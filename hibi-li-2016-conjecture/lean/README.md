@@ -2,9 +2,9 @@
 
 [![Lean build](https://github.com/david44hello/papers_supporting_materials/actions/workflows/lean_build.yml/badge.svg)](https://github.com/david44hello/papers_supporting_materials/actions/workflows/lean_build.yml)
 
-Author: Dave Goel. Copyright (C) Dave Goel 2026--now. Licence: Apache-2.0 (see [LICENSE](../../LICENSE)), the same as Mathlib.
+Author: Dave Goel. Copyright (C) Dave Goel 2026--now. All rights reserved.
 
-This repository is a formal proof, checked by the Lean 4 proof assistant, of every result of the 9-page paper
+This folder is a formal proof, checked by the Lean 4 proof assistant, of every result of the 9-page paper
 "The Hibi–Li (2016) conjecture is fully resolved" by Dave Goel. The paper's link will be added here when it is posted.
 An expanded version of the paper, with many other results, is on Zenodo: https://doi.org/10.5281/zenodo.23601975.
 
@@ -87,7 +87,6 @@ repository:
 ```bash
 git clone https://github.com/david44hello/papers_supporting_materials.git
 cd papers_supporting_materials/hibi-li-2016-conjecture/lean
-export LEAN_NUM_THREADS=1
 lake exe cache get      # downloads prebuilt Mathlib files (it does not compile Mathlib)
 lake build              # the largest file needs about 8 GB of memory
 bash scripts/check.sh   # build, scan for proof holes (sorry, admit, native_decide, ...), regenerate AUDIT.md

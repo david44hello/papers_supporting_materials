@@ -4,6 +4,6 @@ For the paper "The Hibi–Li (2016) conjecture is fully resolved" by Dave Goel. 
 it is posted. An expanded version of the paper, with many other results, is on Zenodo:
 https://doi.org/10.5281/zenodo.23601975.
 
-- [lean/](lean/): a formal proof, checked by the Lean 4 proof assistant, of every result of the paper.
-  Start with [lean/README.md](lean/README.md): the theorem in plain words, exactly what the proof assumes, and how to
-  check it yourself.
+- [lean/](lean/): the Lean 4 proof of the paper's results.
+
+Copyright (C) Dave Goel 2026--now. All rights reserved.
