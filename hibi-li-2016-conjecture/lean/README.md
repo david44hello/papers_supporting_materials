@@ -1,8 +1,8 @@
 # The Hibi–Li (2016) conjecture is fully resolved — the Lean 4 proof
 
-[![Lean build](https://github.com/david44hello/hibi-li-2016-conjecture-lean/actions/workflows/lean_build.yml/badge.svg)](https://github.com/david44hello/hibi-li-2016-conjecture-lean/actions/workflows/lean_build.yml)
+[![Lean build](https://github.com/david44hello/papers_supporting_materials/actions/workflows/lean_build.yml/badge.svg)](https://github.com/david44hello/papers_supporting_materials/actions/workflows/lean_build.yml)
 
-Author: Dave Goel. Copyright (C) Dave Goel 2026--now. Licence: Apache-2.0 (see [LICENSE](LICENSE)), the same as Mathlib.
+Author: Dave Goel. Copyright (C) Dave Goel 2026--now. Licence: Apache-2.0 (see [LICENSE](../../LICENSE)), the same as Mathlib.
 
 This repository is a formal proof, checked by the Lean 4 proof assistant, of every result of the 9-page paper
 "The Hibi–Li (2016) conjecture is fully resolved" by Dave Goel. The paper's link will be added here when it is posted.
@@ -81,9 +81,12 @@ realigned to the published version.
 
 ## How to check it yourself
 
-Prerequisites: the `elan` Lean toolchain manager, Git, curl, Python 3 and ripgrep (`rg`). From a fresh copy:
+Prerequisites: the `elan` Lean toolchain manager, Git, curl, Python 3 and ripgrep (`rg`). From a fresh copy of this
+repository:
 
 ```bash
+git clone https://github.com/david44hello/papers_supporting_materials.git
+cd papers_supporting_materials/hibi-li-2016-conjecture/lean
 export LEAN_NUM_THREADS=1
 lake exe cache get      # downloads prebuilt Mathlib files (it does not compile Mathlib)
 lake build              # the largest file needs about 8 GB of memory
@@ -92,7 +95,7 @@ git diff --exit-code AUDIT.md   # the regenerated AUDIT.md is identical to the p
 ```
 
 GitHub runs these same steps on a fresh machine at every change (the "Lean build" mark at the top; the steps are in
-[.github/workflows/lean_build.yml](.github/workflows/lean_build.yml)).
+[.github/workflows/lean_build.yml](../../.github/workflows/lean_build.yml) at the top of this repository).
 
 The n = 6 count, independently in Python (exact arithmetic; needs pycddlib 2.1.8): `python3 scripts/census/census_n6.py 6`.
 `scripts/census/gen_fvectors.py` wrote the face-vector data in [HibiLi/Census/](HibiLi/Census/); Lean re-checks every

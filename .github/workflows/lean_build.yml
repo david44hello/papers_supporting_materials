@@ -1,0 +1,56 @@
+# Lean build check: at every change, GitHub rebuilds EVERY Lean proof in this repository (each folder <paper>/lean/)
+# on a fresh machine, so a reader sees "passing" without installing Lean. Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+# The projects are found, not listed: a new <paper>/lean/ folder is built with no change here.
+# Both actions are pinned to an exact commit (tag in the comment), so the check never changes under us.
+name: Lean build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  find-projects:
+    runs-on: ubuntu-latest
+    outputs:
+      projects: ${{ steps.find.outputs.projects }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - id: find
+        run: |
+          projects=$(find . -mindepth 3 -maxdepth 3 -path './*/lean/lakefile.toml' -printf '%h\n' | sed 's#^\./##' | sort | jq -R . | jq -cs .)
+          echo "Lean projects: $projects"
+          [ "$projects" != "[]" ] || { echo "no <paper>/lean/lakefile.toml found"; exit 1; }
+          echo "projects=$projects" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: find-projects
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ${{ fromJSON(needs.find-projects.outputs.projects) }}
+    name: ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Build the proof (Mathlib from its cache, then lake build)
+        uses: leanprover/lean-action@24581d74d674803a25a81b10b059c5c0cdd344c6  # v1.6.2
+        with:
+          lake-package-directory: ${{ matrix.project }}
+          auto-config: false
+          use-mathlib-cache: true
+          build: true
+          test: false
+          lint: false
+
+      - name: Policy check and audit (no sorry or admit; no axiom outside Cited/; AUDIT.md regenerated)
+        working-directory: ${{ matrix.project }}
+        run: |
+          sudo apt-get install -y ripgrep
+          bash scripts/check.sh
+
+      - name: The published AUDIT.md is exactly what Lean reports
+        working-directory: ${{ matrix.project }}
+        run: git diff --exit-code -- AUDIT.md
