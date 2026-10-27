@@ -1,6 +1,6 @@
 /-
 HibiLi/Census/Classify.lean — the sixteen census posets are a complete, irredundant list of the 6-element posets that
-contain X (paper v0.70, lines 736–737), and row 5 is P_6.
+contain X (paper v1.00, lines 734–735), and row 5 is P_6.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.Census

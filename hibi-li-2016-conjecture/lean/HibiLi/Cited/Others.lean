@@ -19,11 +19,11 @@ axiom hibiLi_thm_2_1 (P : Type*) [Fintype P] [PartialOrder P] [DecidableEq P] :
 /-- **Hibi–Li–Sahara–Shikama 2017, Theorem 2.1** (Discrete Math. 340, p. 992).  Source, verbatim: "Let P be an
 arbitrary finite poset. Then the number of edges of the order polytope O(P) is equal to that of the chain polytope
 C(P)."  Their `O(P)`, `C(P)` are Hibi–Li's (same §1 text).  Used only for the remark that the equality part fails for
-edges (paper lines 125–129 and 145–147; abstract lines 55–57). -/
+edges (paper lines 122–126 and 145–147; abstract lines 52–54). -/
 axiom hlss_thm_2_1 (P : Type*) [Fintype P] [PartialOrder P] :
     fNum (orderPolytopeHL P) 1 = fNum (chainPolytopeHL P) 1
 
-/-- **Ziegler, Lectures on Polytopes, Ch. 2 (face figures)** (used in paper Lemma 4.7, lines 659–663).  The faces of a
+/-- **Ziegler, Lectures on Polytopes, Ch. 2 (face figures)** (used in paper Lemma 4.7, lines 657–661).  The faces of a
 polytope `B` that contain a face `E` form the face lattice of a polytope `B/E` of dimension `dim B − dim E − 1` (empty when
 `E = B`); a face `G ⊇ E` corresponds to a face of dimension `dim G − dim E − 1`.  Stated for faces STRICTLY containing
 `E` (they correspond to the NONEMPTY faces of `B/E`), with only the dimension bookkeeping we use. -/

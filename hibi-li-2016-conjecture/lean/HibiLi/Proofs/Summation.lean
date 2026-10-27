@@ -1,6 +1,6 @@
 /-
-HibiLi/Proofs/Summation.lean — the counting step of Section 4.4 (paper lines 645–657), in abstract form, and the
-monotone chain along a linear extension (lines 658–667).
+HibiLi/Proofs/Summation.lean — the counting step of Section 4.4 (paper lines 665–677), in abstract form, and the
+monotone chain along a linear extension (lines 678–687).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.PaperDefs
@@ -14,7 +14,7 @@ lemma coeff_X_pow_mul_one_add_X_sq_nonneg (e k : ℕ) : 0 ≤ (X ^ e * (1 + X) ^
   rw [coeff_X_pow_mul', coeff_one_add_X_pow]
   split_ifs <;> positivity
 
-/-- `Σ_{j=0}^{M} C(M, j) t^{j+2}(1+t)^2 = t^2 (1+t)^{M+2}`, coefficientwise (paper line 656). -/
+/-- `Σ_{j=0}^{M} C(M, j) t^{j+2}(1+t)^2 = t^2 (1+t)^{M+2}`, coefficientwise (paper lines 675–676). -/
 lemma binom_sum_identity (M k : ℕ) :
     ∑ j ∈ range (M + 1), (Nat.choose M j : ℤ) * (X ^ (4 + j - 2) * (1 + X) ^ 2 : ℤ[X]).coeff k =
       (X ^ 2 * (1 + X) ^ (M + 2) : ℤ[X]).coeff k := by
@@ -83,7 +83,7 @@ theorem gap_from_local_terms {V : Type*} (F : Finset (Set V)) (d : Set V → ℕ
     _ ≤ ∑ E ∈ F, (δ E).coeff k :=
         sum_le_sum_of_subset_of_nonneg (filter_subset _ _) (fun E hE _ => h1 E hE k)
 
-/-- **The monotone chain** (paper lines 658–667; Fourier's closing remark): if every single switch weakly increases
+/-- **The monotone chain** (paper lines 678–687; Fourier's closing remark): if every single switch weakly increases
 every face number, then so does passing from any order ideal `I` to any larger order ideal `I'`. -/
 theorem mono_of_step {P : Type*} [Fintype P] [PartialOrder P]
     (step : ∀ s : Switch P, ∀ k, fNum (chainOrderPolytope P s.I) k ≤ fNum (chainOrderPolytope P (insert s.q s.I)) k)

@@ -295,7 +295,7 @@ lemma topCells_B_iff {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) {K 
     rw [inter_eq_left.mpr (hK A₀ hA₀).2] at hdim ⊢
     exact ⟨hA₀, hdim⟩
 
-/-- Lines 256–262: the full-dimensional cells of `S` (resp. `T`) are the maximal full-dimensional convex subsets of
+/-- Lines 274–277: the full-dimensional cells of `S` (resp. `T`) are the maximal full-dimensional convex subsets of
 `B` on which `L` (resp. `U`) is affine (Lemma 3.6 with `E = B`). -/
 theorem sec3_S_paper_def_proved {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (A : Set (s.P' → ℝ)) :
     (A ∈ s.cellsS ∧ adim A = Fintype.card s.P' ↔ A ⊆ s.B ∧ Convex ℝ A ∧ adim A = Fintype.card s.P' ∧

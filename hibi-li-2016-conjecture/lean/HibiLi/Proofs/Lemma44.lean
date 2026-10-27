@@ -292,7 +292,7 @@ end System
 
 end Lemma44
 
-/-- **Lemma 4.4** (paper lines 512–530): `E₀` is a face of `B` of dimension 4, cut out by the displayed system. -/
+/-- **Lemma 4.4** (paper lines 504–511): `E₀` is a face of `B` of dimension 4, cut out by the displayed system. -/
 theorem lemma_4_4_proved {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
     (pa pb pg ph : x.toSwitch.P') (hpa : pa.1 = x.a) (hpb : pb.1 = x.b) (hpg : pg.1 = x.g')
     (hph : ph.1 = x.h') :

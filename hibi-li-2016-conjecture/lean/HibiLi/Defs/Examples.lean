@@ -38,7 +38,7 @@ instance : DecidableRel (α := XElem) (· ≤ ·) := fun x y => inferInstanceAs 
 
 end XElem
 
-/-- The chain `a < b` of the paper (line 190). -/
+/-- The chain `a < b` of the paper (line 265, the example after Proposition 3.1). -/
 abbrev Chain2 := Fin 2
 
 /-- The sharpness family (Proposition 5.2): `sharpFamily 0 = X` (that is `P_5`), and `sharpFamily (m+1)` adjoins a new

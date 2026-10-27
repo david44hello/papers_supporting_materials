@@ -75,9 +75,7 @@ Lean checks every proof. A referee only needs to check that the STATEMENTS say w
 [HibiLi/Defs/](HibiLi/Defs/), the cited results in [HibiLi/Cited/](HibiLi/Cited/), and the statements in
 [HibiLi/Paper/Statements.lean](HibiLi/Paper/Statements.lean).
 
-The Lean statements were checked against version 0.70 of the paper, and the line numbers in the comments
-("lines 736–737") refer to its LaTeX source. Later versions changed wording, not statements; the line numbers will be
-realigned to the published version.
+The line numbers in the comments ("lines 94–104") refer to the LaTeX source of version 1.00 of the paper.
 
 ## How to check it yourself
 

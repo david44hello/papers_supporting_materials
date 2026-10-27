@@ -123,7 +123,7 @@ theorem IsPolytope.exists_face_mem_intrinsicInterior {Q : Set E} (polytope : IsP
     induction_hyp (adim top) smaller (polytope.face top_face) u_top rfl
   exact ⟨face, top_face.trans polytope face_top, interior⟩
 
-/-- **Paper v0.70 lines 275–276**: the relative interiors of the cells of a subdivision partition the polytope —
+/-- **Paper v1.00 lines 273–274**: the relative interiors of the cells of a subdivision partition the polytope —
 every point of the base lies in the relative interior of exactly one cell. -/
 theorem subdivision_relint_partition {ι : Type*} [Fintype ι] (base : Set (ι → ℝ))
     (cells : Finset (Set (ι → ℝ))) (hsub : IsFinitePolytopalSubdivision base cells) (u : ι → ℝ)

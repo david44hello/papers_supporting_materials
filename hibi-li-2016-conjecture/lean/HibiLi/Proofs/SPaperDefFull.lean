@@ -1,5 +1,5 @@
 /-
-HibiLi/Proofs/SPaperDefFull.lean — the paper's full definition of `S` and `T` (paper v0.70 lines 276–279): the maximal
+HibiLi/Proofs/SPaperDefFull.lean — the paper's full definition of `S` and `T` (paper v1.00 lines 274–277): the maximal
 full-dimensional convex subsets of `B` on which `L` (resp. `U`) is affine, together with all their nonempty faces.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
@@ -10,7 +10,7 @@ namespace HibiLi.Proofs
 
 open HibiLi
 
-/-- **Definition of `S` and `T`, both halves** (paper lines 276–279): "the maximal full-dimensional convex subsets of
+/-- **Definition of `S` and `T`, both halves** (paper lines 274–277): "the maximal full-dimensional convex subsets of
 `B` on which `L` is affine, together with all their nonempty faces", and the same for `T` with `U`.  The
 full-dimensional half is `sec3_S_paper_def_proved`; a full-dimensional face of an affinity domain is the domain
 itself (`IsFace.eq_of_adim_eq`), and every full-dimensional affinity domain is a face of itself. -/

@@ -1,7 +1,7 @@
 /-
 HibiLi/Cited/Fourier.lean — results of G. Fourier, "The Hibi–Li face-number conjecture", arXiv:2609.23629v1 (2026),
 taken as AXIOMS.  This is a preprint, not yet refereed; Lean does not check it.  Only the results the paper cites
-(paper lines 218–227) appear, each in the narrowest form the paper uses.  Every claim whose AUDIT.md row lists one of
+(paper lines 215–225) appear, each in the narrowest form the paper uses.  Every claim whose AUDIT.md row lists one of
 these two is conditional on it; in particular Theorem 4.1, Corollary 5.3 and the headline rest on both, so a single
 error in Fourier's preprint would make those results unsound.  Fourier's Theorem 1.1 and Proposition 6.1 are
 NOT axioms: we derive them from these (as Fourier does), which keeps the trusted list short.

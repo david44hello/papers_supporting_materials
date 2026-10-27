@@ -330,7 +330,7 @@ lemma close_of_mem {u : x.toSwitch.P' → ℝ}
 
 end Lemma45
 
-/-- **Lemma 4.5** (paper lines 540–571): local product structure of `B` near `u₀`. -/
+/-- **Lemma 4.5** (paper lines 532–549): local product structure of `B` near `u₀`. -/
 theorem lemma_4_5_proved {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∃ (V4 : Set (Fin 4 → ℝ)) (Vz : Set ({p // p ∉ x.special} → ℝ)), IsOpen V4 ∧ IsOpen Vz ∧
       x.alphaPart x.u0 ∈ V4 ∧ x.zeta x.u0 ∈ Vz ∧

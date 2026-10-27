@@ -1,6 +1,6 @@
 /-
 HibiLi/Defs/QEPaper.lean — the defining inequalities of `B`, and the paper's own `Q_E` of Lemma 4.5(a)
-(paper v0.70 lines 543–546), cut out by the inequalities of `B` tight at `u₀`.
+(paper v1.00 lines 541–544), cut out by the inequalities of `B` tight at `u₀`.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.PaperDefs
@@ -11,7 +11,7 @@ namespace Switch
 
 variable {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
 
-/-- The defining inequalities of `B = O_I(P')`: the five families of `chainOrderPolytope` (paper lines 227–240), each
+/-- The defining inequalities of `B = O_I(P')`: the five families of `chainOrderPolytope` (paper lines 225–238), each
 written `0 ≤ g u` with `g` an affine function of `B`'s coordinates (its slack), in the paper's order:
 (1) `x_p ≥ 0` (`p ∈ I`); (2) `y_r ≥ 0` and `y_r ≤ 1` (`r ∈ J`); (3) `y_r ≤ y_r'` (`r ≤ r'` in `J`);
 (4) `Σ_{p∈K} x_p ≤ y_r` (`r ∈ J`, `K ⊆ I` a chain with `p < r` for all `p ∈ K`); (5) `Σ_{p∈K} x_p ≤ 1`
@@ -36,7 +36,7 @@ noncomputable def withZeta (ζ : {p // p ∉ x.special} → ℝ) : x.toSwitch.P'
   classical
   exact fun p => if hp : p ∈ x.special then x.u0 p else ζ ⟨p, hp⟩
 
-/-- `Q_E` as the paper defines it (Lemma 4.5(a), lines 543–546): "the polyhedron in the `ζ`-space defined by the
+/-- `Q_E` as the paper defines it (Lemma 4.5(a), lines 541–544): "the polyhedron in the `ζ`-space defined by the
 inequalities of `B` that are tight at `u₀`, those tight on `E` taken as equalities".  An inequality `0 ≤ g` of `B` is
 tight at `u₀` when `g u₀ = 0`, and tight on `E` when `g = 0` on all of `E`.  The inequalities tight at `u₀` involve
 only `ζ` (`Proofs.QEPaper.tight_ineq_zeta`), so they are read at the point `(α, β, γ, η) = (1/4, 1/4, 3/4, 3/4)`. -/

@@ -8,7 +8,7 @@ import HibiLi.Defs.PaperDefs
 namespace HibiLi
 
 /-- The poset `a, b < c < d < g, h` (`X` with `d` inserted between `c` and `g, h`): an `X`-copy whose `c` has only
-one upper cover, for the remark "q = c would not do in general" (paper lines 476–477). -/
+one upper cover, for the remark "q = c would not do in general" (paper lines 474–475). -/
 inductive XdElem
   | a | b | c | d | g | h
   deriving DecidableEq, Repr

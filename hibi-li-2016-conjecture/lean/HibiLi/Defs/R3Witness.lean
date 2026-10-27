@@ -1,6 +1,6 @@
 /-
 HibiLi/Defs/R3Witness.lean — the 7-element poset for the remark "(If q > c, g′, h′ may differ from g, h.)"
-(paper v0.70 line 494; fresh review r3, finding F5).
+(paper v1.00 line 492; fresh review r3, finding F5).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.Poset
@@ -8,7 +8,7 @@ import HibiLi.Defs.Poset
 namespace HibiLi
 
 /-- The seven elements `a, b, c, d, g', h', g` (written `gp` for `g'` and `hp` for `h'`) of the poset
-`a, b < c < d < g', h'` and `g' < g`, used for the remark at paper line 494.  Its elements `a, b, c, g, h'` form a
+`a, b < c < d < g', h'` and `g' < g`, used for the remark at paper line 492.  Its elements `a, b, c, g, h'` form a
 copy of `X`; the element `q` of Section 4.2 is `d`, whose upper covers are `g', h'`. -/
 inductive R3Elem
   | a | b | c | d | gp | hp | g

@@ -23,7 +23,7 @@ def IsXCopy {P : Type*} [PartialOrder P] (a b c g h : P) : Prop :=
 /-- The hypotheses of Lemma 4.2 at a point `w` of a face `E` of `B`: a convex neighbourhood `N` of `w` in `E` meets
 exactly two `e`-cells `S₁, S₂` of `S|_E`, which cut `N` along the hyperplane `φ = φ w`; the same for `T₁, T₂` and `ψ`;
 and `φ, ψ` restricted to `dir(E)` (the direction of `aff(E)`) are linearly independent — the v0.41 wording of
-Lemma 4.2.  The v0.70 wording (lines 425–429: `H_S`, `H_T` hyperplanes of `aff(E)` through `w`, `H_S ≠ H_T`) is
+Lemma 4.2.  The v1.00 wording (lines 423–427: `H_S`, `H_T` hyperplanes of `aff(E)` through `w`, `H_S ≠ H_T`) is
 equivalent: `crossingAt_iff_v060`. -/
 def CrossingAt {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ)) (w : s.P' → ℝ) :
     Prop :=
@@ -61,7 +61,7 @@ namespace XSwitch
 
 variable {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
 
-/-- The switch of `q` with `I = P \ ↑q` (paper lines 494–497). -/
+/-- The switch of `q` with `I = P \ ↑q` (paper lines 492–495). -/
 def toSwitch : Switch P where
   I := (Set.Ici x.q)ᶜ
   isLowerSet := fun _ _ hle hb ha => hb (le_trans ha hle)
@@ -69,7 +69,7 @@ def toSwitch : Switch P where
   q_notMem := fun h => h le_rfl
   q_minimal := fun _ hp hge => absurd (lt_of_lt_of_le hp hge) (lt_irrefl _)
 
-/-- The face `E₀` (paper lines 502–504): chain coordinates other than `a, b` are 0; order coordinates other than
+/-- The face `E₀` (paper lines 500–502): chain coordinates other than `a, b` are 0; order coordinates other than
 `g', h'` are 1. -/
 def E0 : Set (x.toSwitch.P' → ℝ) :=
   {u | u ∈ x.toSwitch.B ∧
@@ -79,7 +79,7 @@ def E0 : Set (x.toSwitch.P' → ℝ) :=
 lemma a_lt_q : x.a < x.q := lt_of_lt_of_le x.isX.1 x.c_le_q
 lemma b_lt_q : x.b < x.q := lt_of_lt_of_le x.isX.2.1 x.c_le_q
 
-/-- The coordinate `α = x_a` of `B` (paper line 499). -/
+/-- The coordinate `α = x_a` of `B` (paper line 497). -/
 def pa : x.toSwitch.P' := ⟨x.a, x.a_lt_q.ne⟩
 /-- The coordinate `β = x_b`. -/
 def pb : x.toSwitch.P' := ⟨x.b, x.b_lt_q.ne⟩
@@ -91,7 +91,7 @@ def ph : x.toSwitch.P' := ⟨x.h', x.q_covby_h'.lt.ne'⟩
 /-- The four retained coordinates `α, β, γ, η`; the others form `ζ`. -/
 def special : Set x.toSwitch.P' := {x.pa, x.pb, x.pg, x.ph}
 
-/-- The point `u₀` (paper lines 526–527): `(α,β,γ,η) = (1/4,1/4,3/4,3/4)` and `ζ = ζ₀` (chain coordinates 0,
+/-- The point `u₀` (paper lines 524–525): `(α,β,γ,η) = (1/4,1/4,3/4,3/4)` and `ζ = ζ₀` (chain coordinates 0,
 order coordinates 1). -/
 noncomputable def u0 : x.toSwitch.P' → ℝ := by
   classical
@@ -118,7 +118,7 @@ lemma singleton_pb_mem : ({x.pb} : Finset x.toSwitch.P') ∈ x.toSwitch.lowBranc
   refine ⟨fun h => absurd (lt_of_le_of_lt h x.b_lt_q) (lt_irrefl _), ?_, x.b_lt_q⟩
   simp [IsChainSet]
 
-/-- `λ_a` (paper lines 528–531): the maximum of the forms `Σ_{p∈K∖{a}} x_p` over chains `K ∋ a` in the definition
+/-- `λ_a` (paper lines 526–529): the maximum of the forms `Σ_{p∈K∖{a}} x_p` over chains `K ∋ a` in the definition
 of `L` (the `a`-family). -/
 noncomputable def lamA (u : x.toSwitch.P' → ℝ) : ℝ := by
   classical

@@ -1,7 +1,7 @@
 /-
 HibiLi/Proofs/SmallClaims.lean — proofs of four small in-text claims of the paper: the induced copy of `X` (lines
-61–64), `dim B = n − 1` (lines 233–234), `λ_a(ζ₀) = λ_b(ζ₀) = 0` (lines 534–538), and "`q = c` would not do in
-general" (lines 482–483, on the poset `a, b < c < d < g, h`).
+88–91), `dim B = n − 1` (lines 246–247), `λ_a(ζ₀) = λ_b(ζ₀) = 0` (lines 526–530), and "`q = c` would not do in
+general" (lines 474–475, on the poset `a, b < c < d < g, h`).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.ExtraDefs
@@ -14,7 +14,7 @@ namespace HibiLi.Proofs
 
 open HibiLi
 
-/-- Lines 61–64: the five elements of an `X`-copy carry an order embedding of `X`. -/
+/-- Lines 88–91: the five elements of an `X`-copy carry an order embedding of `X`. -/
 theorem sec1_X_copy_induced_proved {P : Type*} [PartialOrder P] {a b c g h : P} (hX : IsXCopy a b c g h) :
     ∃ f : XElem ↪o P, f XElem.a = a ∧ f XElem.b = b ∧ f XElem.c = c ∧ f XElem.g = g ∧ f XElem.h = h := by
   obtain ⟨hac, hbc, hcg, hch, hab, hba, hgh, hhg⟩ := hX
@@ -28,7 +28,7 @@ theorem sec1_X_copy_induced_proved {P : Type*} [PartialOrder P] {a b c g h : P} 
       | exact iff_of_false (by dsimp only [f]; order) (by decide)
   exact ⟨OrderEmbedding.ofMapLEIff f key, rfl, rfl, rfl, rfl, rfl⟩
 
-/-- Lines 233–234: `B = O_I(P′)` is a polytope of dimension `n − 1`. -/
+/-- Lines 246–247: `B = O_I(P′)` is a polytope of dimension `n − 1`. -/
 theorem sec3_B_dim_proved {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     IsPolytope s.B ∧ adim s.B + 1 = Fintype.card P := by
   refine ⟨s.B_isPolytope, ?_⟩
@@ -36,7 +36,7 @@ theorem sec3_B_dim_proved {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P
   rw [Switch.B, chainOrderPolytope_adim, card_P' s]
   omega
 
-/-- Lines 534–538: every form of the `a`- and `b`-families vanishes at `ζ₀`, so `λ_a(ζ₀) = λ_b(ζ₀) = 0`. -/
+/-- Lines 526–530: every form of the `a`- and `b`-families vanishes at `ζ₀`, so `λ_a(ζ₀) = λ_b(ζ₀) = 0`. -/
 theorem sec4_lam_u0_proved {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     x.lamA x.u0 = 0 ∧ x.lamB x.u0 = 0 :=
   ⟨(Lemma46.familyA x).at_u0, (Lemma46.familyB x).at_u0⟩
@@ -85,7 +85,7 @@ lemma c_lt_d : XdElem.c < XdElem.d := by decide
 
 end SmallClaims
 
-/-- Lines 482–483: in `a, b < c < d < g, h` the elements `a, b, c, g, h` form a copy of `X`, a switch of Section 4
+/-- Lines 474–475: in `a, b < c < d < g, h` the elements `a, b, c, g, h` form a copy of `X`, a switch of Section 4
 exists (with `q = d`), and none uses `q = c` (above `c` sits `d`, whose strict upper set `{g, h}` is not a chain). -/
 theorem sec4_q_c_remark_proved :
     IsXCopy XdElem.a XdElem.b XdElem.c XdElem.g XdElem.h ∧ Nonempty (XSwitch XdElem) ∧

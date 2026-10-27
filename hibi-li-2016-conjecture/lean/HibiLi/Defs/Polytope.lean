@@ -2,7 +2,7 @@
 HibiLi/Defs/Polytope.lean — faces, dimensions and face numbers of subsets of a real vector space.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
-Paper (v0.70, lines 130–132): "Write F_Q(t) = Σ_{j≥0} f_j(Q) t^j for the face polynomial of a polytope Q (all nonempty
+Paper (v1.00, lines 127–129): "Write F_Q(t) = Σ_{j≥0} f_j(Q) t^j for the face polynomial of a polytope Q (all nonempty
 faces, Q included)."  A face is an exposed face (Ziegler, Def. 2.1): Q ∩ {x : c·x = max_Q c}; the zero
 functional gives Q itself.  The empty face is excluded.
 -/
@@ -33,7 +33,7 @@ noncomputable def fNum (Q : Set V) (j : ℕ) : ℕ := (faces Q j).ncard
 /-- Number of `j`-dimensional members of a family of cells (a polytopal complex or subdivision). -/
 noncomputable def cellNum (K : Set (Set V)) (j : ℕ) : ℕ := {A ∈ K | adim A = j}.ncard
 
-/-- `E` is the carrier of the cell `C` in `B`: the smallest face of `B` containing `C` (paper lines 288–289). -/
+/-- `E` is the carrier of the cell `C` in `B`: the smallest face of `B` containing `C` (paper lines 286–287). -/
 def IsCarrier (B E C : Set V) : Prop :=
   IsFace B E ∧ C ⊆ E ∧ ∀ E', IsFace B E' → C ⊆ E' → E ⊆ E'
 

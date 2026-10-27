@@ -137,7 +137,7 @@ lemma mem_iff_QE {E : Set (x.toSwitch.P' → ℝ)} (hE : IsFace x.toSwitch.B E) 
 
 end Lemma45Full
 
-/-- **Lemma 4.5, full form of (a)** (paper lines 540–571): for every face `E ⊇ E₀` of `B`, `ζ₀ ∈ Q_E`, and on `N₀`
+/-- **Lemma 4.5, full form of (a)** (paper lines 537–544): for every face `E ⊇ E₀` of `B`, `ζ₀ ∈ Q_E`, and on `N₀`
 both `E` and `relint E` are cut out by `ζ ∈ Q_E`, resp. `ζ ∈ relint Q_E`; part (b) as in `lemma_4_5_proved`. -/
 theorem lemma_4_5_full_proved {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∃ (V4 : Set (Fin 4 → ℝ)) (Vz : Set ({p // p ∉ x.special} → ℝ)), IsOpen V4 ∧ IsOpen Vz ∧

@@ -638,7 +638,7 @@ end Concrete
 
 end Lemma46
 
-/-- **Lemma 4.6** (paper lines 573–610), from **Lemma 3.6** (hypothesis `h36`): every face `E ⊇ E₀` of `B` has a
+/-- **Lemma 4.6** (paper lines 599–602), from **Lemma 3.6** (hypothesis `h36`): every face `E ⊇ E₀` of `B` has a
 point where the hypotheses of Lemma 4.2 hold. -/
 theorem lemma_4_6_of_3_6 {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
     (h36 : ∀ (E : Set (x.toSwitch.P' → ℝ)), IsFace x.toSwitch.B E → ∀ A,
