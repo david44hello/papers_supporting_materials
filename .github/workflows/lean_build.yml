@@ -1,0 +1,33 @@
+# Lean build check: on every change, GitHub rebuilds the proof from a fresh copy, so a reader can see
+# "build passing" without installing Lean. Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+# Both actions are pinned to an exact commit (tag in the comment), so the check never changes under us.
+name: Lean build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Build the proof (Mathlib from its cache, then lake build)
+        uses: leanprover/lean-action@24581d74d674803a25a81b10b059c5c0cdd344c6  # v1.6.2
+        with:
+          auto-config: false
+          use-mathlib-cache: true
+          build: true
+          test: false
+          lint: false
+
+      - name: Policy check and audit (no sorry or admit; no axiom outside Cited/; AUDIT.md regenerated)
+        run: |
+          sudo apt-get install -y ripgrep
+          bash scripts/check.sh
+
+      - name: The published AUDIT.md is exactly what Lean reports
+        run: git diff --exit-code -- AUDIT.md

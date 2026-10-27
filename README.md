@@ -1,5 +1,7 @@
 # The Hibi–Li (2016) conjecture is fully resolved — the Lean 4 proof
 
+[![Lean build](https://github.com/david44hello/hibi-li-2016-conjecture-lean/actions/workflows/lean_build.yml/badge.svg)](https://github.com/david44hello/hibi-li-2016-conjecture-lean/actions/workflows/lean_build.yml)
+
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now. Licence: Apache-2.0 (see [LICENSE](LICENSE)), the same as Mathlib.
 
 This repository is a formal proof, checked by the Lean 4 proof assistant, of every result of the 9-page paper
@@ -88,6 +90,9 @@ lake build              # the largest file needs about 8 GB of memory
 bash scripts/check.sh   # build, scan for proof holes (sorry, admit, native_decide, ...), regenerate AUDIT.md
 git diff --exit-code AUDIT.md   # the regenerated AUDIT.md is identical to the published one
 ```
+
+GitHub runs these same steps on a fresh machine at every change (the "Lean build" mark at the top; the steps are in
+[.github/workflows/lean_build.yml](.github/workflows/lean_build.yml)).
 
 The n = 6 count, independently in Python (exact arithmetic; needs pycddlib 2.1.8): `python3 scripts/census/census_n6.py 6`.
 `scripts/census/gen_fvectors.py` wrote the face-vector data in [HibiLi/Census/](HibiLi/Census/); Lean re-checks every
