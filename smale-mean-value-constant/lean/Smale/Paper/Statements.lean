@@ -1,6 +1,6 @@
 /-
 Smale/Paper/Statements.lean — every claim of paper 009 "Smale's mean value constant exceeds 1.1559" (Dave Goel, posted
-v1.80, tex md5 6863fded; its lines 1-485 are those of v1.40-v1.70), in the paper's order, each with its lines in that tex
+v1.90, tex md5 56d81ca3; its lines 1-485 are those of v1.40-v1.70), in the paper's order, each with its lines in that tex
 file ("tex l."). Bodies link to proofs in other files.
 Sentences NOT stated here (background citations of other papers, program descriptions, history) are listed with reasons
 at the end of this file; each is listed for the author's review.

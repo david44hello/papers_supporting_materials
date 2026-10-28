@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/TextClaims.lean — in-text claims of paper 009 (posted v1.80): a zero of P_c in 0 < |z| < 1 makes H
+Smale/Proofs/TextClaims.lean — in-text claims of paper 009 (posted v1.90): a zero of P_c in 0 < |z| < 1 makes H
 non-univalent (tex l.235-236); the critical points of z - z^d/d and the value of p(β)/β there (tex l.66-67); the
 paper's arithmetic on the constants of [JN] (tex l.33, l.48-49, l.84, l.122-123).
 -/

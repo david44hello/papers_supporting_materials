@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Lemma53More.lean — two steps of the proof of Lemma 5.3 of paper 009 (posted v1.80, tex l.453-463): a
+Smale/Proofs/Lemma53More.lean — two steps of the proof of Lemma 5.3 of paper 009 (posted v1.90, tex l.453-463): a
 critical point of p_ε escapes to ∞ as ε → 0 (the d critical points have product of modulus 1/((d+1)|ε|)); and at a
 critical point β of p_ε, p_ε(β)/β = Q(β) for one polynomial Q of degree d - 1 ≥ 1, so |p_ε(β)/β| → ∞ as |β| → ∞,
 uniformly in ε.

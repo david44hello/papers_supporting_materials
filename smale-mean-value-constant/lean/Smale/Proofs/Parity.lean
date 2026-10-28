@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Parity.lean — the parity of the Dieudonné polynomials of paper 009 (tex v1.80 l.234): since
+Smale/Proofs/Parity.lean — the parity of the Dieudonné polynomials of paper 009 (tex v1.90 l.234): since
 `U_ℓ(-c) = (-1)^ℓ U_ℓ(c)` (Mathlib's `Chebyshev.U_eval_neg`), `P_{-c}(w) = P_c(-w)`.
 -/
 import Smale.Defs.Basic
@@ -13,7 +13,7 @@ theorem U_eval_neg_real (l : ℕ) (c : ℝ) :
     (Chebyshev.U ℝ (l : ℤ)).eval (-c) = (-1) ^ l * (Chebyshev.U ℝ (l : ℤ)).eval c := by
   rw [Chebyshev.U_eval_neg, Int.cast_negOnePow_natCast]
 
-/-- tex v1.80 l.234, the proposed Statements type: `U_ℓ(-c) = (-1)^ℓ U_ℓ(c)`, hence `P_{-c}(w) = P_c(-w)`. -/
+/-- tex v1.90 l.234, the proposed Statements type: `U_ℓ(-c) = (-1)^ℓ U_ℓ(c)`, hence `P_{-c}(w) = P_c(-w)`. -/
 theorem sec4_P_neg_proved (H : ℂ[X]) (n : ℕ) (c : ℝ) (w : ℂ) :
     (∀ l : ℕ, (Chebyshev.U ℝ (l : ℤ)).eval (-c) = (-1) ^ l * (Chebyshev.U ℝ (l : ℤ)).eval c) ∧
       (dieudonne H n (-c)).eval w = (dieudonne H n c).eval (-w) := by

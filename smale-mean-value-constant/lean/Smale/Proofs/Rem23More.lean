@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Rem23More.lean — the steps of Remark 2.3 of paper 009 (posted v1.80, tex l.165-170) that need no Riemann
+Smale/Proofs/Rem23More.lean — the steps of Remark 2.3 of paper 009 (posted v1.90, tex l.165-170) that need no Riemann
 map, with the conformal map ψ as a parameter: the set {|q| < R} (so also its component Ω that contains 0) is bounded;
 for R < m(p) every critical point of p lies outside it; and for every ψ with ψ(0) = 0 and ψ'(0) = κ, the pair
 W = ψ/κ, B = (q∘ψ)/R has W(0) = 0, W'(0) = 1, B(0) = 1/R and (WB)' = p'(ψ)ψ'/(κR).

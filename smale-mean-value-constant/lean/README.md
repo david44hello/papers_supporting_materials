@@ -1,6 +1,6 @@
 # Smale's mean value constant — Lean 4 proofs
 
-For version 1.80 of "Smale's mean value constant exceeds 1.1559" by Dave Goel.
+For version 1.90 of "Smale's mean value constant exceeds 1.1559" by Dave Goel.
 
 [AUDIT.md](AUDIT.md) lists 83 claims: 70 proved from Lean's standard foundations, 7 proved from cited results, and 6 proved assuming fact (R) of Theorem 5.1. The six are the paper's main results, Theorems 1.1 and 5.1 and Corollary 5.4, each stated twice (once from (R) as the paper states it, once from the exact statement the program checks). Fact (R) is checked by [the accompanying program](../pair_checks/check_pair.py), not proved in Lean.
 
@@ -14,7 +14,7 @@ The three standard axioms are `propext`, `Classical.choice` and `Quot.sound`. Ea
 
 The audit lists claims from the numbered results, proofs and running text. Its final sections record four differences between the paper's arguments and the Lean proofs, and sentences without a Lean theorem. These include reports of other authors' results, descriptions of the programs, and the numerical observation about where the closest approach occurs. The steps needing a Riemann map are covered by the cited Proposition 3.1; Lean does not construct that map.
 
-Fact (R) remains computer-checked. Facts (D), (C) and (S), and the stated margins in Remark 5.2, are proved in Lean by exact arithmetic. Paper line references are to version 1.80; the data-file header names an earlier version with identical data, as the audit notes explain.
+Fact (R) remains computer-checked. Facts (D), (C) and (S), and the stated margins in Remark 5.2, are proved in Lean by exact arithmetic. Paper line references are to version 1.90; the data-file header names an earlier version with identical data, as the audit notes explain.
 
 ## Build
 

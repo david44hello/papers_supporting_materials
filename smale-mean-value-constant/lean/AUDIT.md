@@ -165,5 +165,9 @@ no new axiom is used.
 ### C. A comment that is out of date (no code change)
 
 C1. The header of Smale/Defs/Data.lean says that the printed data were parsed from tex v1.30 (md5 46accf74). They are
-identical to the posted v1.80 (l.107-108, l.324-338): all 26 printed rationals and Λ were compared one by one. The
-header is not changed, because any byte change in that file rebuilds the whole library.
+identical to the posted v1.90 (l.107-108, l.324-338; the same lines as in v1.80): all 26 printed rationals and Λ were
+compared one by one. The header is not changed, because any byte change in that file rebuilds the whole library.
+C2. The headers of Smale/Defs/Basic.lean, Smale/Defs/Conditions.lean and Smale/Defs/Control.lean name the posted v1.80.
+v1.90 changes only lines 2, 4, 28, 41, 126-128, 130 and 132, in place; every other line keeps its number and its text,
+and no line these headers cite is a changed one, so their references hold for v1.90. These headers are not changed for
+the reason of C1.

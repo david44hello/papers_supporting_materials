@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Sec2.lean — Section 2 of paper 009 (tex v1.80 l.134-175): Theorem 2.2 "Hence" and "Moreover", and
+Smale/Proofs/Sec2.lean — Section 2 of paper 009 (tex v1.90 l.134-175): Theorem 2.2 "Hence" and "Moreover", and
 Remark 2.3 (the pair from a polynomial, the polynomial q = p(w)/w, the trivial pair W(w) = w, B = 1, and K* ≤ sup_k 𝓑_k).
 The two outside results are the cited [JN, Prop. 4.2] and [JN, Prop. 3.1] (Smale/Cited/Basic.lean).
 -/

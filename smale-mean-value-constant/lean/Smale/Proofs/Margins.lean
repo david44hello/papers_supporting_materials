@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Margins.lean — Remark 5.2 and the control of paper 009 (posted v1.80, tex l.433-442), proved from the
+Smale/Proofs/Margins.lean — Remark 5.2 and the control of paper 009 (posted v1.90, tex l.433-442), proved from the
 certificates SchurCertR.lean (Schur–Cohn for H'(r w), r = 1.00001141) and RoucheCert.lean (two Rouché certificates):
 the zero of H' nearest to the circle has modulus 1.00001141…; at c = 0.9231 a zero of P_c has modulus between
 1 + 7.02·10⁻⁶ and 1 + 7.03·10⁻⁶; for H(sz) the polynomials P_{±1} still have no zero in the closed disk, P_{0.9231} has

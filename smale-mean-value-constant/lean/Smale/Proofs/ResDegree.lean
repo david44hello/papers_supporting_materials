@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/ResDegree.lean — the degree bound of Theorem 5.1, proof (R) (paper 009, posted v1.80, tex l.404-405):
+Smale/Proofs/ResDegree.lean — the degree bound of Theorem 5.1, proof (R) (paper 009, posted v1.90, tex l.404-405):
 the resultant `Res_w(P_c, P_c*)` at formal degrees `(n-1, n-1)` is a polynomial `F` in `c` of degree at most
 `2(n-1)²` (`578` for `n = 18`): the Sylvester matrix has `2(n-1)` rows, and its entries are coefficients of `P_c` or
 `P_c*`, polynomials in `c` of degree at most `n - 1` (`U_l` has degree `l`).

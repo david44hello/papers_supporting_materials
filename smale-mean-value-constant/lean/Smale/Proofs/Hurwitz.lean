@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Hurwitz.lean — the Hurwitz step of the proof of Lemma 5.3 of paper 009 (posted v1.80, tex l.453-456):
+Smale/Proofs/Hurwitz.lean — the Hurwitz step of the proof of Lemma 5.3 of paper 009 (posted v1.90, tex l.453-456):
 as ε → 0, d - 1 of the d critical points of p_ε, counted with multiplicity, tend to those of p, and the other one
 escapes. By Rouché's theorem (ArgPrinciple.lean) with f = p' and g = (d+1)εz^d: (i) in a disk |w| < R₀ that contains
 all critical points of p, p_ε has exactly d - 1 critical points for small ε; (ii) in a small disk around a critical

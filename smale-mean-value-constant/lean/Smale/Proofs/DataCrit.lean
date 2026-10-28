@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/DataCrit.lean — three exact claims of Section 5 (paper v1.80): `GL` is monic of degree 17 (tex l.350);
+Smale/Proofs/DataCrit.lean — three exact claims of Section 5 (paper v1.90): `GL` is monic of degree 17 (tex l.350);
 the 17 critical points of `Q`, counted with multiplicity, are `z = 1` (order 5), the two zeros of `G` and the ten `ρ_j`:
 ten lie within `0.0123` of `1`, the other seven have moduli between `1.017` and `1.238`, none lies in the open disk
 (tex l.354-356, Figure 1 caption l.378-381); `J(a₁,b) = 1.30038…`, `J(a₂,b) = 1.02761…` (tex l.357). All bounds are
