@@ -5,8 +5,9 @@
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now. All rights reserved.
 
 This folder is a formal proof, checked by the Lean 4 proof assistant, of every result of the paper "The Hibi–Li (2016)
-conjecture is fully resolved" by Dave Goel. Lean checked version 2.10 of the paper. The paper's link will be added here
-when it is posted. An expanded version of the paper, with many other results, is on Zenodo:
+conjecture is fully resolved" by Dave Goel. Lean checked version 2.10 of the paper; the posted version 2.20 changes
+only the wording of one footnote. The paper: https://doi.org/10.5281/zenodo.23704735
+An expanded version of the paper, with many other results, is on Zenodo:
 https://doi.org/10.5281/zenodo.23601975
 
 ## The theorem, in plain words
