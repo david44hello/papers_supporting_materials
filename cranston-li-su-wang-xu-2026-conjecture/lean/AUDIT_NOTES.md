@@ -1,7 +1,7 @@
 ## Notes (hand-written; appended by scripts/audit.py)
 
 In sections A-F, "tex l." means a line of the LaTeX source of the expanded version [3] (v0.30) unless the short
-paper is named; section G uses the lines of the short paper's release file p002_short_v1.51.tex.
+paper is named; section G uses the lines of the LaTeX source of the short paper (version 1.59, the final text).
 
 ### A. Route differences (the Lean proof of a claim takes another path than the paper's text)
 | # | Claim(s) | Paper's route | Lean's route |
@@ -45,7 +45,7 @@ The 7 Triangle/Thm23 names: flowConnected_contract, exists_lift_contract, restri
 exists_expand, expandIso, flowConnected_of_loopless. Walk control: thm_2_3 → thm_2_2_proved USED, thm_2_2 → thm_2_3_proved
 NOT-USED.
 
-### C. Sentences of the paper NOT formalized (each needs Dave's sign-off)
+### C. Sentences of the paper NOT formalized (listed for the author's review)
 | # | tex lines | Sentence | Why not |
 |---|---|---|---|
 | C1 | 559-564 | Remark 7.1: "The proofs above are constructive …" | a statement about proofs, not a mathematical proposition |
@@ -71,7 +71,7 @@ finite, and every finite graph is isomorphic to one with vertex set `Fin n` and 
 `Type`; graph isomorphism preserves all notions here (Reduction/Iso.lean, EdgeIso). So nothing of the paper is lost.
 The claims that quantify over all graphs inside the statement (prop_3_4, lem_9_3, sec9_iff) also range over `Type`. This argument is meta-level: `EdgeIso` relates graphs only inside `Type`.
 
-### F. The short paper's review copy v1.46: new statements and claims covered by composition
+### F. An earlier draft (version 1.46) of the short paper: new statements and claims covered by composition
 Six in-text claims of the short paper had no statement; all six are now PROVED (file Sec2/ShortClaims.lean):
 `sec2_step_value_sign` (l.155-157), `sec2_outward_value_ne_zero` (l.171-172), `def_2_1_loop_ends` (l.184),
 `sec4_small_dir_indep` (l.324), `sec4_color_unique` (l.323-326), `sec6_not_small_range` (l.445-446).
@@ -85,45 +85,83 @@ Claims covered only by putting several Lean statements together:
 C9 also covers the short paper's "the same graph" (l.156-157) through `sec2_agree_outside_cycle`.
 
 
-### G. The SHORT paper, RELEASE v1.51 (p002_short_v1.51.tex, md5 bf0f0a5c) — the paper we post
-Line numbers "l." in this section are lines of the release file p002_short_v1.51.tex. Every Lean statement's place in
-it is in the column "Short paper v1.51" above and at the start of its docstring (map: SHORT_MAP_v1.51.tsv in this
-folder, all 93 rows; 29 statements are long-paper material the short paper does not contain; they stay proved). The
-map was moved from v1.48 by a line alignment of the tex files, and every row's quoted text was found at its new line.
-Implicit case: `rem_8_8_k3` = Proposition 7.7 with k = 3. [3]'s results quoted at l.110-112 (Theorems 2.5, 9.1, 9.2
+### G. The SHORT paper, version 1.59 — the paper we post
+Line numbers "l." in this section are lines of the LaTeX source of the short paper, version 1.59 (the final text). Every
+Lean statement's place in it is in the column "Short paper v1.59" above and at the start of its docstring (map:
+SHORT_MAP_v1.59.tsv in this folder, all 106 rows; the 23 rows marked "not in the short paper" are long-paper material
+the short paper does not contain; they stay proved). The map was moved from version 1.51 by a line alignment of the two
+sources; every row's quoted text was found on its new lines, and the rows next to changed text were checked by hand.
+In-text claims with their own statements (files Sec2/ShortClaims2.lean, Sec2/ShortClaims3.lean, Sec2/ShortClaims4.lean,
+IntFlow/ChainLift.lean): `intro_A_connected_differs` (l.157-158: A-connected is a different notion from A-flow-connected:
+the graph with two vertices and one edge is A-flow-connected, as it has no flow, but not A-connected); `sec3_no_edge`
+(l.335: a graph with no edge has exactly one flow, for every A);
+`intro_example_flow_paths` (l.115-117: the six-edge graph has a nowhere-zero 3-flow with three values 1 and three values
+-1, and six edge-disjoint paths join its two vertices); `intro_even_three_flow` (l.121-122: an even graph has a
+nowhere-zero 3-flow, namely the value 1 on every edge directed by an Eulerian orientation; Lean: an Eulerian orientation
+exists, and for EVERY Eulerian orientation the constant flow 1 is a nowhere-zero 3-flow); `intro_euler_orient_exists`
+(l.144-145); `intro_degree_two_balanced` (l.152); `intro_triangle_A_connected` (l.156-157: a triangle is A-connected,
+|A| ≥ 4, stated with entering minus leaving, the same property for -β), `intro_triangle_A_connected_def` (l.158-161: the
+sign of the definition in the text, leaving minus entering) and `intro_triangle_A_connected_any_dir` (the same for any
+reference directions of the three edges); `sec2_cycle_ends` (l.203-204: the ends of Q at a vertex v of Q are exactly
+two); `sec4_small_cycle` (l.356-357); `sec7_three_flows` (l.573: for k = 3 the k-flows are the nowhere-zero 3-flows of
+Section 1); `lem_8_4_fibre` (Lemma 7.4, l.620-621: a PATH of integer lifts of f; `lem_8_4` is the weaker form, any two
+lifts are joined, that Proposition 7.7 uses); `sec7_chain_lift` (l.565-567 and the abstract l.49-51). `sec2_paths_le_four`
+(l.122-123).
+Implicit case: `rem_8_8_k3` = Proposition 7.7 with k = 3. [3]'s results quoted at l.131-136 (Theorems 2.5, 9.1, 9.2
 there) are `thm_2_5_b`, `thm_9_1`, `thm_9_2`, `sec9_iff` (Lean states more of them).
 
-Sentences of the short paper covered only by putting several proved Lean statements together (sections B and F give
-the dependency walks and the long-paper rows):
-| Short tex v1.51 | Sentence | Covered by |
+Sentences of the short paper covered by putting proved Lean statements together, or by a definition (sections B and F
+give the dependency walks and the long-paper rows):
+| Short tex v1.59 | Sentence | Covered by |
 |---|---|---|
-| l.99-101 | the graph with two vertices and six parallel edges (with ANY orientation) is even and is neither ℤ₃- nor 3-flow-connected | `intro_example` (one orientation) + `sec2_ref_dir_indep` (section D) |
-| l.103-104 | "Every even graph in which all degrees are at most 4 is A-flow-connected for every finite abelian group A, of any order (Theorem 2.2)" | `thm_2_2` (no bound on \|A\|) |
-| l.117-118 | "any two flows with a balanced pair on the same two edges are joined by a chain of steps" | `lem_3_2_a` + `lem_3_2_b_joined` + the induction inside `prop_3_4` |
-| l.118-119 | "For any two edges at a vertex and any a ≠ 0, a balanced pair on these edges occurs in some constant flow with value a" | `lem_3_3_b` (every a ≠ 0; loopless G, as in Lemma 3.2) |
-| l.120-121 | "for a suitable a, all constant flows with value a are joined to each other" | `lem_3_3_a` + `sec2_multistep_chain` + (T2), inside `prop_3_4` (route A3) |
-| l.121, l.305-306 | "So all flows with a balanced pair are joined to each other" | its own statement `intro_balanced_joined` (hypotheses as the text uses them: 0 ∉ T, T = -T, (T2), G even and loopless, and the induction hypothesis of the proof of Proposition 3.4); its proof is the step `hbal` of `reduction_preconnected`, from the three rows above |
-| l.124 | "Statement (LOCAL) is needed only for loopless graphs in which every degree is 0 or at least 4" | `prop_3_4`: its (LOCAL) hypothesis is stated only for such graphs; loops (Lemma 3.1) and vertices of degree 2 (Lemma 3.2) are handled inside its proof |
-| l.134 | "Theorem 2.4, which also proves part (a) for cyclic groups" | `sec6_cyclic_flow_connected` (part (a) = `thm_1_1_a` = `thm_2_3` with A = ℤ_m, m ≥ 4) |
-| l.154-156 | "this gives the same graph" (adjacency in [1, 2] = adjacency by a step) | `sec2_agree_outside_cycle`, plus t ≠ 0 because f ≠ f' |
-| l.389-391 | "Theorem 2.2 follows from Sections 3 and 4. For Theorem 2.3, a vertex of degree at least 6 is replaced by a triangle, and Lemma 5.1 shows that the original graph is then A-flow-connected too." | the walks of section B: `thm_2_2` uses `prop_3_4` and `Sec4.prop_4_4_main`, no triangle names; `thm_2_3` uses `exists_expand`, Lemma 5.1 (a) and (c), `thm_2_2_proved` |
-| l.479 | "so these two ends are a balanced pair at v" (end of the proof of Lemma 6.2 (b)) | the conclusion of `lem_6_2_b` (`HasBalancedPairAt … v`) |
-| l.508 | Remark 6.4: "Theorem 2.4 proves Theorem 2.3 again for cyclic groups, without Lemma 5.1." | `sec6_cyclic_flow_connected`; the walk of section B shows it uses `thm_2_4` and `prop_6_3`, and NOT Lemma 5.1 or `thm_2_3` |
-| l.510 | Remark 6.4: "it requires the value −2a in Lemma 6.2 (b) not to be small. This holds in ℤ_m with m ≥ 4" | `sec6_neg_two_not_small` (used by `prop_6_3`) |
-| l.510-512 | Remark 6.4: "but fails, for example, in ℤ₃ × ℤ₃ with S as in Section 4, where −2a = a; there a vertex can have six ends with the same small outward value a and no balanced pair" | `sec6_remark_Z3Z3` (every cyclic decomposition D of ℤ₃ × ℤ₃ and every a ∈ D.S; the graph with two vertices and six parallel edges; Lean: no balanced pair anywhere in the graph) |
+| l.43-44 | abstract: the conjecture for integer flows with values between 1 and k-1 in absolute value, "where each change adds a non-zero integer" | the definition of 𝓕(G,k): `kFlowGraph k` (Defs/Graph.lean), steps with a non-zero integer value between `k`-flows; the theorem is `thm_1_1_b` |
+| l.49-51 | abstract: "a counting argument joins any two nowhere-zero flows with values in ℤ_k, k ≥ 4, by changes that add 1, −1, 2 or −2; every such chain gives a chain of integer flows with values between 1 and k−1 in absolute value, and every integer flow of this chain reduces modulo k to a flow of the given chain" | first half `thm_2_4` (steps with values in `Tcyc k` = {1, −1, 2, −2}); second half `sec7_chain_lift`: a walk in 𝓕(G,k) (its vertices are `k`-flows, its steps have non-zero integer values) whose j-th `k`-flow is an integer lift of the φ(j)-th flow of the chain, φ monotone from 0 to the end |
+| l.112-117 | the graph with two vertices and six parallel edges (with ANY orientation) is even and is neither ℤ₃- nor 3-flow-connected | `intro_example` (one orientation) + `sec2_ref_dir_indep` (section D); the hypotheses of [1, Theorem 2.1] for it are `intro_example_flow_paths` |
+| l.119-120 | "Every even graph in which all degrees are at most 4 is A-flow-connected for every finite abelian group A, of any order (Theorem 2.2)" | `thm_2_2` (no bound on \|A\|) |
+| l.125-126 | "The restriction of the step values to ±1 and ±2 is what the proof of part (b) of Theorem 1.1 needs" | `lem_8_5`, `lem_8_6` (steps with values 1 and 2 only) and `prop_8_7` (hypothesis: a {1, −1, 2, −2}-chain); the walk of section B: `thm_1_1_b` uses `thm_2_4` |
+| l.129-132 | the two main questions of [2, Section 1]: Theorem 1.1 answers the first (connectivity); [3, Theorem 2.5] bounds the diameter | `thm_1_1_a`; `thm_2_5_b`: any two flows are joined by a chain of at most 16M³+12M²+M steps, i.e. their distance in 𝓕(G,A) is at most that number |
+| l.139-140, l.240-243 | Section 3 reduces the flow-connectedness of all even graphs (of a class closed under deleting a loop and splitting off) to: in every loopless graph of the class with at least one edge, every flow is joined by steps to a flow with a balanced pair | `prop_3_4`: its class hypotheses are closure under deleting a loop (`h_loop`) and under splitting off in loopless graphs (`h_split`); its (LOCAL) hypothesis asks only for loopless graphs with at least one edge in which every degree is 0 or at least 4 (`h_local`), so it implies the version in the text; for the class of ALL even graphs also `sec3_T_nonzero` (T = A ∖ {0} satisfies (T1), (T2)), `sec3_closure` (even graphs are closed under both operations) and `sec2_trivial_group` (\|A\| = 1) |
+| l.44-47 | abstract: "The core of the proof is an induction on the number of edges: ... replaced by one edge uw, and the induction hypothesis applies to the smaller graph"; "So the main task is to change every flow into a flow with such a pair" | `lem_3_2_a` (the bijection), `lem_3_2_b_joined`, and `prop_3_4` (the induction; only (LOCAL) is left as a hypothesis) |
+| l.48-49 | abstract: "Replacing vertices of degree more than 4 by triangles reduces the problem to graphs with all degrees at most 4" | the route of `thm_2_3` (section B): `lem_5_1_a`, `lem_5_1_b`, `lem_5_1_c` (Lemma 5.1, the triangle) and `thm_2_2` |
+| l.178 | "a loop is a cycle with one edge, and two parallel edges form a cycle with two edges" | examples with the definition of a cycle (`DirCycle`); the constructions are `loopCycle` (Concrete/Dipole.lean) and `cycleQ` (Concrete/Small.lean) |
+| l.198-199; l.578-579; l.638-639 | one-clause reasons: "as it agrees with f or f′ on every edge"; "because no value of a k-flow is a multiple of k"; "(The statement does not depend on this choice ...)" | they support the proved rows `sec2_multistep_chain`; `sec8_residues`; and `lem_8_5`, which is proved for every reference direction (section A6) |
+| l.576-577 | "this graph is the same as the graph 𝓕(G,k) of [CLSWX, EHLMNS]" | the definition `kFlowGraph`; `sec2_agree_outside_cycle` (for every abelian group, so also for ℤ) gives "adjacent iff they differ by a step" |
+| l.142-144 | "the flows with this balanced pair correspond to the flows of the smaller graph (Lemma 3.2). ... any two flows with a balanced pair on the same two edges are joined by a chain of steps" | `lem_3_2_a` + `lem_3_2_b_joined` + the induction inside `prop_3_4` |
+| l.146-147 | "For any two edges at a vertex of a loopless even graph and any a ≠ 0, the two edges form a balanced pair at that vertex in some constant flow with value a" | `lem_3_3_b` (every a ≠ 0; loopless G, as in Lemma 3.2) |
+| l.147-148 | "for a suitable a, all constant flows with value a are joined to each other" | `lem_3_3_a` + `sec2_multistep_chain` + (T2), inside `prop_3_4` (route A3) |
+| l.148, l.347 | "So all flows with a balanced pair are joined to each other" | its own statement `intro_balanced_joined` (hypotheses as the text uses them: 0 ∉ T, T = -T, (T2), G even and loopless, and the induction hypothesis of the proof of Proposition 3.4) |
+| l.151-152 | "Statement (LOCAL) is needed only for loopless graphs in which every degree is 0 or at least 4: loops can be deleted (Lemma 3.1), and at a vertex of degree 2 the two edges form a balanced pair in every flow, by the flow condition" | `prop_3_4`: its (LOCAL) hypothesis is stated only for such graphs; loops (Lemma 3.1) and vertices of degree 2 (`intro_degree_two_balanced`, Lemma 3.2) are handled inside its proof |
+| l.169 | "Theorem 2.4, which also proves part (a) for cyclic groups" | `sec6_cyclic_flow_connected` (part (a) = `thm_1_1_a` = `thm_2_3` with A = ℤ_m, m ≥ 4) |
+| l.170-172 | Tutte's lifting theorem in the form of [2, Theorem 2.3]: "every nowhere-zero ℤ_k-flow is the residue modulo k of an integer flow with values between 1 and k-1 in absolute value" | `lem_8_3` (the paper's Lemma 7.3, proved in the text and in Lean) |
+| l.190-191 | "this gives the same graph" (adjacency in [1, 2] = adjacency by a step) | `sec2_agree_outside_cycle`, plus t ≠ 0 because f ≠ f' |
+| l.354-357 | Section 4 plan: steps make the edges that are not small a forest (Corollary 4.2); as the graph has an edge and every vertex with an edge has degree 4, the small edges contain a cycle; one more step gives a balanced pair (Lemma 4.3) | `cor_4_2` + `sec4_small_cycle` + `lem_4_3` |
+| l.372, l.380; l.497, l.503 | Lemmas 4.1 and 6.1 and the last sentences of their proofs: "So ρ(f′) ≤ ρ(f) − 1" | the conclusions of `lem_4_1` and `lem_6_1` (`ρ(f′) + 1 ≤ ρ(f)`) |
+| l.435-437 | "Theorem 2.2 follows from Sections 3 and 4. For Theorem 2.3, after the loops are deleted (Lemma 3.1), a vertex of degree at least 6 is replaced by a triangle; Lemma 5.1 ...; induction on Σ_v max(deg v − 4, 0) completes the proof." | the walks of section B: `thm_2_2` uses `prop_3_4` and `Sec4.prop_4_4_main`, no triangle names; `thm_2_3` uses `exists_expand`, Lemma 5.1 (a) and (c), `thm_2_2_proved`; its induction is on `G.phi` = Σ_v (deg v − 4) in ℕ (truncated at 0), the same measure (Reduction/Thm23.lean, Reduction/Expand.lean) |
+| l.525 | "so these two ends are a balanced pair at v" (end of the proof of Lemma 6.2 (b)) | the conclusion of `lem_6_2_b` (`HasBalancedPairAt … v`) |
+| l.554 | Remark 6.4: "Theorem 2.4 proves Theorem 2.3 again for cyclic groups, without Lemma 5.1." | `sec6_cyclic_flow_connected`; the walk of section B shows it uses `thm_2_4` and `prop_6_3`, and NOT Lemma 5.1 or `thm_2_3` |
+| l.556 | Remark 6.4: "it requires the value −2a in Lemma 6.2 (b) not to be small. This holds in ℤ_m with m ≥ 4" | `sec6_neg_two_not_small` (used by `prop_6_3`) |
+| l.556-558 | Remark 6.4: "but fails, for example, in ℤ₃ × ℤ₃ with S as in Section 4, where −2a = a; there a vertex of degree 6 can have six ends with the same small outward value a and no balanced pair" | `sec6_remark_Z3Z3` |
+| l.565-567 | Section 7 opening: a chain of ℤ_k-flows from Theorem 2.4 becomes a walk in 𝓕(G,k): every ℤ_k-flow of the chain is replaced by a path of k-flows whose residues modulo k form that ℤ_k-flow | its own statement `sec7_chain_lift` (each run of lifts is a path; the order of the chain is kept) |
+| l.191-192, l.576 | 𝓕(G,A) and 𝓕(G,k) "count as connected" when they have at most one vertex | the definitions: `FlowConnected` and `KFlowConnected` are `SimpleGraph.Preconnected`, which holds when there is at most one vertex |
 
-The short paper's own sentences that are not mathematical claims (each needs Dave's sign-off; none is a claim we skipped):
-| # | short tex v1.51 | Sentence | Why not formalized |
+The short paper's own sentences that are not mathematical claims (listed for the author's review; none is a claim we
+skipped):
+| # | short tex v1.59 | Sentence | Why not formalized |
 |---|---|---|---|
-| G1 | l.94 | table: "open for odd k ≥ 5 in general" | state of knowledge (history) |
-| G2 | l.109 | "An expanded version of this paper, with many other results, is posted on Zenodo [3]." | pointer to another paper |
-| G3 | l.112 | "None of these results is used here." | a statement about the proofs |
-| G4 | l.535 | "We include their short proofs to keep the paper self-contained" | a statement about the text |
-| G5 | l.635- | Acknowledgments | not mathematics |
-| G6 | l.104-105 | "for A = ℤ₃ this also follows from [1, Theorem 2.1]" | a second, cited route; the claim itself is `thm_2_2` |
-| G7 | l.135 | "(Remark 6.4 explains why the counting argument does not work for all groups)" | a pointer |
-| G8 | l.508-510 | "The counting argument of Proposition 6.3 does not extend to all groups at vertices of degree 6 or more" | about our proof method; its mathematical content is the ℤ₃ × ℤ₃ row above |
-| G9 | l.512-513 | "For this reason, Section 5 first treats graphs with all degrees at most 4 and then reduces larger degrees by triangles." | about the order of the paper |
+| G1 | l.107 | table: "open for odd k ≥ 5 in general" | state of knowledge (history) |
+| G2 | l.128 | "An expanded version of this paper, with many other results, is posted on Zenodo [3]." | pointer to another paper |
+| G3 | l.136 | "None of these results is used here." | a statement about the proofs |
+| G4 | l.587 | "We include their short proofs to keep the paper self-contained" | a statement about the text |
+| G5 | l.687- | Acknowledgments | not mathematics |
+| G6 | l.120-123 | "for A = ℤ₃ this also follows from [1, Theorem 2.1], since …" | a second, cited route; the claim itself is `thm_2_2`, and the two facts after "since" are `intro_even_three_flow` and `sec2_paths_le_four` |
+| G7 | l.170 | "(Remark 6.4 explains why the counting argument does not extend to all groups)" | a pointer |
+| G8 | l.554-555 | "The counting argument of Proposition 6.3 does not extend to all groups" | about our proof method; its mathematical content is the ℤ₃ × ℤ₃ row above |
+| G9 | l.558-559 | "For this reason, the proof of Theorem 2.3 first treats graphs with all degrees at most 4 ... and then reduces larger degrees by triangles." | about the order of the paper |
+| G10 | l.112-115 | [1, Theorem 2.1] stated: for a graph with a nowhere-zero 3-flow, ℤ₃-flow-connected ⇔ 3-flow-connected ⇔ all degrees even and no two vertices joined by more than four edge-disjoint paths | a cited result; its use for the six-edge graph is PROVED directly (`intro_example`, `intro_example_flow_paths`) |
+| G11 | l.129-131 | the two main questions of combinatorial reconfiguration "as listed in [2, Section 1]" | history (a pointer to [2]); the mathematics is the l.129-132 row above |
+| G12 | l.158-161 | the definition of A-connected, following [JLPT] | a definition; the claims that use it are `intro_triangle_A_connected_def` and `intro_triangle_A_connected_any_dir`; that it differs from A-flow-connectedness (l.157-158) is `intro_A_connected_differs` |
+| G13 | l.61-62 | "that is, on whether every nowhere-zero flow can be changed into every other one by changes along cycles that keep the flow nowhere-zero" | a restatement of the definition of flow-connected |
+| G14 | l.64 | "(for example the cyclic group ℤ_m of the integers modulo m)" | an example of a group; a definition |
 Of the long-paper C-list: C2, C3, C5, C8, C9 also apply to the short paper (citations, history, identification with
 [1], [2]'s definitions); C6 is replaced by G8; C1, C4, C7, C10 are about text the short paper drops.
-(Section F uses the line numbers of the review copy v1.46; this section supersedes them for the posted paper.)
+(Section F uses the line numbers of an earlier draft, version 1.46; this section supersedes them for the posted paper.)

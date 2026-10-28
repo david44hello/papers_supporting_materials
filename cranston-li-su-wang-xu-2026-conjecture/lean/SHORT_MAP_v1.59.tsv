@@ -1,0 +1,107 @@
+lean_name	short_ref	short_lines	quote
+sec2_multistep_chain	Section 2 (text, multi-steps)	l.197-200	Every partial sum $f+t(\chi_{Q_1}+\dots+\chi_{Q_j})$ is then a flow, a
+sec2_agree_outside_cycle	Section 2 (text, Flows)	l.190-191	In \cite{CLSWX,EHLMNS} two different flows are adjacent if they agree 
+sec2_step_value_sign	Section 2 (text, Flows; definition of step)	l.189	The value is determined only up to sign, as reversing $Q$ or exchanging
+sec2_outward_value_ne_zero	Section 2 (text, Ends of edges)	l.205	it is non-zero if $f$ is a flow
+def_2_1_loop_ends	Definition 2.1 (the parenthesis)	l.219	(Loops are excluded because the two ends of a loop would always form a balanced pair.)
+sec2_trivial_group	Section 5 (proof of Theorem 2.2, first sentence)	l.440 (also l.191-192)	If $|A|=1$, then $G$ has at most one flow (none if it has an edge), so
+sec2_kirchhoff	Section 2, equation (1)	l.205-209	The flow condition at $v$ says \begin{equation}\label{eq:kirchhoff} \s
+sec2_ends	Section 2, equation (2)	l.210-214	If a directed cycle $Q$ enters $v$ through the end $i$ and leaves $v$ 
+sec2_ref_dir_indep	NOT IN SHORT PAPER	-	The short paper fixes a reference direction (l.149-150) but never says flow-connectedness does not depend on it; the only such sentence, l.578-580, is about the statement of Lemma 7.5 alone
+sec3_T_nonzero	Section 3 (text)	l.251 (also l.440)	Both conditions hold for $T=A\setminus\{0\}$, and also for $A=\Z_m$ wi
+sec3_T_cyc	Section 3 (text)	l.251-252 (T non-zero, T=-T: l.243-244)	Both conditions hold for $T=A\setminus\{0\}$, and also for $A=\Z_m$ wi
+lem_3_1	Lemma 3.1	l.256-257	Let $T$ satisfy \textup{(T1)}, and let $\ell$ be a loop of $G$. If any
+lem_3_2_a	Lemma 3.2 (a)	l.276 (setup l.267-274)	$L$ is a bijection from the flows of $G'$ onto $B(v;e,e')$. \item[(b)]
+lem_3_2_b	Lemma 3.2 (b)	l.277-278	If $f'_2$ comes from $f'_1$ by a multi-step of $G'$ with value $t$, th
+lem_3_2_b_joined	Lemma 3.2 (b), second sentence	l.278-279	In particular, if two flows of $G'$ are $T$-joined, their images under
+lem_3_3_exists	Lemma 3.3 (preamble)	l.303-304	one exists because $G$ is even
+lem_3_3_flow	Lemma 3.3 (preamble)	l.304-305	Let $a\one_D$ be the constant flow with value $a$ along every arc of $D$
+lem_3_3_a	Lemma 3.3 (a)	l.307-308	For two Eulerian orientations $D,D_2$ of $G$, either $a\one_{D_2}=a\on
+lem_3_3_b	Lemma 3.3 (b); also Section 1 (Outline: any two edges at a vertex, any a ≠ 0)	l.309 (also l.146-147)	In the situation of Lemma~\ref{lem:split}, $B(v;e,e')$ contains $a\one
+prop_3_4	Proposition 3.4; also Section 1 (Outline: (LOCAL) is needed only for loopless graphs with all degrees 0 or at least 4)	l.325-332 (also l.139-140, l.149, l.240-243)	Let $\cG$ be a class of even graphs such that $G-\ell\in\cG$ for every
+sec3_closure	Section 5 (proof of Theorem 2.2)	l.440-441 (G' even: l.319)	Deleting a loop lowers the degree of its vertex by $2$. Splitting off 
+sec4_decomp_exists	Section 4 (text)	l.359-364	Write $A$ as a direct sum of cyclic groups, \[ A=\langle s_1\rangle\op
+sec4_S_props	Section 4 (text)	l.365	We have $S=-S$ and $0\notin S$, and $S$ generates $A$. For a flow $f$,
+sec4_small_dir_indep	Section 4 (text)	l.365-366	For a flow $f$, an edge is \emph{small} if its value is small (this do
+sec4_color_unique	Section 4 (text)	l.363-367	the \emph{color} of $s\in S$ is the index $h$ with $s\in\langle s_h\ra
+lem_4_1	Lemma 4.1	l.371-372	Let $f$ be a flow of a graph $G$ and $Q$ a directed cycle of $G$ none 
+cor_4_2	Corollary 4.2	l.384-385	Every flow $f$ of a graph $G$ is joined by a chain of at most $\rho(f)
+lem_4_3	Lemma 4.3	l.392-393	Let $G$ be a loopless graph in which every vertex has degree $0$ or $4
+prop_4_4	Proposition 4.4	l.423	Let $G$ be a loopless graph in which every vertex has degree $0$ or $4
+thm_2_2	Theorem 2.2; also Section 1 (Further results: of any order)	l.224 (also l.119-120)	Let $A$ be a finite abelian group. Every even graph in which all degre
+lem_5_1_a	Lemma 5.1 (a)	l.452 (setup l.447-450)	$pf$ is a flow of $G$, and every flow of $G$ is $pf$ for some flow $f$
+lem_5_1_b	Lemma 5.1 (b)	l.453-454	If $f_2$ comes from $f_1$ by a multi-step with value $t$, then $pf_2=p
+lem_5_1_c	Lemma 5.1, last sentence	l.456	So if $G^+$ is $A$-flow-connected, then $G$ is $A$-flow-connected. \en
+intro_triangle_A_connected	Section 1 (text, Outline of the proof)	l.156-157	That theorem applies because a triangle is $A$-connected when $|A|\ge 4$
+thm_2_3	Theorem 2.3	l.228	Let $A$ be a finite abelian group with $|A|\ge 4$. Every even graph is
+lem_6_1	Lemma 6.1	l.496-497	Let $f$ be a flow of a graph $G$ and $Q$ a cycle none of whose edges i
+lem_6_2_a	Lemma 6.2 (a)	l.510 (setup l.507-508)	The two ends of $Q$ at $v$ have the same outward value $a\in\{1,-1\}$.
+lem_6_2_b	Lemma 6.2 (b)	l.511-512	If an end at $v$ that is not an end of $Q$ has an outward value $c\ne -2a$, then
+prop_6_3	Proposition 6.3	l.529	Let $m\ge 4$, and let $G$ be a loopless even graph in which every vert
+thm_2_4	Theorem 2.4	l.232-233	Let $m\ge 4$. In every even graph, any two nowhere-zero $\Z_m$-flows a
+sec6_cyclic_flow_connected	Remark 6.4, first sentence; also Section 1 (Outline: Theorem 2.4 also proves part (a) for cyclic groups)	l.554 (also l.169)	Theorem~\ref{thm:cyclic} proves Theorem~\ref{thm:all} again for cyclic groups, without Lemma~\ref{lem:triangle}.
+sec6_neg_two_not_small	Section 6 (proof of Proposition 6.3); also Remark 6.4	l.538-539 (also l.556)	As $m\ge 4$, $-2a$ is neither $1$ nor $-1$: $-2a=a$ would mean $3\equi
+sec6_not_small_range	Section 6 (text, opening paragraph)	l.492-493	The value of an edge that is not small is, in each direction, the resi
+sec6_remark_Z3Z3	Remark 6.4 (the Z_3 x Z_3 example)	l.556-558	fails, for example, in $\Z_3\times\Z_3$ with $S$ as in Section~\ref{sec:local}, where $-2a=a$; there a vertex can have six ends
+sec7_c_bound	NOT IN SHORT PAPER	-	long Section 7 (the number of steps) is not in the short paper; the short paper only cites the final bound 16M^3+12M^2+M of [G, Theorem 2.5] at l.115-116
+sec7_multistep_bound	NOT IN SHORT PAPER	-	long Section 7 (the number of steps) is not in the short paper; the short paper only cites the final bound 16M^3+12M^2+M of [G, Theorem 2.5] at l.115-116
+sec7_multistep_bound_loopless	NOT IN SHORT PAPER	-	long Section 7 (the number of steps) is not in the short paper; the short paper only cites the final bound 16M^3+12M^2+M of [G, Theorem 2.5] at l.115-116
+thm_2_5_a	NOT IN SHORT PAPER	-	first part of long Theorem 2.5 (M^3+3M^2+M steps, all degrees <= 4) is not stated; the short paper cites only the |A|>=4 bound of [G, Theorem 2.5] at l.115-116 (= thm_2_5_b)
+thm_2_5_b	Section 1 (text, Further results; cited as [G, Theorem 2.5], not proved here); also: this bounds the diameter of F(G,A)	l.131-132	if $|A|\ge 4$, any two nowhere-zero $A$-flows of an even graph with $M$ edges are joined
+sec8_residues	Section 7 (text, Definitions)	l.578-579	The residues modulo $k$ of a $k$-flow form a $\Z_k$-flow, because no v
+sec8_flow_iff_boundary	Section 7 (text, Definitions)	l.571	So an integer map $x$ is an integer flow if and only if $\partial x=0$
+sec8_chi_flow	Section 7 (text, Definitions)	l.571	also $\partial\chi_Q=0$ for every directed cycle~$Q$.  Let $k\ge 2$. A
+lem_8_2	Lemma 7.2	l.591-593	Let $G$ be a graph and $x$ a map from $E(G)$ to the real interval $[0,
+sec8_rf	Section 7 (text, before Lemma 7.3)	l.606-608	Then $\partial r_f\equiv 0$ modulo $k$ at every vertex, and an integer
+lem_8_3	Lemma 7.3	l.611	Let $k\ge 2$. Every $\Z_k$-flow $f$ of a graph $G$ has an integer lift
+lem_8_4	Lemma 7.4 (the weaker form that Proposition 7.7 uses: any two integer lifts are joined; the path form is lem_8_4_fibre)	l.620-621	Let $k\ge 2$ and let $f$ be a $\Z_k$-flow of a graph $G$. Any two inte
+lem_8_5	Lemma 7.5	l.634-635	Let $k\ge 2$, let $Q$ be a directed cycle of a graph $G$, and let $f$ 
+lem_8_6	Lemma 7.6	l.646-647	Let $k\ge 3$, let $Q$ be a directed cycle of a graph $G$, and let $f$ 
+rem_8_6_zeros	Section 7 (proof of Lemma 7.6, first sentence)	l.650	Lemma~\ref{lem:step1} cannot simply be used twice, because $f+\chi_Q$ 
+prop_8_7	Proposition 7.7	l.666-667	Let $k\ge 3$ and let $G$ be a graph. If any two $\Z_k$-flows of $G$ ar
+thm_8_1	Theorem 7.1	l.582	Let $k\ge 4$. Every even graph is $k$-flow-connected. \end{theorem}  T
+rem_8_8_k3	Proposition 7.7 (case k = 3), implicit	l.666-667	implicit: Proposition 7.7 with k = 3, because in Z_3 the set {1,-1,2,-2} is all of Z_3\{0}; the short paper does not state this case (the expanded version [3] does, in its Remark 8.8)
+rem_8_8_Z2	NOT IN SHORT PAPER	-	long Remark 8.8 was dropped; the short paper says nothing about Z_2-flows or 2-flows
+rem_8_8_k2	NOT IN SHORT PAPER	-	long Remark 8.8 was dropped; the short paper says nothing about 2-flow-connectedness
+rem_8_8	NOT IN SHORT PAPER	-	long Remark 8.8 was dropped; the short paper has no transfer 'Z_k-flow-connected => k-flow-connected' for every k>=2 (Proposition 7.7 needs k>=3 and steps in {1,-1,2,-2})
+sec9_I_props	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+sec9_I_one	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117; q=1 case only implicit in the parenthesis at l.116-117
+sec9_pq_one_iff	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117; q=1 case only implicit in the parenthesis at l.116-117
+sec9_multistep_chain	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+sec9_T_props	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_3	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_3_chain	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_3_loop	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_3_split	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_3_const	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_4	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_5_a	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_5_b	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+lem_9_5_c	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+prop_9_6	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117
+thm_9_1	Section 1 (text, Further results; cited as [G, Theorems 9.1 and 9.2]) [PARTIAL: only 'p>=4q => every even graph is (p,q)-flow-connected'; the step values {1,-1,2q,-2q} are not in the short paper]	l.135-136	All even graphs are $(p,q)$-flow-connected if and only if $p\ge 4q$
+thm_9_2	Section 1 (text, Further results; cited as [G, Theorems 9.1 and 9.2]) [PARTIAL: only 'for 2q<p<4q not every even graph is (p,q)-flow-connected'; the witness (two vertices, 2p parallel edges) is not in the short paper]	l.135-136	All even graphs are $(p,q)$-flow-connected if and only if $p\ge 4q$
+sec9_iff	Section 1 (text, Further results; cited as [G, Theorems 9.1 and 9.2])	l.135-136	All even graphs are $(p,q)$-flow-connected if and only if $p\ge 4q$
+sec9_circular	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117; circular flows do not occur in the short paper
+rem_9_7	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117; long Remark 9.7 (one cycle) was dropped
+rem_9_7_one_cycle	NOT IN SHORT PAPER	-	long Section 9 ((p,q)-flows) is not in the short paper; it only cites the iff of [G, Theorems 9.1 and 9.2] at l.116-117; long Remark 9.7 (one cycle) was dropped
+thm_1_1_a	Theorem 1.1 (a)	l.84-86	$G$ is $A$-flow-connected for every finite abelian group $A$ with $|A|
+thm_1_1_b	Theorem 1.1 (b)	l.84, l.87	$G$ is $k$-flow-connected for every integer $k\ge 4$. \end{itemize} \e
+intro_example	Section 1 (text, after the table)	l.112	The number $4$ in Theorem~\ref{thm:main} cannot be replaced by $3$.
+sec2_paths_le_four	Section 1 (text, Further results)	l.122-123	vertices are joined by more than four edge-disjoint paths
+rem_2_6	NOT IN SHORT PAPER	-	long Remark 2.6 (K_5) was dropped; K_5 does not occur in the short paper
+rem_2_6_triangular	NOT IN SHORT PAPER	-	long Remark 2.6 (K_5 triangularly connected, [CLSWX, Corollary 5.15 (iii)]) was dropped; neither K_5 nor that corollary occurs in the short paper
+intro_balanced_joined	Section 1 (text, Outline of the proof); also the proof of Proposition 3.4	l.148 (also l.347)	So all flows with a balanced pair are joined to each other
+intro_example_flow_paths	Section 1 (text, after the table)	l.115-117	The even graph with two vertices and six parallel edges has a nowhere-zero $3$-flow
+intro_even_three_flow	Section 1 (text, Further results)	l.121-122	since an even graph has a nowhere-zero $3$-flow (the value $1$ on every edge
+intro_euler_orient_exists	Section 1 (text, Outline of the proof)	l.144-145	An Eulerian orientation directs every edge so that at every
+intro_degree_two_balanced	Section 1 (text, Outline of the proof)	l.152	at a vertex of degree $2$ the two edges form a balanced pair in every flow
+intro_triangle_A_connected_def	Section 1 (text, Outline of the proof: the definition of A-connected)	l.158-161	a graph $H$ is \emph{$A$-connected} if
+intro_triangle_A_connected_any_dir	Section 1 (text, Outline of the proof: A-connected, any reference directions)	l.157-161	That theorem applies because a triangle is $A$-connected when $|A|\ge 4$
+sec2_cycle_ends	Section 2 (text, Ends of edges: the ends of Q at v)	l.203-204	If $v$ is a vertex of a cycle $Q$, the \emph{ends of $Q$ at $v$} are the two ends at $v$
+sec4_small_cycle	Section 4 (text, opening)	l.356-357	as the graph has an edge and every vertex with an edge has degree $4$, the small
+sec7_chain_lift	Section 7 (text, opening; also the Abstract)	l.565-567 (also l.49-51)	This section turns a chain of $\Z_k$-flows from Theorem~\ref{thm:cyclic}
+sec7_three_flows	Section 7 (text, Definitions: k = 3)	l.573	for $k=3$, these are the nowhere-zero $3$-flows of Section~\ref{sec:intro}
+lem_8_4_fibre	Lemma 7.4	l.620-621	Any two integer lifts of $f$ are joined by a path in
+intro_A_connected_differs	Section 1 (text, Outline of the proof: A-connected differs from A-flow-connected)	l.157-158	This notion is different from $A$-flow-connectedness
+sec3_no_edge	Proof of Proposition 3.4 (first sentence: no edge)	l.335	A graph with no edge has exactly one flow.

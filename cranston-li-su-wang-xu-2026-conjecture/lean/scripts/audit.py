@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """audit.py — the coverage-and-assumptions table for every paper claim, produced by Lean itself.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
-## (older version lines: versions/audit_version_1.11.py)
+## (older version lines: versions/pre_remap_v159/audit.py)
 
 For every `theorem` in EulerFlow/Paper/Statements.lean this script asks Lean (`#print axioms`) which axioms the proof
 depends on, and classifies it:
@@ -23,7 +23,7 @@ PROJECT = Path(__file__).resolve().parent.parent
 STATEMENTS = PROJECT / "EulerFlow" / "Paper" / "Statements.lean"
 AUDIT_LEAN = PROJECT / "EulerFlow" / "Audit.lean"
 AUDIT_MD = PROJECT / "AUDIT.md"
-SHORT_VERSION = "1.51"  # the SHORT paper release the map and the column refer to (tex md5 bf0f0a5c)
+SHORT_VERSION = "1.59"  # the SHORT paper FINAL text the map and the column refer to (tex md5 24b3c00f)
 SHORT_MAP = PROJECT / f"SHORT_MAP_v{SHORT_VERSION}.tsv"  # Lean name -> place in the SHORT paper (S1)
 AUDIT_NOTES = PROJECT / "AUDIT_NOTES.md"  # hand-written route/not-formalized notes, appended verbatim
 CORE = os.environ.get("EULERFLOW_CORE", "1")  # Team B leader core (BRIEF v0.41)

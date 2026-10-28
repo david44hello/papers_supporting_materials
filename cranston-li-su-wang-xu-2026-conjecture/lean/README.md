@@ -5,7 +5,7 @@
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now. All rights reserved.
 
 This folder is a formal proof, checked by the Lean 4 proof assistant, of the results of the paper "The
-Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel. Lean checked version 1.51 of the paper. The paper's link
+Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel. Lean checked version 1.59 of the paper. The paper's link
 will be added here when it is posted.
 
 ## The theorem
@@ -29,7 +29,7 @@ theorem intro_example :
 Every result of the paper, numbered or stated in the text, is proved in Lean 4: as one Lean theorem, or, for a few
 sentences of the text, by several Lean theorems together (listed in [AUDIT_NOTES.md](AUDIT_NOTES.md), sections F and
 G). So are the results of the paper's expanded version that the paper quotes in Section 1 (its Theorems 2.5, 9.1 and
-9.2). That makes 93 Lean statements, all in [EulerFlow/Paper/Statements.lean](EulerFlow/Paper/Statements.lean). Every
+9.2). That makes 106 Lean statements, all in [EulerFlow/Paper/Statements.lean](EulerFlow/Paper/Statements.lean). Every
 statement is proved from Lean's three standard axioms (`propext`, `Classical.choice`, `Quot.sound`) alone. There is no
 other axiom and no unfinished proof (`sorry`) in the project.
 
@@ -42,9 +42,9 @@ pointers to other papers, remarks about the text) are listed in [AUDIT_NOTES.md]
 
 ## Where each claim is
 
-[AUDIT.md](AUDIT.md) lists all 93 statements. For each it gives its place in the paper (number and line of the version
-1.51 LaTeX source), the paper's claim, and the axioms Lean reports for its proof (`#print axioms`). Each statement's
-docstring also begins with its place in the paper (the map is [SHORT_MAP_v1.51.tsv](SHORT_MAP_v1.51.tsv)). Where the
+[AUDIT.md](AUDIT.md) lists all 106 statements. For each it gives its place in the paper (number and line of the version
+1.59 LaTeX source), the paper's claim, and the axioms Lean reports for its proof (`#print axioms`). Each statement's
+docstring also begins with its place in the paper (the map is [SHORT_MAP_v1.59.tsv](SHORT_MAP_v1.59.tsv)). Where the
 Lean proof takes another route than the text, or where one sentence of the paper is covered by several Lean statements
 together, [AUDIT_NOTES.md](AUDIT_NOTES.md) says so (sections A, B, F and G).
 
@@ -56,6 +56,7 @@ repository:
 ```bash
 git clone https://github.com/david44hello/papers_supporting_materials.git
 cd papers_supporting_materials/cranston-li-su-wang-xu-2026-conjecture/lean
+git checkout cranston-li-su-wang-xu-2026-conjecture-v1.59   # the version the paper cites
 lake exe cache get      # downloads prebuilt Mathlib files (it does not compile Mathlib)
 lake build
 bash scripts/check.sh   # build, scan for forbidden constructs, regenerate AUDIT.md (scripts/audit.py)
