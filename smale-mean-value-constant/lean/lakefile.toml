@@ -1,0 +1,15 @@
+# SmaleLean — Lean 4 formalization of Dave Goel's paper 009 "Smale's mean value constant exceeds 1.1559" (v1.00).
+name = "SmaleLean"
+version = "0.1.0"
+defaultTargets = ["Smale"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.35.0"
+
+[[lean_lib]]
+name = "Smale"
+globs = ["Smale", "Smale.+"]
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+weakLeanArgs = ["-j1"]

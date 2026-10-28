@@ -9,6 +9,10 @@ https://doi.org/10.5281/zenodo.23597020
 - pair_checks/make_controls.py, pair_checks/controls.log: wrong inputs that the program must reject, and the output.
   pairs/pair_XVII_T6.json is a small pair used only by these controls.
 - rebuild_from_printed.py: checks that the numbers printed in the paper (its LaTeX source) give this data.
+- lean/: a Lean 4 check of the paper (Lean v4.35.0, Mathlib commit 56a005855ea1). It proves the paper's results from the
+  cited results of Jatar and Ng (an unrefereed preprint) and of Dieudonné, except fact (R) of Theorem 5.1, which is checked
+  by computer (pair_checks/check_pair.py) and NOT proved in Lean; the main theorems are proved there assuming (R).
+  lean/AUDIT.md lists every claim of the paper with its status.
 
 To run (Python 3 with python-flint 0.9.0; about eight minutes on one core), in pair_checks/:
 
