@@ -1,6 +1,6 @@
-# Lean build check: at every change, GitHub rebuilds EVERY Lean proof in this repository (each folder <paper>/lean/)
-# on a fresh machine, so a reader sees "passing" without installing Lean. Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
-# The projects are found, not listed: a new <paper>/lean/ folder is built with no change here.
+# Lean build check: at every change, GitHub rebuilds EVERY Lean proof in this repository (each folder <paper>/lean/, or
+# lean/ at the top) on a fresh machine, so a reader sees "passing" without installing Lean. Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+# The projects are found, not listed: a new lean/ folder is built with no change here.
 # Both actions are pinned to an exact commit (tag in the comment), so the check never changes under us.
 name: Lean build
 
@@ -18,9 +18,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - id: find
         run: |
-          projects=$(find . -mindepth 3 -maxdepth 3 -path './*/lean/lakefile.toml' -printf '%h\n' | sed 's#^\./##' | sort | jq -R . | jq -cs .)
+          projects=$(find . -mindepth 2 -maxdepth 3 \( -path './lean/lakefile.toml' -o -path './*/lean/lakefile.toml' \) -printf '%h\n' | sed 's#^\./##' | sort | jq -R . | jq -cs .)
           echo "Lean projects: $projects"
-          [ "$projects" != "[]" ] || { echo "no <paper>/lean/lakefile.toml found"; exit 1; }
+          [ "$projects" != "[]" ] || { echo "no lean/lakefile.toml found"; exit 1; }
           echo "projects=$projects" >> "$GITHUB_OUTPUT"
 
   build:
