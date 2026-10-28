@@ -56,7 +56,6 @@ repository:
 ```bash
 git clone https://github.com/david44hello/papers_supporting_materials.git
 cd papers_supporting_materials/cranston-li-su-wang-xu-2026-conjecture/lean
-git checkout cranston-li-su-wang-xu-2026-conjecture-v1.51   # the version the paper cites
 lake exe cache get      # downloads prebuilt Mathlib files (it does not compile Mathlib)
 lake build
 bash scripts/check.sh   # build, scan for forbidden constructs, regenerate AUDIT.md (scripts/audit.py)
