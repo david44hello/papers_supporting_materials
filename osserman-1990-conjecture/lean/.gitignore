@@ -1,0 +1,4 @@
+/.lake/
+/versions/
+**/versions/
+__pycache__/

@@ -1,0 +1,16 @@
+# OssermanLean — Lean version of project 013 (Riemannian Osserman (1990) conjecture paper).
+# Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+name = "OssermanLean"
+version = "0.1.0"
+defaultTargets = ["Osserman"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.35.0"
+
+[[lean_lib]]
+name = "Osserman"
+globs = ["Osserman", "Osserman.+"]
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+weakLeanArgs = ["-j1"]
