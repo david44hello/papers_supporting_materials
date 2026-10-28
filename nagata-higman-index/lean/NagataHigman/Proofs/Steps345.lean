@@ -2,7 +2,7 @@
 NagataHigman/Proofs/Steps345.lean — package B2: Proposition 2.1 steps (3), (4), (5) and v1.02 Remark 2.3 (cut in v1.03) by its own route.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
-Paper v1.04, lines 296-312, 290-294.
+Paper v1.10, lines 330-350, 323-327.
 Route of step (4): a permutation all of whose orbits meet X is a full cycle iff its first-return map to X is a cycle
 on X (isFullCycle_iff_isCycleOn_firstReturn), and the first-return map of τπ is s∘π (firstReturn_mul).
 Route of v1.02 Remark 2.3 (cut in v1.03): rem23_direct uses rem23_proj and the step-(7) duality (prop21_step7_perp and its column twin
@@ -250,7 +250,7 @@ theorem arc_nodup {τ : Perm (Fin N)} {X : Finset (Fin N)} {x : Fin N} (hx : x �
   · have e := eq_pow_sub_of_pow_eq (by omega : j + 1 ≤ i + 1) hij.symm
     exact returnTime_min hex (j := i + 1 - (j + 1)) (by omega) (by omega) (e ▸ hx)
 
-/-- The arcs of the points of `X` partition `Fin N` (paper line 302), for a full cycle `τ` and nonempty `X`. -/
+/-- The arcs of the points of `X` partition `Fin N` (paper line 336), for a full cycle `τ` and nonempty `X`. -/
 theorem existsUnique_mem_arc {τ : Perm (Fin N)} (hτ : ∀ x y, τ.SameCycle x y) {X : Finset (Fin N)}
     (hX : X.Nonempty) (y : Fin N) : ∃! x, x ∈ X ∧ y ∈ arc τ X x := by
   classical
@@ -324,7 +324,7 @@ open Steps345
 
 variable {N : ℕ}
 
-/-- **Proposition 2.1, step (4)** (lines 300-302): for an `N`-cycle `τ` and nonempty `X`, the first-return map `s`
+/-- **Proposition 2.1, step (4)** (lines 334-336): for an `N`-cycle `τ` and nonempty `X`, the first-return map `s`
 is a cycle on `X` (an `|X|`-cycle; `|X| = n + 1` in the paper) and fixes the points outside `X`. -/
 theorem prop21_step4_s {τ : Perm (Fin N)} (hτ : IsFullCycle τ) {X : Finset (Fin N)} (hX : X.Nonempty) :
     (firstReturn τ X).IsCycleOn (X : Set (Fin N)) ∧ ∀ x, x ∉ X → firstReturn τ X x = x :=
@@ -332,7 +332,7 @@ theorem prop21_step4_s {τ : Perm (Fin N)} (hτ : IsFullCycle τ) {X : Finset (F
       (exists_pow_mem (Arcs.sameCycle_of_isFullCycle hτ) hX)).1 hτ,
     fun _ hx => firstReturn_of_not_mem hx⟩
 
-/-- **Proposition 2.1, step (4)** (lines 302-303): the arcs `Arc(x)`, `x ∈ X`, are nonempty, have no repeated point,
+/-- **Proposition 2.1, step (4)** (lines 336-337): the arcs `Arc(x)`, `x ∈ X`, are nonempty, have no repeated point,
 end at `s(x)`, and partition `[N]` (every point lies in exactly one arc). -/
 theorem prop21_step4_arcs {τ : Perm (Fin N)} (hτ : IsFullCycle τ) {X : Finset (Fin N)} (hX : X.Nonempty) :
     (∀ x ∈ X, arc τ X x ≠ [] ∧ (arc τ X x).Nodup ∧ (arc τ X x).getLast? = some (firstReturn τ X x)) ∧
@@ -368,7 +368,7 @@ theorem prop21_step5_sign {τ : Perm (Fin N)} (hτ : IsFullCycle τ) {X : Finset
   have hu : Perm.sign (firstReturn τ X) * Perm.sign π = Perm.sign (firstReturn τ X) * 1 := by rw [mul_one, h2]
   exact mul_left_cancel hu
 
-/-- **Step (5) applied** (lines 309-312, 291): for `N`-cycles `τ`, `σ` with `τ⁻¹σ ∈ Sym(X)`, `sgn(τ⁻¹σ) = +1`, by the
+/-- **Step (5) applied** (lines 345-350, 324): for `N`-cycles `τ`, `σ` with `τ⁻¹σ ∈ Sym(X)`, `sgn(τ⁻¹σ) = +1`, by the
 paper's route: `π := τ⁻¹σ` has `τπ = σ` an `N`-cycle, so `s ∘ π` is a cycle on `X` (step (4)) and
 `sgn π = sgn(s) sgn(s ∘ π) = 1` (step (5)); for `X = ∅`, `π = 1`. (Not via "an `N`-cycle has sign `(-1)^(N-1)`".) -/
 theorem sign_inv_mul_eq_one_of_step5 {τ σ : Perm (Fin N)} (hτ : IsFullCycle τ) (hσ : IsFullCycle σ)
@@ -467,7 +467,7 @@ end Steps345
 
 variable {F : Type*} [Field F]
 
-/-- **Proposition 2.1, step (3)** (line 296): if no `τπ` (`π ∈ Sym(X)`) is an `N`-cycle, then `P(τ E_X) = 0`. -/
+/-- **Proposition 2.1, step (3)** (line 330): if no `τπ` (`π ∈ Sym(X)`) is an `N`-cycle, then `P(τ E_X) = 0`. -/
 theorem prop21_step3_zero (τ : Perm (Fin N)) (X : Finset (Fin N))
     (h : ∀ π : Perm (Fin N), π.support ⊆ X → ¬ IsFullCycle (τ * π)) :
     cycleProj F N (perm F τ * altSum F X) = 0 := by
@@ -478,7 +478,7 @@ theorem prop21_step3_zero (τ : Perm (Fin N)) (X : Finset (Fin N))
     h _ hs (by rw [mul_inv_cancel_left]; exact (Finset.mem_filter.1 hσ).2)
   rw [Arcs.coeff_perm_mul_altSum (F := F), ite_eq_right hns, zero_smul]
 
-/-- **Proposition 2.1, step (3)** (lines 296-298): otherwise `τ E_X = sgn(π₀) τ₀ E_X` with `τ₀ = τπ₀` an
+/-- **Proposition 2.1, step (3)** (lines 330-332): otherwise `τ E_X = sgn(π₀) τ₀ E_X` with `τ₀ = τπ₀` an
 `N`-cycle (`π₀ ∈ Sym(X)`). -/
 theorem prop21_step3_reduce (τ : Perm (Fin N)) (X : Finset (Fin N))
     (h : ∃ π : Perm (Fin N), π.support ⊆ X ∧ IsFullCycle (τ * π)) :
@@ -488,7 +488,7 @@ theorem prop21_step3_reduce (τ : Perm (Fin N)) (X : Finset (Fin N))
   exact ⟨π₀, h1, h2, Steps345.perm_mul_altSum_eq_smul τ π₀ X h1⟩
 
 open Classical in
-/-- **Proposition 2.1, step (5)** (lines 309-312): for an `N`-cycle `τ`, the sign is constant:
+/-- **Proposition 2.1, step (5)** (lines 345-350): for an `N`-cycle `τ`, the sign is constant:
 `P(τ E_X) = ∑_{π ∈ Π} τπ`, with no sign. -/
 theorem prop21_step5_sum {τ : Perm (Fin N)} (hτ : IsFullCycle τ) (X : Finset (Fin N)) :
     cycleProj F N (perm F τ * altSum F X) =

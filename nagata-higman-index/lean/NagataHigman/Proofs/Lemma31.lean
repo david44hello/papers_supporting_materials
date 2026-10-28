@@ -1,5 +1,5 @@
 /-
-NagataHigman/Proofs/Lemma31.lean — Lemma 3.1 (one-corner step, paper lines 363-373): `C_{n²} ∩ B_n^{(n²)} = 0`.
+NagataHigman/Proofs/Lemma31.lean — Lemma 3.1 (one-corner step, paper lines 422-432): `C_{n²} ∩ B_n^{(n²)} = 0`.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
 Route (the paper's). For `f ∈ C_N ∩ I_λ` and `σ` fixing `top = N-1`, `σ⁻¹` is not an `N`-cycle, so `f(σ⁻¹) = 0`;
@@ -116,7 +116,7 @@ theorem cycleSpan_inf_block_eq_bot_of_content [CharZero F]
 
 end YoungSystem
 
-/-- **Lemma 3.1** (paper lines 363-373), for an arbitrary Young system: for `n ≥ 2`, `C_{n²} ∩ B_n^{(n²)} = 0`,
+/-- **Lemma 3.1** (paper lines 422-432), for an arbitrary Young system: for `n ≥ 2`, `C_{n²} ∩ B_n^{(n²)} = 0`,
 given the two Young-combinatorics facts about the square `(n^n)`. -/
 theorem lemma_3_1_of [CharZero F] {n : ℕ} (hn : 2 ≤ n) (Y : YoungSystem F (n ^ 2))
     (hres : ∀ (lam : Shape (n ^ 2)) (top : Fin (n ^ 2)), (top : ℕ) + 1 = n ^ 2 →

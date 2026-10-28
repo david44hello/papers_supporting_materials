@@ -7,7 +7,7 @@ Proof as in the paper: for f ∈ C_N ∩ I_ν and M = ρ_ν(f), Lemma 4.1 makes 
 with every Y_j (each X^{(j)} is a sum of transpositions); so ΓM commutes with every Y_j and is a scalar c (Lemma 4.2);
 Γ² = d ≠ 0 gives M = (c/d)Γ. By Fourier inversion f(σ) = (f^ν/N!)(c/d) ψ(σ⁻¹), ψ(σ) = tr(ρ(σ)Γ), so by (T3) f
 vanishes on every σ whose cycle type is not h(ν). For n ≥ 3, h(ν) = (2n-1, …, 5, 3) has n-1 ≥ 2 cycles, so it is not
-the type of an N-cycle: f vanishes on the N-cycles. As f ∈ C_N, f vanishes off them too. So f = 0 (l. 490-500).
+the type of an N-cycle: f vanishes on the N-cycles. As f ∈ C_N, f vanishes off them too. So f = 0 (l. 590-604).
 -/
 import NagataHigman.Proofs.TwoCorner.Section4
 import NagataHigman.Proofs.TwoCorner.GammaC
@@ -56,7 +56,7 @@ theorem rhoAlg_nu_eq_smul_gamma {F : Type*} [Field F] [CharZero F] (n : ℕ) (hn
   rw [← mul_assoc, hd, smul_mul_assoc, one_mul] at h1
   rw [div_eq_inv_mul, mul_smul, ← h1, smul_smul, inv_mul_cancel₀ hd0, one_smul]
 
-/-- Lemma 4.3, proof (l. 495-496): for `f ∈ C_N ∩ I_ν`, `f(σ) = κ' ψ(σ⁻¹)`, so by (T3) `f` vanishes on every
+/-- Lemma 4.3, proof (l. 595-596): for `f ∈ C_N ∩ I_ν`, `f(σ) = κ' ψ(σ⁻¹)`, so by (T3) `f` vanishes on every
 permutation whose cycle type is not `h(ν)` (`n ≥ 3`, over ℂ, with Frobenius' splitting). -/
 theorem coeff_nu_eq_zero_off_hooks (n : ℕ) (hn : 3 ≤ n) (Y : YoungSystem ℂ (n ^ 2 - 1)) (hsplit : AlternatingSplit Y)
     (lam : Shape (n ^ 2 - 1)) (hlam : lam.InBox n) {f : GrpAlg ℂ (n ^ 2 - 1)}
@@ -74,7 +74,7 @@ theorem coeff_nu_eq_zero_off_hooks (n : ℕ) (hn : 3 ≤ n) (Y : YoungSystem ℂ
     exact hσ (hinv ▸ (gamma_support_C Y hsplit (by omega) lam hself Γ hΓu hΓ σ⁻¹).1 h)
   rw [YoungSystem.coeff_of_mem_block Y hf, hMΓ, Matrix.mul_smul, trace_smul, htr, smul_zero, mul_zero]
 
-/-- Lemma 4.3, end of proof (l. 496-500): for `n ≥ 3` the type `h(ν)` is not that of an `N`-cycle, so `f` vanishes
+/-- Lemma 4.3, end of proof (l. 596-604): for `n ≥ 3` the type `h(ν)` is not that of an `N`-cycle, so `f` vanishes
 on the `N`-cycles; `f ∈ C_N` vanishes off them; so `f = 0`. -/
 theorem nu_cycle_block_eq_zero (n : ℕ) (hn : 3 ≤ n) (Y : YoungSystem ℂ (n ^ 2 - 1)) (hsplit : AlternatingSplit Y)
     (lam : Shape (n ^ 2 - 1)) (hlam : lam.InBox n) {f : GrpAlg ℂ (n ^ 2 - 1)}

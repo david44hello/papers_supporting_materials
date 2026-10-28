@@ -30,27 +30,27 @@ theorem le_sq_of_inBox {N n : ℕ} {lam : Shape N} (h : lam.InBox n) : N ≤ n ^
     _ = n ^ 2 := (sq n).symm
 
 omit [CharZero F] in
-/-- **Remark 2.3** (l. 357): for `N > n²` no partition of `N` fits in the box, so `B_n^{(N)} = 0`. -/
+/-- **Remark 2.3** (l. 416): for `N > n²` no partition of `N` fits in the box, so `B_n^{(N)} = 0`. -/
 theorem boxSum_eq_bot_of_lt {N : ℕ} (Y : YoungSystem F N) (n : ℕ) (h : n ^ 2 < N) : Y.boxSum n = ⊥ := by
   unfold YoungSystem.boxSum YoungSystem.blockSum
   refine le_bot_iff.1 (iSup₂_le fun lam hlam => ?_)
   exact absurd (le_sq_of_inBox hlam) (by omega)
 
-/-- **Remark 2.3** (l. 357): Razmyslov's bound `x_1 ⋯ x_{n²} ∈ T` (`n ≥ 1`), via Remark 2.2 at `N = n² + 1`. -/
+/-- **Remark 2.3** (l. 416): Razmyslov's bound `x_1 ⋯ x_{n²} ∈ T` (`n ≥ 1`), via Remark 2.2 at `N = n² + 1`. -/
 theorem razmyslov_mem (n : ℕ) (hn : 1 ≤ n) (Y : YoungSystem F (n ^ 2 + 1)) :
     firstLettersProd F (n ^ 2) ∈ TIdeal F n := by
   refine rem_2_2_forward_general n (n ^ 2) hn (by nlinarith) Y ?_
   rw [boxSum_eq_bot_of_lt Y n (by omega)]
   exact inf_bot_eq _
 
-/-- **Lemma 3.1** (tex 363-377) for any Young system on `N = n²` points. -/
+/-- **Lemma 3.1** (tex 422-436) for any Young system on `N = n²` points. -/
 theorem lem_3_1_general (n : ℕ) (hn : 2 ≤ n) {N : ℕ} (hN : N = n ^ 2) (Y : YoungSystem F N) :
     cycleSpan F N ⊓ Y.boxSum n = ⊥ := by
   subst hN
   exact lemma_3_1_of hn Y (restriction_of_young Y) (lem_3_1_square_proved n)
     (fun lam hlam T top htop => square_pos_top n (by omega) lam hlam T top htop)
 
-/-- **Theorem A** (tex 130-132, proof l. 363-377): `x_1 ⋯ x_{n²-1} ∈ T` for `n ≥ 2`. -/
+/-- **Theorem A** (tex 134-136, proof l. 422-436): `x_1 ⋯ x_{n²-1} ∈ T` for `n ≥ 2`. -/
 theorem thm_A_mem (n : ℕ) (hn : 2 ≤ n) (Y : YoungSystem F (n ^ 2 - 1 + 1)) :
     firstLettersProd F (n ^ 2 - 1) ∈ TIdeal F n := by
   have h2n : 2 * n ≤ n ^ 2 := by nlinarith
@@ -87,7 +87,7 @@ theorem thm_B_mem_complex (n : ℕ) (hn : 3 ≤ n) (Y : YoungSystem ℂ (n ^ 2 -
   exact rem_2_2_forward_general n (n ^ 2 - 2) (by omega) (by omega) Y (thm_4_4_of_eq n hn (by omega) Y hsplit)
 
 omit [CharZero F] in
-/-- **Theorem B** (tex 134-136) over every field of characteristic 0: the membership over ℂ transfers (ℂ → ℚ → F,
+/-- **Theorem B** (tex 138-140) over every field of characteristic 0: the membership over ℂ transfers (ℂ → ℚ → F,
 `BaseChange.lean`). -/
 theorem thm_B_mem (F : Type*) [Field F] [CharZero F] (n : ℕ) (hn : 3 ≤ n)
     (Y : YoungSystem ℂ (n ^ 2 - 2 + 1)) (hsplit : AlternatingSplit Y) :

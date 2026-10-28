@@ -1,5 +1,5 @@
 /-
-NagataHigman/Proofs/DiagonalHooks.lean — fact (T3), l. 418-419: the diagonal hooks of a self-conjugate shape are
+NagataHigman/Proofs/DiagonalHooks.lean — fact (T3), l. 491-495: the diagonal hooks of a self-conjugate shape are
 distinct odd numbers with sum N, so h(λ) is a cycle type of S_N (the sum holds for every shape).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/

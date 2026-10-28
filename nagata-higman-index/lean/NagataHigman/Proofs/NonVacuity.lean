@@ -33,7 +33,7 @@ theorem blockSum_eq_block {N : ℕ} (Y : YoungSystem F N) {S : Set (Shape N)} {l
   simp
 
 omit [CharZero F] in
-/-- **Lemma 3.1, setting** (l. 363-368): `B_n^{(n²)} = I_{(n^n)}`, the block of the square. -/
+/-- **Lemma 3.1, setting** (l. 422-427): `B_n^{(n²)} = I_{(n^n)}`, the block of the square. -/
 theorem boxSum_sq_eq_block (n : ℕ) (Y : YoungSystem F (n ^ 2)) (lam : Shape (n ^ 2)) (hlam : lam.InBox n) :
     Y.boxSum n = Y.block lam := by
   unfold YoungSystem.boxSum

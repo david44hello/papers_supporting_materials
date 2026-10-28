@@ -9,7 +9,7 @@ Every operator here is diagonal in a Young basis except `ρ(s)`, so each step is
 pairs `(c_T(k), c_T(top)) ∈ {(-1,1), (2,1), (1,-1), (-2,-1)}` (Tableaux.nu_contents). The general lemmas take the two
 content facts `c_T(top)² = 1`, `c_T(k)² - c_T(k) c_T(top) = 2` as hypotheses (as Lemma42.eq_scalar_of_commute_stars);
 the `ν` versions discharge them.
-Step (d), as in short v1.04 (tex l. 473-479): on `ν`, `c_T(k)(c_T(top) - c_T(k)) = -2` for every `T` (the hypothesis
+Step (d), as in short v1.10 (tex l. 567-576): on `ν`, `c_T(k)(c_T(top) - c_T(k)) = -2` for every `T` (the hypothesis
 `hrel`), so `1/(c_T(top) - c_T(k)) = -c_T(k)/2` and `D v_T = ½ c_T(k) v_T`: `ρ(J_k) = 2 • D`
 (`rhoAlg_jucysMurphy_eq_two_smul_stepD`). (`lem42g_table`, `lem42_values_nodup`: the old v1.02 table, no longer a claim.)
 -/
@@ -125,7 +125,7 @@ theorem stepD_mulVec [CharZero F] (hb : IsYoungBasis Y b) (k top : Fin N) (hk : 
       rw [h2]
       linear_combination b.repr (Y.rho lam (swap k top) *ᵥ b T) T' * hxyF / 2
 
-/-- **Lemma 4.2 (d)** (l. 477-478): `c_T(k)(c_T(top) - c_T(k)) = -2` gives `D v_T = ½ c_T(k) v_T`, so `ρ(J_k) = 2 • D`. -/
+/-- **Lemma 4.2 (d)** (l. 571-575): `c_T(k)(c_T(top) - c_T(k)) = -2` gives `D v_T = ½ c_T(k) v_T`, so `ρ(J_k) = 2 • D`. -/
 theorem rhoAlg_jucysMurphy_eq_two_smul_stepD [CharZero F] (hb : IsYoungBasis Y b) (k top : Fin N)
     (hk : (k : ℕ) + 1 = top) (htop : (top : ℕ) + 1 = N) (hy : ∀ T : SYT lam, T.content top ^ 2 = 1)
     (hrel : ∀ T : SYT lam, T.content k ^ 2 - T.content k * T.content top = 2) :

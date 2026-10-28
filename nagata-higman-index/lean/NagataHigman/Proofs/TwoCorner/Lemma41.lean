@@ -1,5 +1,5 @@
 /-
-NagataHigman/Proofs/TwoCorner/Lemma41.lean — Lemma 4.1 (fixed points and stars), tex lines 432-451.
+NagataHigman/Proofs/TwoCorner/Lemma41.lean — Lemma 4.1 (fixed points and stars), tex lines 524-545.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import NagataHigman.Proofs.TwoCorner.Gamma
@@ -180,7 +180,7 @@ theorem swaps_eigenspaces_iff_anticomm (Yt M : Matrix ι ι F) (hY : Yt * Yt = 1
       rw [mulVec_mulVec, h, neg_mulVec, ← mulVec_mulVec, hv, mulVec_neg, neg_neg]
 
 /-- For `Y² = 1` (characteristic 0): `M` is trace-orthogonal to every matrix commuting with `Y` iff `Y M + M Y = 0`,
-along the paper's chain (l. 443-446): trace-orthogonal iff `Q₊ M Q₊ = 0 = Q₋ M Q₋`
+along the paper's chain (l. 535-540): trace-orthogonal iff `Q₊ M Q₊ = 0 = Q₋ M Q₋`
 (`trace_perp_commutant_iff_blocks`), iff `M` maps each eigenspace of `Y` into the other
 (`blocks_iff_swaps_eigenspaces`), iff `Y M = -M Y` (`swaps_eigenspaces_iff_anticomm`). -/
 theorem trace_perp_commutant_iff (Yt M : Matrix ι ι F) (hY : Yt * Yt = 1) :

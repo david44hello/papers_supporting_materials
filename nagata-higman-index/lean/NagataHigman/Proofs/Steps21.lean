@@ -71,13 +71,13 @@ open Steps21
 
 variable {F : Type*} [Field F]
 
-/-- **Step (1)** (line 286), first half: `Φ` is a bijection from the multilinear words onto the `N`-cycles. -/
+/-- **Step (1)** (line 319), first half: `Φ` is a bijection from the multilinear words onto the `N`-cycles. -/
 theorem prop21_step1_words (m : ℕ) (hm : 1 ≤ m) :
     Function.Injective (wordCycle (m := m)) ∧
       ∀ σ : Perm (Fin (m + 1)), IsFullCycle σ ↔ ∃ w : Perm (Fin m), wordCycle w = σ :=
   ⟨wordCycle_injective, fun _ => ⟨exists_wordCycle_eq, fun ⟨w, hw⟩ => hw ▸ wordCycle_isFullCycle hm w⟩⟩
 
-/-- **Step (1)** (line 287), second half, in coordinates: the multilinear words are a basis of `V_m` and the `N`-cycles
+/-- **Step (1)** (line 320), second half, in coordinates: the multilinear words are a basis of `V_m` and the `N`-cycles
 are a basis of `C_N`; so `Φ = cycleLin ∘ wordLin⁻¹ : V_m → C_N` is a linear isomorphism. -/
 theorem prop21_step1_linear (m : ℕ) (hm : 1 ≤ m) :
     Function.Injective (wordLin F m) ∧ LinearMap.range (wordLin F m) = multilinSpace F m ∧
@@ -98,7 +98,7 @@ theorem prop21_step1_linear (m : ℕ) (hm : 1 ≤ m) :
       obtain ⟨w, rfl⟩ := exists_wordCycle_eq hσ
       exact ⟨w, rfl⟩
 
-/-- **Step (1)** (line 287), as the paper words it: a linear isomorphism `Φ : V_m → C_N` with `Φ(x_w) = Φ(w)`. -/
+/-- **Step (1)** (line 320), as the paper words it: a linear isomorphism `Φ : V_m → C_N` with `Φ(x_w) = Φ(w)`. -/
 theorem prop21_step1_iso (m : ℕ) (hm : 1 ≤ m) :
     ∃ Φ : multilinSpace F m ≃ₗ[F] cycleSpan F (m + 1), ∀ w : Perm (Fin m),
       (Φ ⟨multilinWord F w, Submodule.subset_span ⟨w, rfl⟩⟩ : GrpAlg F (m + 1)) = perm F (wordCycle w) := by
@@ -126,7 +126,7 @@ theorem prop21_step1_iso (m : ℕ) (hm : 1 ≤ m) :
   · intro h
     exact absurd (Finset.mem_univ _) h
 
-/-- **Step (6), forward half** (lines 312-326; used by Theorems A and B, Remark 2.2): `P(I) ⊆ Φ(W_{n,m})`. -/
+/-- **Step (6), forward half** (lines 350-365; used by Theorems A and B, Remark 2.2): `P(I) ⊆ Φ(W_{n,m})`. -/
 theorem prop21_step6_forward (n m : ℕ) (hn : 1 ≤ n) (hnm : n ≤ m) :
     (altIdeal F (m + 1) n).map (cycleProj F (m + 1)) ≤
       ((multilinIdentities F n m).comap (wordLin F m)).map (cycleLin F m) := by
@@ -149,7 +149,7 @@ theorem prop21_step6_forward (n m : ℕ) (hn : 1 ≤ n) (hnm : n ≤ m) :
     exact Submodule.mem_inf.mpr ⟨hpV, hpT⟩
   · rw [cycleProj_eq hm, hcoord]
 
-/-- **Step (6)** (lines 312-338): `P(I) = Φ(W_{n,m})`. -/
+/-- **Step (6)** (lines 350-382): `P(I) = Φ(W_{n,m})`. -/
 theorem prop21_step6 [CharZero F] (n m : ℕ) (hn : 1 ≤ n) (hnm : n ≤ m) :
     (altIdeal F (m + 1) n).map (cycleProj F (m + 1)) =
       ((multilinIdentities F n m).comap (wordLin F m)).map (cycleLin F m) := by
@@ -180,7 +180,7 @@ theorem prop21_step6 [CharZero F] (n m : ℕ) (hn : 1 ≤ n) (hnm : n ≤ m) :
   have := key _ hq
   rwa [wordCoord_wordLin hm] at this
 
-/-- **Step (7)** (line 333): `I^⊥ = A`, for any Young system. -/
+/-- **Step (7)** (line 375): `I^⊥ = A`, for any Young system. -/
 theorem prop21_step7_perp [CharZero F] {N : ℕ} (Y : YoungSystem F N) (n : ℕ) (h : n + 1 ≤ N) (f : GrpAlg F N) :
     (∀ a ∈ altIdeal F N n, coeffPairing F f a = 0) ↔ f ∈ Y.rowSum n := by
   constructor
@@ -197,7 +197,7 @@ theorem prop21_step7_box {N : ℕ} (Y : YoungSystem F N) (n : ℕ) :
   · exact le_inf inf_le_left (YoungSystem.cycleSpan_inf_rowSum_le_boxSum Y n)
   · exact inf_le_inf_left _ (boxSum_le_rowSum Y n)
 
-/-- **Step (7)** (lines 327-339), the conclusion: for `c ∈ C_N`, `c ⊥ Φ(W_{n,m})` iff `c ∈ B_n`
+/-- **Step (7)** (lines 366-383), the conclusion: for `c ∈ C_N`, `c ⊥ Φ(W_{n,m})` iff `c ∈ B_n`
 (i.e. `C_N ∩ Φ(W_{n,m})^⊥ = C_N ∩ B_n`), for any Young system. -/
 theorem prop21_step7_dual [CharZero F] (n m : ℕ) (hn : 1 ≤ n) (hnm : n ≤ m) (Y : YoungSystem F (m + 1))
     (c : GrpAlg F (m + 1)) (hc : c ∈ cycleSpan F (m + 1)) :

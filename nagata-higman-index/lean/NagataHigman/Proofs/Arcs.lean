@@ -2,7 +2,7 @@
 NagataHigman/Proofs/Arcs.lean — package B: the "arcs" combinatorics of Proposition 2.1, steps (1)-(6).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
-Paper v1.04, lines 285-338.
+Paper v1.10, lines 318-382.
 -/
 import Mathlib
 import NagataHigman.Defs.FreeAlgebra

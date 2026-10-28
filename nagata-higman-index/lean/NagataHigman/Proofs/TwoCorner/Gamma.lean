@@ -44,7 +44,7 @@ theorem eq_zero_of_trace_rho (lam : Shape N) (Z : Matrix (Fin (Y.dim lam)) (Fin 
       (fun c A hA => by rw [smul_mul_assoc, trace_smul, hA, smul_zero]) h
   exact (ext_iff_trace_mul_left).2 fun X => by rw [hall X, mul_zero, trace_zero]
 
-/-- **(T3), line 417**: `ψ(σ) = tr(ρ(σ)Γ)` vanishes at odd `σ` (characteristic 0). -/
+/-- **(T3), line 490**: `ψ(σ) = tr(ρ(σ)Γ)` vanishes at odd `σ` (characteristic 0). -/
 theorem gamma_odd [CharZero F] (lam : Shape N) (Γ : Matrix (Fin (Y.dim lam)) (Fin (Y.dim lam)) F)
     (hΓ : ∀ σ : Perm (Fin N), Γ * Y.rho lam σ = ((Perm.sign σ : ℤ) : F) • (Y.rho lam σ * Γ))
     (σ : Perm (Fin N)) (hσ : Perm.sign σ = -1) : trace (Y.rho lam σ * Γ) = 0 := by

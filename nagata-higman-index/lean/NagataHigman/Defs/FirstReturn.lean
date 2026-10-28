@@ -2,7 +2,7 @@
 NagataHigman/Defs/FirstReturn.lean — definitions for Proposition 2.1 steps (3)-(5) and v1.02 Remark 2.3 (cut in v1.03) (package B2).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
-Paper v1.04, lines 300-302 (s, Arc)
+Paper v1.10, lines 334-336 (s, Arc)
 and v1.02 line 302 (S_X). A NEW Defs file (not an extension of Defs/WordCycle.lean), so that adding it rebuilds nothing.
 -/
 import Mathlib
@@ -18,18 +18,18 @@ open Equiv Finset
 
 variable (F : Type*) [Field F]
 
-/-- `S_X = ∑_{π ∈ Sym(X)} π` (paper v1.02 line 302; v1.04 does not use `S_X`); `Sym(X)` = the permutations moving only points of `X`. -/
+/-- `S_X = ∑_{π ∈ Sym(X)} π` (paper v1.02 line 302; v1.10 does not use `S_X`); `Sym(X)` = the permutations moving only points of `X`. -/
 def symGroupSum {N : ℕ} (X : Finset (Fin N)) : GrpAlg F N :=
   ∑ π ∈ univ.filter (fun π : Perm (Fin N) => π.support ⊆ X), perm F π
 
 variable {N : ℕ}
 
 open Classical in
-/-- The return time to `X` (paper line 300): the least `k ≥ 1` with `τ^k(x) ∈ X` (`0` if there is none). -/
+/-- The return time to `X` (paper line 334): the least `k ≥ 1` with `τ^k(x) ∈ X` (`0` if there is none). -/
 def returnTime (τ : Perm (Fin N)) (X : Finset (Fin N)) (x : Fin N) : ℕ :=
   if h : ∃ k, 0 < k ∧ (τ ^ k) x ∈ X then Nat.find h else 0
 
-/-- The first-return map as a function (paper line 300): `s(x) = τ^k(x)` for the least `k ≥ 1` with `τ^k(x) ∈ X`,
+/-- The first-return map as a function (paper line 334): `s(x) = τ^k(x)` for the least `k ≥ 1` with `τ^k(x) ∈ X`,
 for `x ∈ X`; points outside `X` are fixed. -/
 def firstReturnFun (τ : Perm (Fin N)) (X : Finset (Fin N)) (x : Fin N) : Fin N :=
   if x ∈ X then (τ ^ returnTime τ X x) x else x
@@ -103,12 +103,12 @@ theorem firstReturnFun_injective (τ : Perm (Fin N)) (X : Finset (Fin N)) :
 
 end FirstReturn
 
-/-- The first-return map `s` of `τ` to `X` (paper line 300), as a permutation of `Fin N` fixing every point outside
+/-- The first-return map `s` of `τ` to `X` (paper line 334), as a permutation of `Fin N` fixing every point outside
 `X`. -/
 def firstReturn (τ : Perm (Fin N)) (X : Finset (Fin N)) : Perm (Fin N) :=
   Equiv.ofBijective (firstReturnFun τ X) (FirstReturn.firstReturnFun_injective τ X).bijective_of_finite
 
-/-- The arc of `x ∈ X` (paper line 302): `Arc(x) = (τ(x), τ²(x), …, s(x))`. -/
+/-- The arc of `x ∈ X` (paper line 336): `Arc(x) = (τ(x), τ²(x), …, s(x))`. -/
 def arc (τ : Perm (Fin N)) (X : Finset (Fin N)) (x : Fin N) : List (Fin N) :=
   (List.range (returnTime τ X x)).map fun i => (τ ^ (i + 1)) x
 

@@ -1,5 +1,5 @@
 /-
-NagataHigman/Proofs/MatrixInvariants.lean — Corollary 1.1 (short v1.04, l. 146-149) from Theorem B and the cited
+NagataHigman/Proofs/MatrixInvariants.lean — Corollary 1.1 (short v1.10, l. 149-152) from Theorem B and the cited
 theorem of Procesi and Formanek, by base change to a field `K ⊇ F` where the cited theorem is stated.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 

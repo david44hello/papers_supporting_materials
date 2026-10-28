@@ -77,12 +77,13 @@ def routeChecks (checks : List (Name × Name × Bool)) : CommandElabM Unit := do
   (`NagataHigman.Paper.thm_A, `NagataHigman.Cited.procesi_formanek, false),
   (`NagataHigman.Paper.thm_B, `NagataHigman.Cited.procesi_formanek, false)]
 -- The other routes named in AUDIT.md: the restriction fact from the Young basis (not branching + Burnside) in
--- Lemmas 3.1 and 4.1; the field step through Proposition 2.1; (F1) by polarization; (F3) by Fourier inversion;
+-- Lemmas 3.1 and 4.1; Theorem B over F through (F1) as in the paper (v1.10 l. 607-608), not base change; (F1) by polarization; (F3) by Fourier inversion;
 -- (T3) with Γ² = d·id (no rescaling).
 #eval routeChecks [
   (`NagataHigman.Paper.lem_3_1, `NagataHigman.Proofs.restriction_of_young, true),
   (`NagataHigman.Paper.lem_4_1, `NagataHigman.Proofs.restriction_of_young, true),
-  (`NagataHigman.Paper.sec_4_1_field, `NagataHigman.Proofs.prop_2_1_general, true),
+  (`NagataHigman.Paper.thm_B, `NagataHigman.Proofs.FieldIndep.field_indep, true),
+  (`NagataHigman.Paper.thm_B, `NagataHigman.Proofs.mem_TIdeal_of_complex, false),
   (`NagataHigman.Paper.F1_symSum_mem, `NagataHigman.Proofs.polarization, true),
   (`NagataHigman.Paper.F3_orthogonal, `NagataHigman.Proofs.YoungSystem.coeffPairing_eq_sum, true),
   (`NagataHigman.Paper.Gamma_pm, `NagataHigman.Proofs.gamma_sq_scalar, true)]

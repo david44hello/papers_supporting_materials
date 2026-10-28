@@ -149,7 +149,7 @@ theorem rhoAlg_eq_zero_of_pairing [CharZero F] (x f : GrpAlg F N)
       exact absurd (Finset.mem_univ lam) hh
   exact eq_zero_of_forall_mul_mul _ _ hx fun G => eq_zero_of_trace_mul _ fun H => key G H
 
-/-- C7 (F3), orthogonality (paper line 231): distinct blocks are orthogonal for `⟨ , ⟩`. -/
+/-- C7 (F3), orthogonality (paper line 267): distinct blocks are orthogonal for `⟨ , ⟩`. -/
 theorem coeffPairing_eq_zero_of_mem_block {lam mu : Shape N} (hne : lam ≠ mu) {a b : GrpAlg F N}
     (ha : a ∈ Y.block lam) (hb : b ∈ Y.block mu) : coeffPairing F a b = 0 := by
   rw [coeffPairing_eq_sum Y]
