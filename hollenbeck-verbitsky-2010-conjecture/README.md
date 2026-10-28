@@ -22,4 +22,10 @@ Run from this folder. Numbering as in the paper.
 | Section 7 | numerical (LP) | `code/best_constant_second.py` | `python3 code/best_constant_second.py --test; python3 code/best_constant_second.py --run` | `logs/best_constant_second.log` |
 | Section 7 (checks) | numerical (LP) | `code/best_constant_lp.py` | `python3 code/best_constant_lp.py --test` | `logs/best_constant_controls.log` |
 
-Every log was made in one environment: Python 3.12.3, python-flint 0.9.0 (Arb), mpmath 1.4.1, NumPy 2.5.4, SciPy 1.18.1 (`requirements.txt`), with `bash code/run_logged.sh logs/NAME.log COMMAND`, which writes the date, these versions and the md5 of every program at the top of the log.
+Notes on the logs:
+
+- In `logs/saddle_sign_mpmath.log` the three `FAIL at` lines at the top come from the three negative controls listed at its end.
+- `code/truepoints_arb.py` has no test of its own: it runs `certify_cell` of `code/certify_arb.py`, whose `--test` (with its negative controls) is at the top of `logs/cells_arb.log`.
+- In `logs/counterexample_quadrature_arb.log` the `--verify` lines print the midpoints of the Arb input balls; each ball contains the exact decimal input, so these enclosures (±2.5·10⁻¹⁰) are wider than those of the `--test` run (±3·10⁻¹⁵).
+
+All logs were made in the same environment: Python 3.12.3, python-flint 0.9.0 (Arb), mpmath 1.4.1, NumPy 2.5.4, SciPy 1.18.1 (`requirements.txt`), with `bash code/run_logged.sh logs/NAME.log COMMAND`, which writes the date, these versions and the md5 of every program at the top of the log.
