@@ -8,7 +8,7 @@ This folder is a formal proof, checked by the Lean 4 proof assistant, of every n
 "Improving Razmyslov's (1974) bound: the Nagata–Higman index is at most n² − 2 for n ≥ 3" by Dave Goel, with the named
 steps of its proofs, its remarks and its worked examples. Lean checked version 1.10 of the paper. Version 1.12 adds one
 sentence (at the end of Section 1.4, a pointer to the expanded version on Zenodo) and one reference, and shortens its
-two sentences about Lean; it adds no claim. The paper's link will be added here when it is posted.
+two sentences about Lean; it adds no claim. The paper: https://doi.org/10.5281/zenodo.23627984
 
 ## The theorems, in plain words
 
