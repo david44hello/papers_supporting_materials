@@ -18,7 +18,8 @@ and, in this folder, with the paper's LaTeX source as the first argument:
 
     python3 rebuild_from_printed.py <the paper's .tex file> pairs/pair_I_K2N18.json
 
-check_pair.py uses the numbering of the expanded version: its Lemma 8.6, Lemma 7.11 and (C') are Lemma 4.3, Lemma 4.2
-and (C) of the paper, and its polynomial R and number J are V and Λ.
+All lemma, theorem and table numbers in check_pair.py refer to the expanded version: its Lemma 8.6, Lemma 7.11 and (C')
+are Lemma 4.3, Lemma 4.2 and (C) of the paper, and its polynomial R and number J are V and Λ. In the output of
+check_pair.py --test, the line "CONTROL WRONG" is expected: one test checks that a missing file is reported as an error.
 
 Copyright (C) Dave Goel 2026--now. All rights reserved.
