@@ -6,9 +6,9 @@ Author: Dave Goel. Copyright (C) Dave Goel 2026--now. All rights reserved.
 
 This folder is a formal proof, checked by the Lean 4 proof assistant, of every numbered result of the paper
 "Improving Razmyslov's (1974) bound: the Nagata–Higman index is at most n² − 2 for n ≥ 3" by Dave Goel, with the named
-steps of its proofs, its remarks and its worked examples. Lean checked version 1.10 of the paper. Version 1.11 adds only
-one sentence (at the end of Section 1.4, a pointer to the expanded version on Zenodo) and one reference; it adds no
-claim. The paper's link will be added here when it is posted.
+steps of its proofs, its remarks and its worked examples. Lean checked version 1.10 of the paper. Version 1.12 adds one
+sentence (at the end of Section 1.4, a pointer to the expanded version on Zenodo) and one reference, and shortens its
+two sentences about Lean; it adds no claim. The paper's link will be added here when it is posted.
 
 ## The theorems, in plain words
 
@@ -74,7 +74,7 @@ of every statement, so a referee checks only that the definitions ([NagataHigman
 - The general fact in the parenthesis of (F1) (multihomogeneous components, by a Vandermonde argument) is not proved;
   Lean's route (polarization) does not need it (route difference 2).
 - Line numbers in Paper/Statements.lean and AUDIT.md refer to the LaTeX source of version 1.10 of the paper; for
-  version 1.11, add 3 to lines 215–656 and 6 to lines 657 onward. Some comments in other files cite an earlier draft (several
+  version 1.12, add 3 to lines 215–656 and 6 to lines 657 onward. Some comments in other files cite an earlier draft (several
   say so: "v1.02 line ...").
 
 ## How to check it yourself
@@ -85,7 +85,7 @@ repository:
 ```bash
 git clone https://github.com/david44hello/papers_supporting_materials.git
 cd papers_supporting_materials/nagata-higman-index/lean
-git checkout nagata-higman-index-v1.11   # the version the paper cites
+git checkout nagata-higman-index-v1.12   # the version the paper cites
 lake exe cache get      # downloads prebuilt Mathlib files (it does not compile Mathlib)
 lake build
 bash scripts/check.sh   # build, scan for proof holes (sorry, admit, native_decide, ...), regenerate AUDIT.md
