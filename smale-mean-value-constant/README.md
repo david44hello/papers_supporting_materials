@@ -14,7 +14,7 @@ To run (Python 3 with python-flint 0.9.0; about eight minutes on one core), in p
 
     python3 check_pair.py ../pairs/pair_I_K2N18.json --bound 1.1559837
 
-and, in this folder, with the paper's LaTeX source (from arXiv) as the first argument:
+and, in this folder, with the paper's LaTeX source as the first argument:
 
     python3 rebuild_from_printed.py <the paper's .tex file> pairs/pair_I_K2N18.json
 
