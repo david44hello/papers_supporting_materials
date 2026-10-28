@@ -1,0 +1,15 @@
+# EulerFlowLean — Lean 4 formalization of Dave Goel's paper 002 "Eulerian graphs are flow-connected" (v0.30).
+name = "EulerFlowLean"
+version = "0.1.0"
+defaultTargets = ["EulerFlow"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.35.0"
+
+[[lean_lib]]
+name = "EulerFlow"
+globs = ["EulerFlow", "EulerFlow.+"]
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+weakLeanArgs = ["-j1"]
