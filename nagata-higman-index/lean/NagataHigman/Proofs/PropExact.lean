@@ -23,7 +23,7 @@ namespace PropExact
 /-! ## 1. The span `G` of all elements `a · L(v_1, …, v_n) · b` (words `v_i` nonempty) is a T-ideal -/
 
 /-- `G`: the span of the elements `a · L(v_1, …, v_n) · b` with nonempty words `v_i` and words `a`, `b`
-(possibly empty) — paper (F1), line 223: "spanned by the elements `p · L(h_1, …, h_n) · q`". -/
+(possibly empty) — paper (F1), line 212: "spanned by the elements `p · L(h_1, …, h_n) · q`". -/
 def sandwichSpan (F : Type*) [Field F] (n : ℕ) : Submodule F (FreeNUAlg F) :=
   Submodule.span F {p | ∃ (a : List ℕ) (v : Fin n → List ℕ) (b : List ℕ), (∀ i, v i ≠ []) ∧ p = sandwichElem F a v b}
 
@@ -503,7 +503,7 @@ theorem cycCoord_range_eq_orthogonal (n m : ℕ) (hn : 1 ≤ n) (hm : 1 ≤ m) (
       rw [coeff_cycleElem, dotFunctional_multilinWord hm]
 
 open PropExact in
-/-- **Q2, Proposition 2.1** (lines 280-286), for an arbitrary Young system `Y` of `S_{m+1}` over `F`:
+/-- **Q2, Proposition 2.1** (lines 269-275), for an arbitrary Young system `Y` of `S_{m+1}` over `F`:
 `dim W_{n,m} + dim (C_N ∩ B_n) = m!` (both `m ≥ n` and, trivially, `1 ≤ m < n`). -/
 theorem prop_2_1_general (n m : ℕ) (hn : 1 ≤ n) (hm : 1 ≤ m) (Y : YoungSystem F (m + 1)) :
     Module.finrank F (multilinIdentities F n m) +
@@ -540,7 +540,7 @@ theorem finrank_multilinSpace {m : ℕ} (hm : 1 ≤ m) : Module.finrank F (multi
   unfold multilinSpace
   rw [finrank_span_eq_card hli, Fintype.card_perm, Fintype.card_fin]
 
-/-- **Q2, Proposition 2.1, "in particular"** (line 285): `x_1 ⋯ x_m ∈ T` iff `C_N ∩ B_n = 0`, for any Young system. -/
+/-- **Q2, Proposition 2.1, "in particular"** (line 274): `x_1 ⋯ x_m ∈ T` iff `C_N ∩ B_n = 0`, for any Young system. -/
 theorem prop_2_1_iff_general (n m : ℕ) (hn : 1 ≤ n) (hm : 1 ≤ m) (Y : YoungSystem F (m + 1)) :
     firstLettersProd F m ∈ TIdeal F n ↔ cycleSpan F (m + 1) ⊓ Y.boxSum n = ⊥ := by
   have hdim := prop_2_1_general n m hn hm Y

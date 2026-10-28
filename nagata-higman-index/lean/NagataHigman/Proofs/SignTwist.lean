@@ -1,5 +1,5 @@
 /-
-NagataHigman/Proofs/SignTwist.lean — the sign twist ε (paper (F7), line 261-263) and the Section 1.4 Method claim.
+NagataHigman/Proofs/SignTwist.lean — the sign twist ε (paper (F7), line 250-252) and the Section 1.4 Method claim.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
 Route: ε is `MonoidAlgebra.lift` of the monoid hom `σ ↦ sgn(σ) σ` (`signTwist_eq_lift`), hence an algebra map;
@@ -57,14 +57,14 @@ lemma signTwist_smul (r : F) (a : GrpAlg F N) : signTwist F (r • a) = r • si
 lemma signTwist_zero : signTwist F (0 : GrpAlg F N) = 0 := by
   simp only [signTwist_eq_lift, map_zero]
 
-/-- **(F7)** (line 261): ε is multiplicative. -/
+/-- **(F7)** (line 250): ε is multiplicative. -/
 theorem signTwist_mul (a b : GrpAlg F N) : signTwist F (a * b) = signTwist F a * signTwist F b := by
   simp only [signTwist_eq_lift, map_mul]
 
 lemma sign_mul_sign (σ : Perm (Fin N)) : ((Perm.sign σ : ℤ) : F) * ((Perm.sign σ : ℤ) : F) = 1 := by
   rw [← Int.cast_mul, ← Units.val_mul, Int.units_mul_self, Units.val_one, Int.cast_one]
 
-/-- **(F7)** (line 261): ε is an involution. -/
+/-- **(F7)** (line 250): ε is an involution. -/
 theorem signTwist_involutive (a : GrpAlg F N) : signTwist F (signTwist F a) = a := by
   apply MonoidAlgebra.ext
   ext τ
@@ -78,7 +78,7 @@ theorem coeffPairing_signTwist (a b : GrpAlg F N) :
   rw [coeff_signTwist, coeff_signTwist]
   linear_combination (a.coeff σ * b.coeff σ) * sign_mul_sign (F := F) σ
 
-/-- **(F7)** (lines 262-263): on `C_N`, ε is the scalar `(-1)^{N-1}`. -/
+/-- **(F7)** (lines 251-252): on `C_N`, ε is the scalar `(-1)^{N-1}`. -/
 theorem signTwist_of_mem_cycleSpan {c : GrpAlg F N} (hc : c ∈ cycleSpan F N) :
     signTwist F c = ((-1 : F) ^ (N - 1)) • c := by
   induction hc using Submodule.span_induction with
@@ -108,7 +108,7 @@ lemma rhoAlg_signTwist (mu : Shape N) (a : GrpAlg F N) :
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [coeff_signTwist]
 
-/-- `ρ_μ(ε a) = 0 ↔ ρ_{μ'}(a) = 0`, from the intertwiner `S^{μ'} ≅ S^μ ⊗ sgn` (paper (F7), line 262). -/
+/-- `ρ_μ(ε a) = 0 ↔ ρ_{μ'}(a) = 0`, from the intertwiner `S^{μ'} ≅ S^μ ⊗ sgn` (paper (F7), line 251). -/
 theorem rhoAlg_signTwist_eq_zero_iff (mu : Shape N) (a : GrpAlg F N) :
     Y.rhoAlg mu (signTwist F a) = 0 ↔ Y.rhoAlg mu.conjugate a = 0 := by
   obtain ⟨Γ, hΓ⟩ := Y.signTwist mu
@@ -129,7 +129,7 @@ theorem rhoAlg_signTwist_eq_zero_iff (mu : Shape N) (a : GrpAlg F N) :
     obtain ⟨v, hv⟩ := Γ.surjective (Pi.single i 1)
     rw [← hv, ← key, h, Matrix.zero_mulVec, map_zero, Matrix.zero_mulVec]
 
-/-- **(F7)** (line 262): `ε(I_λ) = I_{λ'}`. -/
+/-- **(F7)** (line 251): `ε(I_λ) = I_{λ'}`. -/
 theorem mem_block_iff_signTwist (lam : Shape N) (a : GrpAlg F N) :
     a ∈ Y.block lam ↔ signTwist F a ∈ Y.block lam.conjugate := by
   rw [mem_block_iff Y, mem_block_iff Y]

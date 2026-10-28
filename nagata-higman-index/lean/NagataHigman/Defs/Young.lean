@@ -23,17 +23,17 @@ variable {N : ℕ}
 /-- The Young diagram of `λ`: row `i` has the `i`-th largest part as its length. -/
 def diagram (lam : Shape N) : YoungDiagram := YoungDiagram.ofPartition lam
 
-/-- `ℓ(λ)`: the number of rows (paper line 249). -/
+/-- `ℓ(λ)`: the number of rows (paper line 238). -/
 def numRows (lam : Shape N) : ℕ := Multiset.card lam.parts
 
-/-- `λ_1`: the length of the first row, i.e. the largest part (paper line 272). -/
+/-- `λ_1`: the length of the first row, i.e. the largest part (paper line 261). -/
 def firstRow (lam : Shape N) : ℕ := lam.parts.sup
 
-/-- `λ ⊆ (n^n)`: the diagram fits in the `n × n` box (paper line 273). -/
+/-- `λ ⊆ (n^n)`: the diagram fits in the `n × n` box (paper line 262). -/
 def InBox (n : ℕ) (lam : Shape N) : Prop := lam.numRows ≤ n ∧ lam.firstRow ≤ n
 
 open scoped Classical in
-/-- `h(λ)`: the diagonal hook lengths `h_{11}, h_{22}, …` (paper lines 429-430), as a multiset. The diagonal cell
+/-- `h(λ)`: the diagonal hook lengths `h_{11}, h_{22}, …` (paper lines 418-419), as a multiset. The diagonal cell
 `(i, i)` has arm `rowLen i - i - 1` and leg `colLen i - i - 1`, so hook length `rowLen i + colLen i - 2 i - 1`. -/
 def diagonalHooks (lam : Shape N) : Multiset ℕ :=
   ((range N).filter (fun i => (i, i) ∈ lam.diagram.cells)).val.map
@@ -50,7 +50,7 @@ structure SYT {N : ℕ} (lam : Shape N) where
   pos_mem : ∀ k, pos k ∈ lam.diagram.cells
   pos_mono : ∀ k l, (pos k).1 ≤ (pos l).1 → (pos k).2 ≤ (pos l).2 → k ≤ l
 
-/-- The content `c_T(k)` = column minus row of the cell holding `k` (paper line 406). -/
+/-- The content `c_T(k)` = column minus row of the cell holding `k` (paper line 395). -/
 def SYT.content {N : ℕ} {lam : Shape N} (T : SYT lam) (k : Fin N) : ℤ :=
   ((T.pos k).2 : ℤ) - ((T.pos k).1 : ℤ)
 

@@ -123,7 +123,7 @@ end Arcs
 
 /-! ## 3. The formula -/
 
-/-- **Proposition 2.1, step (6), the displayed formula with the paper's arcs** (lines 329-339): write the arc
+/-- **Proposition 2.1, step (6), the displayed formula with the paper's arcs** (lines 318-328): write the arc
 containing `N` as `Arc_0 = (ζ, N, ξ)` and number the other `n` arcs `Arc_1, …, Arc_n` in any way (`e`). Then
 `(ξ, Arc_1, …, Arc_n, ζ)` is a multilinear triple and `Φ⁻¹(P(τ E_X)) = x_ξ · L(x_{Arc_1}, …, x_{Arc_n}) · x_ζ`. -/
 theorem step6_formula_arcs {F : Type*} [Field F] [CharZero F] (n m : ℕ) (hn : 1 ≤ n) (hnm : n ≤ m)

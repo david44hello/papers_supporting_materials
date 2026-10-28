@@ -236,7 +236,7 @@ theorem sum_surjective_eq_sum_perm {M : Type*} [AddCommMonoid M] (n : ℕ) (g : 
   have hs : Function.Surjective f := (Finset.mem_filter.1 hf).2
   exact ⟨Equiv.ofBijective f ⟨Finite.injective_iff_surjective.2 hs, hs⟩, Finset.mem_univ _, rfl⟩
 
-/-- **A5** Polarization (paper line 219), in any non-unital ring:
+/-- **A5** Polarization (paper line 208), in any non-unital ring:
 `∑_{S ⊆ [n]} (-1)^{n-|S|} (∑_{i ∈ S} y_i)^n = L(y_1, …, y_n)`. -/
 theorem polarization (n : ℕ) (y : Fin n → R) :
     ∑ S ∈ (Finset.univ : Finset (Fin n)).powerset, ((-1 : ℤ) ^ (n - S.card)) • nuPow (∑ i ∈ S, y i) n =
@@ -261,7 +261,7 @@ theorem map_symSum {R S G : Type*} [NonUnitalRing R] [NonUnitalRing S] [FunLike 
   rw [symSum, map_sum]
   exact Finset.sum_congr rfl fun π _ => map_tupleProd φ n _
 
-/-- **A6** (F1), paper line 219: `L(y_1, …, y_n) ∈ T` for all `y_i ∈ F⟨X⟩` (no characteristic assumption). -/
+/-- **A6** (F1), paper line 208: `L(y_1, …, y_n) ∈ T` for all `y_i ∈ F⟨X⟩` (no characteristic assumption). -/
 theorem F1_symSum_mem_proved (F : Type*) [Field F] (n : ℕ) (_hn : 1 ≤ n) (y : Fin n → FreeNUAlg F) :
     symSum n y ∈ TIdeal F n := by
   rw [← polarization n y]
@@ -284,7 +284,7 @@ theorem symSum_mul_mem (n : ℕ) (hn : 1 ≤ n) (y : Fin n → FreeNUAlg F) (b :
     symSum n y * b ∈ TIdeal F n :=
   (isTIdeal_TIdeal F n).mul_right b _ (F1_symSum_mem_proved F n hn y)
 
-/-- **A9** (F1), paper line 220: `L(x, …, x) = n! x^n`. -/
+/-- **A9** (F1), paper line 209: `L(x, …, x) = n! x^n`. -/
 theorem F1_symSum_diag_proved (F : Type*) [Field F] (n : ℕ) (x : FreeNUAlg F) :
     symSum n (fun _ => x) = (n.factorial : F) • nuPow x n := by
   simp only [symSum, Finset.sum_const, Finset.card_univ, Fintype.card_perm, Fintype.card_fin]
@@ -301,7 +301,7 @@ theorem nuPow_letter_mem_of_symSum_mem [CharZero F] (n : ℕ) {S : Submodule F (
   have hne : (n.factorial : F) ≠ 0 := Nat.cast_ne_zero.2 (Nat.factorial_ne_zero n)
   simpa [smul_smul, inv_mul_cancel₀ hne] using S.smul_mem (n.factorial : F)⁻¹ h
 
-/-- **A10** (F1), paper line 219: in characteristic `0`, `T = (L)^T`. -/
+/-- **A10** (F1), paper line 208: in characteristic `0`, `T = (L)^T`. -/
 theorem F1_TIdeal_eq_proved (F : Type*) [Field F] [CharZero F] (n : ℕ) (hn : 1 ≤ n) :
     TIdeal F n = sInf {S | IsTIdeal F S ∧ symSum n (fun i => letter F i) ∈ S} := by
   apply le_antisymm

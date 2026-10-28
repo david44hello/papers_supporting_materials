@@ -1,6 +1,6 @@
 /-
 NagataHigman/Proofs/SquareSpanCorners.lean — two sentences of the paper's proofs as claims: Lemma 3.1's "the ρ(σ),
-σ ∈ S_{N-1}, span End(S^β)" on the square (tex 381-383), and "ν has two removable corners, and each holds the top
+σ ∈ S_{N-1}, span End(S^β)" on the square (tex 370-372), and "ν has two removable corners, and each holds the top
 entry of some standard tableau" (v1.02 tex 396).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
@@ -21,7 +21,7 @@ open Equiv Finset Matrix NagataHigman
 
 variable {F : Type*} [Field F]
 
-/-- **Lemma 3.1, span step** (tex 381-383): on the square, the `ρ(σ)` with `σ` fixing the last point span all of
+/-- **Lemma 3.1, span step** (tex 370-372): on the square, the `ρ(σ)` with `σ` fixing the last point span all of
 `End(S^β)`. -/
 theorem lem_3_1_span_proved [CharZero F] (n : ℕ) (hn : 1 ≤ n) (Y : YoungSystem F (n ^ 2)) (lam : Shape (n ^ 2))
     (hlam : lam.InBox n) (last : Fin (n ^ 2)) (hlast : (last : ℕ) + 1 = n ^ 2) :

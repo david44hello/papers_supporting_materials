@@ -1,5 +1,5 @@
 /-
-NagataHigman/Proofs/TwoCorner/Lemma42Chain.lean — Lemma 4.2 along the paper's own chain (a) → (e) (tex 464-492):
+NagataHigman/Proofs/TwoCorner/Lemma42Chain.lean — Lemma 4.2 along the paper's own chain (a) → (e) (tex 453-481):
 step (b), step (e) "the stars generate End(S^ν)", and Lemma 4.2 itself derived from (e).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
@@ -19,7 +19,7 @@ open Equiv Finset Matrix NagataHigman
 
 variable {F : Type*} [Field F]
 
-/-- **Lemma 4.2 (b)** (tex 473): `X^{(k)} = J_k + (k, top)` for `k + 1 = top`, `top + 1 = N`. -/
+/-- **Lemma 4.2 (b)** (tex 462): `X^{(k)} = J_k + (k, top)` for `k + 1 = top`, `top + 1 = N`. -/
 theorem lem_4_2_b_proved (N : ℕ) (k top : Fin N) (hk : (k : ℕ) + 1 = top) (htop : (top : ℕ) + 1 = N) :
     starElem F k = jucysMurphy F k + perm F (swap k top) :=
   starElem_eq_jucysMurphy_add k top hk htop
@@ -52,7 +52,7 @@ theorem conj_mem_adjoin_stars {N : ℕ} (Y : YoungSystem F N) (lam : Shape N) (g
     rw [h]
     exact mul_mem hx hy
 
-/-- **Lemma 4.2 (e)** (tex 491-492): on `ν` the stars generate all of `End(S^ν)`: `𝒴 = ⊤`. -/
+/-- **Lemma 4.2 (e)** (tex 480-481): on `ν` the stars generate all of `End(S^ν)`: `𝒴 = ⊤`. -/
 theorem lem_4_2_e_proved [CharZero F] (n : ℕ) (hn : 2 ≤ n) (Y : YoungSystem F (n ^ 2 - 1))
     (lam : Shape (n ^ 2 - 1)) (hlam : lam.InBox n) :
     Algebra.adjoin F (Set.range fun j => Y.rhoAlg lam (starElem F j)) = ⊤ := by
@@ -98,7 +98,7 @@ theorem lem_4_2_e_proved [CharZero F] (n : ℕ) (hn : 2 ≤ n) (Y : YoungSystem 
   | add x y hx hy => rw [map_add]; exact add_mem hx hy
   | smul r x hx => rw [map_smul]; exact Subalgebra.smul_mem _ hx r
 
-/-- **Lemma 4.2** (tex 464-466), derived along the paper's chain: from (e), a matrix commuting with every `Y_j`
+/-- **Lemma 4.2** (tex 453-455), derived along the paper's chain: from (e), a matrix commuting with every `Y_j`
 commutes with all of `End(S^ν)`, so it is a scalar. Same statement as `lem_4_2_general`. -/
 theorem lem_4_2_general_chain [CharZero F] (n : ℕ) (hn : 2 ≤ n) (Y : YoungSystem F (n ^ 2 - 1))
     (lam : Shape (n ^ 2 - 1)) (hlam : lam.InBox n) (Z : Matrix (Fin (Y.dim lam)) (Fin (Y.dim lam)) F)

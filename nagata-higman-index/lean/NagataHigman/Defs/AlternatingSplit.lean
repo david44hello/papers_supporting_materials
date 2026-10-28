@@ -22,7 +22,7 @@ def IsAltInvariant (V : Submodule ℂ (Fin (Y.dim lam) → ℂ)) : Prop :=
 def IsAltEquivariant (Φ : Matrix (Fin (Y.dim lam)) (Fin (Y.dim lam)) ℂ) : Prop :=
   ∀ σ : Perm (Fin N), Perm.sign σ = 1 → Φ * Y.rho lam σ = Y.rho lam σ * Φ
 
-/-- The splitting of `Res_{A_N} S^λ` (paper l. 425-427) [JK81 2.5.7]:
+/-- The splitting of `Res_{A_N} S^λ` (paper l. 414-416) [JK81 2.5.7]:
 * `V₊ ⊕ V₋ = S^λ`, both `A_N`-invariant, nonzero and irreducible;
 * non-isomorphic: every `A_N`-map `V₊ → V₋` (and `V₋ → V₊`) is zero — written on `S^λ` as an equivariant matrix that kills
   one constituent and maps the other into the first. -/
@@ -41,7 +41,7 @@ structure AltDecomp where
   noniso_mp : ∀ Φ : Matrix (Fin (Y.dim lam)) (Fin (Y.dim lam)) ℂ, IsAltEquivariant Y lam Φ →
     (∀ v ∈ Vp, Φ *ᵥ v = 0) → (∀ v ∈ Vm, Φ *ᵥ v ∈ Vp) → Φ = 0
 
-/-- The splitting of `Res_{A_N} S^λ` and Frobenius' theorem (paper l. 425-427, 381-382): the splitting `AltDecomp`, and
+/-- The splitting of `Res_{A_N} S^λ` and Frobenius' theorem (paper l. 414-416, 370-371): the splitting `AltDecomp`, and
 * Frobenius [JK81 2.5.13]: `χ₊(σ) = χ₋(σ)` for every even `σ` whose cycle type (with fixed points) is not `h(λ)`,
   `χ±(σ)` = the trace of `ρ_λ(σ)` restricted to `V±`. -/
 structure AltSplit extends AltDecomp Y lam where

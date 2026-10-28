@@ -46,7 +46,7 @@ theorem F1_TIdeal_eq_sandwichSpan [CharZero F] (n : ℕ) (hn : 1 ≤ n) :
   rintro _ ⟨a, v, b, -, rfl⟩
   exact sandwichElem_mem_TIdeal F n hn a v b
 
-/-- **(F1), lines 221-222**: `T = (L)^T` is spanned by the `p · L(h_1, …, h_n) · q` with `p`, `q` monomials or `1`
+/-- **(F1), lines 210-211**: `T = (L)^T` is spanned by the `p · L(h_1, …, h_n) · q` with `p`, `q` monomials or `1`
 and ANY `h_i` (in the non-unital algebra every element has no constant term). -/
 theorem F1_TIdeal_eq_span [CharZero F] (n : ℕ) (hn : 1 ≤ n) :
     TIdeal F n = Submodule.span F

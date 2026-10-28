@@ -1,6 +1,6 @@
 /-
 NagataHigman/Proofs/TwoCorner/Section4.lean — Section 4 on ν for an arbitrary Young system: Lemma 4.1 with every
-hypothesis discharged (tex 443-463), and Lemma 4.3.
+hypothesis discharged (tex 432-452), and Lemma 4.3.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import NagataHigman.Proofs.TwoCorner.Lemma41
@@ -39,7 +39,7 @@ theorem jucysMurphy_top_sq_nu (n : ℕ) (hn : 2 ≤ n) (Y : YoungSystem F (n ^ 2
   rw [← Matrix.mulVec_mulVec, hbT, Matrix.mulVec_smul, hbT, smul_smul, Matrix.one_mulVec]
   rcases nu_content_top n hn lam hparts T top htop with h | h <;> rw [h] <;> norm_num
 
-/-- **Lemma 4.1** on `ν` (tex 443-463), every hypothesis of `lem_4_1_general` discharged. -/
+/-- **Lemma 4.1** on `ν` (tex 432-452), every hypothesis of `lem_4_1_general` discharged. -/
 theorem lem_4_1_nu (n : ℕ) (hn : 2 ≤ n) (Y : YoungSystem F (n ^ 2 - 1)) (lam : Shape (n ^ 2 - 1))
     (hlam : lam.InBox n) {f : GrpAlg F (n ^ 2 - 1)} (hf : f ∈ Y.block lam) :
     (∀ σ : Perm (Fin (n ^ 2 - 1)), (∃ j, σ j = j) → f.coeff σ = 0) ↔

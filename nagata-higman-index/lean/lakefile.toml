@@ -1,4 +1,4 @@
-# NagataHigmanLean — Lean 4 proof of the Nagata–Higman index paper (Dave Goel, short paper v1.03).
+# NagataHigmanLean — Lean 4 proof of the Nagata–Higman index paper (Dave Goel, short paper v1.04).
 name = "NagataHigmanLean"
 version = "0.1.0"
 defaultTargets = ["NagataHigman"]

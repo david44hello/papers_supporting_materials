@@ -1,5 +1,5 @@
 /-
-NagataHigman/Defs/CentralIdempotent.lean — the central idempotent `e_λ` of `F[S_N]` (paper line 235), built from the
+NagataHigman/Defs/CentralIdempotent.lean — the central idempotent `e_λ` of `F[S_N]` (paper line 224), built from the
 Jucys–Murphy elements alone, with no Young system:
   e_λ = Σ_{T ∈ SYT(λ)} Π_k Π_{c ∈ (-N, N), c ≠ c_T(k)} (J_k - c)/(c_T(k) - c).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
@@ -36,7 +36,7 @@ evaluated at `J_k`. -/
 def jmFactor {N : ℕ} (k : Fin N) (x : ℤ) : GrpAlg F N :=
   Polynomial.aeval (jucysMurphy F k) (Lagrange.basis (contentRange N) (fun c : ℤ => (c : F)) x)
 
-/-- `e_λ = Σ_{T ∈ SYT(λ)} Π_k Π_{c ≠ c_T(k)} (J_k - c)/(c_T(k) - c)` (paper line 235's `e_λ`). -/
+/-- `e_λ = Σ_{T ∈ SYT(λ)} Π_k Π_{c ≠ c_T(k)} (J_k - c)/(c_T(k) - c)` (paper line 224's `e_λ`). -/
 def youngIdem {N : ℕ} (lam : Shape N) : GrpAlg F N :=
   letI := Fintype.ofFinite (SYT lam)
   ∑ T : SYT lam, ((List.finRange N).map fun k => jmFactor F k (T.content k)).prod

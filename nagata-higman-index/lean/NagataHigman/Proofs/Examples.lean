@@ -1,5 +1,5 @@
 /-
-NagataHigman/Proofs/Examples.lean — the worked examples of short paper v1.03 (steps (1), (6) of Proposition 2.1; Section 4.1).
+NagataHigman/Proofs/Examples.lean — the worked examples of short paper v1.04 (steps (1), (6) of Proposition 2.1; Section 4.1).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import NagataHigman.Defs.WordCycle
@@ -25,7 +25,7 @@ local notation "w₅" => (⟨![0, 3, 1, 2], ![0, 2, 3, 1], by decide, by decide�
 
 /-! ## Step (1) -/
 
--- l. 298-300: Φ(x2x3x1) is the 4-cycle 4→2→3→1→4.
+-- l. 287-289: Φ(x2x3x1) is the 4-cycle 4→2→3→1→4.
 theorem ex_step1 :
     multilinWord F (finRotate 3) = letter F 1 * letter F 2 * letter F 0 ∧
       wordCycle (finRotate 3) 3 = 1 ∧ wordCycle (finRotate 3) 1 = 2 ∧ wordCycle (finRotate 3) 2 = 0 ∧
@@ -74,7 +74,7 @@ theorem firstReturn_apply_of_not_mem {N : ℕ} {τ : Perm (Fin N)} {X : Finset (
   show firstReturnFun τ X x = _
   rw [firstReturnFun, ite_eq_right hx]
 
--- l. 341: τ̄ = (1 3 4) (Lean: 0 → 2 → 3 → 0).
+-- l. 330: τ̄ = (1 3 4) (Lean: 0 → 2 → 3 → 0).
 theorem ex_step6_return :
     firstReturn (wordCycle (1 : Equiv.Perm (Fin 4))) {0, 2, 3} = List.formPerm [0, 2, 3] := by
   ext x : 1
@@ -85,7 +85,7 @@ theorem ex_step6_return :
   · rw [firstReturn_apply_of_mem (by decide) returnTime_ex3]; decide
   · rw [firstReturn_apply_of_not_mem (by decide)]; decide
 
--- l. 341: the arcs (2,3), (4) and Arc_0 = (5,1).
+-- l. 330: the arcs (2,3), (4) and Arc_0 = (5,1).
 theorem ex_step6_arcs :
     arc (wordCycle (1 : Equiv.Perm (Fin 4))) {0, 2, 3} 0 = [1, 2] ∧
       arc (wordCycle (1 : Equiv.Perm (Fin 4))) {0, 2, 3} 2 = [3] ∧
@@ -132,7 +132,7 @@ theorem mem_Pi_iff (π : Perm (Fin 5)) :
   decide +kernel
 
 open Classical in
--- l. 342: Π = {1, τ̄}.
+-- l. 331: Π = {1, τ̄}.
 theorem ex_step6_Pi :
     Finset.univ.filter (fun π : Equiv.Perm (Fin 5) =>
         π.support ⊆ {0, 2, 3} ∧ IsFullCycle (wordCycle (1 : Equiv.Perm (Fin 4)) * π)) =
@@ -163,7 +163,7 @@ theorem perm_mul_altSum_eq {N : ℕ} (τ : Perm (Fin N)) (X : Finset (Fin N)) :
   refine Finset.sum_congr rfl fun π _ => ?_
   rw [mul_smul_comm, perm_mul_perm']
 
--- l. 342: Φ⁻¹P(τE_K) = x1x2x3x4 + x1x4x2x3, i.e. P(τE_K) = τ + Φ(x1x4x2x3).
+-- l. 331: Φ⁻¹P(τE_K) = x1x2x3x4 + x1x4x2x3, i.e. P(τE_K) = τ + Φ(x1x4x2x3).
 theorem ex_step6_sum :
     cycleProj F 5 (perm F (wordCycle (1 : Equiv.Perm (Fin 4))) * altSum F {0, 2, 3}) =
       perm F (wordCycle (1 : Equiv.Perm (Fin 4))) +
@@ -190,7 +190,7 @@ theorem symSum_two {R : Type*} [NonUnitalRing R] (y : Fin 2 → R) : symSum 2 y 
   rw [show (Finset.univ : Finset (Perm (Fin 2))) = {1, swap 0 1} by decide, Finset.sum_pair (by decide)]
   rfl
 
--- l. 342: x1x2x3x4 + x1x4x2x3 = x1 · L(x2x3, x4).
+-- l. 331: x1x2x3x4 + x1x4x2x3 = x1 · L(x2x3, x4).
 theorem ex_step6_word :
     multilinWord F (1 : Equiv.Perm (Fin 4)) +
         multilinWord F (⟨![0, 3, 1, 2], ![0, 2, 3, 1], by decide, by decide⟩ : Equiv.Perm (Fin 4)) =
@@ -206,7 +206,7 @@ theorem ex_step6_word :
 
 /-! ## Section 4.1: `ν` for `n = 3` -/
 
--- l. 396-398 and l. 509: ν = (3,3,2), its cells, its two corners, and h(ν) = (5,3).
+-- l. 385-387 and l. 498: ν = (3,3,2), its cells, its two corners, and h(ν) = (5,3).
 theorem ex_nu_three (lam : Shape 8) (h : lam.InBox 3) :
     lam.parts = {3, 3, 2} ∧
       (∀ i j : ℕ, (i, j) ∈ lam.diagram ↔ (i, j) ∈ ({(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1)} :

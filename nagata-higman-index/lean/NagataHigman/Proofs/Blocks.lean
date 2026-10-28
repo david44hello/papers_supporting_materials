@@ -39,7 +39,7 @@ lemma perm_one : perm F (1 : Perm (Fin N)) = 1 := by
 lemma coeffPairing_perm (a : GrpAlg F N) (σ : Perm (Fin N)) : coeffPairing F a (perm F σ) = a.coeff σ := by
   simp [coeffPairing, coeff_perm]
 
-/-- **(F3)**, nondegeneracy (paper line 243): `⟨a, b⟩ = 0` for all `b` forces `a = 0`. -/
+/-- **(F3)**, nondegeneracy (paper line 232): `⟨a, b⟩ = 0` for all `b` forces `a = 0`. -/
 theorem coeffPairing_nondegenerate (a : GrpAlg F N) (h : ∀ b : GrpAlg F N, coeffPairing F a b = 0) : a = 0 := by
   apply MonoidAlgebra.ext
   ext σ

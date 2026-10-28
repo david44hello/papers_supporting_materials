@@ -6,7 +6,7 @@ Author: Dave Goel. Copyright (C) Dave Goel 2026--now. All rights reserved.
 
 This folder is a formal proof, checked by the Lean 4 proof assistant, of every numbered result of the paper
 "Improving Razmyslov's (1974) bound: the Nagata–Higman index is at most n² − 2 for n ≥ 3" by Dave Goel, with the named
-steps of its proofs, its remarks and its worked examples. Lean checked version 1.03 of the paper. The paper's link will
+steps of its proofs, its remarks and its worked examples. Lean checked version 1.04 of the paper. The paper's link will
 be added here when it is posted.
 
 ## The theorems, in plain words
@@ -65,7 +65,7 @@ of every statement, so a referee checks only that the definitions ([NagataHigman
 - In 10 places Lean proves a step by another argument than the paper's text (for example, where the paper uses the
   branching rule (F5), Burnside's theorem (F6) or the last sentence of (T1), Lean proves the consequence that the proof
   needs); [AUDIT.md](AUDIT.md) lists them under "Route differences", and `scripts/route_check.lean` checks the list.
-- Line numbers in Paper/Statements.lean, Defs/ and Cited/ refer to the LaTeX source of version 1.03 of the paper; a few
+- Line numbers in Paper/Statements.lean, Defs/ and Cited/ refer to the LaTeX source of version 1.04 of the paper; a few
   comments (in Proofs/ and in Defs/FirstReturn.lean) cite an earlier draft and say so ("v1.02 line ...").
 
 ## How to check it yourself
@@ -76,7 +76,7 @@ repository:
 ```bash
 git clone https://github.com/david44hello/papers_supporting_materials.git
 cd papers_supporting_materials/nagata-higman-index/lean
-git checkout nagata-higman-index-v1.03   # the version the paper cites
+git checkout nagata-higman-index-v1.04   # the version the paper cites
 lake exe cache get      # downloads prebuilt Mathlib files (it does not compile Mathlib)
 lake build
 bash scripts/check.sh   # build, scan for proof holes (sorry, admit, native_decide, ...), regenerate AUDIT.md
