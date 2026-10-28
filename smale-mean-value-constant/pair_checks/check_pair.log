@@ -1,0 +1,17 @@
+$ python3 check_pair.py --test
+CONTROL WRONG: FileNotFoundError: [Errno 2] No such file or directory: 'no_such_pair_file.json'
+tests 13/13 OK
+exit 0
+$ python3 check_pair.py ../pairs/pair_I_K2N18.json --bound 1.1559837
+(D)  |b|, |a_j| < 1; distinct; Q(b) = Q(a_j) = 0; Q' = dQ/dz; H matches Q: (True, True, True, True, True) -> PASS
+(C') Z = (z - 1)^5; points on the circle, orders as in the file: True; R (degree 12) has no zero in the closed disk (Schur-Cohn, 12 steps): True -> PASS
+(S)  H' has no zero in the closed disk (Schur-Cohn, 17 steps): PASS
+(J)  J = 2679525219362263370274816001747955444675871769085742015997/2005184811347697816912979513414954793585480256604979855360 = the file's J; 1.1559837 <= sqrt(J) < 1.1559837 + 1e-7: PASS (sqrt(J) ~ 1.1559837292)
+   ... 200 of 1128 primes
+   ... 400 of 1128 primes
+   ... 600 of 1128 primes
+   ... 800 of 1128 primes
+   ... 1000 of 1128 primes
+(R)  Res_w(P_c, P_c*) exact: {'formal degree': 17, 'degree bound 2(n-1)^2': 578, 'degree': 578, 'primes': 1128, 'held-back nodes fit': True, 'imaginary part 0': True, 'Descartes tests': 47, 'no zero in [-1, 1]': True, 'zero search': 'no zero', 'seconds': 468.5} -> PASS
+LEMMA 8.6 for ../pairs/pair_I_K2N18.json with k = 2, n = 18: PASS
+exit 0

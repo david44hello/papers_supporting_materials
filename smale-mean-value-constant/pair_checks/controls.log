@@ -1,0 +1,66 @@
+$ python3 make_controls.py ../pairs controls
+wrote controls/ctl_R_pair_I_Hs.json
+wrote controls/ctl_S_pair_XVII_Hs.json
+wrote controls/ctl_D_pair_XVII_a.json
+wrote controls/ctl_C_pair_XVII_m4.json
+exit 0
+$ python3 check_pair.py ../pairs/pair_XVII_T6.json --bound 1.1143767 --expect J
+(D)  |b|, |a_j| < 1; distinct; Q(b) = Q(a_j) = 0; Q' = dQ/dz; H matches Q: (True, True, True, True, True) -> PASS
+(C') Z = (z - 1)^3; points on the circle, orders as in the file: True; R (degree 2) has no zero in the closed disk (Schur-Cohn, 2 steps): True -> PASS
+(S)  H' has no zero in the closed disk (Schur-Cohn, 5 steps): PASS
+(J)  J = 1273642604564325205470736505/1025613152323668825193054208 = the file's J; 1.1143767 <= sqrt(J) < 1.1143767 + 1e-7: FAIL (sqrt(J) ~ 1.1143766366)
+(R)  Res_w(P_c, P_c*) exact: {'formal degree': 5, 'degree bound 2(n-1)^2': 50, 'degree': 50, 'primes': 50, 'held-back nodes fit': True, 'imaginary part 0': True, 'Descartes tests': 15, 'no zero in [-1, 1]': True, 'zero search': 'no zero', 'seconds': 0.2} -> PASS
+LEMMA 8.6 for ../pairs/pair_XVII_T6.json with k = 1, n = 6: FAIL
+CONTROL: exactly (J) fail, as required
+exit 0
+$ python3 check_pair.py ../pairs/pair_XVII_T6.json --bound 1.1143765 --expect J
+(D)  |b|, |a_j| < 1; distinct; Q(b) = Q(a_j) = 0; Q' = dQ/dz; H matches Q: (True, True, True, True, True) -> PASS
+(C') Z = (z - 1)^3; points on the circle, orders as in the file: True; R (degree 2) has no zero in the closed disk (Schur-Cohn, 2 steps): True -> PASS
+(S)  H' has no zero in the closed disk (Schur-Cohn, 5 steps): PASS
+(J)  J = 1273642604564325205470736505/1025613152323668825193054208 = the file's J; 1.1143765 <= sqrt(J) < 1.1143765 + 1e-7: FAIL (sqrt(J) ~ 1.1143766366)
+(R)  Res_w(P_c, P_c*) exact: {'formal degree': 5, 'degree bound 2(n-1)^2': 50, 'degree': 50, 'primes': 50, 'held-back nodes fit': True, 'imaginary part 0': True, 'Descartes tests': 15, 'no zero in [-1, 1]': True, 'zero search': 'no zero', 'seconds': 0.2} -> PASS
+LEMMA 8.6 for ../pairs/pair_XVII_T6.json with k = 1, n = 6: FAIL
+CONTROL: exactly (J) fail, as required
+exit 0
+$ python3 check_pair.py controls/ctl_D_pair_XVII_a.json --bound 1.1143766 --expect D,J
+(D)  |b|, |a_j| < 1; distinct; Q(b) = Q(a_j) = 0; Q' = dQ/dz; H matches Q: (True, True, False, True, False) -> FAIL
+(C') Z = (z - 1)^3; points on the circle, orders as in the file: True; R (degree 2) has no zero in the closed disk (Schur-Cohn, 2 steps): True -> PASS
+(S)  H' has no zero in the closed disk (Schur-Cohn, 5 steps): PASS
+(J)  J = 135637842727563181656058473412117/109223698230618977721832492236800 = the file's J; 1.1143766 <= sqrt(J) < 1.1143766 + 1e-7: FAIL (sqrt(J) ~ 1.1143766364)
+(R)  Res_w(P_c, P_c*) exact: {'formal degree': 5, 'degree bound 2(n-1)^2': 50, 'degree': 50, 'primes': 50, 'held-back nodes fit': True, 'imaginary part 0': True, 'Descartes tests': 15, 'no zero in [-1, 1]': True, 'zero search': 'no zero', 'seconds': 0.2} -> PASS
+LEMMA 8.6 for controls/ctl_D_pair_XVII_a.json with k = 1, n = 6: FAIL
+CONTROL: exactly (D, J) fail, as required
+exit 0
+$ python3 check_pair.py controls/ctl_C_pair_XVII_m4.json --bound 1.1143766 --expect C'
+(D)  |b|, |a_j| < 1; distinct; Q(b) = Q(a_j) = 0; Q' = dQ/dz; H matches Q: (True, True, True, True, True) -> PASS
+(C') Z = (z - 1)^3; points on the circle, orders as in the file: False; R (degree 2) has no zero in the closed disk (Schur-Cohn, 2 steps): True -> FAIL
+(S)  H' has no zero in the closed disk (Schur-Cohn, 5 steps): PASS
+(J)  J = 1273642604564325205470736505/1025613152323668825193054208 = the file's J; 1.1143766 <= sqrt(J) < 1.1143766 + 1e-7: PASS (sqrt(J) ~ 1.1143766366)
+(R)  Res_w(P_c, P_c*) exact: {'formal degree': 5, 'degree bound 2(n-1)^2': 50, 'degree': 50, 'primes': 50, 'held-back nodes fit': True, 'imaginary part 0': True, 'Descartes tests': 15, 'no zero in [-1, 1]': True, 'zero search': 'no zero', 'seconds': 0.2} -> PASS
+LEMMA 8.6 for controls/ctl_C_pair_XVII_m4.json with k = 1, n = 6: FAIL
+CONTROL: exactly (C') fail, as required
+exit 0
+$ python3 check_pair.py controls/ctl_S_pair_XVII_Hs.json --bound 1.1143766 --expect D,S,R
+(D)  |b|, |a_j| < 1; distinct; Q(b) = Q(a_j) = 0; Q' = dQ/dz; H matches Q: (True, True, True, True, False) -> FAIL
+(C') Z = (z - 1)^3; points on the circle, orders as in the file: True; R (degree 2) has no zero in the closed disk (Schur-Cohn, 2 steps): True -> PASS
+(S)  H' has no zero in the closed disk (Schur-Cohn, 1 steps): FAIL
+(J)  J = 1273642604564325205470736505/1025613152323668825193054208 = the file's J; 1.1143766 <= sqrt(J) < 1.1143766 + 1e-7: PASS (sqrt(J) ~ 1.1143766366)
+(R)  Res_w(P_c, P_c*) exact: {'formal degree': 5, 'degree bound 2(n-1)^2': 50, 'degree': 50, 'primes': 50, 'held-back nodes fit': True, 'imaginary part 0': True, 'Descartes tests': 7, 'no zero in [-1, 1]': False, 'zero search': 'a zero in (-1, 1) (one sign variation)', 'seconds': 0.3} -> FAIL
+LEMMA 8.6 for controls/ctl_S_pair_XVII_Hs.json with k = 1, n = 6: FAIL
+CONTROL: exactly (D, R, S) fail, as required
+exit 0
+$ python3 check_pair.py controls/ctl_R_pair_I_Hs.json --bound 1.1559837 --expect D,R
+(D)  |b|, |a_j| < 1; distinct; Q(b) = Q(a_j) = 0; Q' = dQ/dz; H matches Q: (True, True, True, True, False) -> FAIL
+(C') Z = (z - 1)^5; points on the circle, orders as in the file: True; R (degree 12) has no zero in the closed disk (Schur-Cohn, 12 steps): True -> PASS
+(S)  H' has no zero in the closed disk (Schur-Cohn, 17 steps): PASS
+(J)  J = 2679525219362263370274816001747955444675871769085742015997/2005184811347697816912979513414954793585480256604979855360 = the file's J; 1.1559837 <= sqrt(J) < 1.1559837 + 1e-7: PASS (sqrt(J) ~ 1.1559837292)
+   ... 200 of 1292 primes
+   ... 400 of 1292 primes
+   ... 600 of 1292 primes
+   ... 800 of 1292 primes
+   ... 1000 of 1292 primes
+   ... 1200 of 1292 primes
+(R)  Res_w(P_c, P_c*) exact: {'formal degree': 17, 'degree bound 2(n-1)^2': 578, 'degree': 578, 'primes': 1292, 'held-back nodes fit': True, 'imaginary part 0': True, 'Descartes tests': 17, 'no zero in [-1, 1]': False, 'zero search': 'a zero in (-1, 1) (one sign variation)', 'seconds': 516.6} -> FAIL
+LEMMA 8.6 for controls/ctl_R_pair_I_Hs.json with k = 2, n = 18: FAIL
+CONTROL: exactly (D, R) fail, as required
+exit 0
