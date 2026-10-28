@@ -1,0 +1,96 @@
+self-conjugate shapes N<=9: [(), (1,), (2, 1), (2, 2), (3, 1, 1), (3, 2, 1), (4, 1, 1, 1), (4, 2, 1, 1), (3, 3, 2), (5, 1, 1, 1, 1), (3, 3, 3)]
+lam=() N=0: dim=1 -> AltSplit impossible (needs two nonzero complementary subspaces); the guard 2 <= N is ESSENTIAL
+lam=(1,) N=1: dim=1 -> AltSplit impossible (needs two nonzero complementary subspaces); the guard 2 <= N is ESSENTIAL
+lam=(2, 1) N=3 dim=2 h=[3] Gamma^2=-4/3 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (3,): chi=-1 psi=tr(rho Gamma)=2 ok=True valueOK=True  <-- h(lam)
+    even type (1, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+lam=(2, 2) N=4 dim=2 h=[3, 1] Gamma^2=-4/3 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (3, 1): chi=-1 psi=tr(rho Gamma)=2 ok=True valueOK=True  <-- h(lam)
+    even type (2, 2): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (1, 1, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+lam=(3, 1, 1) N=5 dim=6 h=[5] Gamma^2=9/5 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (5,): chi=1 psi=tr(rho Gamma)=-3 ok=True valueOK=True  <-- h(lam)
+    even type (3, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 1): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (1, 1, 1, 1, 1): chi=6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+lam=(3, 2, 1) N=6 dim=16 h=[5, 1] Gamma^2=16/5 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (5, 1): chi=1 psi=tr(rho Gamma)=4 ok=True valueOK=True  <-- h(lam)
+    even type (4, 2): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 3): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 1, 1, 1): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (1, 1, 1, 1, 1, 1): chi=16 psi=tr(rho Gamma)=0 ok=True valueOK=None
+lam=(4, 1, 1, 1) N=7 dim=20 h=[7] Gamma^2=-16/7 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (7,): chi=-1 psi=tr(rho Gamma)=-4 ok=True valueOK=True  <-- h(lam)
+    even type (5, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 2, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 3, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 2, 2): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 1, 1, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 1, 1, 1): chi=-4 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (1, 1, 1, 1, 1, 1, 1): chi=20 psi=tr(rho Gamma)=0 ok=True valueOK=None
+lam=(4, 2, 1, 1) N=8 dim=90 h=[7, 1] Gamma^2=-36/7 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (7, 1): chi=-1 psi=tr(rho Gamma)=-6 ok=True valueOK=True  <-- h(lam)
+    even type (6, 2): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (5, 3): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (5, 1, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 4): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 2, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 3, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 2, 2, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 1, 1, 1, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 2, 2): chi=-6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 1, 1, 1, 1): chi=-6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (1, 1, 1, 1, 1, 1, 1, 1): chi=90 psi=tr(rho Gamma)=0 ok=True valueOK=None
+lam=(3, 3, 2) N=8 dim=42 h=[5, 3] Gamma^2=-27/5 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (7, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (6, 2): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (5, 3): chi=-1 psi=tr(rho Gamma)=-9 ok=True valueOK=True  <-- h(lam)
+    even type (5, 1, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 4): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 2, 1, 1): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 3, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 2, 2, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 1, 1, 1, 1, 1): chi=-6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 2, 2): chi=-6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 1, 1, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (1, 1, 1, 1, 1, 1, 1, 1): chi=42 psi=tr(rho Gamma)=0 ok=True valueOK=None
+lam=(5, 1, 1, 1, 1) N=9 dim=70 h=[9] Gamma^2=25/9 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (9,): chi=1 psi=tr(rho Gamma)=5 ok=True valueOK=True  <-- h(lam)
+    even type (7, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (6, 2, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (5, 3, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (5, 2, 2): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (5, 1, 1, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 4, 1): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 3, 2): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 2, 1, 1, 1): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 3, 3): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 3, 1, 1, 1): chi=4 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 2, 2, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 1, 1, 1, 1, 1, 1): chi=10 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 2, 2, 1): chi=6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 1, 1, 1, 1, 1): chi=-10 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (1, 1, 1, 1, 1, 1, 1, 1, 1): chi=70 psi=tr(rho Gamma)=0 ok=True valueOK=None
+lam=(3, 3, 3) N=9 dim=42 h=[5, 3, 1] Gamma^2=-27/5 trGamma=0 dimEnd_AN=2 frobOK=True
+    even type (9,): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (7, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (6, 2, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (5, 3, 1): chi=-1 psi=tr(rho Gamma)=-9 ok=True valueOK=True  <-- h(lam)
+    even type (5, 2, 2): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (5, 1, 1, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 4, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 3, 2): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (4, 2, 1, 1, 1): chi=-2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 3, 3): chi=6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 3, 1, 1, 1): chi=0 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 2, 2, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (3, 1, 1, 1, 1, 1, 1): chi=-6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 2, 2, 1): chi=-6 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (2, 2, 1, 1, 1, 1, 1): chi=2 psi=tr(rho Gamma)=0 ok=True valueOK=None
+    even type (1, 1, 1, 1, 1, 1, 1, 1, 1): chi=42 psi=tr(rho Gamma)=0 ok=True valueOK=None
+ALL OK
+
+real	0m4.791s
+user	0m4.642s
+sys	0m0.018s

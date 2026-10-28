@@ -1,0 +1,126 @@
+
+=== N = 0: 1 permutations, shapes/dims {(): 1}  (0.0s)
+  (a) rho homomorphism  PASS  [instances 1] all pairs + Cayley edges + Coxeter
+  (b) wedderburn        PASS  [instances 1] sum f^2 = 1 = N!, rank 1 (exact over Q)
+  (c) fourier           PASS  [instances 4] all basis elements (a proof) + 3 random integer a
+  (d) youngBasis        PASS  [instances 0] #SYT(Lean def) = f^lam; rho(J_k) = diag(c_T(k)) for all T, k
+  (e) restriction       PASS  [instances 0] vacuous: no top : Fin 0
+  (f) signTwist         PASS  [instances 1] invertible Gamma, all sigma; solution-space dims ()->():dim1
+  (g) frobenius         PASS  [instances 0] self-conjugate shapes [()]; constrained (Gamma, sigma) instances = 0
+        (): h=[], sol.dim=1, nonzero at partitions {(): (1, 1)} (even sigma of that type, nonzero count); tr^2/Gamma^2 = {Fraction(1, 1)} vs eps*prod(h) = 1
+  (h) edge-case reading:
+        Shape 0 = [()], dims [1] (= #SYT by Lean def), |Perm(Fin 0)| = 1, rho(id) = I_dim
+        youngBasis: k : Fin 0 is empty; basis of F^1 indexed by the 1 tableau of the empty shape
+        restriction: no top : Fin 0 -> vacuous
+        signTwist: conjugate pairs [((), ())]
+        frobenius: self-conjugate [()]; partition(id) = [], h = [[]]; constrained (lam, even sigma) pairs: 0 -> vacuous
+
+=== N = 1: 1 permutations, shapes/dims {(1,): 1}  (0.0s)
+  (a) rho homomorphism  PASS  [instances 1] all pairs + Cayley edges + Coxeter
+  (b) wedderburn        PASS  [instances 1] sum f^2 = 1 = N!, rank 1 (exact over Q)
+  (c) fourier           PASS  [instances 4] all basis elements (a proof) + 3 random integer a
+  (d) youngBasis        PASS  [instances 1] #SYT(Lean def) = f^lam; rho(J_k) = diag(c_T(k)) for all T, k
+  (e) restriction       PASS  [instances 1] dim span = dim commutant: (1,):1=1
+  (f) signTwist         PASS  [instances 1] invertible Gamma, all sigma; solution-space dims (1,)->(1,):dim1
+  (g) frobenius         PASS  [instances 0] self-conjugate shapes [(1,)]; constrained (Gamma, sigma) instances = 0
+        (1,): h=[1], sol.dim=1, nonzero at partitions {(1,): (1, 1)} (even sigma of that type, nonzero count); tr^2/Gamma^2 = {Fraction(1, 1)} vs eps*prod(h) = 1
+  (h) edge-case reading:
+        Shape 1 = [(1,)], dims [1] (= #SYT by Lean def), |Perm(Fin 1)| = 1, rho(id) = I_dim
+        youngBasis: k ranges over Fin 1 (1 values); J_0 = 0 = content of entry 0 (cell (0,0))
+        restriction: top = 0, |Stab(top)| = 1
+        signTwist: conjugate pairs [((1,), (1,))]
+        frobenius: self-conjugate [(1,)]; partition(id) = [1], h = [[1]]; constrained (lam, even sigma) pairs: 0 -> vacuous
+
+=== N = 2: 2 permutations, shapes/dims {(2,): 1, (1, 1): 1}  (0.0s)
+  (a) rho homomorphism  PASS  [instances 12] all pairs + Cayley edges + Coxeter
+  (b) wedderburn        PASS  [instances 1] sum f^2 = 2 = N!, rank 2 (exact over Q)
+  (c) fourier           PASS  [instances 8] all basis elements (a proof) + 3 random integer a
+  (d) youngBasis        PASS  [instances 4] #SYT(Lean def) = f^lam; rho(J_k) = diag(c_T(k)) for all T, k
+  (e) restriction       PASS  [instances 2] dim span = dim commutant: (2,):1=1 (1, 1):1=1
+  (f) signTwist         PASS  [instances 2] invertible Gamma, all sigma; solution-space dims (2,)->(1, 1):dim1 (1, 1)->(2,):dim1
+  (g) frobenius         PASS  [instances 0] self-conjugate shapes []; constrained (Gamma, sigma) instances = 0
+  (h) edge-case reading:
+        Shape 2 = [(2,), (1, 1)], dims [1, 1] (= #SYT by Lean def), |Perm(Fin 2)| = 2, rho(id) = I_dim
+        youngBasis: k ranges over Fin 2 (2 values); J_0 = 0 = content of entry 0 (cell (0,0))
+        restriction: top = 1, |Stab(top)| = 1
+        signTwist: conjugate pairs [((2,), (1, 1)), ((1, 1), (2,))]
+        frobenius: self-conjugate []; partition(id) = [1, 1], h = []; constrained (lam, even sigma) pairs: 0 -> vacuous
+
+=== N = 3: 6 permutations, shapes/dims {(3,): 1, (2, 1): 2, (1, 1, 1): 1}  (0.0s)
+  (a) rho homomorphism  PASS  [instances 144] all pairs + Cayley edges + Coxeter
+  (b) wedderburn        PASS  [instances 1] sum f^2 = 6 = N!, rank 6 (exact over Q)
+  (c) fourier           PASS  [instances 24] all basis elements (a proof) + 3 random integer a
+  (d) youngBasis        PASS  [instances 12] #SYT(Lean def) = f^lam; rho(J_k) = diag(c_T(k)) for all T, k
+  (e) restriction       PASS  [instances 3] dim span = dim commutant: (3,):1=1 (2, 1):2=2 (1, 1, 1):1=1
+  (f) signTwist         PASS  [instances 3] invertible Gamma, all sigma; solution-space dims (3,)->(1, 1, 1):dim1 (2, 1)->(2, 1):dim1 (1, 1, 1)->(3,):dim1
+  (g) frobenius         PASS  [instances 1] self-conjugate shapes [(2, 1)]; constrained (Gamma, sigma) instances = 1
+        (2, 1): h=[3], sol.dim=1, nonzero at partitions {(3,): (2, 2)} (even sigma of that type, nonzero count); tr^2/Gamma^2 = {Fraction(-3, 1)} vs eps*prod(h) = -3
+
+=== N = 4: 24 permutations, shapes/dims {(4,): 1, (3, 1): 3, (2, 2): 2, (2, 1, 1): 3, (1, 1, 1, 1): 1}  (0.1s)
+  (a) rho homomorphism  PASS  [instances 3240] all pairs + Cayley edges + Coxeter
+  (b) wedderburn        PASS  [instances 1] sum f^2 = 24 = N!, rank 24 (exact over Q)
+  (c) fourier           PASS  [instances 96] all basis elements (a proof) + 3 random integer a
+  (d) youngBasis        PASS  [instances 40] #SYT(Lean def) = f^lam; rho(J_k) = diag(c_T(k)) for all T, k
+  (e) restriction       PASS  [instances 5] dim span = dim commutant: (4,):1=1 (3, 1):5=5 (2, 2):4=4 (2, 1, 1):5=5 (1, 1, 1, 1):1=1
+  (f) signTwist         PASS  [instances 5] invertible Gamma, all sigma; solution-space dims (4,)->(1, 1, 1, 1):dim1 (3, 1)->(2, 1, 1):dim1 (2, 2)->(2, 2):dim1 (2, 1, 1)->(3, 1):dim1 (1, 1, 1, 1)->(4,):dim1
+  (g) frobenius         PASS  [instances 4] self-conjugate shapes [(2, 2)]; constrained (Gamma, sigma) instances = 4
+        (2, 2): h=[3, 1], sol.dim=1, nonzero at partitions {(3, 1): (8, 8)} (even sigma of that type, nonzero count); tr^2/Gamma^2 = {Fraction(-3, 1)} vs eps*prod(h) = -3
+
+=== N = 5: 120 permutations, shapes/dims {(5,): 1, (4, 1): 4, (3, 2): 5, (3, 1, 1): 6, (2, 2, 1): 5, (2, 1, 1, 1): 4, (1, 1, 1, 1, 1): 1}  (1.8s)
+  (a) rho homomorphism  PASS  [instances 3360] Cayley edges + Coxeter (a proof)
+  (b) wedderburn        PASS  [instances 1] sum f^2 = 120 = N!, rank 120 (exact over Q)
+  (c) fourier           PASS  [instances 480] all basis elements (a proof) + 3 random integer a
+  (d) youngBasis        PASS  [instances 130] #SYT(Lean def) = f^lam; rho(J_k) = diag(c_T(k)) for all T, k
+  (e) restriction       PASS  [instances 7] dim span = dim commutant: (5,):1=1 (4, 1):10=10 (3, 2):13=13 (3, 1, 1):18=18 (2, 2, 1):13=13 (2, 1, 1, 1):10=10 (1, 1, 1, 1, 1):1=1
+  (f) signTwist         PASS  [instances 7] invertible Gamma, all sigma; solution-space dims (5,)->(1, 1, 1, 1, 1):dim1 (4, 1)->(2, 1, 1, 1):dim1 (3, 2)->(2, 2, 1):dim1 (3, 1, 1)->(3, 1, 1):dim1 (2, 2, 1)->(3, 2):dim1 (2, 1, 1, 1)->(4, 1):dim1 (1, 1, 1, 1, 1)->(5,):dim1
+  (g) frobenius         PASS  [instances 36] self-conjugate shapes [(3, 1, 1)]; constrained (Gamma, sigma) instances = 36
+        (3, 1, 1): h=[5], sol.dim=1, nonzero at partitions {(5,): (24, 24)} (even sigma of that type, nonzero count); tr^2/Gamma^2 = {Fraction(5, 1)} vs eps*prod(h) = 5
+
+=== N = 6: 720 permutations, shapes/dims {(6,): 1, (5, 1): 5, (4, 2): 9, (4, 1, 1): 10, (3, 3): 5, (3, 2, 1): 16, (3, 1, 1, 1): 10, (2, 2, 2): 5, (2, 2, 1, 1): 9, (2, 1, 1, 1, 1): 5, (1, 1, 1, 1, 1, 1): 1}  (17.6s)
+  (a) rho homomorphism  PASS  [instances 39600] Cayley edges + Coxeter (a proof)
+  (b) wedderburn        PASS  [instances 1] sum f^2 = 720 = N!, rank 720 (mod 16777213 (lower bound for rank over Q))
+  (c) fourier           PASS  [instances 1440] all basis elements (a proof) + 1 random integer a
+  (d) youngBasis        PASS  [instances 456] #SYT(Lean def) = f^lam; rho(J_k) = diag(c_T(k)) for all T, k
+  (e) restriction       PASS  [instances 11] dim span = dim commutant: (6,):1=1 (5, 1):17=17 (4, 2):41=41 (4, 1, 1):52=52 (3, 3):25=25 (3, 2, 1):86=86 (3, 1, 1, 1):52=52 (2, 2, 2):25=25 (2, 2, 1, 1):41=41 (2, 1, 1, 1, 1):17=17 (1, 1, 1, 1, 1, 1):1=1
+  (f) signTwist         PASS  [instances 11] invertible Gamma, all sigma; solution-space dims (6,)->(1, 1, 1, 1, 1, 1):dim1 (5, 1)->(2, 1, 1, 1, 1):dim1 (4, 2)->(2, 2, 1, 1):dim1 (4, 1, 1)->(3, 1, 1, 1):dim1 (3, 3)->(2, 2, 2):dim1 (3, 2, 1)->(3, 2, 1):dim1 (3, 1, 1, 1)->(4, 1, 1):dim1 (2, 2, 2)->(3, 3):dim1 (2, 2, 1, 1)->(4, 2):dim1 (2, 1, 1, 1, 1)->(5, 1):dim1 (1, 1, 1, 1, 1, 1)->(6,):dim1
+  (g) frobenius         PASS  [instances 216] self-conjugate shapes [(3, 2, 1)]; constrained (Gamma, sigma) instances = 216
+        (3, 2, 1): h=[5, 1], sol.dim=1, nonzero at partitions {(5, 1): (144, 144)} (even sigma of that type, nonzero count); tr^2/Gamma^2 = {Fraction(5, 1)} vs eps*prod(h) = 5
+
+=== Negative controls (each MUST be FAIL)
+  FAIL (as required): youngBasis with content = row - col (wrong sign), N=3 -- (3,): rho(J_1) != diag(content(T,1)); (3,): rho(J_2) != diag(content(T,2)); (2, 1): rho(J_1) != diag(content(T,1)) (+3 more)
+  FAIL (as required): frobenius with cycle type WITHOUT fixed points, N=4 (lam=(2,2)) -- (2, 2): tr(rho((0, 2, 3, 1)) Gamma) != 0, partition (3,) != h (3, 1); (2, 2): tr(rho((0, 3, 1, 2)) Gamma) != 0, partition (3,) != h (3, 1); (2, 2): tr(rho((1, 2, 0, 3)) Gamma) != 0, partition (3,) != h (3, 1) (+5 more)
+  FAIL (as required): restriction with top = 0 instead of N-1, N=3 -- (2, 1): dim span{rho(Stab 0)} = 2 (exact over Q) != dim commutant = 4
+  FAIL (as required): signTwist with the sign dropped (eps = +1), N=3 -- (3,): no invertible intertwiner (solution space dim 0); (1, 1, 1): no invertible intertwiner (solution space dim 0)
+  FAIL (as required): fourier with every f^lam replaced by 1, N=3 -- a((0, 1, 2)) = 8 but Fourier gives 13/2; a((0, 2, 1)) = 5 but Fourier gives 3; a((1, 0, 2)) = -2 but Fourier gives -1/2 (+13 more)
+
+=== (i) Paper-side probe
+  PASS  nu=(2, 1) N=3 dim=2: rho((N-2 N-1)) = -Y_(N-1) Y_(N-2) Y_(N-1): True; commutant dim 1 (exact over Q); Coxeter relations OK: True  (0.0s)
+      F_p-commutant of the diagonal Y_(N-1): dim 882
+      F_p-commutant after one more Y_j: dim 306
+      F_p-commutant after one more Y_j: dim 86
+      F_p-commutant after one more Y_j: dim 22
+      F_p-commutant after one more Y_j: dim 6
+      F_p-commutant after one more Y_j: dim 2
+      F_p-commutant after one more Y_j: dim 1
+      F_p-commutant after one more Y_j: dim 1
+  PASS  nu=(3, 3, 2) N=8 dim=42: rho((N-2 N-1)) = -Y_(N-1) Y_(N-2) Y_(N-1): True; commutant dim 1 (F_16777213-commutant dim (upper bound for Q)); Coxeter relations OK: True  (8.1s)
+
+=== (j) Kuzmin axiom at small n (extra; char 0, exact)
+  PASS  n=2: m=2: x_0..x_(m-1) not in T(x^n): True (exact; dim V_m ∩ T = 1 of 2); m+1=3: V_(m+1) ⊆ T: True (rank 6 of 6 mod p)
+  PASS  n=3: m=5: x_0..x_(m-1) not in T(x^n): True (exact; dim V_m ∩ T = 105 of 120); m+1=6: V_(m+1) ⊆ T: True (rank 720 of 720 mod p)
+
+=== SUMMARY
+  (a) rho homomorphism  PASS  N = [0, 1, 2, 3, 4, 5, 6]
+  (b) wedderburn        PASS  N = [0, 1, 2, 3, 4, 5, 6]
+  (c) fourier           PASS  N = [0, 1, 2, 3, 4, 5, 6]
+  (d) youngBasis        PASS  N = [0, 1, 2, 3, 4, 5, 6]
+  (e) restriction       PASS  N = [0, 1, 2, 3, 4, 5, 6]
+  (f) signTwist         PASS  N = [0, 1, 2, 3, 4, 5, 6]
+  (g) frobenius         PASS  N = [0, 1, 2, 3, 4, 5, 6]
+  (h) edge cases N=0,1,2      PASS
+  (i) paper probe [(2, 1), (3, 3, 2)]  PASS
+  (j) Kuzmin n = [2, 3]      PASS
+  negative controls           all FAIL as required
+
+Total time 35.6s.  OVERALL: ALL PASS
+exit=0
