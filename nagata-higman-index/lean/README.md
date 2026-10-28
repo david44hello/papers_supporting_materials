@@ -74,7 +74,7 @@ of every statement, so a referee checks only that the definitions ([NagataHigman
 - The general fact in the parenthesis of (F1) (multihomogeneous components, by a Vandermonde argument) is not proved;
   Lean's route (polarization) does not need it (route difference 2).
 - Line numbers in Paper/Statements.lean and AUDIT.md refer to the LaTeX source of version 1.10 of the paper; for
-  version 1.11, add 3 after line 214 and 6 after line 656. Some comments in other files cite an earlier draft (several
+  version 1.11, add 3 to lines 215–656 and 6 to lines 657 onward. Some comments in other files cite an earlier draft (several
   say so: "v1.02 line ...").
 
 ## How to check it yourself
