@@ -1,0 +1,3 @@
+# stmt_diff_allow.txt — claims whose X_proved type is not IDENTICAL to the claim type ON PURPOSE, with the reason (read by scripts/stmt_diff.py).
+# Format: <full claim name> <reason>. Only the leader adds entries; every entry needs a reason.
+# version 0.21 - 20261028_0507 — no entries: the 7 index-proof cases are now the computed verdict IDENTICAL_AUX (stmt_diff.py v0.21).
