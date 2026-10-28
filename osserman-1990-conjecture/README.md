@@ -1,7 +1,7 @@
 # The Osserman (1990) conjecture is fully resolved — supporting materials
 
 For the paper "The Osserman (1990) conjecture is fully resolved" by Dave Goel.
-The paper's link will be added here when it is posted.
+The paper (version 4.00): https://doi.org/10.5281/zenodo.23744914
 
 An expanded version of the paper, with many other results, is on Zenodo:
 https://doi.org/10.5281/zenodo.23603278
