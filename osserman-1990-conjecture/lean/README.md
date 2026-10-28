@@ -1,4 +1,4 @@
-# The Osserman (1990) conjecture is fully resolved — the Lean 4 proof of Sections 1–8
+# The Osserman (1990) conjecture is fully resolved — the Lean 4 proof of most of Sections 1–8
 
 [![Lean build](https://github.com/david44hello/papers_supporting_materials/actions/workflows/lean_build.yml/badge.svg)](https://github.com/david44hello/papers_supporting_materials/actions/workflows/lean_build.yml)
 
