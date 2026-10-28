@@ -68,7 +68,8 @@ and Kastner that the paper recalls with its proof is not an assumption: Lean pro
 [HibiLi/Paper/Statements.lean](HibiLi/Paper/Statements.lean) has one Lean theorem per claim, named by the paper's
 numbering. [AUDIT.md](AUDIT.md) lists all 167 statements with their place in the paper: 142 PROVED (from Lean's
 standard axioms alone) and 25 PROVED-FROM-CITED (from the standard axioms and the cited results named in that row);
-none is open. One row, `sec5_census_n6` (a count for n = 6), is a claim of an earlier version of the paper that
+none is open. One of the 25, Proposition 3.4, is Fourier's Proposition 5.2 itself, which the paper quotes: Lean states
+it as that assumption. One row, `sec5_census_n6` (a count for n = 6), is a claim of an earlier version of the paper that
 version 2.10 no longer makes; Lean keeps it. The comment at the top of Statements.lean lists the few sentences
 deliberately not formalized: sentences that report other papers' results without using them, pointers to other
 documents, bibliographic sentences, an informal summary, and the recalled proof of a cited lemma that Lean proves by
