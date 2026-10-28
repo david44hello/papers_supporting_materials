@@ -1,0 +1,260 @@
+=== START 2026-10-27 12:07:03 EDT
+=== COMMAND bash code/run_cells.sh
+=== Python 3.12.3; python-flint 0.9.0, mpmath 1.4.1, numpy 2.5.4, scipy 1.18.1
+=== md5 of the programs:
+8ecda0566e4531aa30c106416a1f989c  code/arb_dual.py
+7d29ee7bb7a8035cb140a2056eea73db  code/badcells_arb.py
+7fa91427b4b5c48c1db1440b9de18404  code/best_constant_lp.py
+f46b34ac3c5e7dd8fa6fb2af0129e91c  code/best_constant_second.py
+655c652b33ed19c35e48f46164099e5f  code/certify_arb.py
+d39118afbffa918c4612d9e981cbe195  code/counterexample_beta_arb.py
+d3d5fd61ba2e06649640464d4b9f1f07  code/counterexample_closed_form.py
+049ecd4f6de51aefab699adbe413b19d  code/counterexample_quadrature_arb.py
+6b5df54f74bb776844dbf429b0b9d9a1  code/point_arb.py
+941894757f55ac59eba084790e3712cb  code/point_check_mpmath.py
+9bfa202c1dea600fd302df16d72c9b89  code/saddle_sign_arb.py
+14fd1bad0b3d4b234c34c25c4bd67e54  code/saddle_sign_mpmath.py
+e34a551139cd9639923215bc6930a08d  code/truepoints_arb.py
+d03c1c8ac9dbe95f3a943268390de23e  code/truepoints_mpmath.py
+b63c9268f69e8fd00bfe4af41db1c769  code/run_best_constant.sh
+48684d765663aaed055d72e1ea9e7352  code/run_cells.sh
+2429da546abc51a90026144e4932ec52  code/run_false_cells.sh
+8b29d769fbe56f694e62a2bc296d9a00  code/run_logged.sh
+dual tests passed: gradients match finite differences; mean-value bound below the true minimum
+negative control (B) failed as it must: lower bound -1.517e-03 <= 0 on [1.5, 1.5] x [0.61, 0.61] x [1.69, 1.69] (s = 4)
+negative control (A) failed as it must at s = sec^2: budget 3000 exceeded at [1.5, 1.5] x [0.0343383789, 0.034350
+(625, [5.4080733626628256140802e-6 +/- 8.05e-30], 1, [0.0025669329478717539400811 +/- 2.35e-26])
+Hessian formulas = finite differences at 200 random points
+tests done
+RUN argv = code/certify_arb.py --p-from 4/3 --p-to 19/10 --cells 114 --kappas 1/2,13/20,4/5,9/10 --ey 1/5 --et 1/5 --ymax 3 --max-boxes 200000 | python 3.12.3 | python-flint 0.9.0 | prec 80
+CELL p in [1.333333, 1.338304] (exact [4/3, 4577/3420]) kappa = 9/10 s = 256539/40000 (6.413475; above p/(p-1) by >= 2.4135): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3183 boxes, min lb 4.47e-08; (C) 1 boxes, min lb 1.19e-01; 3 s
+CELL p in [1.338304, 1.343275] (exact [4577/3420, 2297/1710]) kappa = 9/10 s = 3143279/500000 (6.286558; above p/(p-1) by >= 2.3306): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3180 boxes, min lb 2.82e-07; (C) 1 boxes, min lb 1.12e-01; 4 s
+CELL p in [1.343275, 1.348246] (exact [2297/1710, 1537/1140]) kappa = 9/10 s = 123291/20000 (6.164550; above p/(p-1) by >= 2.2514): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3233 boxes, min lb 1.01e-07; (C) 1 boxes, min lb 1.05e-01; 5 s
+CELL p in [1.348246, 1.353216] (exact [1537/1140, 1157/855]) kappa = 9/10 s = 755899/125000 (6.047192; above p/(p-1) by >= 2.1757): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3213 boxes, min lb 1.38e-07; (C) 1 boxes, min lb 9.82e-02; 4 s
+CELL p in [1.353216, 1.358187] (exact [1157/855, 929/684]) kappa = 9/10 s = 5934241/1000000 (5.934241; above p/(p-1) by >= 2.1031): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3233 boxes, min lb 1.58e-08; (C) 1 boxes, min lb 9.17e-02; 4 s
+CELL p in [1.358187, 1.363158] (exact [929/684, 259/190]) kappa = 9/10 s = 5825469/1000000 (5.825469; above p/(p-1) by >= 2.0336): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3262 boxes, min lb 1.92e-07; (C) 1 boxes, min lb 8.53e-02; 4 s
+CELL p in [1.363158, 1.368129] (exact [259/190, 4679/3420]) kappa = 9/10 s = 715083/125000 (5.720664; above p/(p-1) by >= 1.9670): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3271 boxes, min lb 1.82e-07; (C) 1 boxes, min lb 7.92e-02; 4 s
+CELL p in [1.368129, 1.373099] (exact [4679/3420, 1174/855]) kappa = 9/10 s = 5619627/1000000 (5.619627; above p/(p-1) by >= 1.9032): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3305 boxes, min lb 1.18e-08; (C) 1 boxes, min lb 7.33e-02; 5 s
+CELL p in [1.373099, 1.378070] (exact [1174/855, 1571/1140]) kappa = 9/10 s = 5522171/1000000 (5.522171; above p/(p-1) by >= 1.8419): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3317 boxes, min lb 4.89e-09; (C) 1 boxes, min lb 6.75e-02; 4 s
+CELL p in [1.378070, 1.383041] (exact [1571/1140, 473/342]) kappa = 9/10 s = 5428123/1000000 (5.428123; above p/(p-1) by >= 1.7831): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3346 boxes, min lb 2.46e-07; (C) 1 boxes, min lb 6.20e-02; 5 s
+CELL p in [1.383041, 1.388012] (exact [473/342, 4747/3420]) kappa = 9/10 s = 5337317/1000000 (5.337317; above p/(p-1) by >= 1.7266): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3377 boxes, min lb 9.06e-08; (C) 1 boxes, min lb 5.66e-02; 4 s
+CELL p in [1.388012, 1.392982] (exact [4747/3420, 397/285]) kappa = 9/10 s = 5249601/1000000 (5.249601; above p/(p-1) by >= 1.6724): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3398 boxes, min lb 1.77e-07; (C) 1 boxes, min lb 5.14e-02; 4 s
+CELL p in [1.392982, 1.397953] (exact [397/285, 4781/3420]) kappa = 9/10 s = 1291207/250000 (5.164828; above p/(p-1) by >= 1.6202): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3404 boxes, min lb 9.40e-09; (C) 1 boxes, min lb 4.64e-02; 5 s
+CELL p in [1.397953, 1.402924] (exact [4781/3420, 2399/1710]) kappa = 9/10 s = 317679/62500 (5.082864; above p/(p-1) by >= 1.5700): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3443 boxes, min lb 1.41e-08; (C) 1 boxes, min lb 4.15e-02; 5 s
+CELL p in [1.402924, 1.407895] (exact [2399/1710, 107/76]) kappa = 9/10 s = 5003579/1000000 (5.003579; above p/(p-1) by >= 1.5217): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3485 boxes, min lb 3.28e-07; (C) 1 boxes, min lb 3.67e-02; 5 s
+CELL p in [1.407895, 1.412865] (exact [107/76, 1208/855]) kappa = 9/10 s = 1231713/250000 (4.926852; above p/(p-1) by >= 1.4752): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3492 boxes, min lb 1.39e-08; (C) 1 boxes, min lb 3.22e-02; 5 s
+CELL p in [1.412865, 1.417836] (exact [1208/855, 4849/3420]) kappa = 9/10 s = 4852571/1000000 (4.852571; above p/(p-1) by >= 1.4305): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3534 boxes, min lb 1.93e-08; (C) 1 boxes, min lb 2.77e-02; 6 s
+CELL p in [1.417836, 1.422807] (exact [4849/3420, 811/570]) kappa = 9/10 s = 2390313/500000 (4.780626; above p/(p-1) by >= 1.3873): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3540 boxes, min lb 7.09e-08; (C) 1 boxes, min lb 2.34e-02; 5 s
+CELL p in [1.422807, 1.427778] (exact [811/570, 257/180]) kappa = 9/10 s = 4710917/1000000 (4.710917; above p/(p-1) by >= 1.3458): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3589 boxes, min lb 2.85e-07; (C) 1 boxes, min lb 1.93e-02; 6 s
+CELL p in [1.427778, 1.432749] (exact [257/180, 245/171]) kappa = 9/10 s = 1160837/250000 (4.643348; above p/(p-1) by >= 1.3057): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3620 boxes, min lb 7.40e-08; (C) 1 boxes, min lb 1.52e-02; 8 s
+CELL p in [1.432749, 1.437719] (exact [245/171, 1639/1140]) kappa = 9/10 s = 4577827/1000000 (4.577827; above p/(p-1) by >= 1.2670): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3667 boxes, min lb 1.16e-08; (C) 1 boxes, min lb 1.13e-02; 7 s
+CELL p in [1.437719, 1.442690] (exact [1639/1140, 2467/1710]) kappa = 9/10 s = 4514269/1000000 (4.514269; above p/(p-1) by >= 1.2297): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3677 boxes, min lb 2.33e-07; (C) 1 boxes, min lb 7.52e-03; 9 s
+CELL p in [1.442690, 1.447661] (exact [2467/1710, 4951/3420]) kappa = 9/10 s = 278287/62500 (4.452592; above p/(p-1) by >= 1.1937): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3750 boxes, min lb 1.55e-08; (C) 1 boxes, min lb 3.84e-03; 7 s
+CELL p in [1.447661, 1.452632] (exact [4951/3420, 138/95]) kappa = 9/10 s = 4392719/1000000 (4.392719; above p/(p-1) by >= 1.1589): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3764 boxes, min lb 6.33e-08; (C) 1 boxes, min lb 2.73e-04; 8 s
+CELL p in [1.452632, 1.457602] (exact [138/95, 997/684]) kappa = 9/10 s = 2167289/500000 (4.334578; above p/(p-1) by >= 1.1253): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3836 boxes, min lb 7.56e-08; (C) 2 boxes, min lb 3.70e-02; 7 s
+CELL p in [1.457602, 1.462573] (exact [997/684, 2501/1710]) kappa = 9/10 s = 2139049/500000 (4.278098; above p/(p-1) by >= 1.0928): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3899 boxes, min lb 1.81e-08; (C) 2 boxes, min lb 3.33e-02; 8 s
+CELL p in [1.462573, 1.467544] (exact [2501/1710, 1673/1140]) kappa = 9/10 s = 2111607/500000 (4.223214; above p/(p-1) by >= 1.0614): PROVED  (A) touching box ok (ey = et = 1/20); (B) 3942 boxes, min lb 4.66e-09; (C) 2 boxes, min lb 2.98e-02; 6 s
+CELL p in [1.467544, 1.472515] (exact [1673/1140, 1259/855]) kappa = 9/10 s = 521233/125000 (4.169864; above p/(p-1) by >= 1.0310): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4023 boxes, min lb 5.35e-08; (C) 2 boxes, min lb 2.65e-02; 8 s
+CELL p in [1.472515, 1.477485] (exact [1259/855, 5053/3420]) kappa = 9/10 s = 4117987/1000000 (4.117987; above p/(p-1) by >= 1.0017): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4064 boxes, min lb 2.06e-07; (C) 2 boxes, min lb 2.32e-02; 7 s
+CELL p in [1.477485, 1.482456] (exact [5053/3420, 169/114]) kappa = 9/10 s = 508441/125000 (4.067528; above p/(p-1) by >= 0.9732): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4130 boxes, min lb 1.37e-08; (C) 2 boxes, min lb 2.00e-02; 7 s
+CELL p in [1.482456, 1.487427] (exact [169/114, 5087/3420]) kappa = 9/10 s = 4018433/1000000 (4.018433; above p/(p-1) by >= 0.9457): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4221 boxes, min lb 3.47e-08; (C) 2 boxes, min lb 1.68e-02; 6 s
+CELL p in [1.487427, 1.492398] (exact [5087/3420, 1276/855]) kappa = 9/10 s = 79413/20000 (3.970650; above p/(p-1) by >= 0.9191): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4285 boxes, min lb 5.52e-08; (C) 2 boxes, min lb 1.38e-02; 11 s
+CELL p in [1.492398, 1.497368] (exact [1276/855, 569/380]) kappa = 9/10 s = 3924131/1000000 (3.924131; above p/(p-1) by >= 0.8933): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4343 boxes, min lb 5.80e-08; (C) 2 boxes, min lb 1.09e-02; 12 s
+CELL p in [1.497368, 1.502339] (exact [569/380, 2569/1710]) kappa = 9/10 s = 3878829/1000000 (3.878829; above p/(p-1) by >= 0.8682): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4435 boxes, min lb 4.65e-09; (C) 2 boxes, min lb 8.06e-03; 17 s
+CELL p in [1.502339, 1.507310] (exact [2569/1710, 1031/684]) kappa = 9/10 s = 38347/10000 (3.834700; above p/(p-1) by >= 0.8440): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4525 boxes, min lb 1.96e-07; (C) 2 boxes, min lb 5.28e-03; 11 s
+CELL p in [1.507310, 1.512281] (exact [1031/684, 431/285]) kappa = 9/10 s = 1895851/500000 (3.791702; above p/(p-1) by >= 0.8205): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4583 boxes, min lb 9.08e-09; (C) 2 boxes, min lb 2.57e-03; 8 s
+CELL p in [1.512281, 1.517251] (exact [431/285, 5189/3420]) kappa = 9/10 s = 1874897/500000 (3.749794; above p/(p-1) by >= 0.7977): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4684 boxes, min lb 8.50e-08; (C) 3 boxes, min lb 2.61e-02; 10 s
+CELL p in [1.517251, 1.522222] (exact [5189/3420, 137/90]) kappa = 9/10 s = 3708939/1000000 (3.708939; above p/(p-1) by >= 0.7756): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4784 boxes, min lb 2.18e-09; (C) 3 boxes, min lb 2.34e-02; 11 s
+CELL p in [1.522222, 1.527193] (exact [137/90, 1741/1140]) kappa = 9/10 s = 1834549/500000 (3.669098; above p/(p-1) by >= 0.7542): PROVED  (A) touching box ok (ey = et = 1/20); (B) 4912 boxes, min lb 6.38e-08; (C) 3 boxes, min lb 2.07e-02; 24 s
+CELL p in [1.527193, 1.532164] (exact [1741/1140, 262/171]) kappa = 9/10 s = 1815119/500000 (3.630238; above p/(p-1) by >= 0.7334): PROVED  (A) touching box ok (ey = et = 1/20); (B) 5023 boxes, min lb 3.92e-08; (C) 3 boxes, min lb 1.82e-02; 9 s
+CELL p in [1.532164, 1.537135] (exact [262/171, 5257/3420]) kappa = 9/10 s = 143693/40000 (3.592325; above p/(p-1) by >= 0.7132): PROVED  (A) touching box ok (ey = et = 1/20); (B) 5159 boxes, min lb 3.07e-08; (C) 3 boxes, min lb 1.57e-02; 9 s
+CELL p in [1.537135, 1.542105] (exact [5257/3420, 293/190]) kappa = 9/10 s = 142213/40000 (3.555325; above p/(p-1) by >= 0.6936): PROVED  (A) touching box ok (ey = et = 1/20); (B) 5275 boxes, min lb 2.22e-08; (C) 3 boxes, min lb 1.33e-02; 11 s
+CELL p in [1.542105, 1.547076] (exact [293/190, 5291/3420]) kappa = 9/10 s = 351921/100000 (3.519210; above p/(p-1) by >= 0.6745): PROVED  (A) touching box ok (ey = et = 1/20); (B) 5444 boxes, min lb 1.71e-08; (C) 3 boxes, min lb 1.10e-02; 11 s
+CELL p in [1.547076, 1.552047] (exact [5291/3420, 1327/855]) kappa = 9/10 s = 3483949/1000000 (3.483949; above p/(p-1) by >= 0.6560): PROVED  (A) touching box ok (ey = et = 1/20); (B) 5627 boxes, min lb 1.09e-07; (C) 3 boxes, min lb 8.72e-03; 13 s
+CELL p in [1.552047, 1.557018] (exact [1327/855, 355/228]) kappa = 9/10 s = 1724757/500000 (3.449514; above p/(p-1) by >= 0.6381): PROVED  (A) touching box ok (ey = et = 1/20); (B) 5897 boxes, min lb 4.35e-09; (C) 3 boxes, min lb 6.51e-03; 10 s
+CELL p in [1.557018, 1.561988] (exact [355/228, 2671/1710]) kappa = 9/10 s = 1707939/500000 (3.415878; above p/(p-1) by >= 0.6206): PROVED  (A) touching box ok (ey = et = 1/20); (B) 6264 boxes, min lb 6.25e-08; (C) 3 boxes, min lb 4.37e-03; 11 s
+CELL p in [1.561988, 1.566959] (exact [2671/1710, 5359/3420]) kappa = 9/10 s = 676603/200000 (3.383015; above p/(p-1) by >= 0.6036): PROVED  (A) touching box ok (ey = et = 1/20); (B) 6656 boxes, min lb 1.21e-08; (C) 3 boxes, min lb 2.29e-03; 9 s
+CELL p in [1.566959, 1.571930] (exact [5359/3420, 448/285]) kappa = 9/10 s = 3350901/1000000 (3.350901; above p/(p-1) by >= 0.5871): PROVED  (A) touching box ok (ey = et = 1/20); (B) 7209 boxes, min lb 1.54e-08; (C) 3 boxes, min lb 2.68e-04; 9 s
+CELL p in [1.571930, 1.576901] (exact [448/285, 5393/3420]) kappa = 9/10 s = 3319511/1000000 (3.319511; above p/(p-1) by >= 0.5710): PROVED  (A) touching box ok (ey = et = 1/20); (B) 7949 boxes, min lb 4.49e-08; (C) 4 boxes, min lb 3.50e-03; 7 s
+CELL p in [1.576901, 1.581871] (exact [5393/3420, 541/342]) kappa = 9/10 s = 411103/125000 (3.288824; above p/(p-1) by >= 0.5554): PROVED  (A) touching box ok (ey = et = 1/20); (B) 9281 boxes, min lb 1.57e-09; (C) 4 boxes, min lb 8.89e-04; 9 s
+CELL p in [1.581871, 1.586842] (exact [541/342, 603/380]) kappa = 9/10 s = 50919/15625 (3.258816; above p/(p-1) by >= 0.5402): PROVED  (A) touching box ok (ey = et = 1/20); (B) 10938 boxes, min lb 3.06e-09; (C) 5 boxes, min lb 1.94e-03; 8 s
+CELL p in [1.586842, 1.591813] (exact [603/380, 1361/855]) kappa = 9/10 s = 3229467/1000000 (3.229467; above p/(p-1) by >= 0.5254): PROVED  (A) touching box ok (ey = et = 1/20); (B) 15462 boxes, min lb 3.88e-08; (C) 5 boxes, min lb 9.97e-05; 10 s
+  cell [1.591813, 1.596784] kappa = 9/10: not proved (lower bound -3.386e-16 <= 0 on [1.59678363, 1.59678363] x [0.752929777)
+CELL p in [1.591813, 1.596784] (exact [1361/855, 5461/3420]) kappa = 4/5 s = 785603/250000 (3.142412; above p/(p-1) by >= 0.4527): PROVED  (A) touching box ok (ey = et = 1/10); (B) 2457 boxes, min lb 8.23e-09; (C) 5 boxes, min lb 2.83e-03; 6 s
+  cell [1.596784, 1.601754] kappa = 9/10: not proved (lower bound -4.235e-16 <= 0 on [1.60175439, 1.60175439] x [0.750045777)
+CELL p in [1.596784, 1.601754] (exact [5461/3420, 913/570]) kappa = 4/5 s = 48686/15625 (3.115904; above p/(p-1) by >= 0.4403): PROVED  (A) touching box ok (ey = et = 1/10); (B) 2530 boxes, min lb 2.14e-07; (C) 5 boxes, min lb 1.04e-03; 6 s
+  cell [1.601754, 1.606725] kappa = 9/10: not proved (lower bound -3.648e-15 <= 0 on [1.60672515, 1.60672515] x [0.755950928)
+CELL p in [1.601754, 1.606725] (exact [913/570, 1099/684]) kappa = 4/5 s = 617991/200000 (3.089955; above p/(p-1) by >= 0.4281): PROVED  (A) touching box ok (ey = et = 1/10); (B) 2579 boxes, min lb 1.00e-06; (C) 6 boxes, min lb 1.19e-03; 4 s
+  cell [1.606725, 1.611696] kappa = 9/10: not proved (lower bound -2.905e-15 <= 0 on [1.61169591, 1.61169591] x [0.750006437)
+CELL p in [1.606725, 1.611696] (exact [1099/684, 1378/855]) kappa = 4/5 s = 61291/20000 (3.064550; above p/(p-1) by >= 0.4164): PROVED  (A) touching box ok (ey = et = 1/10); (B) 2657 boxes, min lb 1.78e-06; (C) 9 boxes, min lb 2.09e-03; 3 s
+  cell [1.611696, 1.616667] kappa = 9/10: not proved (lower bound -5.047e-15 <= 0 on [1.61666667, 1.61666667] x [0.750002861)
+CELL p in [1.611696, 1.616667] (exact [1378/855, 97/60]) kappa = 4/5 s = 303967/100000 (3.039670; above p/(p-1) by >= 0.4049): PROVED  (A) touching box ok (ey = et = 1/10); (B) 2719 boxes, min lb 1.25e-06; (C) 9 boxes, min lb 3.36e-04; 3 s
+  cell [1.616667, 1.621637] kappa = 9/10: not proved (lower bound -1.146e-15 <= 0 on [1.62163743, 1.62163743] x [0.84375, 0.)
+CELL p in [1.616667, 1.621637] (exact [97/60, 2773/1710]) kappa = 4/5 s = 1507651/500000 (3.015302; above p/(p-1) by >= 0.3937): PROVED  (A) touching box ok (ey = et = 1/10); (B) 2816 boxes, min lb 1.12e-07; (C) 10 boxes, min lb 2.75e-04; 13 s
+  cell [1.621637, 1.626608] kappa = 9/10: not proved (lower bound -1.103e-17 <= 0 on [1.62660819, 1.62660819] x [0.7565922, )
+CELL p in [1.621637, 1.626608] (exact [2773/1710, 5563/3420]) kappa = 4/5 s = 299143/100000 (2.991430; above p/(p-1) by >= 0.3828): PROVED  (A) touching box ok (ey = et = 1/10); (B) 2895 boxes, min lb 4.38e-07; (C) 11 boxes, min lb 5.49e-03; 14 s
+  cell [1.626608, 1.631579] kappa = 9/10: not proved (lower bound -3.518e-15 <= 0 on [1.63157895, 1.63157895] x [0.761767745)
+CELL p in [1.626608, 1.631579] (exact [5563/3420, 31/19]) kappa = 4/5 s = 2968041/1000000 (2.968041; above p/(p-1) by >= 0.3721): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3011 boxes, min lb 1.10e-07; (C) 11 boxes, min lb 3.87e-03; 4 s
+  cell [1.631579, 1.636550] kappa = 9/10: not proved (lower bound -3.450e-15 <= 0 on [1.63654971, 1.63654971] x [0.750003599)
+CELL p in [1.631579, 1.636550] (exact [31/19, 5597/3420]) kappa = 4/5 s = 18407/6250 (2.945120; above p/(p-1) by >= 0.3618): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3111 boxes, min lb 3.20e-07; (C) 11 boxes, min lb 2.28e-03; 4 s
+  cell [1.636550, 1.641520] kappa = 9/10: not proved (lower bound -1.584e-15 <= 0 on [1.64152047, 1.64152047] x [0.773438221)
+CELL p in [1.636550, 1.641520] (exact [5597/3420, 2807/1710]) kappa = 4/5 s = 1461327/500000 (2.922654; above p/(p-1) by >= 0.3517): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3238 boxes, min lb 2.22e-07; (C) 11 boxes, min lb 7.44e-04; 8 s
+  cell [1.641520, 1.646491] kappa = 9/10: not proved (lower bound -1.165e-15 <= 0 on [1.64649123, 1.64649123] x [0.618292303)
+CELL p in [1.641520, 1.646491] (exact [2807/1710, 1877/1140]) kappa = 4/5 s = 2900631/1000000 (2.900631; above p/(p-1) by >= 0.3418): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3320 boxes, min lb 1.24e-07; (C) 12 boxes, min lb 3.17e-03; 3 s
+  cell [1.646491, 1.651462] kappa = 9/10: not proved (lower bound -1.471e-15 <= 0 on [1.65146199, 1.65146199] x [0.624379397)
+CELL p in [1.646491, 1.651462] (exact [1877/1140, 1412/855]) kappa = 4/5 s = 2879039/1000000 (2.879039; above p/(p-1) by >= 0.3322): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3409 boxes, min lb 7.20e-09; (C) 12 boxes, min lb 1.65e-03; 4 s
+  cell [1.651462, 1.656433] kappa = 9/10: not proved (lower bound -1.665e-15 <= 0 on [1.65643275, 1.65643275] x [0.627772502)
+CELL p in [1.651462, 1.656433] (exact [1412/855, 1133/684]) kappa = 4/5 s = 571573/200000 (2.857865; above p/(p-1) by >= 0.3229): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3466 boxes, min lb 3.40e-09; (C) 12 boxes, min lb 1.77e-04; 5 s
+  cell [1.656433, 1.661404] kappa = 9/10: not proved (lower bound -1.191e-15 <= 0 on [1.66140351, 1.66140351] x [0.629711377)
+CELL p in [1.656433, 1.661404] (exact [1133/684, 947/570]) kappa = 4/5 s = 2837097/1000000 (2.837097; above p/(p-1) by >= 0.3137): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3569 boxes, min lb 1.06e-07; (C) 13 boxes, min lb 4.27e-03; 3 s
+  cell [1.661404, 1.666374] kappa = 9/10: not proved (lower bound -6.068e-17 <= 0 on [1.66637427, 1.66637427] x [0.630621665)
+CELL p in [1.661404, 1.666374] (exact [947/570, 5699/3420]) kappa = 4/5 s = 1408363/500000 (2.816726; above p/(p-1) by >= 0.3048): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3635 boxes, min lb 1.94e-08; (C) 13 boxes, min lb 2.84e-03; 3 s
+  cell [1.666374, 1.671345] kappa = 9/10: not proved (lower bound -1.214e-15 <= 0 on [1.67134503, 1.67134503] x [0.630718913)
+CELL p in [1.666374, 1.671345] (exact [5699/3420, 1429/855]) kappa = 4/5 s = 2796741/1000000 (2.796741; above p/(p-1) by >= 0.2961): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3738 boxes, min lb 3.63e-07; (C) 13 boxes, min lb 1.45e-03; 4 s
+  cell [1.671345, 1.676316] kappa = 9/10: not proved (lower bound -2.047e-15 <= 0 on [1.67631579, 1.67631579] x [0.630117578)
+CELL p in [1.671345, 1.676316] (exact [1429/855, 637/380]) kappa = 4/5 s = 277713/100000 (2.777130; above p/(p-1) by >= 0.2876): PROVED  (A) touching box ok (ey = et = 1/10); (B) 3962 boxes, min lb 1.32e-07; (C) 13 boxes, min lb 9.91e-05; 3 s
+  cell [1.676316, 1.681287] kappa = 9/10: not proved (lower bound -6.032e-16 <= 0 on [1.68128655, 1.68128655] x [0.628876805)
+CELL p in [1.676316, 1.681287] (exact [637/380, 575/342]) kappa = 4/5 s = 551577/200000 (2.757885; above p/(p-1) by >= 0.2793): PROVED  (A) touching box ok (ey = et = 1/10); (B) 4261 boxes, min lb 3.20e-07; (C) 14 boxes, min lb 6.12e-04; 4 s
+  cell [1.681287, 1.686257] kappa = 9/10: not proved (lower bound -7.196e-16 <= 0 on [1.68625731, 1.68625731] x [0.627018518)
+CELL p in [1.681287, 1.686257] (exact [575/342, 5767/3420]) kappa = 4/5 s = 684749/250000 (2.738996; above p/(p-1) by >= 0.2712): PROVED  (A) touching box ok (ey = et = 1/10); (B) 4882 boxes, min lb 5.71e-07; (C) 15 boxes, min lb 8.24e-03; 4 s
+  cell [1.686257, 1.691228] kappa = 9/10: not proved (lower bound -3.667e-16 <= 0 on [1.69122807, 1.69122807] x [0.624578829)
+CELL p in [1.686257, 1.691228] (exact [5767/3420, 482/285]) kappa = 4/5 s = 680113/250000 (2.720452; above p/(p-1) by >= 0.2633): PROVED  (A) touching box ok (ey = et = 1/10); (B) 5274 boxes, min lb 3.83e-07; (C) 15 boxes, min lb 6.28e-03; 5 s
+  cell [1.691228, 1.696199] kappa = 9/10: not proved (lower bound -1.350e-15 <= 0 on [1.69619883, 1.69619883] x [0.621525167)
+CELL p in [1.691228, 1.696199] (exact [482/285, 5801/3420]) kappa = 4/5 s = 2702247/1000000 (2.702247; above p/(p-1) by >= 0.2555): PROVED  (A) touching box ok (ey = et = 1/10); (B) 5592 boxes, min lb 2.69e-07; (C) 15 boxes, min lb 4.36e-03; 4 s
+  cell [1.696199, 1.701170] kappa = 9/10: not proved (lower bound -7.877e-16 <= 0 on [1.70116959, 1.70116959] x [0.617892707)
+CELL p in [1.696199, 1.701170] (exact [5801/3420, 2909/1710]) kappa = 4/5 s = 268437/100000 (2.684370; above p/(p-1) by >= 0.2480): PROVED  (A) touching box ok (ey = et = 1/10); (B) 6285 boxes, min lb 1.65e-08; (C) 15 boxes, min lb 2.49e-03; 5 s
+  cell [1.701170, 1.706140] kappa = 9/10: not proved (lower bound -1.216e-15 <= 0 on [1.70614035, 1.70614035] x [0.613569584)
+CELL p in [1.701170, 1.706140] (exact [2909/1710, 389/228]) kappa = 4/5 s = 2666813/1000000 (2.666813; above p/(p-1) by >= 0.2406): PROVED  (A) touching box ok (ey = et = 1/10); (B) 8024 boxes, min lb 1.48e-08; (C) 15 boxes, min lb 6.66e-04; 13 s
+  cell [1.706140, 1.711111] kappa = 9/10: not proved (lower bound -1.641e-15 <= 0 on [1.71111111, 1.71111111] x [0.60855864,)
+CELL p in [1.706140, 1.711111] (exact [389/228, 77/45]) kappa = 4/5 s = 2649569/1000000 (2.649569; above p/(p-1) by >= 0.2334): PROVED  (A) touching box ok (ey = et = 1/10); (B) 11368 boxes, min lb 6.64e-09; (C) 16 boxes, min lb 2.51e-03; 10 s
+  cell [1.711111, 1.716082] kappa = 4/5: not proved (lower bound -1.629e-16 <= 0 on [1.71608187, 1.71608187] x [1.17557488,)
+CELL p in [1.711111, 1.716082] (exact [77/45, 5869/3420]) kappa = 13/20 s = 40443/15625 (2.588352; above p/(p-1) by >= 0.1821): PROVED  (A) touching box ok (ey = et = 1/5); (B) 1931 boxes, min lb 2.03e-07; (C) 15 boxes, min lb 2.01e-03; 1 s
+  cell [1.716082, 1.721053] kappa = 4/5: not proved (lower bound -3.418e-17 <= 0 on [1.72105263, 1.72105263] x [1.12976309,)
+CELL p in [1.716082, 1.721053] (exact [5869/3420, 327/190]) kappa = 13/20 s = 102921/40000 (2.573025; above p/(p-1) by >= 0.1765): PROVED  (A) touching box ok (ey = et = 1/5); (B) 1970 boxes, min lb 1.40e-06; (C) 15 boxes, min lb 2.20e-04; 1 s
+  cell [1.721053, 1.726023] kappa = 4/5: not proved (lower bound -1.449e-15 <= 0 on [1.72602339, 1.72602339] x [1.125, 1.12)
+CELL p in [1.721053, 1.726023] (exact [327/190, 5903/3420]) kappa = 13/20 s = 1278979/500000 (2.557958; above p/(p-1) by >= 0.1711): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2020 boxes, min lb 3.87e-06; (C) 16 boxes, min lb 3.34e-03; 1 s
+  cell [1.726023, 1.730994] kappa = 4/5: not proved (lower bound -4.591e-16 <= 0 on [1.73099415, 1.73099415] x [1.07959597,)
+CELL p in [1.726023, 1.730994] (exact [5903/3420, 296/171]) kappa = 13/20 s = 317893/125000 (2.543144; above p/(p-1) by >= 0.1658): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2065 boxes, min lb 7.54e-06; (C) 16 boxes, min lb 1.56e-03; 2 s
+  cell [1.730994, 1.735965] kappa = 4/5: not proved (lower bound -7.796e-16 <= 0 on [1.73596491, 1.73596491] x [1.05482317,)
+CELL p in [1.730994, 1.735965] (exact [296/171, 1979/1140]) kappa = 13/20 s = 1264289/500000 (2.528578; above p/(p-1) by >= 0.1606): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2105 boxes, min lb 4.79e-06; (C) 17 boxes, min lb 4.68e-04; 2 s
+  cell [1.735965, 1.740936] kappa = 4/5: not proved (lower bound -4.709e-16 <= 0 on [1.74093567, 1.74093567] x [1.125, 1.12)
+CELL p in [1.735965, 1.740936] (exact [1979/1140, 2977/1710]) kappa = 13/20 s = 2514253/1000000 (2.514253; above p/(p-1) by >= 0.1555): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2164 boxes, min lb 2.50e-06; (C) 18 boxes, min lb 1.65e-04; 1 s
+  cell [1.740936, 1.745906] kappa = 4/5: not proved (lower bound -9.784e-16 <= 0 on [1.74590643, 1.74590643] x [1.125, 1.12)
+CELL p in [1.740936, 1.745906] (exact [2977/1710, 5971/3420]) kappa = 13/20 s = 500033/200000 (2.500165; above p/(p-1) by >= 0.1505): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2227 boxes, min lb 3.55e-06; (C) 19 boxes, min lb 9.80e-04; 1 s
+  cell [1.745906, 1.750877] kappa = 4/5: not proved (lower bound -4.242e-15 <= 0 on [1.75087719, 1.75087719] x [1.125, 1.12)
+CELL p in [1.745906, 1.750877] (exact [5971/3420, 499/285]) kappa = 13/20 s = 2486307/1000000 (2.486307; above p/(p-1) by >= 0.1457): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2294 boxes, min lb 1.20e-06; (C) 22 boxes, min lb 7.40e-04; 1 s
+  cell [1.750877, 1.755848] kappa = 4/5: not proved (lower bound -4.167e-15 <= 0 on [1.75584795, 1.75584795] x [1.125, 1.12)
+CELL p in [1.750877, 1.755848] (exact [499/285, 1201/684]) kappa = 13/20 s = 1236337/500000 (2.472674; above p/(p-1) by >= 0.1409): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2344 boxes, min lb 2.80e-07; (C) 24 boxes, min lb 2.91e-04; 1 s
+  cell [1.755848, 1.760819] kappa = 4/5: not proved (lower bound -5.148e-15 <= 0 on [1.76081871, 1.76081871] x [1.125, 1.12)
+CELL p in [1.755848, 1.760819] (exact [1201/684, 3011/1710]) kappa = 13/20 s = 2459261/1000000 (2.459261; above p/(p-1) by >= 0.1362): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2444 boxes, min lb 2.96e-06; (C) 28 boxes, min lb 4.89e-05; 1 s
+  cell [1.760819, 1.765789] kappa = 4/5: not proved (lower bound -2.752e-15 <= 0 on [1.76578947, 1.76578947] x [1.125, 1.12)
+CELL p in [1.760819, 1.765789] (exact [3011/1710, 671/380]) kappa = 13/20 s = 2446063/1000000 (2.446063; above p/(p-1) by >= 0.1317): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2559 boxes, min lb 2.18e-06; (C) 29 boxes, min lb 3.23e-05; 1 s
+  cell [1.765789, 1.770760] kappa = 4/5: not proved (lower bound -2.538e-15 <= 0 on [1.77076023, 1.77076023] x [1.125, 1.12)
+CELL p in [1.765789, 1.770760] (exact [671/380, 1514/855]) kappa = 13/20 s = 97323/40000 (2.433075; above p/(p-1) by >= 0.1272): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2701 boxes, min lb 1.15e-06; (C) 33 boxes, min lb 1.52e-05; 1 s
+  cell [1.770760, 1.775731] kappa = 4/5: not proved (lower bound -5.711e-15 <= 0 on [1.77573099, 1.77573099] x [1.125, 1.12)
+CELL p in [1.770760, 1.775731] (exact [1514/855, 6073/3420]) kappa = 13/20 s = 605073/250000 (2.420292; above p/(p-1) by >= 0.1229): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2832 boxes, min lb 8.84e-07; (C) 35 boxes, min lb 1.11e-03; 1 s
+  cell [1.775731, 1.780702] kappa = 4/5: not proved (lower bound -3.449e-16 <= 0 on [1.78070175, 1.78070175] x [1.125, 1.12)
+CELL p in [1.775731, 1.780702] (exact [6073/3420, 203/114]) kappa = 13/20 s = 2407709/1000000 (2.407709; above p/(p-1) by >= 0.1186): PROVED  (A) touching box ok (ey = et = 1/5); (B) 2938 boxes, min lb 1.19e-06; (C) 35 boxes, min lb 1.85e-04; 2 s
+  cell [1.780702, 1.785673] kappa = 4/5: not proved (lower bound -1.515e-15 <= 0 on [1.78567251, 1.78567251] x [1.125, 1.12)
+CELL p in [1.780702, 1.785673] (exact [203/114, 6107/3420]) kappa = 13/20 s = 2395323/1000000 (2.395323; above p/(p-1) by >= 0.1144): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3080 boxes, min lb 9.59e-07; (C) 36 boxes, min lb 1.42e-04; 1 s
+  cell [1.785673, 1.790643] kappa = 4/5: not proved (lower bound -6.779e-15 <= 0 on [1.79064327, 1.79064327] x [1.125, 1.12)
+CELL p in [1.785673, 1.790643] (exact [6107/3420, 1531/855]) kappa = 13/20 s = 297891/125000 (2.383128; above p/(p-1) by >= 0.1103): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3164 boxes, min lb 2.35e-06; (C) 37 boxes, min lb 3.35e-04; 1 s
+  cell [1.790643, 1.795614] kappa = 4/5: not proved (lower bound -1.732e-16 <= 0 on [1.79561404, 1.79561404] x [1.125, 1.12)
+CELL p in [1.790643, 1.795614] (exact [1531/855, 2047/1140]) kappa = 13/20 s = 2371121/1000000 (2.371121; above p/(p-1) by >= 0.1063): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3279 boxes, min lb 4.68e-07; (C) 39 boxes, min lb 4.81e-04; 2 s
+  cell [1.795614, 1.800585] kappa = 4/5: not proved (lower bound -3.056e-15 <= 0 on [1.8005848, 1.8005848] x [1.125, 1.125])
+CELL p in [1.795614, 1.800585] (exact [2047/1140, 3079/1710]) kappa = 13/20 s = 2359297/1000000 (2.359297; above p/(p-1) by >= 0.1024): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3376 boxes, min lb 6.36e-07; (C) 40 boxes, min lb 8.09e-04; 2 s
+  cell [1.800585, 1.805556] kappa = 4/5: not proved (lower bound -1.714e-16 <= 0 on [1.80555556, 1.80555556] x [1.5, 1.5] x)
+CELL p in [1.800585, 1.805556] (exact [3079/1710, 65/36]) kappa = 13/20 s = 586913/250000 (2.347652; above p/(p-1) by >= 0.0986): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3473 boxes, min lb 2.15e-06; (C) 41 boxes, min lb 6.81e-04; 2 s
+  cell [1.805556, 1.810526] kappa = 4/5: not proved (lower bound -4.795e-16 <= 0 on [1.81052632, 1.81052632] x [1.5, 1.5] x)
+CELL p in [1.805556, 1.810526] (exact [65/36, 172/95]) kappa = 13/20 s = 2336183/1000000 (2.336183; above p/(p-1) by >= 0.0948): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3582 boxes, min lb 1.01e-06; (C) 45 boxes, min lb 2.52e-04; 3 s
+  cell [1.810526, 1.815497] kappa = 4/5: not proved (lower bound -2.791e-15 <= 0 on [1.81549708, 1.81549708] x [1.5, 1.5] x)
+CELL p in [1.810526, 1.815497] (exact [172/95, 6209/3420]) kappa = 13/20 s = 1162443/500000 (2.324886; above p/(p-1) by >= 0.0911): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3680 boxes, min lb 2.09e-10; (C) 48 boxes, min lb 2.23e-04; 2 s
+  cell [1.815497, 1.820468] kappa = 4/5: not proved (lower bound -2.434e-15 <= 0 on [1.82046784, 1.82046784] x [1.5, 1.5] x)
+CELL p in [1.815497, 1.820468] (exact [6209/3420, 3113/1710]) kappa = 13/20 s = 578439/250000 (2.313756; above p/(p-1) by >= 0.0875): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3781 boxes, min lb 1.83e-06; (C) 51 boxes, min lb 5.00e-05; 2 s
+  cell [1.820468, 1.825439] kappa = 4/5: not proved (lower bound -5.904e-16 <= 0 on [1.8254386, 1.8254386] x [1.5, 1.5] x [)
+CELL p in [1.820468, 1.825439] (exact [3113/1710, 2081/1140]) kappa = 13/20 s = 2302791/1000000 (2.302791; above p/(p-1) by >= 0.0840): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3888 boxes, min lb 5.78e-07; (C) 52 boxes, min lb 2.48e-04; 2 s
+  cell [1.825439, 1.830409] kappa = 4/5: not proved (lower bound -2.418e-15 <= 0 on [1.83040936, 1.83040936] x [1.5, 1.5] x)
+CELL p in [1.825439, 1.830409] (exact [2081/1140, 313/171]) kappa = 13/20 s = 572997/250000 (2.291988; above p/(p-1) by >= 0.0805): PROVED  (A) touching box ok (ey = et = 1/5); (B) 3983 boxes, min lb 1.73e-06; (C) 54 boxes, min lb 1.11e-04; 4 s
+  cell [1.830409, 1.835380] kappa = 4/5: not proved (lower bound -3.594e-15 <= 0 on [1.83538012, 1.83538012] x [1.5, 1.5] x)
+CELL p in [1.830409, 1.835380] (exact [313/171, 6277/3420]) kappa = 13/20 s = 2281341/1000000 (2.281341; above p/(p-1) by >= 0.0771): PROVED  (A) touching box ok (ey = et = 1/5); (B) 4116 boxes, min lb 1.39e-06; (C) 56 boxes, min lb 7.57e-05; 4 s
+  cell [1.835380, 1.840351] kappa = 4/5: not proved (lower bound -4.775e-15 <= 0 on [1.84035088, 1.84035088] x [1.5, 1.5] x)
+CELL p in [1.835380, 1.840351] (exact [6277/3420, 1049/570]) kappa = 13/20 s = 2270849/1000000 (2.270849; above p/(p-1) by >= 0.0738): PROVED  (A) touching box ok (ey = et = 1/5); (B) 4223 boxes, min lb 2.45e-06; (C) 57 boxes, min lb 7.09e-04; 3 s
+  cell [1.840351, 1.845322] kappa = 4/5: not proved (lower bound -2.985e-15 <= 0 on [1.84532164, 1.84532164] x [1.5, 1.5] x)
+CELL p in [1.840351, 1.845322] (exact [1049/570, 6311/3420]) kappa = 13/20 s = 2260509/1000000 (2.260509; above p/(p-1) by >= 0.0705): PROVED  (A) touching box ok (ey = et = 1/5); (B) 4350 boxes, min lb 1.26e-06; (C) 58 boxes, min lb 1.64e-05; 3 s
+  cell [1.845322, 1.850292] kappa = 4/5: not proved (lower bound -1.882e-15 <= 0 on [1.8502924, 1.8502924] x [1.5, 1.5] x [)
+CELL p in [1.845322, 1.850292] (exact [6311/3420, 1582/855]) kappa = 13/20 s = 562579/250000 (2.250316; above p/(p-1) by >= 0.0673): PROVED  (A) touching box ok (ey = et = 1/10); (B) 5406 boxes, min lb 1.38e-08; (C) 69 boxes, min lb 3.51e-05; 10 s
+  cell [1.850292, 1.855263] kappa = 4/5: not proved (lower bound -4.263e-15 <= 0 on [1.85526316, 1.85526316] x [1.5, 1.5] x)
+CELL p in [1.850292, 1.855263] (exact [1582/855, 141/76]) kappa = 13/20 s = 560067/250000 (2.240268; above p/(p-1) by >= 0.0642): PROVED  (A) touching box ok (ey = et = 1/10); (B) 5591 boxes, min lb 8.31e-08; (C) 75 boxes, min lb 9.89e-07; 11 s
+  cell [1.855263, 1.860234] kappa = 4/5: not proved (lower bound -4.298e-15 <= 0 on [1.86023392, 1.86023392] x [1.5, 1.5] x)
+CELL p in [1.855263, 1.860234] (exact [141/76, 3181/1710]) kappa = 13/20 s = 2230363/1000000 (2.230363; above p/(p-1) by >= 0.0611): PROVED  (A) touching box ok (ey = et = 1/10); (B) 5768 boxes, min lb 3.90e-08; (C) 86 boxes, min lb 4.18e-05; 8 s
+  cell [1.860234, 1.865205] kappa = 4/5: not proved (lower bound -3.695e-15 <= 0 on [1.86520468, 1.86520468] x [1.5, 1.5] x)
+CELL p in [1.860234, 1.865205] (exact [3181/1710, 6379/3420]) kappa = 13/20 s = 555149/250000 (2.220596; above p/(p-1) by >= 0.0581): PROVED  (A) touching box ok (ey = et = 1/10); (B) 6119 boxes, min lb 5.42e-08; (C) 94 boxes, min lb 1.79e-05; 10 s
+  cell [1.865205, 1.870175] kappa = 4/5: not proved (lower bound -2.946e-15 <= 0 on [1.87017544, 1.87017544] x [1.5, 1.5] x)
+CELL p in [1.865205, 1.870175] (exact [6379/3420, 533/285]) kappa = 13/20 s = 1105483/500000 (2.210966; above p/(p-1) by >= 0.0552): PROVED  (A) touching box ok (ey = et = 1/10); (B) 6449 boxes, min lb 1.55e-07; (C) 110 boxes, min lb 2.02e-06; 11 s
+  cell [1.870175, 1.875146] kappa = 4/5: not proved (lower bound -1.616e-15 <= 0 on [1.8751462, 1.8751462] x [1.5, 1.5] x [)
+CELL p in [1.870175, 1.875146] (exact [533/285, 6413/3420]) kappa = 13/20 s = 220147/100000 (2.201470; above p/(p-1) by >= 0.0523): PROVED  (A) touching box ok (ey = et = 1/10); (B) 6990 boxes, min lb 5.45e-08; (C) 123 boxes, min lb 2.77e-05; 14 s
+  cell [1.875146, 1.880117] kappa = 4/5: not proved (lower bound -1.644e-17 <= 0 on [1.88011696, 1.88011696] x [1.5, 1.5] x)
+CELL p in [1.875146, 1.880117] (exact [6413/3420, 643/342]) kappa = 13/20 s = 438421/200000 (2.192105; above p/(p-1) by >= 0.0494): PROVED  (A) touching box ok (ey = et = 1/10); (B) 7523 boxes, min lb 5.56e-08; (C) 135 boxes, min lb 1.92e-04; 11 s
+  cell [1.880117, 1.885088] kappa = 4/5: not proved (lower bound -1.950e-15 <= 0 on [1.88508772, 1.88508772] x [1.5, 1.5] x)
+CELL p in [1.880117, 1.885088] (exact [643/342, 2149/1140]) kappa = 13/20 s = 545717/250000 (2.182868; above p/(p-1) by >= 0.0467): PROVED  (A) touching box ok (ey = et = 1/10); (B) 8137 boxes, min lb 8.45e-08; (C) 143 boxes, min lb 7.78e-06; 11 s
+  cell [1.885088, 1.890058] kappa = 4/5: not proved (lower bound -1.346e-15 <= 0 on [1.89005848, 1.89005848] x [1.5, 1.5] x)
+CELL p in [1.885088, 1.890058] (exact [2149/1140, 1616/855]) kappa = 13/20 s = 2173757/1000000 (2.173757; above p/(p-1) by >= 0.0439): PROVED  (A) touching box ok (ey = et = 1/10); (B) 8672 boxes, min lb 1.46e-08; (C) 161 boxes, min lb 5.09e-05; 9 s
+  cell [1.890058, 1.895029] kappa = 4/5: not proved (lower bound -2.295e-15 <= 0 on [1.89502924, 1.89502924] x [1.5, 1.5] x)
+CELL p in [1.890058, 1.895029] (exact [1616/855, 6481/3420]) kappa = 13/20 s = 216477/100000 (2.164770; above p/(p-1) by >= 0.0412): PROVED  (A) touching box ok (ey = et = 1/10); (B) 9248 boxes, min lb 6.94e-09; (C) 171 boxes, min lb 3.17e-05; 12 s
+  cell [1.895029, 1.900000] kappa = 4/5: not proved (lower bound -2.605e-15 <= 0 on [1.9, 1.9] x [1.5, 1.5] x [0.605049811,)
+CELL p in [1.895029, 1.900000] (exact [6481/3420, 19/10]) kappa = 13/20 s = 33686/15625 (2.155904; above p/(p-1) by >= 0.0386): PROVED  (A) touching box ok (ey = et = 1/10); (B) 9880 boxes, min lb 2.03e-08; (C) 182 boxes, min lb 1.77e-05; 10 s
+RUN argv = code/certify_arb.py --p-from 19/10 --p-to 99/50 --cells 16 --kappas 1/2,13/20,4/5,9/10 --ey 1/5 --et 1/5 --ymax 3 --max-boxes 300000 | python 3.12.3 | python-flint 0.9.0 | prec 80
+  cell [1.900000, 1.905000] kappa = 4/5: not proved (lower bound -1.002e-15 <= 0 on [1.905, 1.905] x [1.5, 1.5] x [0.615438)
+CELL p in [1.900000, 1.905000] (exact [19/10, 381/200]) kappa = 13/20 s = 429421/200000 (2.147105; above p/(p-1) by >= 0.0360): PROVED  (A) touching box ok (ey = et = 1/10); (B) 10589 boxes, min lb 8.34e-08; (C) 194 boxes, min lb 3.60e-05; 12 s
+  cell [1.905000, 1.910000] kappa = 4/5: not proved (lower bound -3.650e-15 <= 0 on [1.91, 1.91] x [1.5, 1.5] x [0.62532251)
+CELL p in [1.905000, 1.910000] (exact [381/200, 191/100]) kappa = 13/20 s = 267303/125000 (2.138424; above p/(p-1) by >= 0.0335): PROVED  (A) touching box ok (ey = et = 1/10); (B) 11376 boxes, min lb 9.37e-08; (C) 235 boxes, min lb 1.87e-05; 12 s
+  cell [1.910000, 1.915000] kappa = 4/5: not proved (lower bound -8.866e-16 <= 0 on [1.915, 1.915] x [1.5, 1.5] x [0.634709)
+CELL p in [1.910000, 1.915000] (exact [191/100, 383/200]) kappa = 13/20 s = 2129859/1000000 (2.129859; above p/(p-1) by >= 0.0310): PROVED  (A) touching box ok (ey = et = 1/10); (B) 12209 boxes, min lb 1.05e-08; (C) 264 boxes, min lb 2.49e-06; 12 s
+  cell [1.915000, 1.920000] kappa = 4/5: not proved (lower bound -3.761e-15 <= 0 on [1.92, 1.92] x [1.5, 1.5] x [0.64367049)
+CELL p in [1.915000, 1.920000] (exact [383/200, 48/25]) kappa = 13/20 s = 2121407/1000000 (2.121407; above p/(p-1) by >= 0.0285): PROVED  (A) touching box ok (ey = et = 1/10); (B) 13068 boxes, min lb 4.10e-08; (C) 305 boxes, min lb 2.15e-05; 11 s
+  cell [1.920000, 1.925000] kappa = 4/5: not proved (lower bound -4.374e-15 <= 0 on [1.925, 1.925] x [1.5, 1.5] x [0.652111)
+CELL p in [1.920000, 1.925000] (exact [48/25, 77/40]) kappa = 13/20 s = 2113067/1000000 (2.113067; above p/(p-1) by >= 0.0261): PROVED  (A) touching box ok (ey = et = 1/10); (B) 14226 boxes, min lb 1.17e-08; (C) 367 boxes, min lb 7.57e-06; 20 s
+  cell [1.925000, 1.930000] kappa = 4/5: not proved (lower bound -2.918e-15 <= 0 on [1.93, 1.93] x [1.5, 1.5] x [0.66024945)
+CELL p in [1.925000, 1.930000] (exact [77/40, 193/100]) kappa = 13/20 s = 420967/200000 (2.104835; above p/(p-1) by >= 0.0238): PROVED  (A) touching box ok (ey = et = 1/10); (B) 16028 boxes, min lb 1.98e-08; (C) 443 boxes, min lb 2.11e-05; 17 s
+  cell [1.930000, 1.935000] kappa = 4/5: not proved (lower bound -1.830e-15 <= 0 on [1.935, 1.935] x [1.5, 1.5] x [0.667969)
+CELL p in [1.930000, 1.935000] (exact [193/100, 387/200]) kappa = 13/20 s = 2096711/1000000 (2.096711; above p/(p-1) by >= 0.0214): PROVED  (A) touching box ok (ey = et = 1/10); (B) 17956 boxes, min lb 5.32e-08; (C) 549 boxes, min lb 9.88e-06; 15 s
+  cell [1.935000, 1.940000] kappa = 4/5: not proved (lower bound -2.382e-15 <= 0 on [1.94, 1.94] x [1.5, 1.5] x [0.67530957)
+CELL p in [1.935000, 1.940000] (exact [387/200, 97/50]) kappa = 13/20 s = 522173/250000 (2.088692; above p/(p-1) by >= 0.0192): PROVED  (A) touching box ok (ey = et = 1/10); (B) 20094 boxes, min lb 1.38e-08; (C) 634 boxes, min lb 2.11e-05; 16 s
+  cell [1.940000, 1.945000] kappa = 4/5: not proved (lower bound -3.129e-15 <= 0 on [1.945, 1.945] x [1.5, 1.5] x [0.682302)
+CELL p in [1.940000, 1.945000] (exact [97/50, 389/200]) kappa = 13/20 s = 260097/125000 (2.080776; above p/(p-1) by >= 0.0169): PROVED  (A) touching box ok (ey = et = 1/10); (B) 22550 boxes, min lb 1.20e-08; (C) 803 boxes, min lb 1.01e-06; 16 s
+  cell [1.945000, 1.950000] kappa = 4/5: not proved (lower bound -9.541e-16 <= 0 on [1.95, 1.95] x [1.5, 1.5] x [0.68897632)
+CELL p in [1.945000, 1.950000] (exact [389/200, 39/20]) kappa = 13/20 s = 2072961/1000000 (2.072961; above p/(p-1) by >= 0.0148): PROVED  (A) touching box ok (ey = et = 1/10); (B) 25403 boxes, min lb 3.29e-08; (C) 1055 boxes, min lb 2.50e-06; 17 s
+  cell [1.950000, 1.955000] kappa = 4/5: not proved (lower bound -6.349e-17 <= 0 on [1.955, 1.955] x [1.5, 1.5] x [0.695356)
+CELL p in [1.950000, 1.955000] (exact [39/20, 391/200]) kappa = 13/20 s = 1032623/500000 (2.065246; above p/(p-1) by >= 0.0126): PROVED  (A) touching box ok (ey = et = 1/10); (B) 29950 boxes, min lb 5.61e-09; (C) 1360 boxes, min lb 2.36e-07; 19 s
+  cell [1.955000, 1.960000] kappa = 4/5: not proved (lower bound -2.533e-15 <= 0 on [1.96, 1.96] x [1.5, 1.5] x [0.70146305)
+CELL p in [1.955000, 1.960000] (exact [391/200, 49/25]) kappa = 13/20 s = 2057629/1000000 (2.057629; above p/(p-1) by >= 0.0105): PROVED  (A) touching box ok (ey = et = 1/10); (B) 35539 boxes, min lb 7.76e-09; (C) 1740 boxes, min lb 2.09e-07; 26 s
+  cell [1.960000, 1.965000] kappa = 4/5: not proved (lower bound -1.509e-15 <= 0 on [1.965, 1.965] x [1.5, 1.5] x [0.707305)
+CELL p in [1.960000, 1.965000] (exact [49/25, 393/200]) kappa = 13/20 s = 2050107/1000000 (2.050107; above p/(p-1) by >= 0.0084): PROVED  (A) touching box ok (ey = et = 1/10); (B) 42281 boxes, min lb 2.62e-10; (C) 3058 boxes, min lb 2.31e-07; 27 s
+  cell [1.965000, 1.970000] kappa = 4/5: not proved (lower bound -1.710e-15 <= 0 on [1.97, 1.97] x [1.5, 1.5] x [0.71288494)
+CELL p in [1.965000, 1.970000] (exact [393/200, 197/100]) kappa = 13/20 s = 2042679/1000000 (2.042679; above p/(p-1) by >= 0.0064): PROVED  (A) touching box ok (ey = et = 1/10); (B) 53745 boxes, min lb 1.89e-09; (C) 4840 boxes, min lb 3.15e-07; 38 s
+  cell [1.970000, 1.975000] kappa = 4/5: not proved (lower bound -7.734e-16 <= 0 on [1.975, 1.975] x [1.5, 1.5] x [0.718402)
+CELL p in [1.970000, 1.975000] (exact [197/100, 79/40]) kappa = 13/20 s = 127209/62500 (2.035344; above p/(p-1) by >= 0.0044): PROVED  (A) touching box ok (ey = et = 1/10); (B) 68689 boxes, min lb 3.22e-09; (C) 7799 boxes, min lb 3.62e-08; 33 s
+  cell [1.975000, 1.980000] kappa = 4/5: not proved (lower bound -8.977e-17 <= 0 on [1.98, 1.98] x [1.5, 1.5] x [0.72339055)
+CELL p in [1.975000, 1.980000] (exact [79/40, 99/50]) kappa = 13/20 s = 20281/10000 (2.028100; above p/(p-1) by >= 0.0025): PROVED  (A) touching box ok (ey = et = 1/10); (B) 89898 boxes, min lb 1.40e-10; (C) 13631 boxes, min lb 5.00e-08; 58 s
+RUN argv = code/certify_arb.py --p-from 99/50 --p-to 199/100 --cells 10 --kappas 1/2,13/20,4/5,9/10 --ey 1/5 --et 1/5 --ymax 3 --max-boxes 400000 | python 3.12.3 | python-flint 0.9.0 | prec 80
+  cell [1.980000, 1.981000] kappa = 4/5: not proved (lower bound -1.168e-15 <= 0 on [1.981, 1.981] x [1.5, 1.5] x [0.724363)
+CELL p in [1.980000, 1.981000] (exact [99/50, 1981/1000]) kappa = 13/20 s = 1013331/500000 (2.026662; above p/(p-1) by >= 0.0063): PROVED  (A) touching box ok (ey = et = 1/10); (B) 48770 boxes, min lb 9.64e-10; (C) 5528 boxes, min lb 6.09e-08; 24 s
+  cell [1.981000, 1.982000] kappa = 4/5: not proved (lower bound -1.316e-15 <= 0 on [1.982, 1.982] x [1.5, 1.5] x [0.725359)
+CELL p in [1.981000, 1.982000] (exact [1981/1000, 991/500]) kappa = 13/20 s = 2025227/1000000 (2.025227; above p/(p-1) by >= 0.0059): PROVED  (A) touching box ok (ey = et = 1/10); (B) 52203 boxes, min lb 8.09e-11; (C) 6351 boxes, min lb 7.20e-08; 55 s
+  cell [1.982000, 1.983000] kappa = 4/5: not proved (lower bound -1.146e-15 <= 0 on [1.983, 1.983] x [1.5, 1.5] x [0.726389)
+CELL p in [1.982000, 1.983000] (exact [991/500, 1983/1000]) kappa = 13/20 s = 505949/250000 (2.023796; above p/(p-1) by >= 0.0055): PROVED  (A) touching box ok (ey = et = 1/10); (B) 55721 boxes, min lb 2.74e-09; (C) 7447 boxes, min lb 1.83e-08; 29 s
+  cell [1.983000, 1.984000] kappa = 4/5: not proved (lower bound -7.387e-16 <= 0 on [1.984, 1.984] x [1.5, 1.5] x [0.727115)
+CELL p in [1.983000, 1.984000] (exact [1983/1000, 248/125]) kappa = 13/20 s = 63199/31250 (2.022368; above p/(p-1) by >= 0.0051): PROVED  (A) touching box ok (ey = et = 1/10); (B) 59378 boxes, min lb 2.50e-09; (C) 8826 boxes, min lb 1.25e-08; 52 s
+  cell [1.984000, 1.985000] kappa = 4/5: not proved (lower bound -6.096e-16 <= 0 on [1.985, 1.985] x [1.5, 1.5] x [0.728229)
+CELL p in [1.984000, 1.985000] (exact [248/125, 397/200]) kappa = 13/20 s = 126309/62500 (2.020944; above p/(p-1) by >= 0.0047): PROVED  (A) touching box ok (ey = et = 1/10); (B) 63463 boxes, min lb 7.98e-09; (C) 9929 boxes, min lb 8.88e-09; 43 s
+  cell [1.985000, 1.986000] kappa = 4/5: not proved (lower bound -6.872e-16 <= 0 on [1.986, 1.986] x [1.5, 1.5] x [0.729025)
+CELL p in [1.985000, 1.986000] (exact [397/200, 993/500]) kappa = 13/20 s = 504881/250000 (2.019524; above p/(p-1) by >= 0.0043): PROVED  (A) touching box ok (ey = et = 1/10); (B) 68049 boxes, min lb 1.22e-09; (C) 11383 boxes, min lb 8.26e-08; 54 s
+  cell [1.986000, 1.987000] kappa = 4/5: not proved (lower bound -8.660e-16 <= 0 on [1.987, 1.987] x [1.5, 1.5] x [0.729865)
+CELL p in [1.986000, 1.987000] (exact [993/500, 1987/1000]) kappa = 13/20 s = 2018107/1000000 (2.018107; above p/(p-1) by >= 0.0039): PROVED  (A) touching box ok (ey = et = 1/10); (B) 73245 boxes, min lb 1.33e-09; (C) 13936 boxes, min lb 6.06e-08; 65 s
+  cell [1.987000, 1.988000] kappa = 4/5: not proved (lower bound -8.771e-16 <= 0 on [1.988, 1.988] x [1.5, 1.5] x [0.730769)
+CELL p in [1.987000, 1.988000] (exact [1987/1000, 497/250]) kappa = 13/20 s = 2016693/1000000 (2.016693; above p/(p-1) by >= 0.0035): PROVED  (A) touching box ok (ey = et = 1/10); (B) 79633 boxes, min lb 4.03e-10; (C) 17087 boxes, min lb 3.30e-08; 50 s
+  cell [1.988000, 1.989000] kappa = 4/5: not proved (lower bound -4.088e-16 <= 0 on [1.989, 1.989] x [1.5, 1.5] x [0.731763)
+CELL p in [1.988000, 1.989000] (exact [497/250, 1989/1000]) kappa = 13/20 s = 2015283/1000000 (2.015283; above p/(p-1) by >= 0.0031): PROVED  (A) touching box ok (ey = et = 1/10); (B) 88775 boxes, min lb 1.12e-09; (C) 20853 boxes, min lb 1.03e-08; 51 s
+  cell [1.989000, 1.990000] kappa = 4/5: not proved (lower bound -6.231e-16 <= 0 on [1.99, 1.99] x [1.5, 1.5] x [0.73288520)
+CELL p in [1.989000, 1.990000] (exact [1989/1000, 199/100]) kappa = 13/20 s = 2013877/1000000 (2.013877; above p/(p-1) by >= 0.0028): PROVED  (A) touching box ok (ey = et = 1/10); (B) 101155 boxes, min lb 8.92e-11; (C) 25638 boxes, min lb 2.32e-08; 64 s
+=== END 2026-10-27 13:03:44 EDT exit code 0

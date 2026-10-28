@@ -1,0 +1,30 @@
+=== START 2026-10-27 10:47:43 EDT
+=== COMMAND python3 -B code/truepoints_arb.py 7/5:52986/10000 3/2:39572/10000 8/5:31799/10000 17/10:26921/10000 9/5:23764/10000 19/10:21588/10000 --radius 1/5 --ymax 3 --max-boxes 3000000
+=== Python 3.12.3; python-flint 0.9.0, mpmath 1.4.1, numpy 2.5.4, scipy 1.18.1
+=== md5 of the programs:
+8ecda0566e4531aa30c106416a1f989c  code/arb_dual.py
+7d29ee7bb7a8035cb140a2056eea73db  code/badcells_arb.py
+7fa91427b4b5c48c1db1440b9de18404  code/best_constant_lp.py
+f46b34ac3c5e7dd8fa6fb2af0129e91c  code/best_constant_second.py
+655c652b33ed19c35e48f46164099e5f  code/certify_arb.py
+d39118afbffa918c4612d9e981cbe195  code/counterexample_beta_arb.py
+d3d5fd61ba2e06649640464d4b9f1f07  code/counterexample_closed_form.py
+049ecd4f6de51aefab699adbe413b19d  code/counterexample_quadrature_arb.py
+6b5df54f74bb776844dbf429b0b9d9a1  code/point_arb.py
+941894757f55ac59eba084790e3712cb  code/point_check_mpmath.py
+9bfa202c1dea600fd302df16d72c9b89  code/saddle_sign_arb.py
+14fd1bad0b3d4b234c34c25c4bd67e54  code/saddle_sign_mpmath.py
+e34a551139cd9639923215bc6930a08d  code/truepoints_arb.py
+d03c1c8ac9dbe95f3a943268390de23e  code/truepoints_mpmath.py
+b63c9268f69e8fd00bfe4af41db1c769  code/run_best_constant.sh
+48684d765663aaed055d72e1ea9e7352  code/run_cells.sh
+2429da546abc51a90026144e4932ec52  code/run_false_cells.sh
+8b29d769fbe56f694e62a2bc296d9a00  code/run_logged.sh
+RUN argv = code/truepoints_arb.py 7/5:52986/10000 3/2:39572/10000 8/5:31799/10000 17/10:26921/10000 9/5:23764/10000 19/10:21588/10000 --radius 1/5 --ymax 3 --max-boxes 3000000 | python 3.12.3 | python-flint 0.9.0 | prec 80
+TRUEPOINT p = 7/5 (1.4000): Gamma >= e HOLDS at s_true = 26493/5000 (5.298600): PROVED  (A) radius 1/320; (B) 8084 boxes, min lb 2.38e-11; (C) 1 boxes, min lb 4.53e-02; 10 s
+TRUEPOINT p = 3/2 (1.5000): Gamma >= e HOLDS at s_true = 9893/2500 (3.957200): PROVED  (A) radius 1/40; (B) 5523 boxes, min lb 6.80e-09; (C) 2 boxes, min lb 9.98e-03; 11 s
+TRUEPOINT p = 8/5 (1.6000): Gamma >= e HOLDS at s_true = 31799/10000 (3.179900): PROVED  (A) radius 1/20; (B) 6656 boxes, min lb 9.00e-09; (C) 5 boxes, min lb 7.38e-05; 9 s
+TRUEPOINT p = 17/10 (1.7000): Gamma >= e HOLDS at s_true = 26921/10000 (2.692100): PROVED  (A) radius 1/10; (B) 7064 boxes, min lb 1.48e-08; (C) 15 boxes, min lb 4.10e-03; 5 s
+TRUEPOINT p = 9/5 (1.8000): Gamma >= e HOLDS at s_true = 5941/2500 (2.376400): PROVED  (A) radius 1/10; (B) 7493 boxes, min lb 9.62e-09; (C) 40 boxes, min lb 6.42e-04; 9 s
+TRUEPOINT p = 19/10 (1.9000): Gamma >= e HOLDS at s_true = 5397/2500 (2.158800): PROVED  (A) radius 1/10; (B) 11038 boxes, min lb 2.62e-09; (C) 171 boxes, min lb 6.48e-06; 16 s
+=== END 2026-10-27 10:48:42 EDT exit code 0

@@ -1,0 +1,48 @@
+=== START 2026-10-27 12:11:10 EDT
+=== COMMAND python3 -B code/best_constant_lp.py --test
+=== Python 3.12.3; python-flint 0.9.0, mpmath 1.4.1, numpy 2.5.4, scipy 1.18.1
+=== md5 of the programs:
+8ecda0566e4531aa30c106416a1f989c  code/arb_dual.py
+7d29ee7bb7a8035cb140a2056eea73db  code/badcells_arb.py
+7fa91427b4b5c48c1db1440b9de18404  code/best_constant_lp.py
+f46b34ac3c5e7dd8fa6fb2af0129e91c  code/best_constant_second.py
+655c652b33ed19c35e48f46164099e5f  code/certify_arb.py
+d39118afbffa918c4612d9e981cbe195  code/counterexample_beta_arb.py
+d3d5fd61ba2e06649640464d4b9f1f07  code/counterexample_closed_form.py
+049ecd4f6de51aefab699adbe413b19d  code/counterexample_quadrature_arb.py
+6b5df54f74bb776844dbf429b0b9d9a1  code/point_arb.py
+941894757f55ac59eba084790e3712cb  code/point_check_mpmath.py
+9bfa202c1dea600fd302df16d72c9b89  code/saddle_sign_arb.py
+14fd1bad0b3d4b234c34c25c4bd67e54  code/saddle_sign_mpmath.py
+e34a551139cd9639923215bc6930a08d  code/truepoints_arb.py
+d03c1c8ac9dbe95f3a943268390de23e  code/truepoints_mpmath.py
+b63c9268f69e8fd00bfe4af41db1c769  code/run_best_constant.sh
+48684d765663aaed055d72e1ea9e7352  code/run_cells.sh
+2429da546abc51a90026144e4932ec52  code/run_false_cells.sh
+8b29d769fbe56f694e62a2bc296d9a00  code/run_logged.sh
+LP p=1.5 s=2.5 lam=1.000000000000 N=120: FEASIBLE (sigma* = 0.000e+00); min(m - e) = -4.986211e-16 at t = -2.09440 (y* = 0.00000); phi - e min -4.986e-16
+LP p=1.5 s=4.5 lam=1.000000000000 N=120: INFEASIBLE (sigma* = 4.764e-03); min(m - e) = -3.764825e-02 at t = -0.78540 (y* = 1.06539)
+p=1.5 s=4.5 lam=1.000000000000 N=120: RUNOFF after 38798 sweeps; min(m - e) = -3.764825e-02 at t = -0.78540 (y* = 1.06539); phi(0) = -1000297.557996
+  exact-trig residual 1.55e-15
+UPPER p=1.5 s=2.5 N=1200 samples=24 fine=48: lam_up = 1.000000048828 (sigma* 0.00e+00, shift 0.00e+00); min jump 9.983e-09 (mu units), max(Phi - m) -2.949e-08 -> VERIFIED; A*/A <= 1.000000032552
+LP p=1.5 s=4.0 lam=1.000000000000 N=1200: INFEASIBLE (sigma* = 3.255e-05); min(m - e) = -1.806979e-03 at t = -1.63886 (y* = 0.60036)
+LP p=1.5 s=4.0 lam=1.010000000000 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = 9.571742e-03 at t = -2.15723 (y* = 0.00000); phi - e min 9.572e-03
+LP p=1.5 s=4.0 lam=1.005000000000 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = 4.890660e-03 at t = -2.12581 (y* = 0.00000); phi - e min 4.891e-03
+LP p=1.5 s=4.0 lam=1.002500000000 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = 2.430903e-03 at t = 1.80118 (y* = 0.48041); phi - e min 2.431e-03
+LP p=1.5 s=4.0 lam=1.001250000000 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = 4.008902e-04 at t = -1.71217 (y* = 0.54941); phi - e min 4.009e-04
+LP p=1.5 s=4.0 lam=1.000625000000 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = -6.824415e-04 at t = -1.67552 (y* = 0.57550); phi - e min -2.364e-03
+LP p=1.5 s=4.0 lam=1.000312500000 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = -1.239723e-03 at t = -1.65457 (y* = 0.58972); phi - e min -4.372e-03
+LP p=1.5 s=4.0 lam=1.000156250000 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = -1.522074e-03 at t = -1.64410 (y* = 0.59669); phi - e min -5.432e-03
+LP p=1.5 s=4.0 lam=1.000078125000 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = -1.664179e-03 at t = -1.64410 (y* = 0.59691); phi - e min -5.980e-03
+LP p=1.5 s=4.0 lam=1.000039062500 N=1200: INFEASIBLE (sigma* = 1.027e-05); min(m - e) = -1.735568e-03 at t = 1.63886 (y* = 0.60025)
+LP p=1.5 s=4.0 lam=1.000058593750 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = -1.699865e-03 at t = -1.63886 (y* = 0.60019); phi - e min -6.120e-03
+LP p=1.5 s=4.0 lam=1.000048828125 N=1200: INFEASIBLE (sigma* = 4.704e-06); min(m - e) = -1.717716e-03 at t = 1.63886 (y* = 0.60022)
+LP p=1.5 s=4.0 lam=1.000053710937 N=1200: INFEASIBLE (sigma* = 1.919e-06); min(m - e) = -1.708791e-03 at t = 1.63886 (y* = 0.60021)
+LP p=1.5 s=4.0 lam=1.000056152344 N=1200: INFEASIBLE (sigma* = 5.271e-07); min(m - e) = -1.704328e-03 at t = -1.63886 (y* = 0.60020)
+LP p=1.5 s=4.0 lam=1.000057373047 N=1200: FEASIBLE (sigma* = 0.000e+00); min(m - e) = -1.702096e-03 at t = 1.63886 (y* = 0.60020); phi - e min -6.129e-03
+LP p=1.5 s=4.0 lam=1.000056762695 N=1200: INFEASIBLE (sigma* = 1.790e-07); min(m - e) = -1.703212e-03 at t = 1.63886 (y* = 0.60020)
+CONSTANT p=1.5 s=4.0: lam* in [1.000056762695, 1.000057373047]; A*/A in [1.000037841439, 1.000038248332]
+UPPER p=1.5 s=4.0 N=1200 samples=24 fine=48: lam_up = 1.000057409668 (sigma* 0.00e+00, shift 0.00e+00); min jump 9.968e-09 (mu units), max(Phi - m) -2.922e-08 -> VERIFIED; A*/A <= 1.000038272746
+  upper controls: shifted phi max(Phi - m) 9.71e-07 (> 0); dented phi min jump -7.30e+01 (< 0)
+ALL TESTS PASS
+=== END 2026-10-27 12:16:35 EDT exit code 0

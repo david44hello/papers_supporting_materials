@@ -1,0 +1,172 @@
+=== START 2026-10-27 12:08:20 EDT
+=== COMMAND bash code/run_false_cells.sh
+=== Python 3.12.3; python-flint 0.9.0, mpmath 1.4.1, numpy 2.5.4, scipy 1.18.1
+=== md5 of the programs:
+8ecda0566e4531aa30c106416a1f989c  code/arb_dual.py
+7d29ee7bb7a8035cb140a2056eea73db  code/badcells_arb.py
+7fa91427b4b5c48c1db1440b9de18404  code/best_constant_lp.py
+f46b34ac3c5e7dd8fa6fb2af0129e91c  code/best_constant_second.py
+655c652b33ed19c35e48f46164099e5f  code/certify_arb.py
+d39118afbffa918c4612d9e981cbe195  code/counterexample_beta_arb.py
+d3d5fd61ba2e06649640464d4b9f1f07  code/counterexample_closed_form.py
+049ecd4f6de51aefab699adbe413b19d  code/counterexample_quadrature_arb.py
+6b5df54f74bb776844dbf429b0b9d9a1  code/point_arb.py
+941894757f55ac59eba084790e3712cb  code/point_check_mpmath.py
+9bfa202c1dea600fd302df16d72c9b89  code/saddle_sign_arb.py
+14fd1bad0b3d4b234c34c25c4bd67e54  code/saddle_sign_mpmath.py
+e34a551139cd9639923215bc6930a08d  code/truepoints_arb.py
+d03c1c8ac9dbe95f3a943268390de23e  code/truepoints_mpmath.py
+b63c9268f69e8fd00bfe4af41db1c769  code/run_best_constant.sh
+48684d765663aaed055d72e1ea9e7352  code/run_cells.sh
+2429da546abc51a90026144e4932ec52  code/run_false_cells.sh
+8b29d769fbe56f694e62a2bc296d9a00  code/run_logged.sh
+negative control failed as it must (s = 3.9): no proof on [1.500000000, 1.500000000] at s = 39/10
+range check works (s = sec^2 refused): s_bad = 4 is not below sec^2 at pb = 3/2
+positive control: cell [1.5, 1.501] at s = 3.98 proved bad with 4 pieces; float s0(3/2) = 3.9573502
+offset positive control: cell [1.5, 1.501], s = sec^2 - 0.02 proved bad with 8 pieces
+offset negative control failed as it must (delta = 0.06): no proof on [1.500000000, 1.500000000] at delta = 3/50
+tests done
+RUN argv = code/badcells_arb.py --p-from 4/3 --p-to 19/10 --cells 114 --digits 5 --max-pieces 40 --fractions 9/10,3/4,1/2,1/4 | python 3.12.3 | python-flint 0.9.0 | prec 100
+BADCELL p in [1.333333, 1.338304] (exact [4/3, 4577/3420]): NOT COVERED (float gap 0.00e+00; last: delta = 0 must be positive)
+BADCELL p in [1.338304, 1.343275] (exact [4577/3420, 2297/1710]): NOT COVERED (float gap 1.17e-04; last: piece budget exceeded near p = 1.338304)
+BADCELL p in [1.343275, 1.348246] (exact [2297/1710, 1537/1140]): NOT COVERED (float gap 4.49e-04; last: piece budget exceeded near p = 1.343277)
+BADCELL p in [1.348246, 1.353216] (exact [1537/1140, 1157/855]): NOT COVERED (float gap 9.71e-04; last: piece budget exceeded near p = 1.348255)
+BADCELL p in [1.353216, 1.358187] (exact [1157/855, 929/684]): NOT COVERED (float gap 1.66e-03; last: piece budget exceeded near p = 1.353236)
+BADCELL p in [1.358187, 1.363158] (exact [929/684, 259/190]): NOT COVERED (float gap 2.50e-03; last: piece budget exceeded near p = 1.358226)
+BADCELL p in [1.363158, 1.368129] (exact [259/190, 4679/3420]): NOT COVERED (float gap 3.46e-03; last: piece budget exceeded near p = 1.363236)
+BADCELL p in [1.368129, 1.373099] (exact [4679/3420, 1174/855]): NOT COVERED (float gap 4.54e-03; last: piece budget exceeded near p = 1.368206)
+BADCELL p in [1.373099, 1.378070] (exact [1174/855, 1571/1140]): NOT COVERED (float gap 5.71e-03; last: piece budget exceeded near p = 1.373255)
+BADCELL p in [1.378070, 1.383041] (exact [1571/1140, 473/342]): NOT COVERED (float gap 6.96e-03; last: piece budget exceeded near p = 1.378226)
+BADCELL p in [1.383041, 1.388012] (exact [473/342, 4747/3420]): NOT COVERED (float gap 8.29e-03; last: piece budget exceeded near p = 1.383352)
+BADCELL p in [1.388012, 1.392982] (exact [4747/3420, 397/285]): NOT COVERED (float gap 9.67e-03; last: piece budget exceeded near p = 1.388322)
+BADCELL p in [1.392982, 1.397953] (exact [397/285, 4781/3420]): NOT COVERED (float gap 1.11e-02; last: piece budget exceeded near p = 1.393643)
+BADCELL p in [1.397953, 1.402924] (exact [4781/3420, 2399/1710]): NOT COVERED (float gap 1.26e-02; last: piece budget exceeded near p = 1.398613)
+BADCELL p in [1.402924, 1.407895] (exact [2399/1710, 107/76]): NOT COVERED (float gap 1.41e-02; last: piece budget exceeded near p = 1.403584)
+BADCELL p in [1.407895, 1.412865] (exact [107/76, 1208/855]): NOT COVERED (float gap 1.56e-02; last: piece budget exceeded near p = 1.408749)
+BADCELL p in [1.412865, 1.417836] (exact [1208/855, 4849/3420]): NOT COVERED (float gap 1.72e-02; last: piece budget exceeded near p = 1.414264)
+BADCELL p in [1.417836, 1.422807] (exact [4849/3420, 811/570]): NOT COVERED (float gap 1.87e-02; last: piece budget exceeded near p = 1.419234)
+BADCELL p in [1.422807, 1.427778] (exact [811/570, 257/180]): NOT COVERED (float gap 2.03e-02; last: piece budget exceeded near p = 1.424205)
+BADCELL p in [1.427778, 1.432749] (exact [257/180, 245/171]): NOT COVERED (float gap 2.18e-02; last: piece budget exceeded near p = 1.429176)
+BADCELL p in [1.432749, 1.437719] (exact [245/171, 1639/1140]): NOT COVERED (float gap 2.34e-02; last: piece budget exceeded near p = 1.435545)
+BADCELL p in [1.437719, 1.442690] (exact [1639/1140, 2467/1710]): NOT COVERED (float gap 2.50e-02; last: piece budget exceeded near p = 1.440515)
+BADCELL p in [1.442690, 1.447661] (exact [2467/1710, 4951/3420]): NOT COVERED (float gap 2.65e-02; last: piece budget exceeded near p = 1.445486)
+BADCELL p in [1.447661, 1.452632] (exact [4951/3420, 138/95]): NOT COVERED (float gap 2.80e-02; last: piece budget exceeded near p = 1.450457)
+BADCELL p in [1.452632, 1.457602] (exact [138/95, 997/684]): NOT COVERED (float gap 2.95e-02; last: piece budget exceeded near p = 1.455428)
+BADCELL p in [1.457602, 1.462573] (exact [997/684, 2501/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 31/4000 (0.00775 = 1/4 of float gap 0.03103) for every p: 34 pieces, max upper -1.27e-06  PROVED
+BADCELL p in [1.462573, 1.467544] (exact [2501/1710, 1673/1140]): Gamma >= e FAILS at s = sec^2(pi/2p) - 203/25000 (0.00812 = 1/4 of float gap 0.03250) for every p: 32 pieces, max upper -5.73e-05  PROVED
+BADCELL p in [1.467544, 1.472515] (exact [1673/1140, 1259/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 53/6250 (0.00848 = 1/4 of float gap 0.03394) for every p: 32 pieces, max upper -1.23e-04  PROVED
+BADCELL p in [1.472515, 1.477485] (exact [1259/855, 5053/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 221/25000 (0.00884 = 1/4 of float gap 0.03536) for every p: 32 pieces, max upper -1.93e-04  PROVED
+BADCELL p in [1.477485, 1.482456] (exact [5053/3420, 169/114]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1837/100000 (0.01837 = 1/2 of float gap 0.03675) for every p: 40 pieces, max upper -1.61e-06  PROVED
+BADCELL p in [1.482456, 1.487427] (exact [169/114, 5087/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 381/20000 (0.01905 = 1/2 of float gap 0.03811) for every p: 32 pieces, max upper -3.44e-05  PROVED
+BADCELL p in [1.487427, 1.492398] (exact [5087/3420, 1276/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1971/100000 (0.01971 = 1/2 of float gap 0.03944) for every p: 32 pieces, max upper -8.84e-05  PROVED
+BADCELL p in [1.492398, 1.497368] (exact [1276/855, 569/380]): Gamma >= e FAILS at s = sec^2(pi/2p) - 509/25000 (0.02036 = 1/2 of float gap 0.04073) for every p: 32 pieces, max upper -1.46e-04  PROVED
+BADCELL p in [1.497368, 1.502339] (exact [569/380, 2569/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2099/100000 (0.02099 = 1/2 of float gap 0.04200) for every p: 32 pieces, max upper -2.08e-04  PROVED
+BADCELL p in [1.502339, 1.507310] (exact [2569/1710, 1031/684]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2161/100000 (0.02161 = 1/2 of float gap 0.04322) for every p: 32 pieces, max upper -2.73e-04  PROVED
+BADCELL p in [1.507310, 1.512281] (exact [1031/684, 431/285]): Gamma >= e FAILS at s = sec^2(pi/2p) - 111/5000 (0.02220 = 1/2 of float gap 0.04442) for every p: 32 pieces, max upper -3.43e-04  PROVED
+BADCELL p in [1.512281, 1.517251] (exact [431/285, 5189/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1139/50000 (0.02278 = 1/2 of float gap 0.04557) for every p: 32 pieces, max upper -4.17e-04  PROVED
+BADCELL p in [1.517251, 1.522222] (exact [5189/3420, 137/90]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1167/50000 (0.02334 = 1/2 of float gap 0.04670) for every p: 32 pieces, max upper -4.96e-04  PROVED
+BADCELL p in [1.522222, 1.527193] (exact [137/90, 1741/1140]): Gamma >= e FAILS at s = sec^2(pi/2p) - 597/25000 (0.02388 = 1/2 of float gap 0.04778) for every p: 26 pieces, max upper -1.05e-06  PROVED
+BADCELL p in [1.527193, 1.532164] (exact [1741/1140, 262/171]): Gamma >= e FAILS at s = sec^2(pi/2p) - 3661/100000 (0.03661 = 3/4 of float gap 0.04883) for every p: 32 pieces, max upper -1.30e-05  PROVED
+BADCELL p in [1.532164, 1.537135] (exact [262/171, 5257/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 3737/100000 (0.03737 = 3/4 of float gap 0.04984) for every p: 32 pieces, max upper -5.25e-05  PROVED
+BADCELL p in [1.537135, 1.542105] (exact [5257/3420, 293/190]): Gamma >= e FAILS at s = sec^2(pi/2p) - 381/10000 (0.03810 = 3/4 of float gap 0.05081) for every p: 32 pieces, max upper -9.43e-05  PROVED
+BADCELL p in [1.542105, 1.547076] (exact [293/190, 5291/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 97/2500 (0.03880 = 3/4 of float gap 0.05174) for every p: 32 pieces, max upper -1.38e-04  PROVED
+BADCELL p in [1.547076, 1.552047] (exact [5291/3420, 1327/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 3947/100000 (0.03947 = 3/4 of float gap 0.05263) for every p: 32 pieces, max upper -1.85e-04  PROVED
+BADCELL p in [1.552047, 1.557018] (exact [1327/855, 355/228]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4011/100000 (0.04011 = 3/4 of float gap 0.05349) for every p: 32 pieces, max upper -2.34e-04  PROVED
+BADCELL p in [1.557018, 1.561988] (exact [355/228, 2671/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 509/12500 (0.04072 = 3/4 of float gap 0.05431) for every p: 32 pieces, max upper -2.85e-04  PROVED
+BADCELL p in [1.561988, 1.566959] (exact [2671/1710, 5359/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4131/100000 (0.04131 = 3/4 of float gap 0.05508) for every p: 32 pieces, max upper -3.38e-04  PROVED
+BADCELL p in [1.566959, 1.571930] (exact [5359/3420, 448/285]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2093/50000 (0.04186 = 3/4 of float gap 0.05582) for every p: 32 pieces, max upper -3.94e-04  PROVED
+BADCELL p in [1.571930, 1.576901] (exact [448/285, 5393/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4239/100000 (0.04239 = 3/4 of float gap 0.05652) for every p: 32 pieces, max upper -4.53e-04  PROVED
+BADCELL p in [1.576901, 1.581871] (exact [5393/3420, 541/342]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4289/100000 (0.04289 = 3/4 of float gap 0.05719) for every p: 32 pieces, max upper -5.14e-04  PROVED
+BADCELL p in [1.581871, 1.586842] (exact [541/342, 603/380]): Gamma >= e FAILS at s = sec^2(pi/2p) - 867/20000 (0.04335 = 3/4 of float gap 0.05781) for every p: 32 pieces, max upper -5.79e-04  PROVED
+BADCELL p in [1.586842, 1.591813] (exact [603/380, 1361/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4379/100000 (0.04379 = 3/4 of float gap 0.05840) for every p: 32 pieces, max upper -6.45e-04  PROVED
+BADCELL p in [1.591813, 1.596784] (exact [1361/855, 5461/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 221/5000 (0.04420 = 3/4 of float gap 0.05894) for every p: 28 pieces, max upper -3.74e-06  PROVED
+BADCELL p in [1.596784, 1.601754] (exact [5461/3420, 913/570]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2229/50000 (0.04458 = 3/4 of float gap 0.05945) for every p: 18 pieces, max upper -4.96e-07  PROVED
+BADCELL p in [1.601754, 1.606725] (exact [913/570, 1099/684]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2247/50000 (0.04494 = 3/4 of float gap 0.05992) for every p: 16 pieces, max upper -4.53e-05  PROVED
+BADCELL p in [1.606725, 1.611696] (exact [1099/684, 1378/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2263/50000 (0.04526 = 3/4 of float gap 0.06035) for every p: 16 pieces, max upper -1.05e-04  PROVED
+BADCELL p in [1.611696, 1.616667] (exact [1378/855, 97/60]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1139/25000 (0.04556 = 3/4 of float gap 0.06075) for every p: 16 pieces, max upper -1.66e-04  PROVED
+BADCELL p in [1.616667, 1.621637] (exact [97/60, 2773/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2291/50000 (0.04582 = 3/4 of float gap 0.06111) for every p: 16 pieces, max upper -2.31e-04  PROVED
+BADCELL p in [1.621637, 1.626608] (exact [2773/1710, 5563/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2303/50000 (0.04606 = 3/4 of float gap 0.06143) for every p: 16 pieces, max upper -2.97e-04  PROVED
+BADCELL p in [1.626608, 1.631579] (exact [5563/3420, 31/19]): Gamma >= e FAILS at s = sec^2(pi/2p) - 5553/100000 (0.05553 = 9/10 of float gap 0.06171) for every p: 33 pieces, max upper -1.43e-06  PROVED
+BADCELL p in [1.631579, 1.636550] (exact [31/19, 5597/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 697/12500 (0.05576 = 9/10 of float gap 0.06196) for every p: 32 pieces, max upper -2.36e-05  PROVED
+BADCELL p in [1.636550, 1.641520] (exact [5597/3420, 2807/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2797/50000 (0.05594 = 9/10 of float gap 0.06217) for every p: 32 pieces, max upper -5.07e-05  PROVED
+BADCELL p in [1.641520, 1.646491] (exact [2807/1710, 1877/1140]): Gamma >= e FAILS at s = sec^2(pi/2p) - 561/10000 (0.05610 = 9/10 of float gap 0.06234) for every p: 32 pieces, max upper -7.66e-05  PROVED
+BADCELL p in [1.646491, 1.651462] (exact [1877/1140, 1412/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2811/50000 (0.05622 = 9/10 of float gap 0.06248) for every p: 32 pieces, max upper -1.05e-04  PROVED
+BADCELL p in [1.651462, 1.656433] (exact [1412/855, 1133/684]): Gamma >= e FAILS at s = sec^2(pi/2p) - 176/3125 (0.05632 = 9/10 of float gap 0.06258) for every p: 32 pieces, max upper -1.31e-04  PROVED
+BADCELL p in [1.656433, 1.661404] (exact [1133/684, 947/570]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2819/50000 (0.05638 = 9/10 of float gap 0.06264) for every p: 32 pieces, max upper -1.60e-04  PROVED
+BADCELL p in [1.661404, 1.666374] (exact [947/570, 5699/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 141/2500 (0.05640 = 9/10 of float gap 0.06267) for every p: 32 pieces, max upper -1.91e-04  PROVED
+BADCELL p in [1.666374, 1.671345] (exact [5699/3420, 1429/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 5637/100000 (0.05637 = 9/10 of float gap 0.06263) for every p: 32 pieces, max upper -2.45e-04  PROVED
+BADCELL p in [1.671345, 1.676316] (exact [1429/855, 637/380]): Gamma >= e FAILS at s = sec^2(pi/2p) - 563/10000 (0.05630 = 9/10 of float gap 0.06256) for every p: 32 pieces, max upper -3.04e-04  PROVED
+BADCELL p in [1.676316, 1.681287] (exact [637/380, 575/342]): Gamma >= e FAILS at s = sec^2(pi/2p) - 5619/100000 (0.05619 = 9/10 of float gap 0.06244) for every p: 32 pieces, max upper -3.51e-04  PROVED
+BADCELL p in [1.681287, 1.686257] (exact [575/342, 5767/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 7/125 (0.05600 = 9/10 of float gap 0.06223) for every p: 32 pieces, max upper -3.79e-04  PROVED
+BADCELL p in [1.686257, 1.691228] (exact [5767/3420, 482/285]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2787/50000 (0.05574 = 9/10 of float gap 0.06194) for every p: 32 pieces, max upper -4.01e-04  PROVED
+BADCELL p in [1.691228, 1.696199] (exact [482/285, 5801/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 5541/100000 (0.05541 = 9/10 of float gap 0.06157) for every p: 32 pieces, max upper -4.21e-04  PROVED
+BADCELL p in [1.696199, 1.701170] (exact [5801/3420, 2909/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 5501/100000 (0.05501 = 9/10 of float gap 0.06113) for every p: 32 pieces, max upper -4.41e-04  PROVED
+BADCELL p in [1.701170, 1.706140] (exact [2909/1710, 389/228]): Gamma >= e FAILS at s = sec^2(pi/2p) - 341/6250 (0.05456 = 9/10 of float gap 0.06063) for every p: 32 pieces, max upper -4.57e-04  PROVED
+BADCELL p in [1.706140, 1.711111] (exact [389/228, 77/45]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1081/20000 (0.05405 = 9/10 of float gap 0.06006) for every p: 32 pieces, max upper -4.73e-04  PROVED
+BADCELL p in [1.711111, 1.716082] (exact [77/45, 5869/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 107/2000 (0.05350 = 9/10 of float gap 0.05945) for every p: 32 pieces, max upper -4.84e-04  PROVED
+BADCELL p in [1.716082, 1.721053] (exact [5869/3420, 327/190]): Gamma >= e FAILS at s = sec^2(pi/2p) - 5289/100000 (0.05289 = 9/10 of float gap 0.05878) for every p: 32 pieces, max upper -4.97e-04  PROVED
+BADCELL p in [1.721053, 1.726023] (exact [327/190, 5903/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 209/4000 (0.05225 = 9/10 of float gap 0.05806) for every p: 32 pieces, max upper -5.05e-04  PROVED
+BADCELL p in [1.726023, 1.730994] (exact [5903/3420, 296/171]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1289/25000 (0.05156 = 9/10 of float gap 0.05730) for every p: 32 pieces, max upper -5.14e-04  PROVED
+BADCELL p in [1.730994, 1.735965] (exact [296/171, 1979/1140]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1271/25000 (0.05084 = 9/10 of float gap 0.05650) for every p: 32 pieces, max upper -5.20e-04  PROVED
+BADCELL p in [1.735965, 1.740936] (exact [1979/1140, 2977/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 5009/100000 (0.05009 = 9/10 of float gap 0.05566) for every p: 32 pieces, max upper -5.24e-04  PROVED
+BADCELL p in [1.740936, 1.745906] (exact [2977/1710, 5971/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 493/10000 (0.04930 = 9/10 of float gap 0.05479) for every p: 32 pieces, max upper -5.28e-04  PROVED
+BADCELL p in [1.745906, 1.750877] (exact [5971/3420, 499/285]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4849/100000 (0.04849 = 9/10 of float gap 0.05388) for every p: 32 pieces, max upper -5.29e-04  PROVED
+BADCELL p in [1.750877, 1.755848] (exact [499/285, 1201/684]): Gamma >= e FAILS at s = sec^2(pi/2p) - 953/20000 (0.04765 = 9/10 of float gap 0.05295) for every p: 32 pieces, max upper -5.29e-04  PROVED
+BADCELL p in [1.755848, 1.760819] (exact [1201/684, 3011/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4679/100000 (0.04679 = 9/10 of float gap 0.05199) for every p: 32 pieces, max upper -5.27e-04  PROVED
+BADCELL p in [1.760819, 1.765789] (exact [3011/1710, 671/380]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4591/100000 (0.04591 = 9/10 of float gap 0.05101) for every p: 32 pieces, max upper -5.23e-04  PROVED
+BADCELL p in [1.765789, 1.770760] (exact [671/380, 1514/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 9/200 (0.04500 = 9/10 of float gap 0.05001) for every p: 32 pieces, max upper -5.21e-04  PROVED
+BADCELL p in [1.770760, 1.775731] (exact [1514/855, 6073/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 551/12500 (0.04408 = 9/10 of float gap 0.04899) for every p: 32 pieces, max upper -5.16e-04  PROVED
+BADCELL p in [1.775731, 1.780702] (exact [6073/3420, 203/114]): Gamma >= e FAILS at s = sec^2(pi/2p) - 863/20000 (0.04315 = 9/10 of float gap 0.04795) for every p: 32 pieces, max upper -5.07e-04  PROVED
+BADCELL p in [1.780702, 1.785673] (exact [203/114, 6107/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 211/5000 (0.04220 = 9/10 of float gap 0.04689) for every p: 32 pieces, max upper -4.99e-04  PROVED
+BADCELL p in [1.785673, 1.790643] (exact [6107/3420, 1531/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 4123/100000 (0.04123 = 9/10 of float gap 0.04582) for every p: 32 pieces, max upper -4.92e-04  PROVED
+BADCELL p in [1.790643, 1.795614] (exact [1531/855, 2047/1140]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2013/50000 (0.04026 = 9/10 of float gap 0.04474) for every p: 32 pieces, max upper -4.80e-04  PROVED
+BADCELL p in [1.795614, 1.800585] (exact [2047/1140, 3079/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 491/12500 (0.03928 = 9/10 of float gap 0.04365) for every p: 32 pieces, max upper -4.68e-04  PROVED
+BADCELL p in [1.800585, 1.805556] (exact [3079/1710, 65/36]): Gamma >= e FAILS at s = sec^2(pi/2p) - 957/25000 (0.03828 = 9/10 of float gap 0.04254) for every p: 32 pieces, max upper -4.57e-04  PROVED
+BADCELL p in [1.805556, 1.810526] (exact [65/36, 172/95]): Gamma >= e FAILS at s = sec^2(pi/2p) - 233/6250 (0.03728 = 9/10 of float gap 0.04143) for every p: 32 pieces, max upper -4.43e-04  PROVED
+BADCELL p in [1.810526, 1.815497] (exact [172/95, 6209/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 907/25000 (0.03628 = 9/10 of float gap 0.04031) for every p: 32 pieces, max upper -4.27e-04  PROVED
+BADCELL p in [1.815497, 1.820468] (exact [6209/3420, 3113/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1763/50000 (0.03526 = 9/10 of float gap 0.03919) for every p: 32 pieces, max upper -4.13e-04  PROVED
+BADCELL p in [1.820468, 1.825439] (exact [3113/1710, 2081/1140]): Gamma >= e FAILS at s = sec^2(pi/2p) - 137/4000 (0.03425 = 9/10 of float gap 0.03806) for every p: 32 pieces, max upper -3.94e-04  PROVED
+BADCELL p in [1.825439, 1.830409] (exact [2081/1140, 313/171]): Gamma >= e FAILS at s = sec^2(pi/2p) - 3323/100000 (0.03323 = 9/10 of float gap 0.03692) for every p: 32 pieces, max upper -3.77e-04  PROVED
+BADCELL p in [1.830409, 1.835380] (exact [313/171, 6277/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 161/5000 (0.03220 = 9/10 of float gap 0.03579) for every p: 32 pieces, max upper -3.60e-04  PROVED
+BADCELL p in [1.835380, 1.840351] (exact [6277/3420, 1049/570]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1559/50000 (0.03118 = 9/10 of float gap 0.03465) for every p: 32 pieces, max upper -3.39e-04  PROVED
+BADCELL p in [1.840351, 1.845322] (exact [1049/570, 6311/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 603/20000 (0.03015 = 9/10 of float gap 0.03351) for every p: 32 pieces, max upper -3.20e-04  PROVED
+BADCELL p in [1.845322, 1.850292] (exact [6311/3420, 1582/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2913/100000 (0.02913 = 9/10 of float gap 0.03237) for every p: 32 pieces, max upper -2.97e-04  PROVED
+BADCELL p in [1.850292, 1.855263] (exact [1582/855, 141/76]): Gamma >= e FAILS at s = sec^2(pi/2p) - 281/10000 (0.02810 = 9/10 of float gap 0.03123) for every p: 32 pieces, max upper -2.76e-04  PROVED
+BADCELL p in [1.855263, 1.860234] (exact [141/76, 3181/1710]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2707/100000 (0.02707 = 9/10 of float gap 0.03009) for every p: 32 pieces, max upper -2.54e-04  PROVED
+BADCELL p in [1.860234, 1.865205] (exact [3181/1710, 6379/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 521/20000 (0.02605 = 9/10 of float gap 0.02895) for every p: 32 pieces, max upper -2.29e-04  PROVED
+BADCELL p in [1.865205, 1.870175] (exact [6379/3420, 533/285]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1251/50000 (0.02502 = 9/10 of float gap 0.02781) for every p: 32 pieces, max upper -2.07e-04  PROVED
+BADCELL p in [1.870175, 1.875146] (exact [533/285, 6413/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 3/125 (0.02400 = 9/10 of float gap 0.02668) for every p: 32 pieces, max upper -1.82e-04  PROVED
+BADCELL p in [1.875146, 1.880117] (exact [6413/3420, 643/342]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1149/50000 (0.02298 = 9/10 of float gap 0.02554) for every p: 32 pieces, max upper -1.57e-04  PROVED
+BADCELL p in [1.880117, 1.885088] (exact [643/342, 2149/1140]): Gamma >= e FAILS at s = sec^2(pi/2p) - 2197/100000 (0.02197 = 9/10 of float gap 0.02442) for every p: 32 pieces, max upper -1.29e-04  PROVED
+BADCELL p in [1.885088, 1.890058] (exact [2149/1140, 1616/855]): Gamma >= e FAILS at s = sec^2(pi/2p) - 131/6250 (0.02096 = 9/10 of float gap 0.02329) for every p: 32 pieces, max upper -1.01e-04  PROVED
+BADCELL p in [1.890058, 1.895029] (exact [1616/855, 6481/3420]): Gamma >= e FAILS at s = sec^2(pi/2p) - 399/20000 (0.01995 = 9/10 of float gap 0.02217) for every p: 32 pieces, max upper -7.41e-05  PROVED
+BADCELL p in [1.895029, 1.900000] (exact [6481/3420, 19/10]): Gamma >= e FAILS at s = sec^2(pi/2p) - 379/20000 (0.01895 = 9/10 of float gap 0.02106) for every p: 32 pieces, max upper -4.45e-05  PROVED
+RUN argv = code/badcells_arb.py --p-from 19/10 --p-to 99/50 --cells 16 --digits 5 --max-pieces 40 --fractions 9/10,3/4,1/2,1/4 | python 3.12.3 | python-flint 0.9.0 | prec 100
+BADCELL p in [1.900000, 1.905000] (exact [19/10, 381/200]): Gamma >= e FAILS at s = sec^2(pi/2p) - 897/50000 (0.01794 = 9/10 of float gap 0.01994) for every p: 32 pieces, max upper -1.31e-05  PROVED
+BADCELL p in [1.905000, 1.910000] (exact [381/200, 191/100]): Gamma >= e FAILS at s = sec^2(pi/2p) - 847/50000 (0.01694 = 9/10 of float gap 0.01883) for every p: 34 pieces, max upper -7.87e-06  PROVED
+BADCELL p in [1.910000, 1.915000] (exact [191/100, 383/200]): Gamma >= e FAILS at s = sec^2(pi/2p) - 319/20000 (0.01595 = 9/10 of float gap 0.01772) for every p: 36 pieces, max upper -4.28e-07  PROVED
+BADCELL p in [1.915000, 1.920000] (exact [383/200, 48/25]): Gamma >= e FAILS at s = sec^2(pi/2p) - 187/12500 (0.01496 = 9/10 of float gap 0.01662) for every p: 39 pieces, max upper -6.80e-06  PROVED
+BADCELL p in [1.920000, 1.925000] (exact [48/25, 77/40]): Gamma >= e FAILS at s = sec^2(pi/2p) - 291/25000 (0.01164 = 3/4 of float gap 0.01553) for every p: 16 pieces, max upper -4.95e-05  PROVED
+BADCELL p in [1.925000, 1.930000] (exact [77/40, 193/100]): Gamma >= e FAILS at s = sec^2(pi/2p) - 1083/100000 (0.01083 = 3/4 of float gap 0.01444) for every p: 18 pieces, max upper -1.22e-05  PROVED
+BADCELL p in [1.930000, 1.935000] (exact [193/100, 387/200]): Gamma >= e FAILS at s = sec^2(pi/2p) - 501/50000 (0.01002 = 3/4 of float gap 0.01336) for every p: 21 pieces, max upper -3.30e-07  PROVED
+BADCELL p in [1.935000, 1.940000] (exact [387/200, 97/50]): Gamma >= e FAILS at s = sec^2(pi/2p) - 921/100000 (0.00921 = 3/4 of float gap 0.01229) for every p: 25 pieces, max upper -1.41e-05  PROVED
+BADCELL p in [1.940000, 1.945000] (exact [97/50, 389/200]): Gamma >= e FAILS at s = sec^2(pi/2p) - 841/100000 (0.00841 = 3/4 of float gap 0.01122) for every p: 28 pieces, max upper -2.48e-07  PROVED
+BADCELL p in [1.945000, 1.950000] (exact [389/200, 39/20]): Gamma >= e FAILS at s = sec^2(pi/2p) - 381/50000 (0.00762 = 3/4 of float gap 0.01016) for every p: 32 pieces, max upper -3.21e-04  PROVED
+BADCELL p in [1.950000, 1.955000] (exact [39/20, 391/200]): Gamma >= e FAILS at s = sec^2(pi/2p) - 683/100000 (0.00683 = 3/4 of float gap 0.00911) for every p: 32 pieces, max upper -2.27e-04  PROVED
+BADCELL p in [1.955000, 1.960000] (exact [391/200, 49/25]): Gamma >= e FAILS at s = sec^2(pi/2p) - 121/20000 (0.00605 = 3/4 of float gap 0.00807) for every p: 32 pieces, max upper -1.30e-04  PROVED
+BADCELL p in [1.960000, 1.965000] (exact [49/25, 393/200]): Gamma >= e FAILS at s = sec^2(pi/2p) - 527/100000 (0.00527 = 3/4 of float gap 0.00703) for every p: 32 pieces, max upper -3.44e-05  PROVED
+BADCELL p in [1.965000, 1.970000] (exact [393/200, 197/100]): Gamma >= e FAILS at s = sec^2(pi/2p) - 9/2000 (0.00450 = 3/4 of float gap 0.00600) for every p: 38 pieces, max upper -1.27e-05  PROVED
+BADCELL p in [1.970000, 1.975000] (exact [197/100, 79/40]): Gamma >= e FAILS at s = sec^2(pi/2p) - 249/100000 (0.00249 = 1/2 of float gap 0.00498) for every p: 32 pieces, max upper -3.59e-04  PROVED
+BADCELL p in [1.975000, 1.980000] (exact [79/40, 99/50]): Gamma >= e FAILS at s = sec^2(pi/2p) - 99/50000 (0.00198 = 1/2 of float gap 0.00397) for every p: 32 pieces, max upper -1.45e-04  PROVED
+RUN argv = code/badcells_arb.py --p-from 99/50 --p-to 199/100 --cells 10 --digits 5 --max-pieces 40 --fractions 9/10,3/4,1/2,1/4 | python 3.12.3 | python-flint 0.9.0 | prec 100
+BADCELL p in [1.980000, 1.981000] (exact [99/50, 1981/1000]): Gamma >= e FAILS at s = sec^2(pi/2p) - 339/100000 (0.00339 = 9/10 of float gap 0.00377) for every p: 32 pieces, max upper -2.57e-05  PROVED
+BADCELL p in [1.981000, 1.982000] (exact [1981/1000, 991/500]): Gamma >= e FAILS at s = sec^2(pi/2p) - 321/100000 (0.00321 = 9/10 of float gap 0.00357) for every p: 32 pieces, max upper -1.74e-05  PROVED
+BADCELL p in [1.982000, 1.983000] (exact [991/500, 1983/1000]): Gamma >= e FAILS at s = sec^2(pi/2p) - 151/50000 (0.00302 = 9/10 of float gap 0.00337) for every p: 32 pieces, max upper -1.32e-05  PROVED
+BADCELL p in [1.983000, 1.984000] (exact [1983/1000, 248/125]): Gamma >= e FAILS at s = sec^2(pi/2p) - 71/25000 (0.00284 = 9/10 of float gap 0.00317) for every p: 32 pieces, max upper -5.12e-06  PROVED
+BADCELL p in [1.984000, 1.985000] (exact [248/125, 397/200]): Gamma >= e FAILS at s = sec^2(pi/2p) - 133/50000 (0.00266 = 9/10 of float gap 0.00296) for every p: 34 pieces, max upper -2.19e-06  PROVED
+BADCELL p in [1.985000, 1.986000] (exact [397/200, 993/500]): Gamma >= e FAILS at s = sec^2(pi/2p) - 31/12500 (0.00248 = 9/10 of float gap 0.00277) for every p: 37 pieces, max upper -1.88e-06  PROVED
+BADCELL p in [1.986000, 1.987000] (exact [993/500, 1987/1000]): Gamma >= e FAILS at s = sec^2(pi/2p) - 23/10000 (0.00230 = 9/10 of float gap 0.00257) for every p: 40 pieces, max upper -1.67e-06  PROVED
+BADCELL p in [1.987000, 1.988000] (exact [1987/1000, 497/250]): Gamma >= e FAILS at s = sec^2(pi/2p) - 177/100000 (0.00177 = 3/4 of float gap 0.00237) for every p: 19 pieces, max upper -3.74e-07  PROVED
+BADCELL p in [1.988000, 1.989000] (exact [497/250, 1989/1000]): Gamma >= e FAILS at s = sec^2(pi/2p) - 81/50000 (0.00162 = 3/4 of float gap 0.00217) for every p: 23 pieces, max upper -5.38e-07  PROVED
+BADCELL p in [1.989000, 1.990000] (exact [1989/1000, 199/100]): Gamma >= e FAILS at s = sec^2(pi/2p) - 147/100000 (0.00147 = 3/4 of float gap 0.00197) for every p: 27 pieces, max upper -6.76e-07  PROVED
+=== END 2026-10-27 12:41:35 EDT exit code 0

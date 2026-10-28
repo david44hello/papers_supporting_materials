@@ -1,0 +1,32 @@
+=== START 2026-10-27 10:45:59 EDT
+=== COMMAND python3 -B code/counterexample_closed_form.py
+=== Python 3.12.3; python-flint 0.9.0, mpmath 1.4.1, numpy 2.5.4, scipy 1.18.1
+=== md5 of the programs:
+8ecda0566e4531aa30c106416a1f989c  code/arb_dual.py
+7d29ee7bb7a8035cb140a2056eea73db  code/badcells_arb.py
+7fa91427b4b5c48c1db1440b9de18404  code/best_constant_lp.py
+f46b34ac3c5e7dd8fa6fb2af0129e91c  code/best_constant_second.py
+655c652b33ed19c35e48f46164099e5f  code/certify_arb.py
+d39118afbffa918c4612d9e981cbe195  code/counterexample_beta_arb.py
+d3d5fd61ba2e06649640464d4b9f1f07  code/counterexample_closed_form.py
+049ecd4f6de51aefab699adbe413b19d  code/counterexample_quadrature_arb.py
+6b5df54f74bb776844dbf429b0b9d9a1  code/point_arb.py
+941894757f55ac59eba084790e3712cb  code/point_check_mpmath.py
+9bfa202c1dea600fd302df16d72c9b89  code/saddle_sign_arb.py
+14fd1bad0b3d4b234c34c25c4bd67e54  code/saddle_sign_mpmath.py
+e34a551139cd9639923215bc6930a08d  code/truepoints_arb.py
+d03c1c8ac9dbe95f3a943268390de23e  code/truepoints_mpmath.py
+b63c9268f69e8fd00bfe4af41db1c769  code/run_best_constant.sh
+48684d765663aaed055d72e1ea9e7352  code/run_cells.sh
+2429da546abc51a90026144e4932ec52  code/run_false_cells.sh
+8b29d769fbe56f694e62a2bc296d9a00  code/run_logged.sh
+q al = 0.927331 0.07591574 0.4967532; e1 = 0.00324676083907
+Gamma(y2, t*) = 0.391226052590085; Gamma(0, b) = -0.0176491351527687; Gamma(0, -2pi/3) = 0.0
+K1 terms: short arc Gamma(y2, t*) B(1-a, 1-bb) = 5.4329584; arc past the contact point Gamma(0, b) B(1-bb, e1) = -5.4382509; Gamma(y2, t*) - e(t*) = -0.00076888742
+I1 = 0.0384375880647722; I2 = 1.73362529816599; K1 = -0.00529241302693218; K0 = 3.82116125924253
+threshold ln(1/delta) = 2133.31341907
+ln(1/delta) = 2000: int G = 0.2136659122862
+ln(1/delta) = 2200: int G = -0.1470171286465
+ln(1/delta) = 2500: int G = -1.391990813083
+ln(1/delta) = 3000: int G = -9.532992803745
+=== END 2026-10-27 10:45:59 EDT exit code 0
