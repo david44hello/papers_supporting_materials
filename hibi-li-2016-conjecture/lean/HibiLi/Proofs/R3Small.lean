@@ -1,7 +1,7 @@
 /-
 HibiLi/Proofs/R3Small.lean — three in-text claims of the paper found unstated by the fresh review r3 (findings F3,
 F4, F5): L = max(α, β) and U = min(γ, η) on B for P = X; c has no two upper covers in XdElem; the upper covers g′, h′
-of q may differ from g, h.
+of q need not be g, h.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.ExtraDefs
@@ -121,7 +121,7 @@ section R3Facts
 lemma R3_isChain_Ioi_iff (q : R3Elem) :
     IsChain (· ≤ ·) (Set.Ioi q) ↔ ∀ y, q < y → ∀ z, q < z → y ≠ z → y ≤ z ∨ z ≤ y := Iff.rfl
 
-/-- The witness switch for paper line 492: the copy `a, b, c, g, h'` of `X`, `q = d`, and its upper covers
+/-- The witness switch for paper line 706: the copy `a, b, c, g, h'` of `X`, `q = d`, and its upper covers
 `g', h'`. -/
 def r3Switch : XSwitch R3Elem where
   a := .a
@@ -167,8 +167,8 @@ end R3Small
 
 open R3Small
 
-/-- Paper v1.00 lines 585–586 (Figure 2 caption: "for `P = X` … `L = max(α, β)`, `U = min(γ, η)`") and lines 700–702
-(proof of Proposition 5.1: "For the switch of `c`, `I = {a, b}`, `J' = {g, h}` … with `L = max(α, β)` and
+/-- Paper v2.10 lines 657–661 (Figure 2 caption: "for `P = X` … `L = max(α, β)`, `U = min(γ, η)`") and lines 905–907
+(proof of Proposition 5.1: "When `c` is switched, `I = {a, b}` and `J' = {g, h}` … with `L = max(α, β)` and
 `U = min(γ, η)`"): for every switch of Section 4.2 in `X`, `q = c`, `I = {a, b}`, `J' = J \ {q} = {g, h}`, the
 coordinates `α, β` are those of `a, b` and `γ, η` those of `g, h`, and on all of `B` the two functions are
 `L = max(α, β)` and `U = min(γ, η)`. -/
@@ -197,10 +197,10 @@ theorem prop_5_1_X_LU_proved : ∀ x : XSwitch XElem,
   · rw [← Example21.CenterSwitch.E0_eq_B x] at hu
     exact ⟨L_eq_max_on_E0 x hu, U_eq_min_on_E0 x hu⟩
 
-/-- Paper v1.00 lines 472–475, the reason behind "`q = c` would not do in general: `E₀` below needs two incomparable
-upper covers of `q`": in `a, b < c < d < g, h` (`XdElem`, whose `a, b, c, g, h` form a copy of `X`), `c` is among the
-elements `m ≥ c` with a strict upper set that is not a chain, yet `c` has no two distinct upper covers (its only one
-is `d`), so `E₀` cannot be built with `q = c`. -/
+/-- Paper v2.10 lines 679–684, the reason behind "We cannot always take `q = c`: the construction of `E₀` below needs
+two incomparable upper covers of `q`, and `c` may have only one": in `a, b < c < d < g, h` (`XdElem`, whose
+`a, b, c, g, h` form a copy of `X`), `c` is among the elements `m ≥ c` with a strict upper set that is not a chain, yet
+`c` has no two distinct upper covers (its only one is `d`), so `E₀` cannot be built with `q = c`. -/
 theorem sec4_q_c_no_two_covers_proved :
     ¬ IsChain (· ≤ ·) (Set.Ioi XdElem.c) ∧
       ¬ ∃ g' h' : XdElem, XdElem.c ⋖ g' ∧ XdElem.c ⋖ h' ∧ g' ≠ h' := by
@@ -210,11 +210,11 @@ theorem sec4_q_c_no_two_covers_proved :
   · rintro ⟨g', h', hg, hh, hne⟩
     exact hne ((Xd_covBy_c g' hg).trans (Xd_covBy_c h' hh).symm)
 
-/-- Paper v1.00 line 492, "(If `q > c`, `g′, h′` may differ from `g, h`.)", in a strong form.  In
-`a, b < c < d < g', h'`, `g' < g` (`R3Elem`), the elements `a, b, c, g, h'` form a copy of `X`; a switch of
-Section 4.2 for this copy exists with `q > c` and `{g', h'} ≠ {g, h}`; and the difference is forced: every `q`
-satisfying the hypotheses of Lemma 4.3 for this copy has `q > c`, and no two distinct upper covers of such a `q` form
-the pair `{g, h'}`. -/
+/-- Paper v2.10 line 706, "Fix two upper covers `g′` and `h′` of `q`; they need not be `g` and `h`", in a strong form.
+In `a, b < c < d < g', h'`, `g' < g` (`R3Elem`), the elements `a, b, c, g, h'` form a copy of `X`; a switch of Section
+4.2 for this copy exists with `q > c` and `{g', h'} ≠ {g, h}`; and the difference is forced: every `q` satisfying the
+hypotheses of Lemma 4.3 for this copy has `q > c`, and no two distinct upper covers of such a `q` form the pair
+`{g, h'}`. -/
 theorem sec4_covers_may_differ_proved :
     IsXCopy R3Elem.a R3Elem.b R3Elem.c R3Elem.g R3Elem.hp ∧
     (∃ x : XSwitch R3Elem, x.a = R3Elem.a ∧ x.b = R3Elem.b ∧ x.c = R3Elem.c ∧ x.g = R3Elem.g ∧
@@ -230,7 +230,7 @@ theorem sec4_covers_may_differ_proved :
   · obtain rfl := R3_q_eq_d q hcq hq hmax
     exact ⟨by decide, fun g' h' hg hh _ => R3_pair_ne g' h' hg hh⟩
 
-/-- Paper v1.00 line 492 in the bare existential form: some poset containing `X` has a switch of Section 4.2 with
+/-- Paper v2.10 line 706 in the bare existential form: some poset containing `X` has a switch of Section 4.2 with
 `q > c` whose upper covers `g', h'` differ (as a pair) from `g, h`. -/
 theorem sec4_covers_may_differ_exists_proved :
     ∃ (P : Type) (_ : Fintype P) (_ : PartialOrder P) (x : XSwitch P),

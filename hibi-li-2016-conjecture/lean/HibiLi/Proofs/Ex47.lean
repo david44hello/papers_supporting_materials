@@ -199,7 +199,8 @@ lemma adim_E0_succ : adim xs.E0 + 1 = adim xs.toSwitch.B := by
 end Ex47
 
 open Ex47 in
-/-- **Example 4.7** (a draft before v0.60; the example was cut in v0.60 and is not in v1.00), given Proposition 5.2 for `n = 6` (the last conjunct). -/
+/-- **Example 4.7** (a draft before v0.60; the example was cut in v0.60 and is not in v1.80 or v2.10), given Proposition
+5.2 for `n = 6` (the last conjunct). -/
 theorem ex_4_7_of
     (h52 : facePoly (chainPolytope (WithBot XElem)) - facePoly (orderPolytope (WithBot XElem)) = gapPoly 6) :
     ¬ IsChain (· ≤ ·) (Set.Ioi ((XElem.c : XElem) : WithBot XElem)) ∧

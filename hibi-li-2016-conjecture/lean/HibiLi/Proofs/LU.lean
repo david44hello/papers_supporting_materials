@@ -1,5 +1,5 @@
 /-
-HibiLi/Proofs/LU.lean — the functions L and U of a switch: 0 ≤ L ≤ U ≤ 1 on B, L convex, U concave (paper lines 253–255).
+HibiLi/Proofs/LU.lean — the functions L and U of a switch: 0 ≤ L ≤ U ≤ 1 on B, L convex, U concave (paper lines 317–321).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.Switch

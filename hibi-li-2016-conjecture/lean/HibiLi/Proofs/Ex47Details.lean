@@ -110,7 +110,8 @@ lemma family_eq {lam : (x.toSwitch.P' → ℝ) → ℝ} {pc : x.toSwitch.P'} (hF
 end Ex47Details
 
 open Ex47Details in
-/-- **Example 4.7, details** (a draft before v0.60; the example was cut in v0.60 and is not in v1.00), given Lemma 4.2 for this switch (`h42`). -/
+/-- **Example 4.7, details** (a draft before v0.60; the example was cut in v0.60 and is not in v1.80 or v2.10), given
+Lemma 4.2 for this switch (`h42`). -/
 theorem ex_4_7_details_of (x : XSwitch (WithBot XElem)) (hq : x.q = ((XElem.c : XElem) : WithBot XElem))
     (h42 : ∀ (E : Set (x.toSwitch.P' → ℝ)) (_ : IsFace x.toSwitch.B E) (w : x.toSwitch.P' → ℝ)
       (_ : CrossingAt x.toSwitch E w) (k : ℕ),

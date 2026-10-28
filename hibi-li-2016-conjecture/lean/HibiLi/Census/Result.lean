@@ -1,5 +1,5 @@
 /-
-HibiLi/Census/Result.lean — the n = 6 census sentence (paper v1.00, lines 734–735), assembled:
+HibiLi/Census/Result.lean — the n = 6 census sentence (paper v1.70, lines 737–738; not in v1.80 or v2.10), assembled:
 "For n=6, seven of the sixteen posets containing X attain the bound, P_6 among them".
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
@@ -55,7 +55,7 @@ theorem census_attain_iff (i : Fin 16) :
   revert i
   decide
 
-/-- **Census sentence** (paper v1.00, lines 734–735),. -/
+/-- **Census sentence** (paper v1.70, lines 737–738; not in v1.80 or v2.10),. -/
 theorem sec5_census_n6_proved :
     (∀ i, Fintype.card (censusPoset i) = 6) ∧
     (∀ i, ContainsX (censusPoset i)) ∧

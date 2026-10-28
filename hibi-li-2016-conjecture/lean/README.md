@@ -4,33 +4,35 @@
 
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now. All rights reserved.
 
-This folder is a formal proof, checked by the Lean 4 proof assistant, of every result of the 9-page paper
-"The Hibi–Li (2016) conjecture is fully resolved" by Dave Goel. The paper's link will be added here when it is posted.
-An expanded version of the paper, with many other results, is on Zenodo: https://doi.org/10.5281/zenodo.23601975
+This folder is a formal proof, checked by the Lean 4 proof assistant, of every result of the paper "The Hibi–Li (2016)
+conjecture is fully resolved" by Dave Goel. Lean checked version 2.10 of the paper. The paper's link will be added here
+when it is posted. An expanded version of the paper, with many other results, is on Zenodo:
+https://doi.org/10.5281/zenodo.23601975
 
 ## The theorem, in plain words
 
-Let P be a finite poset with d elements. Its order polytope O(P) and its chain polytope C(P) are two d-dimensional
-polytopes. Hibi and Li conjectured in 2016 that (a) for every i, C(P) has at least as many i-dimensional faces as
-O(P), and (b) if the two numbers of i-dimensional faces are equal for some i, then O(P) and C(P) are unimodularly
+Let P be a finite poset with n elements. Its order polytope O(P) and its chain polytope C(P) are two n-dimensional
+polytopes. Hibi and Li conjectured in 2016 that (a) for every k, C(P) has at least as many k-dimensional faces as
+O(P), and (b) if the two numbers of k-dimensional faces are equal for some k, then O(P) and C(P) are unimodularly
 equivalent. Fourier proved (a).
 
 Let X be the five-element poset with two incomparable elements below a third element, which lies below two further
 incomparable elements. Hibi and Li showed that O(P) and C(P) are unimodularly equivalent exactly when P does not
-contain X. The paper proves: if P contains X, then for every k with 2 ≤ k ≤ d − 1, C(P) has at least the binomial
-coefficient C(d−3, k−2) more k-dimensional faces than O(P); and for every d ≥ 5 some d-element poset attains all
-these bounds. So (b) holds for every i with 2 ≤ i ≤ d − 1. For edges (i = 1) it fails: the poset X itself has equally many edges in
-both polytopes, yet they are not unimodularly equivalent.
+contain X. The paper proves: if P contains X, then for every k with 2 ≤ k ≤ n − 1, C(P) has at least the binomial
+coefficient C(n−3, k−2) more k-dimensional faces than O(P); and for every n ≥ 5 some n-element poset containing X
+attains all these bounds. So (b) holds for every k with 2 ≤ k ≤ n − 1. For edges (k = 1) it fails, for every poset
+that contains X: O(P) and C(P) always have equally many edges (Hibi, Li, Sahara and Shikama, 2017), yet they are not
+unimodularly equivalent.
 
 In Lean (names ending in `HL` follow Hibi and Li's own published conventions; the full statement is in
 [HibiLi/Paper/Statements.lean](HibiLi/Paper/Statements.lean)):
 
 ```lean
 theorem HibiLi.Paper.conj_1_1_resolved :
-    -- (a) for every poset P with d > 1 elements and every 1 ≤ i ≤ d − 1: f_i(O(P)) ≤ f_i(C(P))
+    -- (a) for every poset P with n > 1 elements and every 1 ≤ i ≤ n − 1: f_i(O(P)) ≤ f_i(C(P))
     (∀ (P : Type u) [Fintype P] [PartialOrder P], 1 < Fintype.card P → ∀ i, 1 ≤ i → i ≤ Fintype.card P - 1 →
       fNum (orderPolytopeHL P) i ≤ fNum (chainPolytopeHL P) i) ∧
-    -- (b) for every 2 ≤ i ≤ d − 1: f_i(O(P)) = f_i(C(P)) implies that O(P) and C(P) are unimodularly equivalent
+    -- (b) for every 2 ≤ i ≤ n − 1: f_i(O(P)) = f_i(C(P)) implies that O(P) and C(P) are unimodularly equivalent
     (∀ (P : Type u) [Fintype P] [PartialOrder P] [DecidableEq P], 1 < Fintype.card P → ∀ i, 2 ≤ i →
       i ≤ Fintype.card P - 1 → fNum (orderPolytopeHL P) i = fNum (chainPolytopeHL P) i →
       UnimodEquivHL (orderPolytopeHL P) (chainPolytopeHL P)) ∧
@@ -39,43 +41,46 @@ theorem HibiLi.Paper.conj_1_1_resolved :
       ¬ UnimodEquivHL (orderPolytopeHL XElem) (chainPolytopeHL XElem))
 ```
 
+Theorem 1.2 of the paper, whose part (c) covers every poset that contains X, is `thm_1_2` in the same file.
+
 ## What the proof assumes
 
-Mathlib, Lean's three standard axioms (`propext`, `Classical.choice`, `Quot.sound`), and results that the paper cites
-from other papers, stated as axioms in [HibiLi/Cited/](HibiLi/Cited/), each in its source's own words and conventions.
-The headline theorem uses exactly these five (row 69 of [AUDIT.md](AUDIT.md), which `scripts/check.sh` regenerates
-from Lean's `#print axioms`):
+Mathlib, Lean's three standard axioms (`propext`, `Classical.choice`, `Quot.sound`), and five results of other
+works that the paper cites, stated as axioms in [HibiLi/Cited/](HibiLi/Cited/), each with its source. Lean assumes
+them; it does not prove them again. [AUDIT.md](AUDIT.md), which `scripts/check.sh` regenerates from Lean's
+`#print axioms`, names in each row the cited results that claim uses.
 
 | Cited result | Source | Refereed? |
 |---|---|---|
 | `fourier_lemma_4_1`: the switch face-polynomial identity | Fourier, Lemma 4.1, arXiv:2609.23629v1 (2026) | **No: a preprint** |
 | `fourier_prop_5_2`: relative transversality | Fourier, Proposition 5.2, arXiv:2609.23629v1 (2026) | **No: a preprint** |
 | `hibiLi_thm_2_1`: the unimodular-equivalence criterion | Hibi–Li, Theorem 2.1, Math. Scand. 118 (2016) | Yes |
-| `ziegler_face_figure`: face figures | Ziegler, Lectures on Polytopes, Chapter 2 | Yes |
-| `cjk_dual_connected`: connectivity of subdivision dual graphs | Casabella–Joswig–Kastner, Lemma 2 of the published paper (the Lean file quotes the same statement from arXiv v1, where it is Lemma 3) | Yes |
+| `hlss_thm_2_1`: O(P) and C(P) have equally many edges | Hibi–Li–Sahara–Shikama, Theorem 2.1, Discrete Math. 340 (2017) | Yes |
+| `ziegler_face_figure`: vertex figures and face figures | Ziegler, Lectures on Polytopes, Chapter 2 (a textbook) | Yes |
 
-One more cited result, `hlss_thm_2_1` (Hibi–Li–Sahara–Shikama 2017, Theorem 2.1: O(P) and C(P) always have equally
-many edges), is used only for a side remark, not by the headline theorem. Lean assumes these cited results; it does
-not prove them again.
+The headline theorem above uses the first, second, third and fifth; Theorem 1.2 (c) also uses `hlss_thm_2_1`. Lean
+states Ziegler's result in its own words: the wording was not compared with the book. The lemma of Casabella, Joswig
+and Kastner that the paper recalls with its proof is not an assumption: Lean proves it.
 
 ## Where each claim of the paper is
 
 [HibiLi/Paper/Statements.lean](HibiLi/Paper/Statements.lean) has one Lean theorem per claim, named by the paper's
-numbering: 69 claims, covering every numbered result and the small claims in the text, including the count "for
-n = 6, seven of the sixteen posets containing X attain the bound" (`sec5_census_n6`: Lean classifies all 6-element
-posets containing X and counts the faces of all 32 polytopes). [AUDIT.md](AUDIT.md) lists every claim with its status:
-51 PROVED (from Lean's standard axioms alone), 18 PROVED-FROM-CITED (from the standard axioms and the cited results
-named in that row), none open. The comment at the top of Statements.lean
-lists the few sentences deliberately not formalized (remarks that only report other papers' results, and informal
-proof sketches).
+numbering. [AUDIT.md](AUDIT.md) lists all 167 statements with their place in the paper: 142 PROVED (from Lean's
+standard axioms alone) and 25 PROVED-FROM-CITED (from the standard axioms and the cited results named in that row);
+none is open. One row, `sec5_census_n6` (a count for n = 6), is a claim of an earlier version of the paper that
+version 2.10 no longer makes; Lean keeps it. The comment at the top of Statements.lean lists the few sentences
+deliberately not formalized: sentences that report other papers' results without using them, pointers to other
+documents, bibliographic sentences, an informal summary, and the recalled proof of a cited lemma that Lean proves by
+its own route.
 
 ## What a referee must read
 
-Lean checks every proof. A referee only needs to check that the STATEMENTS say what the paper says: the definitions in
+Lean checks every proof. A referee only needs to check that the statements say what the paper says: the definitions in
 [HibiLi/Defs/](HibiLi/Defs/), the cited results in [HibiLi/Cited/](HibiLi/Cited/), and the statements in
 [HibiLi/Paper/Statements.lean](HibiLi/Paper/Statements.lean).
 
-The line numbers in the comments ("lines 94–104") refer to the LaTeX source of version 1.00 of the paper.
+Line numbers in Statements.lean and AUDIT.md refer to the LaTeX source of version 2.10 of the paper, unless a row
+names another version.
 
 ## How to check it yourself
 
@@ -85,6 +90,7 @@ repository:
 ```bash
 git clone https://github.com/david44hello/papers_supporting_materials.git
 cd papers_supporting_materials/hibi-li-2016-conjecture/lean
+git checkout hibi-li-2016-conjecture-v2.10   # the version the paper cites
 lake exe cache get      # downloads prebuilt Mathlib files (it does not compile Mathlib)
 lake build              # the largest file needs about 8 GB of memory
 bash scripts/check.sh   # build, scan for proof holes (sorry, admit, native_decide, ...), regenerate AUDIT.md
@@ -93,14 +99,6 @@ git diff --exit-code AUDIT.md   # the regenerated AUDIT.md is identical to the p
 
 GitHub runs these same steps on a fresh machine at every change (the "Lean build" mark at the top; the steps are in
 [.github/workflows/lean_build.yml](../../.github/workflows/lean_build.yml) at the top of this repository).
-
-The n = 6 count, independently in Python (exact arithmetic; needs pycddlib 2.1.8): `python3 scripts/census/census_n6.py 6`.
-`scripts/census/gen_fvectors.py` wrote the face-vector data in [HibiLi/Census/](HibiLi/Census/); Lean re-checks every
-one of those facts itself, so the Python only proposes.
-
-Optional, after a build: `scripts/kernel_replay.sh --test`, then `scripts/kernel_replay.sh`, re-check every declaration
-with Lean's kernel and with independent proof checkers (they need the checker binaries listed at the top of the
-script). Checkers that refuse any project with cited assumptions report SKIPPED, by design.
 
 Versions: Lean 4.35.0 (pinned in `lean-toolchain`); Mathlib v4.35.0, commit `56a005855ea17e0b0958f73ec801ae140b0a1679`
 (all dependencies pinned in `lake-manifest.json`).

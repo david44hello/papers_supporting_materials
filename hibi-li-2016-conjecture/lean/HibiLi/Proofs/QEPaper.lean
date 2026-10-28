@@ -1,6 +1,7 @@
 /-
-HibiLi/Proofs/QEPaper.lean — Lemma 4.5(a) with the paper's own `Q_E` (paper v1.00 lines 537–544): the polyhedron in
-the `ζ`-space cut out by the inequalities of `B` tight at `u₀`, those tight on `E` taken as equalities.
+HibiLi/Proofs/QEPaper.lean — Lemma 4.5(a) with the paper's own `Q_E` (paper v2.10 lines 752–759): the polyhedron of
+the points of the `ζ`-space that satisfy the defining inequalities of `B` tight at `u₀`, those tight on all of `E`
+imposed as equations.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.QEPaper
@@ -165,7 +166,7 @@ lemma close_withZeta {ζ : {p // p ∉ x.special} → ℝ} (hζ : ζ ∈ box (x.
     rw [Metric.mem_ball, Real.dist_eq] at h
     simpa [XSwitch.withZeta, hp, XSwitch.zeta] using h
 
-/-- **The inequalities of `B` tight at `u₀` involve only `ζ`** (paper proof of Lemma 4.5(a), lines 551–554): every
+/-- **The inequalities of `B` tight at `u₀` involve only `ζ`** (paper proof of Lemma 4.5(a), lines 766–773): every
 inequality involving `α, β, γ` or `η` is strict at `u₀`. -/
 theorem tight_ineq_zeta {g : (x.toSwitch.P' → ℝ) → ℝ} (hg : g ∈ x.toSwitch.ineqs) (h0 : g x.u0 = 0)
     {u v : x.toSwitch.P' → ℝ} (huv : x.zeta u = x.zeta v) : g u = g v := by
@@ -264,9 +265,9 @@ end XS
 
 end QEPaper
 
-/-- **Lemma 4.5, with the paper's own `Q_E`** (paper lines 537–544): `lemma_4_5_full_proved` with `Q_E` the
-polyhedron in the `ζ`-space cut out by the inequalities of `B` tight at `u₀`, those tight on `E` taken as equalities
-(`XSwitch.QEpaper`).  For every face `E ⊇ E₀` of `B`: `ζ₀ ∈ Q_E`, `E ∩ N₀ = V₄ × (Q_E ∩ V_ζ)` and
+/-- **Lemma 4.5, with the paper's own `Q_E`** (paper lines 752–759): `lemma_4_5_full_proved` with `Q_E` the polyhedron
+in the `ζ`-space cut out by the defining inequalities of `B` tight at `u₀`, those tight on all of `E` imposed as
+equations (`XSwitch.QEpaper`).  For every face `E ⊇ E₀` of `B`: `ζ₀ ∈ Q_E`, `E ∩ N₀ = V₄ × (Q_E ∩ V_ζ)` and
 `relint E ∩ N₀ = V₄ × (relint Q_E ∩ V_ζ)`; part (b) as before. -/
 theorem lemma_4_5_paper {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∃ (V4 : Set (Fin 4 → ℝ)) (Vz : Set ({p // p ∉ x.special} → ℝ)), IsOpen V4 ∧ IsOpen Vz ∧

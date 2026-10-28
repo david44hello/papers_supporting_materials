@@ -1,5 +1,5 @@
 /-
-HibiLi/Proofs/Lemma48.lean — proof of paper Lemma 4.8: the simplex lower bound on face numbers, and cofaces of a face.
+HibiLi/Proofs/Lemma48.lean — proof of paper Lemma 4.7: the simplex lower bound on face numbers, and cofaces of a face.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Polytope.Transitivity
@@ -63,7 +63,7 @@ theorem ncard_cofaces_eq {ι : Type*} [Fintype ι] {m : ℕ} {B E : Set (ι → 
 def SimplexBound {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) : Prop :=
   ∀ κ ≤ adim Q, (adim Q + 1).choose (κ + 1) ≤ fNum Q κ
 
-/-- Induction step for the simplex bound (paper, Lemma 4.8, first part): a facet `F` and a vertex `v ∉ F` split the
+/-- Induction step for the simplex bound (paper, Lemma 4.7, first part): a facet `F` and a vertex `v ∉ F` split the
 `κ`-faces into those inside `F` and those containing `v` (the latter via the face figure of `v`). -/
 theorem simplexBound_step {ι : Type*} [Fintype ι] (s : ℕ)
     (ihι : ∀ Q' : Set (ι → ℝ), IsPolytope Q' → Q'.Nonempty → adim Q' < s → SimplexBound Q')
@@ -157,7 +157,7 @@ theorem simplexBound_fin (s : ℕ) : ∀ (m : ℕ) (Q : Set (Fin m → ℝ)), Is
     exact simplexBound_step s (fun Q' hQ' hne' hlt => ih _ hlt m Q' hQ' hne' rfl)
       (fun m' Q' hQ' hne' hlt => ih _ hlt m' Q' hQ' hne' rfl) Q hQ hne hs
 
-/-- **Lemma 4.8**, first part: an `s`-polytope has at least `C(s+1, κ+1)` faces of dimension `κ` (`0 ≤ κ ≤ s`). -/
+/-- **Lemma 4.7**, first part: an `s`-polytope has at least `C(s+1, κ+1)` faces of dimension `κ` (`0 ≤ κ ≤ s`). -/
 theorem lemma_4_8_simplex_proved {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ : IsPolytope Q) (hne : Q.Nonempty)
     (κ : ℕ) (hκ : κ ≤ adim Q) : Nat.choose (adim Q + 1) (κ + 1) ≤ fNum Q κ := by
   suffices h : ∀ s (Q : Set (ι → ℝ)), IsPolytope Q → Q.Nonempty → adim Q = s → SimplexBound Q from
@@ -169,7 +169,7 @@ theorem lemma_4_8_simplex_proved {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)
     exact simplexBound_step s (fun Q' hQ' hne' hlt => ih _ hlt Q' hQ' hne' rfl)
       (fun m Q' hQ' hne' _ => simplexBound_fin _ m Q' hQ' hne' rfl) Q hQ hne hs
 
-/-- **Lemma 4.8**: a nonempty `e`-face `E` of an `m`-polytope `B` lies in at least `C(m−e, j)` faces of dimension
+/-- **Lemma 4.7**: a nonempty `e`-face `E` of an `m`-polytope `B` lies in at least `C(m−e, j)` faces of dimension
 `e + j`, for `0 ≤ j ≤ m − e`. -/
 theorem lemma_4_8_proved {ι : Type*} [Fintype ι] (B : Set (ι → ℝ)) (hB : IsPolytope B) (E : Set (ι → ℝ))
     (hE : IsFace B E) (j : ℕ) (hj : j ≤ adim B - adim E) :

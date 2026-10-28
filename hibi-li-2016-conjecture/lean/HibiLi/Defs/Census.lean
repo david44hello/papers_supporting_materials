@@ -1,5 +1,5 @@
 /-
-HibiLi/Defs/Census.lean — the sixteen 6-element posets that contain X (paper v1.00, lines 734–735; data from
+HibiLi/Defs/Census.lean — the sixteen 6-element posets that contain X (paper v1.70, lines 737–738; data from
 the output of scripts/census/census_n6.py, same row order).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 

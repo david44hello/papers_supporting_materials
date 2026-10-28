@@ -3,7 +3,7 @@ HibiLi/Census/PosetRows.lean — the order and chain polytopes of a census poset
 their 0/1 hull and full dimension (the inputs of `fNum_eq_of_check`, FaceCount.lean).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
-Rows (paper lines 176–179): order polytope `0 ≤ x_p`, `x_p ≤ 1`, `x_p − x_q ≤ 0` for `p ≤ q`;
+Rows (paper lines 222–225): order polytope `0 ≤ x_p`, `x_p ≤ 1`, `x_p − x_q ≤ 0` for `p ≤ q`;
 chain polytope `0 ≤ x_p`, `∑_{p ∈ K} x_p ≤ 1` for every chain `K` (all chains, the empty one included), a chain being
 given by its bitmask `K < 2^d`.
 -/

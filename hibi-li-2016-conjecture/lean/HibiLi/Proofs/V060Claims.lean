@@ -1,6 +1,6 @@
 /-
-HibiLi/Proofs/V060Claims.lean — proofs of the claims added or reworded in paper v0.60 (kept in v1.00; see
-work/REALIGN_v060.md).
+HibiLi/Proofs/V060Claims.lean — proofs of the claims added or reworded in paper v0.60 (all still in v2.10;
+v2.10 rewords the set `N` of Lemma 4.2, see `crossingAt_iff_v060_proved`).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.PaperDefs
@@ -100,8 +100,10 @@ theorem linearIndependent_pair_iff_hyperplanes_ne {V : Type*} [AddCommGroup V] [
         {u | u ∈ affineSpan ℝ E ∧ φ u = φ w} ≠ {u | u ∈ affineSpan ℝ E ∧ ψ u = ψ w} := by
   rw [linearIndependent_pair_iff_ker_ne, Ne, Ne, Ne, Ne, hyperplanes_eq_iff_ker_eq E hw]
 
-/-- `CrossingAt` is exactly the v0.60–v1.00 hypothesis of Lemma 4.2 (v1.00 lines 419–427): `H_S = {φ = φ w}`,
-`H_T = {ψ = ψ w}` hyperplanes of `aff(E)` through `w`, and `H_S ≠ H_T`. -/
+/-- `CrossingAt` is exactly the hypothesis of Lemma 4.2 as worded in v0.60 to v1.80: `H_S = {φ = φ w}`,
+`H_T = {ψ = ψ w}` hyperplanes of `aff(E)` through `w`, and `H_S ≠ H_T`.  v2.10 keeps this clause (lines 585–588) but
+words `N` as "some convex set `N ⊆ E`, open in `aff(E)` and containing `w`" (lines 582–583) where v1.80 had "a convex
+neighborhood `N` of `w` in `E`"; such an `N` is a neighbourhood of `w` in `E` (`Paper.lemma_4_2_v190`). -/
 theorem crossingAt_iff_v060_proved {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (w : s.P' → ℝ) :
     CrossingAt s E w ↔
@@ -128,7 +130,7 @@ theorem crossingAt_iff_v060_proved {P : Type*} [Fintype P] [PartialOrder P] (s :
         (subset_affineSpan ℝ E (intrinsicInterior_subset hw)) φ ψ).mpr hne⟩
 
 /-- A finite family of nonempty polytopes in `B`, covering `B`, closed under nonempty faces and meeting face to face, is
-a subdivision of `B` (the paper's definition, v1.00 lines 271–274). -/
+a subdivision of `B` (the paper's definition, v2.10 lines 349–352). -/
 theorem subdivision_of_parts {ι : Type*} [Fintype ι] (base : Set (ι → ℝ)) (K : Set (Set (ι → ℝ)))
     (hfin : K.Finite) (hpoly : ∀ C ∈ K, IsPolytope C) (hne : ∀ C ∈ K, C.Nonempty) (hsub : ∀ C ∈ K, C ⊆ base)
     (hcov : base ⊆ ⋃ C : K, (C : Set (ι → ℝ))) (hface : ∀ C ∈ K, ∀ F, IsFace C F → F ∈ K)
@@ -144,7 +146,8 @@ theorem subdivision_of_parts {ι : Type*} [Fintype ι] (base : Set (ι → ℝ))
     obtain ⟨C, huC⟩ := Set.mem_iUnion.mp (hcov hu)
     exact ⟨C.1, hfin.mem_toFinset.mpr C.2, huC⟩
 
-/-- v1.00 lines 281–284: `S`, `T` and `R` are subdivisions of `B` [Fourier, Section 4] (here proved). -/
+/-- v2.10 lines 383–385: `S`, `T` and `R` are subdivisions of `B` ("All three are subdivisions of `B`"; the paper
+proves it at lines 385–394, and so does Lean here). -/
 theorem sec3_subdivisions_proved {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     ∃ cS cT cR : Finset (Set (s.P' → ℝ)),
       (cS : Set (Set (s.P' → ℝ))) = s.cellsS ∧ (cT : Set (Set (s.P' → ℝ))) = s.cellsT ∧
@@ -170,8 +173,8 @@ theorem sec3_subdivisions_proved {P : Type*} [Fintype P] [PartialOrder P] (s : S
       (fun C hC => by obtain ⟨_, A, hA, D, -, rfl⟩ := hC; exact fun u hu => hS_B A hA hu.1) s.cellsR_cover
       (fun C hC F hF => s.cellsR_face_closed hC hF) (fun C hC D hD h => s.cellsR_inter_faces hC hD h)
 
-/-- v1.00 lines 321–322: `L` depends only on the coordinates `x_p` with `p < q`, and `U` only on the `y_r` with
-`r > q`. -/
+/-- v2.10 lines 450–451, the clause "Although `L` depends only on the coordinates `x_p` with `p < q` and `U` only on
+the coordinates `y_r` with `r > q`, …". -/
 theorem sec3_L_U_locality_proved {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (u v : s.P' → ℝ) :
     ((∀ p : s.P', p.1 < s.q → u p = v p) → s.L u = s.L v) ∧
       ((∀ r : s.P', s.q < r.1 → u r = v r) → s.U u = s.U v) := by
@@ -224,7 +227,7 @@ theorem unique_restrict_cell {P : Type*} [Fintype P] [PartialOrder P] (s : Switc
   have e2 := h2.eq_of_mem_intrinsicInterior ⟨intrinsicInterior_subset huA, intrinsicInterior_subset huF⟩ huF
   rw [← e1, e2]
 
-/-- Definition 3.3, "the unique cells" (v1.00 lines 316–317). -/
+/-- Definition 3.3, "the unique cells" (v2.10 lines 445–446). -/
 theorem def_3_3_unique_cells_proved {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) (u : s.P' → ℝ) (hu : u ∈ intrinsicInterior ℝ E) :
     (∃! A, A ∈ s.restrict s.cellsS E ∧ u ∈ intrinsicInterior ℝ A) ∧
@@ -273,7 +276,7 @@ theorem pwTop_cover {ι β : Type*} [Fintype ι] {B : Set (ι → ℝ)} {S : Fin
   · rw [← hdim]
     exact Submodule.finrank_mono (vectorSpan_mono ℝ (subset_inter hAi hAE))
 
-/-- Lemma 3.6, second clause (v1.00 lines 382–383). -/
+/-- Lemma 3.6, second clause (v2.10 lines 539–540). -/
 theorem lemma_3_6_cover_proved {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) (D : Set (s.P' → ℝ)) (hDE : D ⊆ E) (hDc : Convex ℝ D) (hDdim : adim D = adim E) :
     (AffineOn s.L D → ∃ C ∈ s.topCells s.cellsS E, D ⊆ C) ∧

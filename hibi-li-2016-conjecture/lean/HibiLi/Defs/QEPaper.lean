@@ -1,6 +1,6 @@
 /-
 HibiLi/Defs/QEPaper.lean — the defining inequalities of `B`, and the paper's own `Q_E` of Lemma 4.5(a)
-(paper v1.00 lines 541–544), cut out by the inequalities of `B` tight at `u₀`.
+(paper v2.10 lines 756–758), cut out by the defining inequalities of `B` tight at `u₀`.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.PaperDefs
@@ -11,9 +11,10 @@ namespace Switch
 
 variable {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
 
-/-- The defining inequalities of `B = O_I(P')`: the five families of `chainOrderPolytope` (paper lines 225–238), each
+/-- The defining inequalities of `B = O_I(P')`: the five families of `chainOrderPolytope` (paper lines 285–298), each
 written `0 ≤ g u` with `g` an affine function of `B`'s coordinates (its slack), in the paper's order:
-(1) `x_p ≥ 0` (`p ∈ I`); (2) `y_r ≥ 0` and `y_r ≤ 1` (`r ∈ J`); (3) `y_r ≤ y_r'` (`r ≤ r'` in `J`);
+(1) `x_p ≥ 0` (`p ∈ I`); (2) `y_r ≥ 0` and `y_r ≤ 1` (`r ∈ J`); (3) `y_r ≤ y_r'` (`r ≤ r'` in `J`; the paper, line
+293, has `r < r'`; `r = r'` only adds the trivial `0 ≤ 0`);
 (4) `Σ_{p∈K} x_p ≤ y_r` (`r ∈ J`, `K ⊆ I` a chain with `p < r` for all `p ∈ K`); (5) `Σ_{p∈K} x_p ≤ 1`
 (`K ⊆ I` a chain).  `B = {u | ∀ g ∈ ineqs, 0 ≤ g u}` is `Proofs.QEPaper.mem_B_iff_ineqs`. -/
 def ineqs : Set ((s.P' → ℝ) → ℝ) :=
@@ -36,8 +37,9 @@ noncomputable def withZeta (ζ : {p // p ∉ x.special} → ℝ) : x.toSwitch.P'
   classical
   exact fun p => if hp : p ∈ x.special then x.u0 p else ζ ⟨p, hp⟩
 
-/-- `Q_E` as the paper defines it (Lemma 4.5(a), lines 541–544): "the polyhedron in the `ζ`-space defined by the
-inequalities of `B` that are tight at `u₀`, those tight on `E` taken as equalities".  An inequality `0 ≤ g` of `B` is
+/-- `Q_E` as the paper defines it (Lemma 4.5(a), v2.10 lines 756–758): "the polyhedron of the points of the
+`ζ`-space that satisfy the defining inequalities of `B` that are tight at `u₀` (these involve only `ζ`), those that are
+tight on all of `E` being imposed as equations".  An inequality `0 ≤ g` of `B` is
 tight at `u₀` when `g u₀ = 0`, and tight on `E` when `g = 0` on all of `E`.  The inequalities tight at `u₀` involve
 only `ζ` (`Proofs.QEPaper.tight_ineq_zeta`), so they are read at the point `(α, β, γ, η) = (1/4, 1/4, 3/4, 3/4)`. -/
 def QEpaper (E : Set (x.toSwitch.P' → ℝ)) : Set ({p // p ∉ x.special} → ℝ) :=

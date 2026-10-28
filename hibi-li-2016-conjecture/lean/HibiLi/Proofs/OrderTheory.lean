@@ -33,7 +33,7 @@ lemma exists_covBy_le_of_lt {q x : P} (h : q < x) : ∃ g, q ⋖ g ∧ g ≤ x :
   have hzS : z ∈ S := by simp [S, hqz, le_trans hzg.le hgS.2]
   exact hzg.not_ge (hmin hzS hzg.le)
 
-/-- Paper lines 472–474: a `q ≥ c`, maximal among the elements whose strict upper set is not a chain, exists. -/
+/-- Paper lines 679–681: a `q ≥ c`, maximal among the elements whose strict upper set is not a chain, exists. -/
 theorem q_exists {c g h : P} (hcg : c < g) (hch : c < h) (hgh : ¬ g ≤ h) (hhg : ¬ h ≤ g) :
     ∃ q, c ≤ q ∧ ¬ IsChain (· ≤ ·) (Set.Ioi q) ∧ ∀ r, q < r → IsChain (· ≤ ·) (Set.Ioi r) := by
   classical

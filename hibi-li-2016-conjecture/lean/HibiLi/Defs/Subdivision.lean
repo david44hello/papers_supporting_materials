@@ -6,7 +6,7 @@ import HibiLi.Defs.Polytope
 
 namespace HibiLi
 
-/-- A subdivision of `base` (paper v1.00, lines 271–274): a finite family of nonempty polytopes covering `base`
+/-- A subdivision of `base` (paper v2.10, lines 349–353): a finite family of nonempty polytopes covering `base`
 exactly, closed under nonempty faces, any two meeting in a common face (or not at all).  The relative interiors of its
 cells partition `base`: `subdivision_relint_partition` (HibiLi/Polytope/RelintPartition.lean). -/
 def IsFinitePolytopalSubdivision {ι : Type*} [Fintype ι]

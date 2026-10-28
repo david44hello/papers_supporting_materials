@@ -9,7 +9,7 @@ namespace HibiLi
 
 open Finset Polynomial
 
-/-- The data of one switch (paper lines 243–245; "so that I ∪ {q} is again an order ideal" is
+/-- The data of one switch (paper lines 306–308; "so that I ∪ {q} is again an order ideal" is
 `sec3_insert_isLowerSet`): an order ideal `I` and an element `q` minimal in `J = P \ I`
 ("minimal in J" = every element below `q` lies in `I`). -/
 structure Switch (P : Type*) [Fintype P] [PartialOrder P] where
@@ -31,7 +31,7 @@ noncomputable instance : Fintype s.P' := by classical exact inferInstance
 /-- The ideal `I` seen inside `P'`. -/
 def I' : Set s.P' := {p | p.1 ∈ s.I}
 
-/-- The base polytope `B = O_I(P')` (paper line 246). -/
+/-- The base polytope `B = O_I(P')` (paper line 309). -/
 def B : Set (s.P' → ℝ) := chainOrderPolytope s.P' s.I'
 
 /-- The chains `K ⊆ I` with `p < q` for all `p ∈ K` (the empty chain included) — the branches of `L`. -/
@@ -46,7 +46,7 @@ lemma lowBranches_nonempty : s.lowBranches.Nonempty := by
 /-- The chain sum `ℓ_K(u) = Σ_{p∈K} u_p`. -/
 def chainSum (K : Finset s.P') (u : s.P' → ℝ) : ℝ := ∑ p ∈ K, u p
 
-/-- `L(u) = max{Σ_{p∈K} u_p : K ⊆ I a chain with p < q for all p ∈ K}` (paper line 249). -/
+/-- `L(u) = max{Σ_{p∈K} u_p : K ⊆ I a chain with p < q for all p ∈ K}` (paper line 312). -/
 noncomputable def L (u : s.P' → ℝ) : ℝ := s.lowBranches.sup' s.lowBranches_nonempty (fun K => s.chainSum K u)
 
 /-- The branches of `U`: `none` is the constant `1`, `some r` (with `r > q`) is the coordinate `u_r`. -/
@@ -61,16 +61,16 @@ def upVal : Option s.P' → (s.P' → ℝ) → ℝ
   | none, _ => 1
   | some r, u => u r
 
-/-- `U(u) = min({u_r : r > q} ∪ {1})` (paper line 251). -/
+/-- `U(u) = min({u_r : r > q} ∪ {1})` (paper line 314). -/
 noncomputable def U (u : s.P' → ℝ) : ℝ := s.upBranches.inf' s.upBranches_nonempty (fun j => s.upVal j u)
 
-/-- Affinity domain of the branch `K` of `L`: `A_ℓ = {u ∈ B : L(u) = ℓ_K(u)}` (paper line 280). -/
+/-- Affinity domain of the branch `K` of `L`: `A_ℓ = {u ∈ B : L(u) = ℓ_K(u)}` (paper line 369). -/
 def domL (K : Finset s.P') : Set (s.P' → ℝ) := {u | u ∈ s.B ∧ s.L u = s.chainSum K u}
 
 /-- Affinity domain of the branch `j` of `U`. -/
 def domU (j : Option s.P') : Set (s.P' → ℝ) := {u | u ∈ s.B ∧ s.U u = s.upVal j u}
 
-/-- Cells of `S` (paper lines 274–281): all nonempty faces of the full-dimensional affinity domains of `L`. -/
+/-- Cells of `S` (paper lines 357–380): all nonempty faces of the full-dimensional affinity domains of `L`. -/
 def cellsS : Set (Set (s.P' → ℝ)) :=
   {C | ∃ K ∈ s.lowBranches, adim (s.domL K) = Fintype.card s.P' ∧ IsFace (s.domL K) C}
 
@@ -78,28 +78,28 @@ def cellsS : Set (Set (s.P' → ℝ)) :=
 def cellsT : Set (Set (s.P' → ℝ)) :=
   {C | ∃ j ∈ s.upBranches, adim (s.domU j) = Fintype.card s.P' ∧ IsFace (s.domU j) C}
 
-/-- Cells of the common refinement `R = S ∨ T` (paper lines 281–283): the nonempty intersections `S ∩ T`. -/
+/-- Cells of the common refinement `R = S ∨ T` (paper lines 383–385): the nonempty intersections `S ∩ T`. -/
 def cellsR : Set (Set (s.P' → ℝ)) :=
   {C | C.Nonempty ∧ ∃ A ∈ s.cellsS, ∃ D ∈ s.cellsT, C = A ∩ D}
 
-/-- Restriction of a family of cells to a face `E` (paper lines 284–286): the nonempty intersections with `E`. -/
+/-- Restriction of a family of cells to a face `E` (paper lines 397–403): the nonempty intersections with `E`. -/
 def restrict (K : Set (Set (s.P' → ℝ))) (E : Set (s.P' → ℝ)) : Set (Set (s.P' → ℝ)) :=
   {C | C.Nonempty ∧ ∃ A ∈ K, C = A ∩ E}
 
-/-- Number of `k`-cells of the family `K` whose carrier is `E` (paper lines 292–294: σ_E, τ_E, ρ_E). -/
+/-- Number of `k`-cells of the family `K` whose carrier is `E` (paper lines 415–417: σ_E, τ_E, ρ_E). -/
 noncomputable def carrierNum (K : Set (Set (s.P' → ℝ))) (E : Set (s.P' → ℝ)) (k : ℕ) : ℕ :=
   {C | C ∈ K ∧ adim C = k ∧ IsCarrier s.B E C}.ncard
 
-/-- `δ_{E,k} = ρ_E(k) − σ_E(k) − τ_E(k) + 1_{k=e}` (paper line 296). -/
+/-- `δ_{E,k} = ρ_E(k) − σ_E(k) − τ_E(k) + 1_{k=e}` (paper line 419). -/
 noncomputable def deltaCoeff (E : Set (s.P' → ℝ)) (k : ℕ) : ℤ :=
   (s.carrierNum s.cellsR E k : ℤ) - s.carrierNum s.cellsS E k - s.carrierNum s.cellsT E k +
     (if k = adim E then 1 else 0)
 
-/-- `δ_E(t) = Σ_k δ_{E,k} t^k` (paper line 297); every cell lies in `B`, so `k ≤ card P'`. -/
+/-- `δ_E(t) = Σ_k δ_{E,k} t^k` (paper line 420); every cell lies in `B`, so `k ≤ card P'`. -/
 noncomputable def delta (E : Set (s.P' → ℝ)) : ℤ[X] :=
   ∑ k ∈ range (Fintype.card s.P' + 1), C (s.deltaCoeff E k) * X ^ k
 
-/-- Transversality relative to the faces of `B` (paper Definition 3.3, lines 314–319 = Fourier Definition 4.2): for
+/-- Transversality relative to the faces of `B` (paper Definition 3.3, lines 443–448 = Fourier Definition 4.2): for
 every face `E` of `B` and `x ∈ relint E` (the paper's `u`), the cells `A ∈ S|_E`, `D ∈ T|_E` whose relative interiors
 contain `x` — unique on each side, by `def_3_3_unique_cells` — satisfy
 `dim(A ∩ D) = dim A + dim D − dim E` (written with `+` on both sides to avoid truncated subtraction). -/

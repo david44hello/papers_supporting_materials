@@ -1,8 +1,10 @@
 /-
-HibiLi/Cited/CJK.lean — cited result: the dual graph of a polytopal subdivision is connected (Casabella–Joswig–Kastner).
+HibiLi/Cited/CJK.lean — [CJK, Lemma 2] (Casabella–Joswig–Kastner): the dual graph of a polytopal subdivision is
+connected. Since paper v2.10 this is PROVED in Lean (HibiLi/Polytope/CJKProof.lean); it is no longer an assumption.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Defs.Subdivision
+import HibiLi.Polytope.CJKProof
 
 namespace HibiLi.Cited
 
@@ -28,12 +30,16 @@ the source's convention; lower-dimensional bases are handled by a proved transpo
 The source definition puts no condition on the vertices of the cells; the application (the common refinement of the
 two affinity subdivisions, restricted to a face) uses this generality.  Only connectivity is imported.
 
-Intended use: only in the proof of Lemma 3.5(ii). -/
-axiom cjk_dual_connected {ι : Type*} [Fintype ι]
+Intended use: only in the proof of Lemma 3.5(ii). The paper (v2.10 l. 492-505) cites this lemma AND recalls its
+proof, so Lean proves it too: `CJKProof.cjk_dual_connected_proved` (same statement; the two steps where Lean's route
+differs from the recalled argument are listed in the header of `HibiLi/Polytope/CJKProof.lean`).  This is a
+THEOREM, not an assumption: it stays in `Cited/` only so that the name, and every use downstream, is unchanged. -/
+theorem cjk_dual_connected {ι : Type*} [Fintype ι]
     (base : Set (ι → ℝ)) (cells : Finset (Set (ι → ℝ)))
     (polytope : HibiLi.IsPolytope base) (nonempty : base.Nonempty)
     (spans : affineSpan ℝ base = ⊤)
     (subdivision : HibiLi.IsFinitePolytopalSubdivision base cells) :
-    (HibiLi.subdivisionDualGraph cells).Connected
+    (HibiLi.subdivisionDualGraph cells).Connected :=
+  HibiLi.CJKProof.cjk_dual_connected_proved base cells polytope nonempty spans subdivision
 
 end HibiLi.Cited
