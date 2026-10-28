@@ -29,7 +29,8 @@ theorem intro_example :
 Every result of the paper, numbered or stated in the text, is proved in Lean 4: as one Lean theorem, or, for a few
 sentences of the text, by several Lean theorems together (listed in [AUDIT_NOTES.md](AUDIT_NOTES.md), sections F and
 G). So are the results of the paper's expanded version that the paper quotes in Section 1 (its Theorems 2.5, 9.1 and
-9.2). That makes 106 Lean statements, all in [EulerFlow/Paper/Statements.lean](EulerFlow/Paper/Statements.lean). Every
+9.2). That makes 78 Lean statements. The folder also proves 28 further results of the expanded version. All 106 are
+in [EulerFlow/Paper/Statements.lean](EulerFlow/Paper/Statements.lean). Every
 statement is proved from Lean's three standard axioms (`propext`, `Classical.choice`, `Quot.sound`) alone. There is no
 other axiom and no unfinished proof (`sorry`) in the project.
 
@@ -43,7 +44,7 @@ pointers to other papers, remarks about the text) are listed in [AUDIT_NOTES.md]
 ## Where each claim is
 
 [AUDIT.md](AUDIT.md) lists all 106 statements. For each it gives its place in the paper (number and line of the version
-1.59 LaTeX source), the paper's claim, and the axioms Lean reports for its proof (`#print axioms`). Each statement's
+1.59 LaTeX source; for the 28 further results, their place in the expanded version), the paper's claim, and the axioms Lean reports for its proof (`#print axioms`). Each statement's
 docstring also begins with its place in the paper (the map is [SHORT_MAP_v1.59.tsv](SHORT_MAP_v1.59.tsv)). Where the
 Lean proof takes another route than the text, or where one sentence of the paper is covered by several Lean statements
 together, [AUDIT_NOTES.md](AUDIT_NOTES.md) says so (sections A, B, F and G).
