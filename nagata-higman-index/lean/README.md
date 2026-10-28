@@ -92,8 +92,3 @@ cited assumptions report SKIPPED, by design.
 
 Versions: Lean 4.35.0 (pinned in `lean-toolchain`); Mathlib v4.35.0, commit `56a005855ea17e0b0958f73ec801ae140b0a1679`
 (all dependencies pinned in `lake-manifest.json`).
-
-## Acknowledgments
-
-This work was done overwhelmingly by AI models and supervised by the author. The models were Anthropic's Claude and
-OpenAI's ChatGPT. The author takes full responsibility for the paper.

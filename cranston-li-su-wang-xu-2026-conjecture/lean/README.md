@@ -72,8 +72,3 @@ are listed at the top of the script).
 
 Versions: Lean 4.35.0 (pinned in `lean-toolchain`); Mathlib commit `56a005855ea1` (tag `v4.35.0`; all dependencies
 pinned in `lake-manifest.json`).
-
-## Acknowledgments
-
-This work was done overwhelmingly by AI models and supervised by the author. The models were Anthropic's Claude and
-OpenAI's ChatGPT. The author takes full responsibility for the paper.
