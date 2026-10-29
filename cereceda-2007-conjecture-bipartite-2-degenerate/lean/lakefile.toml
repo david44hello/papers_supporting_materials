@@ -1,0 +1,16 @@
+# CerecedaLean — Lean formalization of "The Cereceda (2007) conjecture holds for bipartite 2-degenerate graphs"
+# (Dave Goel; short paper v3.90).
+name = "CerecedaLean"
+version = "0.1.0"
+defaultTargets = ["Cereceda"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.35.0"
+
+[[lean_lib]]
+name = "Cereceda"
+globs = ["Cereceda", "Cereceda.+"]
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+weakLeanArgs = ["-j1"]
