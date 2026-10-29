@@ -1,86 +1,27 @@
-# The Osserman (1990) conjecture is fully resolved — the Lean 4 proof of most of Sections 1–8
+# The Osserman (1990) conjecture is fully resolved — Lean 4 proof of most of Sections 1–8
 
-[![Lean build](https://github.com/david44hello/papers_supporting_materials/actions/workflows/lean_build.yml/badge.svg)](https://github.com/david44hello/papers_supporting_materials/actions/workflows/lean_build.yml)
+The paper: https://doi.org/10.5281/zenodo.23744914
 
-Author: Dave Goel. Copyright (C) Dave Goel 2026--now. All rights reserved.
+This folder is a Lean 4 proof of most of Sections 1–8 of the paper and six pieces of Sections 9–27. Lean does not
+check the paper's main result; [AUDIT_NOTES.md](AUDIT_NOTES.md) says exactly what it checks.
 
-## Read this first: Lean does not check the paper's main result
+## Directions to Reproduce
 
-Theorem A of the paper (the Nikolayevsky (2009) conjecture), Corollary B and Remark 1.1 are not formalized. So the
-title and the main claim of the abstract are not checked by Lean. The proof of Theorem A uses Sections 9–27 of the
-paper. They need complex projective algebraic geometry, divisor class groups, real semialgebraic sets and algebraic
-topology, which Lean's mathematics library (Mathlib) does not have. Corollary B is about Riemannian manifolds; Mathlib
-has no curvature tensor of a manifold, so Lean cannot state it.
-
-## What Lean checks
-
-Every other claim of Sections 1–8 (Theorems C, E, F and Corollary D, with all their steps; the exceptions are
-listed under "Not part of the check"), and six pieces of Sections
-9–27: Setting (T), Lemmas 12.1, 12.4, 12.5 and 12.6, the anisotropy step inside the proof of Theorem G, and Lemma
-24.5. Theorem G itself, and the facts these six pieces take from Sections 9, 10 and 27, are not formalized. Lean
-checked version 4.00 of the paper. Line numbers refer to its LaTeX source: the main file P013_short.tex
-(MD5 6e130b9592d813067ed9e12359d97d99) and the section files it inputs.
-
-That makes 351 claims of the paper: 299 proved from Lean's three standard axioms alone, and 52
-proved from eight cited published results; none is open. No claim rests on a computer calculation. One of the eight
-cited results, the classification of isoparametric hypersurfaces written with polynomials, also contains about one
-page of the paper's own Section 3 argument (it turns hypersurfaces into polynomials), which Lean cannot express; that
-page is not checked.
-
-## The cited results
-
-The 52 claims rest on these eight statements, each written out in [Osserman/Cited/](Osserman/Cited/):
-
-1. The classification of isoparametric hypersurfaces on R^32, in polynomial form: Münzner, Math. Ann. 251 (1980);
-   Ferus, Karcher and Münzner, Math. Z. 177 (1981); Chi, J. Differential Geom. 115 (2020).
-2. Symmetric Clifford systems of nine 16×16 matrices are unique up to orthogonal conjugacy and the sign of one
-   generator: Ferus, Karcher and Münzner (1981), Sections 3.4–3.5; Nikolayevsky, Ann. Mat. Pura Appl. 191 (2012).
-3. Nikolayevsky, "On Osserman manifolds of dimension 16", conference proceedings, Belgrade 2006, Lemma 3.1; the same
-   statement is Lemma 2 of Nikolayevsky, Manuscripta Math. 115 (2004).
-4. The same 2006 article, Lemma 3.11.
-5. The same 2006 article, Theorem 3.1: R[x_1, …, x_16]/(|x|^2) is a unique factorization domain (Nagata's theorem,
-   J. Math. Soc. Japan 9 (1957)).
-6. The same 2006 article, Proposition 2.1.
-7. Nikolayevsky, Math. Ann. 331 (2005), Proposition 1.
-8. Andrejić and Lukić, Filomat 37 (2023), Theorem 3 (= Andrejić, J. Geom. Phys. 176 (2022), Theorem 5).
-
-Two of them, 4 and 6, rest only on the 2006 proceedings article, whose refereeing is not stated; the others are in
-refereed journals.
-
-## Not part of the check
-
-Besides Theorem A, Corollary B and Remark 1.1: Nikolayevsky's announced manifold theorem and the multiplicities of
-CP^8, HP^4 and their duals; that R_Cay is the curvature tensor of the Cayley plane (Lean takes the Brown–Gray formula
-as its definition; its normalization is proved); the isomorphism Cl⁺(9) ≅ M16(R) ⊕ M16(R) (only its consequence,
-result 2 above, is used); the Section 3 page inside result 1; sentences that only report other papers.
-[AUDIT.md](AUDIT.md) lists each with its lines.
-
-## Where each claim is
-
-[AUDIT.md](AUDIT.md) lists every claim with its place in the paper and the axioms Lean reports for its proof
-(`#print axioms`); [Osserman/Paper/Statements.lean](Osserman/Paper/Statements.lean) has one Lean theorem per claim.
-In four places Lean takes another route than the text (Lemma 4.1, the rotations of Sections 4–5, Remark 7.2,
-Lemma 8.1); there the paper's own steps are also proved as separate claims. Line 474 of P013_short.tex uses
-ΔF_P = (136 − 16(m+1))s, which needs the hypothesis m ≥ 1 of line 447; the Lean statements carry m ≥ 1, which
-result 1 provides.
-
-## How to check it yourself
-
-Prerequisites: the `elan` Lean toolchain manager, Git, curl, Python 3 and ripgrep (`rg`). From a fresh copy of this
-repository:
+Install Git, Lean (https://lean-lang.org/install/), Python 3 and ripgrep, then run:
 
 ```bash
 git clone https://github.com/david44hello/papers_supporting_materials.git
 cd papers_supporting_materials/osserman-1990-conjecture/lean
-git checkout osserman-1990-conjecture-v4.00   # the version the paper cites
-lake exe cache get      # downloads prebuilt Mathlib files (it does not compile Mathlib)
-lake build
-bash scripts/check.sh   # build, scan for forbidden constructs, regenerate AUDIT.md (scripts/audit.py)
-git diff --exit-code AUDIT.md   # the regenerated AUDIT.md is identical to the published one
+./check.sh
 ```
 
-GitHub runs these same steps on a fresh machine at every change (the "Lean build" mark at the top).
-`scripts/kernel_replay.sh` re-checks every declaration with independent checkers (listed at the top of the script).
+Near the end it prints lines like:
 
-Versions: Lean 4.35.0 (pinned in `lean-toolchain`); Mathlib commit `56a005855ea1` (all dependencies pinned in
-`lake-manifest.json`).
+```
+AUDIT: 370 rows = 351 paper claims (PROVED: 299, PROVED-FROM-CITED: 52); 19 Lean-only rows, not claims of the paper (15 non-vacuity witnesses, 4 helpers: PROVED: 19). Table: .../AUDIT.md
+PASS: project builds; source policy passes; no forbidden assumptions in the paper audit; route facts hold.
+```
+
+52 claims use results that the paper cites; [AUDIT.md](AUDIT.md) names them, claim by claim.
+
+Copyright (C) Dave Goel 2026--now. All rights reserved.
