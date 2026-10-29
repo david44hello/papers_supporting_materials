@@ -1,6 +1,0 @@
-# Copyright (C) Dave Goel 2026--now. All rights reserved.
-# The exact versions used for every log in logs/ (Python 3.12.3). SciPy's linprog brings its own HiGHS solver.
-python-flint==0.9.0
-mpmath==1.4.1
-numpy==2.5.4
-scipy==1.18.1
