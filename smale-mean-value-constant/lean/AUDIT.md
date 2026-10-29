@@ -171,3 +171,45 @@ C2. The headers of Smale/Defs/Basic.lean, Smale/Defs/Conditions.lean and Smale/D
 v1.90 changes only lines 2, 4, 28, 41, 126-128, 130 and 132, in place; every other line keeps its number and its text,
 and no line these headers cite is a changed one, so their references hold for v1.90. These headers are not changed for
 the reason of C1.
+
+## From the old README
+
+For version 1.90 of "Smale's mean value constant exceeds 1.1559" by Dave Goel.
+
+[AUDIT.md](AUDIT.md) lists 83 claims: 70 proved from Lean's standard foundations, 7 proved from cited results, and 6 proved assuming fact (R) of Theorem 5.1. The six are the paper's main results, Theorems 1.1 and 5.1 and Corollary 5.4, each stated twice (once from (R) as the paper states it, once from the exact statement the program checks). Fact (R) is checked by [the accompanying program](../pair_checks/check_pair.py), not proved in Lean.
+
+## Assumptions
+
+The cited results are Jatar and Ng's Propositions 4.2 and 3.1 (arXiv:2610.21472v2, an unrefereed preprint) and Dieudonné's criterion (1931, in the form of Jatar and Ng's Lemma 6.3). They are stated in [Smale/Cited/Basic.lean](Smale/Cited/Basic.lean). The main theorems use Proposition 4.2 and Dieudonné's criterion; they also assume (R): the resultant F(c) of the Dieudonné polynomial P_c of H and its reflection P_c* is a polynomial in c of degree 578 with no zero for c in [-1, 1].
+
+The three standard axioms are `propext`, `Classical.choice` and `Quot.sound`. Each audit row lists its cited assumptions.
+
+## Scope
+
+The audit lists claims from the numbered results, proofs and running text. Its final sections record four differences between the paper's arguments and the Lean proofs, and sentences without a Lean theorem. These include reports of other authors' results, descriptions of the programs, and the numerical observation about where the closest approach occurs. The steps needing a Riemann map are covered by the cited Proposition 3.1; Lean does not construct that map.
+
+Fact (R) remains computer-checked. Facts (D), (C) and (S), and the stated margins in Remark 5.2, are proved in Lean by exact arithmetic. Paper line references are to version 1.90; the data-file header names an earlier version with identical data, as the audit notes explain.
+
+Lean v4.35.0 and Mathlib commit `56a005855ea17e0b0958f73ec801ae140b0a1679` are pinned in the toolchain and dependency files. [Smale/Paper/Statements.lean](Smale/Paper/Statements.lean) contains the claims. Optional independent kernel checks are available through `scripts/kernel_replay.sh`, with the checker binaries it names.
+
+## From the old folder README
+
+An expanded version of the paper, with many other results, is on Zenodo: https://doi.org/10.5281/zenodo.23597020
+
+- pairs/pair_I_K2N18.json: the exact data of the pair (W, B) that proves the paper's main theorem.
+- pair_checks/check_pair.py: the program that checks the pair; pair_checks/check_pair.log: the output of its run.
+- pair_checks/make_controls.py, pair_checks/controls.log: wrong inputs that the program must reject, and the output.
+  pairs/pair_XVII_T6.json is a small pair used only by these controls.
+- rebuild_from_printed.py: checks that the numbers printed in the paper (its LaTeX source) give this data.
+- lean/: a Lean 4 check of the paper (Lean v4.35.0, Mathlib commit 56a005855ea1). It proves the paper's results from the
+  cited results of Jatar and Ng (an unrefereed preprint) and of Dieudonné, except fact (R) of Theorem 5.1, which is checked
+  by computer (pair_checks/check_pair.py) and NOT proved in Lean; the main theorems are proved there assuming (R).
+  lean/AUDIT.md lists every claim of the paper with its status.
+
+and, in this folder, with the paper's LaTeX source as the first argument:
+
+    python3 rebuild_from_printed.py <the paper's .tex file> pairs/pair_I_K2N18.json
+
+All lemma, theorem and table numbers in check_pair.py refer to the expanded version: its Lemma 8.6, Lemma 7.11 and (C')
+are Lemma 4.3, Lemma 4.2 and (C) of the paper, and its polynomial R and number J are V and Λ. In the output of
+check_pair.py --test, the line "CONTROL WRONG" is expected: one test checks that a missing file is reported as an error.
