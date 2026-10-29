@@ -165,3 +165,58 @@ skipped):
 Of the long-paper C-list: C2, C3, C5, C8, C9 also apply to the short paper (citations, history, identification with
 [1], [2]'s definitions); C6 is replaced by G8; C1, C4, C7, C10 are about text the short paper drops.
 (Section F uses the line numbers of an earlier draft, version 1.46; this section supersedes them for the posted paper.)
+
+## From the old README
+
+This folder is a formal proof, checked by the Lean 4 proof assistant, of the results of the paper "The
+Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel. Lean checked version 1.59 of the paper. The paper's link
+will be added here when it is posted.
+
+## The theorem
+
+Theorem 1.1 of the paper: every even graph (finite; loops and parallel edges allowed, as in the paper) is
+A-flow-connected for every finite abelian group A with |A| ≥ 4, and k-flow-connected for every integer k ≥ 4. The
+paper also notes that the number 4 cannot be replaced by 3; Lean proves this for the paper's example, the even graph
+with two vertices and six parallel edges (`intro_example`). The paper defines these terms in Section 2; the Lean
+definitions are in [EulerFlow/Defs/](EulerFlow/Defs/). In Lean:
+
+```lean
+theorem thm_1_1_a (G : MGraph V E) (hev : G.IsEven) (A : Type) [AddCommGroup A] [Fintype A]
+    (hA : 4 ≤ Fintype.card A) : G.FlowConnected A
+theorem thm_1_1_b (G : MGraph V E) (hev : G.IsEven) (k : ℕ) (hk : 4 ≤ k) : G.KFlowConnected k
+theorem intro_example :
+    (dipole 6).IsEven ∧ ¬ (dipole 6).FlowConnected (ZMod 3) ∧ ¬ (dipole 6).KFlowConnected 3
+```
+
+## What is proved
+
+Every result of the paper, numbered or stated in the text, is proved in Lean 4: as one Lean theorem, or, for a few
+sentences of the text, by several Lean theorems together (listed in [AUDIT_NOTES.md](AUDIT_NOTES.md), sections F and
+G). So are the results of the paper's expanded version that the paper quotes in Section 1 (its Theorems 2.5, 9.1 and
+9.2). That makes 78 Lean statements. The folder also proves 28 further results of the expanded version. All 106 are
+in [EulerFlow/Paper/Statements.lean](EulerFlow/Paper/Statements.lean). Every
+statement is proved from Lean's three standard axioms (`propext`, `Classical.choice`, `Quot.sound`) alone. There is no
+other axiom and no unfinished proof (`sorry`) in the project.
+
+## What is not part of the check
+
+The paper also quotes results of other papers as context (its references [1], [2], [4] and [5]). The paper's proofs do
+not use them, and they are not part of this check. A few of them are proved here anyway (for example the fact, from
+reference [4], that a triangle is A-connected when |A| ≥ 4). Sentences that are not mathematical claims (history,
+pointers to other papers, remarks about the text) are listed in [AUDIT_NOTES.md](AUDIT_NOTES.md), section G.
+
+## Where each claim is
+
+[AUDIT.md](AUDIT.md) lists all 106 statements. For each it gives its place in the paper (number and line of the version
+1.59 LaTeX source; for the 28 further results, their place in the expanded version), the paper's claim, and the axioms Lean reports for its proof (`#print axioms`). Each statement's
+docstring also begins with its place in the paper (the map is [SHORT_MAP_v1.59.tsv](SHORT_MAP_v1.59.tsv)). Where the
+Lean proof takes another route than the text, or where one sentence of the paper is covered by several Lean statements
+together, [AUDIT_NOTES.md](AUDIT_NOTES.md) says so (sections A, B, F and G).
+
+Optional, after a build: `scripts/kernel_replay.sh` re-checks every declaration outside the elaborator: first
+`leanchecker` replays each compiled module; then `leanexport` exports the declarations, and the export is checked by
+independent checkers: `leanchecker`, its paranoid mode, `lean4lean`, `nanoda`, `con-leche` and `con-ron` (the tools
+are listed at the top of the script).
+
+Versions: Lean 4.35.0 (pinned in `lean-toolchain`); Mathlib commit `56a005855ea1` (tag `v4.35.0`; all dependencies
+pinned in `lake-manifest.json`).
