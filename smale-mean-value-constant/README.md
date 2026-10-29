@@ -1,8 +1,10 @@
 # Smale's mean value constant exceeds 1.1559 — supporting materials
 
-For the paper "Smale's mean value constant exceeds 1.1559" by Dave Goel. The paper's link will be added here when it is
-posted. An expanded version of the paper, with many other results, is on Zenodo:
-https://doi.org/10.5281/zenodo.23597020
+For the paper "Smale's mean value constant exceeds 1.1559" by Dave Goel.
+
+The paper (version 1.90): https://doi.org/10.5281/zenodo.23731801
+
+An expanded version of the paper, with many other results, is on Zenodo: https://doi.org/10.5281/zenodo.23597020
 
 - pairs/pair_I_K2N18.json: the exact data of the pair (W, B) that proves the paper's main theorem.
 - pair_checks/check_pair.py: the program that checks the pair; pair_checks/check_pair.log: the output of its run.
