@@ -47,9 +47,15 @@ jobs:
 
       - name: Policy check and audit (no sorry or admit; no axiom outside Cited/; AUDIT.md regenerated)
         working-directory: ${{ matrix.project }}
+        # A project whose check.sh takes only explicit modes ships scripts/ci_check.sh naming the one to run here.
         run: |
           sudo apt-get install -y ripgrep
-          bash scripts/check.sh
+          if [ -f scripts/ci_check.sh ]; then
+            echo "running the project's scripts/ci_check.sh"
+            bash scripts/ci_check.sh
+          else
+            bash scripts/check.sh
+          fi
 
       - name: The published AUDIT.md is exactly what Lean reports
         working-directory: ${{ matrix.project }}
