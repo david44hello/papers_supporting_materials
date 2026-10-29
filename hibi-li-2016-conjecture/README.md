@@ -1,10 +1,23 @@
-# The Hibi–Li (2016) conjecture is fully resolved — supporting materials
+# The Hibi–Li (2016) conjecture is fully resolved
 
-For the paper "The Hibi–Li (2016) conjecture is fully resolved" by Dave Goel. The paper (version 2.20):
-https://doi.org/10.5281/zenodo.23704735
-An expanded version of the paper, with many other results, is on Zenodo:
-https://doi.org/10.5281/zenodo.23601975
+The paper: https://doi.org/10.5281/zenodo.23704735
 
-- [lean/](lean/): the Lean 4 proof of the paper's results.
+[lean/](lean/) is a Lean 4 proof of the paper's results. To check it, install Git, Lean
+(https://lean-lang.org/install/), Python 3 and ripgrep, then run:
+
+```bash
+git clone https://github.com/david44hello/papers_supporting_materials.git
+cd papers_supporting_materials/hibi-li-2016-conjecture/lean
+./check.sh
+```
+
+Its last lines look like:
+
+```
+AUDIT: 167 claims. PROVED: 142, PROVED-FROM-CITED: 25. Table: .../AUDIT.md
+PASS: project builds; source policy passes; no forbidden assumptions in the paper audit.
+```
+
+25 claims use results that the paper cites; [AUDIT.md](lean/AUDIT.md) names them, claim by claim.
 
 Copyright (C) Dave Goel 2026--now. All rights reserved.
