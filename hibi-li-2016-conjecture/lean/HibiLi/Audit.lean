@@ -12,6 +12,8 @@ import HibiLi.Paper.Statements
 #print axioms HibiLi.Paper.sec1_edges_agree
 #print axioms HibiLi.Paper.sec1_X_copy_induced
 #print axioms HibiLi.Paper.sec1_containsX_iff
+#print axioms HibiLi.Paper.fig1_P7
+#print axioms HibiLi.Paper.fig_beforeafter_no_X
 #print axioms HibiLi.Paper.sec2_chain2_triangles
 #print axioms HibiLi.Paper.ex_2_1
 #print axioms HibiLi.Paper.ex_2_1_v180
@@ -64,6 +66,7 @@ import HibiLi.Paper.Statements
 #print axioms HibiLi.Paper.def_3_3_unique_cells
 #print axioms HibiLi.Paper.sec3_L_U_locality
 #print axioms HibiLi.Paper.prop_3_4
+#print axioms HibiLi.Paper.sec3_transverse_equal_case
 #print axioms HibiLi.Paper.lemma_3_5_i_cover
 #print axioms HibiLi.Paper.lemma_3_5_i_disjoint
 #print axioms HibiLi.Paper.lemma_3_5_ii
@@ -86,8 +89,12 @@ import HibiLi.Paper.Statements
 #print axioms HibiLi.Paper.sec3_R_cell_faces
 #print axioms HibiLi.Paper.sec3_informal_before
 #print axioms HibiLi.Paper.sec3_informal_after
+#print axioms HibiLi.Paper.sec3_informal_before_graph
+#print axioms HibiLi.Paper.sec3_informal_after_graph
+#print axioms HibiLi.Paper.sec3_informal_both_kinds
 #print axioms HibiLi.Paper.sec3_informal_vertical_count
 #print axioms HibiLi.Paper.sec3_nonvertical_coefficient
+#print axioms HibiLi.Paper.sec3_informal_equivalence
 #print axioms HibiLi.Paper.sec3_coupled_coordinates
 #print axioms HibiLi.Paper.lemma_3_5_i_relint
 #print axioms HibiLi.Paper.lemma_3_5_i_not_both
@@ -113,6 +120,8 @@ import HibiLi.Paper.Statements
 #print axioms HibiLi.Paper.sec4_covers_may_differ_exists
 #print axioms HibiLi.Paper.lemma_4_4
 #print axioms HibiLi.Paper.sec4_E0_inequality
+#print axioms HibiLi.Paper.sec4_E0_L_U
+#print axioms HibiLi.Paper.sec4_E0_copy
 #print axioms HibiLi.Paper.lemma_4_5
 #print axioms HibiLi.Paper.sec4_lam_u0
 #print axioms HibiLi.Paper.lemma_4_5_full
@@ -135,6 +144,7 @@ import HibiLi.Paper.Statements
 #print axioms HibiLi.Paper.sec4_no_remaining_below_covers
 #print axioms HibiLi.Paper.lemma_4_6_v190
 #print axioms HibiLi.Paper.lemma_4_6_point
+#print axioms HibiLi.Paper.lemma_4_6_point_values
 #print axioms HibiLi.Paper.lemma_4_7_facet_counts
 #print axioms HibiLi.Paper.sec4_facet_families_disjoint
 #print axioms HibiLi.Paper.sec4_sum_identity

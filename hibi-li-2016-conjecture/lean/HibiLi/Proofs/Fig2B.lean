@@ -1,5 +1,5 @@
 /-
-HibiLi/Proofs/Fig2B.lean — Figure 2 caption (paper v2.10 l. 665-667), strict reading: `L` is affine on no neighbourhood in
+HibiLi/Proofs/Fig2B.lean — Figure 3 caption (Figure 2 in paper v2.10, l. 665-667), strict reading: `L` is affine on no neighbourhood in
 `B` of a point of `B` with `α = β`, and `U` on none of a point with `γ = η`. The row `fig2_not_affine_near_B` is in
 Statements.lean.
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
@@ -107,7 +107,7 @@ theorem U_split {v : Coord → ℝ} (hgh : v CenterSwitch.canonical.pg = v Cente
     rcases coord_cases c with rfl | rfl | rfl | rfl <;> linarith
   linarith
 
-/-- Figure 2, `L`: at every point `v` of `B` with `α = β`, `L` is affine on no `B ∩ ball(v, ε)`. If `α > 0`, lower `β`:
+/-- Figure 3, `L`: at every point `v` of `B` with `α = β`, `L` is affine on no `B ∩ ball(v, ε)`. If `α > 0`, lower `β`:
 `p = (α, α - t, γ, η)`. If `α = β = 0`, raise `α`: `p = (t, 0, max γ t, max η t)`. -/
 theorem L_not_affine_near_B_proved (v : Coord → ℝ) (hv : v ∈ center.B)
     (hξ : v CenterSwitch.canonical.pa = v CenterSwitch.canonical.pb) {ε : ℝ} (hε : 0 < ε) :
@@ -135,7 +135,7 @@ theorem L_not_affine_near_B_proved (v : Coord → ℝ) (hv : v ∈ center.B)
       ht0 (le_max_right _ _) (le_max_right _ _) (max_le hg1 ht1) (max_le hh1 ht1)
       ?_ ?_ ?_ ?_ <;> (rw [abs_lt]; constructor <;> linarith)
 
-/-- Figure 2, `U`: at every point `v` of `B` with `γ = η`, `U` is affine on no `B ∩ ball(v, ε)`. If `η < 1`, raise `γ`:
+/-- Figure 3, `U`: at every point `v` of `B` with `γ = η`, `U` is affine on no `B ∩ ball(v, ε)`. If `η < 1`, raise `γ`:
 `p = (α, β, η + t, η)`. If `γ = η = 1`, lower `η`: `p = (min α (1 - t), min β (1 - t), 1, 1 - t)`. -/
 theorem U_not_affine_near_B_proved (v : Coord → ℝ) (hv : v ∈ center.B)
     (hω : v CenterSwitch.canonical.pg = v CenterSwitch.canonical.ph) {ε : ℝ} (hε : 0 < ε) :

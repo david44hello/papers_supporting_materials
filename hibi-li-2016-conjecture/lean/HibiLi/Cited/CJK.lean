@@ -30,7 +30,7 @@ the source's convention; lower-dimensional bases are handled by a proved transpo
 The source definition puts no condition on the vertices of the cells; the application (the common refinement of the
 two affinity subdivisions, restricted to a face) uses this generality.  Only connectivity is imported.
 
-Intended use: only in the proof of Lemma 3.5(ii). The paper (v2.10 l. 492-505) cites this lemma AND recalls its
+Intended use: only in the proof of Lemma 3.5(ii). The paper (v4.60 l. 432-437) cites this lemma AND recalls its
 proof, so Lean proves it too: `CJKProof.cjk_dual_connected_proved` (same statement; the two steps where Lean's route
 differs from the recalled argument are listed in the header of `HibiLi/Polytope/CJKProof.lean`).  This is a
 THEOREM, not an assumption: it stays in `Cited/` only so that the name, and every use downstream, is unchanged. -/

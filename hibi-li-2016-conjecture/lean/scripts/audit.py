@@ -23,16 +23,17 @@ AUDIT_LEAN = PROJECT / "HibiLi" / "Audit.lean"
 AUDIT_MD = PROJECT / "AUDIT.md"
 STANDARD = {"propext", "Classical.choice", "Quot.sound"}
 NAMESPACE = "HibiLi.Paper"
-# The results the formal proof may assume: cited and not proved by the paper (paper v2.10, Outline l. 179-185, and the
-# places they are used); nothing else may be used. [CJK, Lemma 2] is not among them: v2.10 proves it, and so does Lean.
+# The results the formal proof may assume: cited and not proved by the paper (paper v4.60, Outline l. 186-192, and the
+# places they are used); nothing else may be used. [CJK, Lemma 2] is not among them: v4.60 proves it, and so does Lean.
+# [Fourier, Lemma 4.1] is not among them either: the paper cites it, and Lean proves it (HibiLi/Proofs/Fourier41.lean).
 PAPER_CITED = frozenset("HibiLi.Cited." + name for name in (
-    "hibiLi_thm_2_1", "ziegler_face_figure", "fourier_lemma_4_1", "fourier_prop_5_2",
+    "hibiLi_thm_2_1", "ziegler_face_figure", "fourier_prop_5_2",
     "hlss_thm_2_1"))
 TRUST_NOTE = ("**Trust.** A row is conditional on exactly the cited axioms listed in its last column (PROVED rows on "
               "none); the cited axioms live in HibiLi/Cited/ (Fourier arXiv:2609.23629v1 "
-              "Lemma 4.1 and Proposition 5.2 — an unrefereed preprint; Hibi–Li 2016 Theorem 2.1; HLSS 2017 Theorem 2.1; "
-              "Ziegler Ch. 2 face figures). Casabella–Joswig–Kastner 2025 Lemma 2 (dual graphs) is cited by the paper and "
-              "PROVED in Lean (HibiLi/Polytope/CJKProof.lean). A PROVED-FROM-TEMP row would rest on a placeholder for a "
+              "Proposition 5.2 — an unrefereed preprint; Hibi–Li 2016 Theorem 2.1; HLSS 2017 Theorem 2.1; "
+              "Ziegler Ch. 2 face figures). Fourier's Lemma 4.1 and Casabella–Joswig–Kastner 2025 Lemma 2 (dual graphs) "
+              "are cited by the paper and PROVED in Lean (HibiLi/Proofs/Fourier41.lean, HibiLi/Polytope/CJKProof.lean). A PROVED-FROM-TEMP row would rest on a placeholder for a "
               "fact the paper proves (namespace HibiLi.Cited.Temp); such rows are NOT counted as proved.")
 
 

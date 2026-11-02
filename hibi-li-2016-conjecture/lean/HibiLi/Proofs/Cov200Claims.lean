@@ -187,14 +187,14 @@ section Q8
 
 open HibiLi.Example21 HibiLi.Example21.CenterGeometry
 
-/-- The coordinates `(α, β, γ, η)` of a point (copied from the Figure 2 draft). -/
+/-- The coordinates `(α, β, γ, η)` of a point (as in the proofs for Figure 3). -/
 theorem canonicalEquiv_coords (u : Coord → ℝ) :
     canonicalEquiv u = ![u CenterSwitch.canonical.pa, u CenterSwitch.canonical.pb, u CenterSwitch.canonical.pg,
       u CenterSwitch.canonical.ph] := by
   ext i
   fin_cases i <;> rfl
 
-/-- The point with coordinates `(α, β, γ, η) = v` (copied from the Figure 2 draft). -/
+/-- The point with coordinates `(α, β, γ, η) = v` (as in the proofs for Figure 3). -/
 theorem coords_symm (v : Fin 4 → ℝ) :
     canonicalEquiv.symm v CenterSwitch.canonical.pa = v 0 ∧ canonicalEquiv.symm v CenterSwitch.canonical.pb = v 1 ∧
       canonicalEquiv.symm v CenterSwitch.canonical.pg = v 2 ∧ canonicalEquiv.symm v CenterSwitch.canonical.ph = v 3 := by
@@ -214,7 +214,7 @@ theorem coords_symm (v : Fin 4 → ℝ) :
     simp only [Matrix.cons_val_three, Matrix.tail_cons, Matrix.head_cons] at this
     exact this.symm
 
-/-- An affine function at the midpoint is the average (copied from the Figure 2 draft). -/
+/-- An affine function at the midpoint is the average (as in the proofs for Figure 3). -/
 theorem affine_mid (g : (Coord → ℝ) →ᵃ[ℝ] ℝ) (p q m : Coord → ℝ) (hm : ∀ c, m c = (p c + q c) / 2) :
     g m = (g p + g q) / 2 := by
   have hline : m = AffineMap.lineMap p q (1 / 2 : ℝ) := by

@@ -1,6 +1,6 @@
 /-
 HibiLi/Example21/NamedCells.lean — Proposition 5.1, switch of c in X: the cells with carrier B by name, the maximal cells of S and T, the
-Figure 2 slices, and L, U not affine across the walls (local model CenterRegions, then transported).
+Figure 3 slices, and L, U not affine across the walls (local model CenterRegions, then transported).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 -/
 import HibiLi.Example21.CenterResult
@@ -16,7 +16,7 @@ macro "point_tac" : tactic =>
   `(tactic| (simp only [body, base, Set.mem_ofPred_eq, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons] <;> norm_num))
 
-/-- The interior point `u₀ = (1/4, 1/4, 3/4, 3/4)` of `B` (paper, Figure 2). -/
+/-- The interior point `u₀ = (1/4, 1/4, 3/4, 3/4)` of `B` (paper, Figure 3). -/
 noncomputable def u0 : Fin 4 → ℝ := ![1/4, 1/4, 3/4, 3/4]
 
 theorem u0_mem_body (lower upper : Option Bool) : u0 ∈ body lower upper := by
@@ -578,7 +578,7 @@ theorem center_cells_with_carrier_B :
   · rw [transport_carried _ _ image_cellsR]
     exact local_R.1
 
-/-! ### Figure 2 (v2.10 l. 665-667: "The function L is affine on no neighborhood of a point with ξ = 0 …, and U is
+/-! ### Figure 3 (Figure 2 in v2.10, l. 665-667: "The function L is affine on no neighborhood of a point with ξ = 0 …, and U is
 affine on no neighborhood of a point with ω = 0"), here in the weaker band form: L is not affine across ξ = 0, nor U
 across ω = 0 -/
 
@@ -708,9 +708,9 @@ theorem center_U_not_affine_across (t : ℝ) (ht : 0 < t) (ht' : t ≤ 1 / 2) :
 
 
 
-/-! ### Figure 2: the slices through `u₀`
+/-! ### Figure 3: the slices through `u₀`
 
-Paper (Figure 2 caption, v2.10 l. 661-669): "The figure shows the slice of B by the plane {α+β = 1/2,
+Paper (Figure 3 caption; Figure 2 in v2.10, l. 661-669): "The figure shows the slice of B by the plane {α+β = 1/2,
 γ+η = 3/2} through u₀ = (1/4,1/4,3/4,3/4), in the coordinates ξ = α − β, ω = γ − η (|ξ|, |ω| ≤ 1/2). ... The point u₀,
 the four half-axes and the four quadrants are the slices of the 2-, 3- and 4-dimensional cells of R with carrier B".
 Route: on the plane, `sliceLift (ξ, ω) = (1/4 + ξ/2, 1/4 − ξ/2, 3/4 + ω/2, 3/4 − ω/2)` inverts `sliceCoords`, so the image

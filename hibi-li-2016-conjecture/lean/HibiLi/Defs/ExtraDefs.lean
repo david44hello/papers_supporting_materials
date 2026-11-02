@@ -9,7 +9,7 @@ namespace HibiLi
 
 /-- The poset `a, b < c < d < g, h` (`X` with `d` inserted between `c` and `g, h`): an `X`-copy whose `c` has only
 one upper cover, the example of the remark "We cannot always take q = c: … c may have only one, for example when an
-element d with c < d < g, h is the only upper cover of c" (paper v2.10 lines 681–684). -/
+element d with c < d < g, h is the only upper cover of c" (paper v4.60 lines 594–595). -/
 inductive XdElem
   | a | b | c | d | g | h
   deriving DecidableEq, Repr

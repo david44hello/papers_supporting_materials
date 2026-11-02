@@ -1,6 +1,6 @@
 /-
 HibiLi/Defs/Census.lean — the sixteen 6-element posets that contain X (paper v1.70, lines 737–738; data from
-the output of scripts/census/census_n6.py, same row order).
+a computer census of the 6-element posets, same row order).
 Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 
 Every census poset is `X` plus one extra element `f`, all on the carrier `Fin 6`:

@@ -1,5 +1,5 @@
 /-
-HibiLi/Paper/Statements.lean — every mathematical claim of the paper itself (v2.10), one Lean statement each,
+HibiLi/Paper/Statements.lean — every mathematical claim of the paper itself (v4.60), one Lean statement each,
 named by the paper's own numbering.  This file is the audited surface: a referee compares it with the paper.  Each body links to a proof
 elsewhere; scripts/audit.py reports, per claim, exactly which assumptions it rests on.  Statements are FROZEN after
 review (DESIGN rule R4).
@@ -72,6 +72,9 @@ import HibiLi.Proofs.DeltaPyramid
 import HibiLi.Proofs.DeltaOrder
 import HibiLi.Proofs.Delta46
 import HibiLi.Proofs.DeltaCoefficient
+import HibiLi.Proofs.V450Small
+import HibiLi.Proofs.V450Rows
+import HibiLi.Proofs.Fourier41
 
 universe u
 
@@ -79,19 +82,19 @@ namespace HibiLi.Paper
 
 open HibiLi Polynomial Finset
 
-/-! ### Paper sentences deliberately NOT formalized (paper v2.10 line numbers)
+/-! ### Paper sentences deliberately NOT formalized (paper v4.60 line numbers)
 
 Every numbered result and every in-text claim of the paper itself has a statement below.  A step inside a proof is
 covered by the row of its result when the Lean proof follows the paper's route at that step; where Lean's route
 differs, or where the paper states a general fact inside an argument, the step has a row of its own.
-Steps covered by the row of their result: lines 387–390 ("`F ∩ F'` is a face of `F` and of `F'`", for cells of `S`
-and of `T`) and lines 392–394 ("`(S ∩ T) ∩ (S' ∩ T')` … is a face of `S ∩ T`") are steps of `sec3_subdivisions`;
+Steps covered by the row of their result: lines 349–351 ("`F ∩ F'` is a face of `F` and of `F'`", for cells of `S`
+and of `T`) and lines 351–353 ("`(S ∩ T) ∩ (S' ∩ T')` … is a face of `S ∩ T`") are steps of `sec3_subdivisions`;
 Lean proves them on the paper's route (`cellsS_inter_faces`, `cellsT_inter_faces`: faces of the common face
 `A_ℓ ∩ A_ℓ'`; `cellsR_inter_faces`: a face of `S` meets a face of `T` in a face of `S ∩ T`).
 Steps with rows of their own, by result:
-* Section 2, pyramids (lines 257–268): `sec2_pyramid_extend`, `sec2_pyramid_cut`, `sec2_pyramid_apex_cut`,
+* Section 2, pyramids (lines 248–253): `sec2_pyramid_extend`, `sec2_pyramid_cut`, `sec2_pyramid_apex_cut`,
   `sec2_pyramid_face_parts`, `sec2_pyramid_face_cases`.
-* Section 3, the cells of `S`, `T`, `R` (lines 367–394): `sec3_affine_in_domain`, `sec3_domain_inter_face`,
+* Section 3, the cells of `S`, `T`, `R` (lines 338–353): `sec3_affine_in_domain`, `sec3_domain_inter_face`,
   `sec3_R_cell_faces`.
 * Lemma 3.5: (i) `lemma_3_5_i_relint`, `lemma_3_5_i_not_both`; (ii) `lemma_3_5_ii_dual_graph`,
   `lemma_3_5_ii_shared_facet`, `lemma_3_5_ii_opposite_sides`, `lemma_3_5_ii_adjacent_common_vertex`,
@@ -109,67 +112,89 @@ Steps with rows of their own, by result:
 Not formalized are only sentences that report other papers' results without using them, pointers to other documents,
 bibliographic sentences, an informal summary, and the recalled proof of a cited lemma that Lean proves by its own
 route:
-* Lines 138–156: the right column of the introduction's table (what other papers proved; bibliographic).  Its entry
-  "false for k=1 (by [HLSS, Theorem 2.1] and [HL, Theorem 2.1])" (line 148) is formalized: `sec1_partb_false_k1`.
-* Lines 98–101 and 106–107: the history of the conjecture (other papers' results): part (a) "earlier for maximal
-  ranked posets [AFJ, Corollary 4.2] and for the posets built by disjoint unions and ordinal sums from posets that do
-  not contain X [FHL, Theorem 1]"; "Later papers restate part (b) for k ≥ 2 [FLM, Conjecture 1.1], [Lee,
-  Conjecture 28]".  (Fourier's part (a), lines 98–99, is formalized: `fourier_thm_1_1`.)
-* Lines 32–33 and 187–188: the author note with the link to this Lean proof, and the pointer to the expanded version
-  [G] ("None of those results is used here").
-* Lines 964–965: "A characterization of the posets that attain the bound of Theorem 4.1 is given in the expanded
+* Lines 148–171, the introduction's table (Table 1): its right column (what other papers proved; bibliographic), and,
+  in its left column, the note on Corollary 5.3 "proved independently by Fourier [FourierV2, Theorem 8.2]" (lines
+  164–165; another paper's result).  The rest of the left column restates Theorem 4.1 and Corollary 5.3 (rows
+  `thm_4_1`, `prop_5_2`, `cor_5_3`).  The right column's entry "false for k=1 [HLSS, Theorem 2.1], [HL, Theorem 2.1]"
+  (line 168) is formalized: `sec1_partb_false_k1`.
+* Line 146 (new in v4.60), "Figure 2 shows the equality part before and after this paper", and Figure 2 itself (the
+  file `fig_before_after.tex`): its left panel and the caption's last sentence report other papers' results (known for
+  k = 2 [FLM] and k = n − 1 [HL], open otherwise [Lee]; [FourierV2, Theorem 8.2]); the rest repeats results of this
+  paper: false for k = 1 (`sec1_partb_false_k1`), the bounds and the poset attaining them all (`thm_4_1`,
+  `thm_4_1_sharp`, `prop_5_2`; the drawn numbers are the binomial coefficients C(n−3, k−2) for n = 5, …, 9), and
+  equality exactly when P does not contain X (`cor_5_3`, `thm_1_2`).  Its "for n ≤ 4 no poset contains X" is a row:
+  `fig_beforeafter_no_X`.
+* Lines 113 and 117–118: the history of the conjecture (other papers' results): part (a) "had been proved earlier
+  for maximal ranked posets [AFJ, Corollary 4.2] and for posets that can be built by disjoint unions and ordinal sums
+  from posets that do not contain X [FHL, Theorem 1]"; "Later papers restate part (b) for k ≥ 2 [FLM, Conjecture 1.1],
+  [Lee, Conjecture 28]".  (Fourier's part (a), line 113, is formalized: `fourier_thm_1_1`.)
+* Lines 120–124 and 56–57 (abstract): "The second version of Fourier's preprint gives an independent proof of this
+  statement [FourierV2, Theorem 8.2]; it shows that, for posets that contain X, the inequalities of part (a) are
+  strict for 2 ≤ k ≤ n−1, and it states no explicit lower bound for the differences" (another paper's result, not
+  used).
+* Lines 35–36 and 194–195: the author note with the link to this Lean proof, and the pointer to the expanded version
+  [G] ("None of those results is used here"); lines 59–60 of the abstract, "The proofs given in this paper are
+  formally verified in Lean 4".
+* Lines 807–808: "A characterization of the posets that attain the bound of Theorem 4.1 is given in the expanded
   version [G, Theorem 6.1]; it is not used here."
-* Lines 159–185 ("Outline of the proof", with the paragraph on the results used without proof; Lean's own assumptions
+* Lines 173–192 ("Outline of the proof", with the paragraph on the results used without proof; Lean's own assumptions
   are the cited results in the Cited/ files): an informal summary.
-* Lines 272–283 (how Fourier passes from `O(P)` to `C(P)`, the notation, what the paper takes from Fourier's preprint and
-  what it reproves), 423–425 (the subdivisions,
-  polynomials and carriers "are those of [Fourier, Section 4]; so Lemma 3.2 and Proposition 3.4 below apply to them as
-  stated") and 458–460 (Fourier's Lemma 4.3 "states only after summing over all carriers; we include the proof"):
-  bibliographic sentences about Fourier's preprint, not claims.  (The results they name are rows: `lemma_3_2`,
+* Lines 257–264 (how Fourier passes from `O(P)` to `C(P)`, the notation, what the paper takes from Fourier's preprint and
+  what it reproves), 371 (the subdivisions, polynomials and carriers "are those of Fourier [Section 4]", with
+  Fourier's own definition of `S` and `T` quoted, and "So Lemma 3.2 and Proposition 3.4 below apply to them as
+  stated"; the description of the maximal cells it repeats is row `sec3_maximal_cells_full`) and 401–402 (Fourier's
+  Lemma 4.3 "states only after summing over all carriers; we include the proof"): bibliographic sentences about
+  Fourier's preprint, not claims.  (The results they name are rows: `lemma_3_2`,
   `prop_3_4`, `prop_3_1`, `lemma_3_5_i_cover` to `lemma_3_5_iii`, `prop_3_7`.)
-* Lines 494–509: the recalled argument for [CJK, Lemma 2] (a segment `[x, y]` through the `e`-cells).  Lean proves the
+* Lines 432–437: the recalled argument for [CJK, Lemma 2] (a segment `[x, y]` through the `e`-cells).  Lean proves the
   lemma itself (`lemma_3_5_ii_dual_graph`) by its own route, documented in the header of
   `HibiLi/Polytope/CJKProof.lean`; the recalled steps are not rows.
-The informal reading of lines 435–441 ("not used below") is formalized: `sec3_informal_before`,
-`sec3_informal_after`, `sec3_informal_vertical_count` and, for the sentence "Thus `F_B + F_R − F_S − F_T`
-compares the numbers of these faces before and after the switch" (lines 439–440), `sec3_nonvertical_coefficient`.
-(The n = 6 count of v1.70 lines 737–738, "seven of the sixteen posets containing X attain the bound", is not in v2.10
-(nor in v1.80); it stays formalized: `sec5_census_n6`.)
+* Lines 393–395 (new in v4.50), "The idea of Fourier's proof is this": a sketch of the proof of Proposition 3.4, a cited
+  result.  Its first case is the paper's own reasoning and is a row: `sec3_transverse_equal_case`.
+The informal reading of lines 380–384 ("not used below") is formalized: `sec3_informal_before`,
+`sec3_informal_after` (the v2.10 wording), `sec3_informal_before_graph`, `sec3_informal_after_graph`,
+`sec3_informal_both_kinds` (the v4.60 wording), `sec3_informal_vertical_count` and, for the sentence "Thus
+`F_B + F_R − F_S − F_T` counts, dimension by dimension, the change in the number of faces with no segment parallel to
+the `z`-axis" (line 383), `sec3_nonvertical_coefficient`, and for its "is equivalent to" (lines 383–384),
+`sec3_informal_equivalence`.  These rows use no cited result; with them Lean proves [Fourier, Lemma 4.1] itself.
+(The n = 6 count of v1.70 lines 737–738, "seven of the sixteen posets containing X attain the bound", is not in v4.60
+(nor in v1.80 or v2.10); it stays formalized: `sec5_census_n6`.)
 
 ### Cited results that the paper uses without proof
 
-Lean assumes exactly the five results in the Cited/ files: [Fourier, Lemma 4.1, first equality] and
-[Fourier, Proposition 5.2] (`Cited/Fourier.lean`), [HL, Theorem 2.1], [HLSS, Theorem 2.1] and Ziegler's face figures
-(`Cited/Others.lean`).  The other cited results that the paper uses are proved in Lean wherever Lean uses them, with
-no assumption:
-* Lines 207–217, the standard facts on polytopes [Ziegler, Chapters 1–2]: Lean proves each fact it uses (for example
-  line 211, the relative interiors of the nonempty faces partition a polytope: `sec2_faces_relint_partition`), except
-  that a polytope of dimension at least 1 has a facet (line 210), which Lean derives from the cited face figures
+Lean assumes exactly four results, stated as axioms in the Cited/ files: [Fourier, Proposition 5.2]
+(`Cited/Fourier.lean`), [HL, Theorem 2.1], [HLSS, Theorem 2.1] and Ziegler's face figures (`Cited/Others.lean`).  The
+other cited results that the paper uses are proved in Lean wherever Lean uses them, with no assumption:
+* Lines 186–188 and 261, [Fourier, Lemma 4.1] (the first equality of our Lemma 3.2): proved in Lean along the paper's
+  informal reading, lines 380–384 (`HibiLi/Proofs/Fourier41.lean`); `Cited.fourier_lemma_4_1` is a theorem.
+* Lines 209–214, the standard facts on polytopes [Ziegler, Chapters 1–2]: Lean proves each fact it uses (for example
+  line 212, the relative interiors of the nonempty faces partition a polytope: `sec2_faces_relint_partition`), except
+  that a polytope of dimension at least 1 has a facet (line 211), which Lean derives from the cited face figures
   (`sec4_facet_vertex_outside`).
-* Lines 227–229, Stanley's vertex description [Stanley, Corollary 1.3 and Theorem 2.2]: `sec2_stanley_vertices`.
-* Lines 241–242, [HL, Lemma 1.1] (the facets of `O(P)` and `C(P)`): Lean does not use the general statement; it proves
+* Lines 223–225, Stanley's vertex description [Stanley, Corollary 1.3 and Theorem 2.2]: `sec2_stanley_vertices`.
+* Lines 234–236, [HL, Lemma 1.1] (the facets of `O(P)` and `C(P)`): Lean does not use the general statement; it proves
   the two counts the paper draws from it, `8` and `9` facets for `X`: `ex_2_1_facet_counts`.
-* Lines 492–494, [CJK, Lemma 2]: proved, `lemma_3_5_ii_dual_graph` (see above).
+* Line 432, [CJK, Lemma 2]: proved, `lemma_3_5_ii_dual_graph` (see above).
 -/
 
 /-! ## Section 1 (introduction) and Section 2 (definitions and examples) -/
 
-/-- Lines 64–67 (and line 227): `O(P)` and `C(P)` are `n`-dimensional 0/1 polytopes. -/
+/-- Lines 70–73 (and line 223): `O(P)` and `C(P)` are `n`-dimensional 0/1 polytopes. -/
 theorem sec1_zero_one_polytopes (P : Type*) [Fintype P] [PartialOrder P] :
     (∃ S : Finset (P → ℝ), (∀ v ∈ S, ∀ p, v p = 0 ∨ v p = 1) ∧ orderPolytope P = convexHull ℝ (S : Set (P → ℝ))) ∧
     (∃ S : Finset (P → ℝ), (∀ v ∈ S, ∀ p, v p = 0 ∨ v p = 1) ∧ chainPolytope P = convexHull ℝ (S : Set (P → ℝ))) ∧
     adim (orderPolytope P) = Fintype.card P ∧ adim (chainPolytope P) = Fintype.card P :=
   sec1_zero_one_polytopes_proved P
 
-/-- Lines 67–68: "with equally many vertices" (proved at lines 229–231). -/
+/-- Lines 73–74: "with the same number of vertices" (proved at lines 225–227). -/
 theorem sec1_same_vertices (P : Type*) [Fintype P] [PartialOrder P] :
     fNum (orderPolytope P) 0 = fNum (chainPolytope P) 0 :=
   sec1_same_vertices_proved P
 
 open HibiLi Proofs Finset
 
-/-- **P1** (v2.10 l. 229-231): "Sending an upper set to the set of its minimal elements is a bijection from the upper
-sets onto the antichains, with inverse `A ↦ {r ∈ P : r ≥ p for some p ∈ A}`, so the two polytopes have equally many
+/-- **P1** (v4.60 l. 225-227): "Sending an upper set to the set of its minimal elements is a bijection from the upper
+sets onto the antichains, with inverse `A ↦ {r ∈ P : r ≥ p for some p ∈ A}`, so the two polytopes have the same number of
 vertices". -/
 theorem sec1_upper_antichain_bij (P : Type*) [Fintype P] [PartialOrder P] :
     (∀ S : Set P, IsUpperSet S →
@@ -183,7 +208,7 @@ theorem sec1_upper_antichain_bij (P : Type*) [Fintype P] [PartialOrder P] :
     (orderPolytope_isPolytope P).finite_faces.subset fun _ h => h.1,
     (chainPolytope_isPolytope P).finite_faces.subset fun _ h => h.1⟩
 
-/-- Footnote, lines 231–234: Hibi–Li's order polytope is the image of ours under `v ↦ 1 − v`, a unimodular map. -/
+/-- Footnote, line 217: Hibi–Li's order polytope is the image of ours under `v ↦ 1 − v`, a unimodular map. -/
 theorem sec2_footnote_HL_convention (P : Type*) [Fintype P] [PartialOrder P] [DecidableEq P] :
     orderPolytopeHL P = (fun v => (fun _ => (1 : ℝ)) - v) '' orderPolytope P ∧
     UnimodEquiv (orderPolytope P) (orderPolytopeHL P) :=
@@ -199,15 +224,15 @@ theorem sec2_HL_unimod_convention {ι : Type*} [Fintype ι] [DecidableEq ι] (Q 
     UnimodEquivHL Q Q' ↔ UnimodEquiv Q Q' :=
   sec2_HL_unimod_convention_proved Q Q'
 
-/-- Lines 237–238: "Such an affine bijection maps j-faces onto j-faces, so unimodularly equivalent polytopes have the
-same f-vector." -/
+/-- Lines 230–231: "The affine bijection `u ↦ Mu + w` maps the `j`-faces of `Q` onto those of `Q'`, so unimodularly
+equivalent polytopes have the same `f`-vector." -/
 theorem sec2_unimod_same_fvector {ι : Type*} [Fintype ι] [DecidableEq ι] (Q Q' : Set (ι → ℝ))
     (h : UnimodEquiv Q Q') (j : ℕ) : fNum Q j = fNum Q' j :=
   h.fNum_eq j
 
-/-- v2.10 l. 234-238 (F12): "Two `n`-dimensional polytopes `Q, Q' ⊆ ℝⁿ` with integer vertices are unimodularly
+/-- v4.60 l. 227-231 (F12): "Two `n`-dimensional polytopes `Q, Q' ⊆ ℝⁿ` with integer vertices are unimodularly
 equivalent (as in [HL]) if `Q' = M(Q) + w` for an integral matrix `M` with `det M = ±1` and an integral vector `w`.
-Such an affine bijection maps `j`-faces onto `j`-faces": the map `v ↦ Mv + w` is an affine bijection `f` of `ℝⁿ`, and
+The affine bijection `u ↦ Mu + w` maps the `j`-faces of `Q` onto those of `Q'`": the map `v ↦ Mv + w` is an affine bijection `f` of `ℝⁿ`, and
 for every `j`, `F ↦ f(F)` maps the `j`-faces of `Q` one-to-one onto the `j`-faces of `f(Q) = M(Q) + w`. (It holds for
 every set `Q`; the paper needs it for polytopes with integer vertices. The f-vector consequence is
 `sec2_unimod_same_fvector`.) -/
@@ -219,38 +244,56 @@ theorem sec2_unimod_faces {ι : Type*} [Fintype ι] [DecidableEq ι] (M : Matrix
         Set.InjOn (fun F => f '' F) (faces Q j) :=
   Proofs.AddV170.unimod_faces_proved M hM w
 
-/-- Lines 103–104: "`O(P)` and `C(P)` always have equally many edges [HLSS, Theorem 2.1]" (cited; read through the
-convention theorems above). -/
+/-- Line 115: "the polytopes `O(P)` and `C(P)` always have the same number of edges [HLSS, Theorem 2.1]" (cited; read
+through the convention theorems above). -/
 theorem sec1_edges_agree (P : Type*) [Fintype P] [PartialOrder P] :
     fNum (orderPolytope P) 1 = fNum (chainPolytope P) 1 := by
   classical
   rw [sec2_unimod_same_fvector _ _ (sec2_footnote_HL_convention P).2 1, Cited.hlss_thm_2_1 P,
     sec2_HL_chain_convention P]
 
-/-- Lines 95–97: five distinct elements with `a, b < c < g, h`, `a, b` incomparable and `g, h` incomparable also satisfy
+/-- Lines 112–113: five distinct elements with `a, b < c < g, h`, `a, b` incomparable and `g, h` incomparable also satisfy
 `a, b < g, h`, so they form an induced copy of `X` (an order embedding of `X` onto them). -/
 theorem sec1_X_copy_induced {P : Type*} [PartialOrder P] {a b c g h : P} (hX : IsXCopy a b c g h) :
     ∃ f : XElem ↪o P, f XElem.a = a ∧ f XElem.b = b ∧ f XElem.c = c ∧ f XElem.g = g ∧ f XElem.h = h :=
   Proofs.sec1_X_copy_induced_proved hX
 
-/-- v2.10 l. 95-98 (F1): "We say that `P` contains `X` if five elements of `P` satisfy these relations and
-incomparabilities, that is, if `P` has an induced subposet isomorphic to `X`; the relations need not be cover
-relations": `ContainsX P` (the five elements and
+/-- v4.60 l. 112-113 (F1): "We say that `P` contains `X` if five elements of `P` satisfy these relations and
+incomparabilities, that is, if `P` has an induced subposet isomorphic to `X`, as in [HL, Theorem 2.1]; the relations
+need not be cover relations": `ContainsX P` (the five elements and
 relations) holds iff some order embedding `X ↪o P` exists, iff some subset of `P` with the induced order is
 isomorphic to `X`. -/
 theorem sec1_containsX_iff (P : Type*) [PartialOrder P] :
     (ContainsX P ↔ Nonempty (XElem ↪o P)) ∧ (ContainsX P ↔ ∃ S : Set P, Nonempty (XElem ≃o S)) :=
   ⟨Proofs.AddV170.containsX_iff_embedding_proved P, Proofs.AddV170.containsX_iff_subposet_proved P⟩
 
-/-- Lines 341–346 (the example after Proposition 3.1; a Section 2 example in v0.70, hence the name): for the
+/-- **Figure 1**, caption (v4.60 l. 108, new in v4.50): "The poset `P_7` is obtained from `X` by adjoining a new least
+element two times in succession, and it attains the bound of Theorem 4.1."  `P_7 = sharpFamily 2`, which is
+`WithBot (WithBot X)` (each `WithBot` adjoins a new least element `⊥`); it has 7 elements, contains `X`, and
+`F_C(P_7) − F_O(P_7) = t²(1+t)⁴`, the bound `t²(1+t)^{n−3}` of Theorem 4.1 for `n = 7` (Proposition 5.2 at `n = 7`). -/
+theorem fig1_P7 :
+    sharpFamily 2 = WithBot (WithBot XElem) ∧
+    Fintype.card (sharpFamily 2) = 7 ∧ ContainsX (sharpFamily 2) ∧
+    facePoly (chainPolytope (sharpFamily 2)) - facePoly (orderPolytope (sharpFamily 2)) = gapPoly 7 :=
+  Proofs.V450.fig1_P7_proved
+
+/-- **Figure 2**, caption (new in v4.60; the figure is the file `fig_before_after.tex`, input at the end of l. 146):
+"for `n ≤ 4` no poset contains `X`": a poset with at most four elements does not contain `X` (which has five).  The
+caption's other claims repeat Theorem 4.1, Proposition 5.2, Corollary 5.3 and Theorem 1.2(c), or report results of
+other papers (AUDIT_NOTES.md).  (The rows named `fig2_…` are older and belong to the slice figure, now Figure 3.) -/
+theorem fig_beforeafter_no_X (P : Type*) [Fintype P] [PartialOrder P] (hP : Fintype.card P ≤ 4) :
+    ¬ ContainsX P :=
+  Proofs.V450.fig_beforeafter_no_X_proved P hP
+
+/-- Lines 318–323 (the example after Proposition 3.1; a Section 2 example in v0.70, hence the name): for the
 chain `a < b`, both polytopes are triangles with `F_{O(P)} = F_{C(P)} = 3 + 3t + t^2`. -/
 theorem sec2_chain2_triangles :
     facePoly (orderPolytope Chain2) = 3 + 3 * X + X ^ 2 ∧
     facePoly (chainPolytope Chain2) = 3 + 3 * X + X ^ 2 :=
   sec2_chain2_triangles_proved
 
-/-- **Example 2.1** (lines 240–250), computed: `f(O(X)) = (8,24,34,24,8,1)` and `f(C(X)) = (8,24,35,26,9,1)` (and no
-faces of dimension ≥ 6).  These full f-vectors are no longer in the paper (Example 2.1 listed them up to v1.70); v2.10
+/-- **Example 2.1** (lines 233–241), computed: `f(O(X)) = (8,24,34,24,8,1)` and `f(C(X)) = (8,24,35,26,9,1)` (and no
+faces of dimension ≥ 6).  These full f-vectors are no longer in the paper (Example 2.1 listed them up to v1.70); v4.60
 states only consequences of them: the facet numbers `8` and `9` (`ex_2_1_facet_counts`) and the differences in each
 dimension (`ex_2_1_v180`, `prop_5_1`). -/
 theorem ex_2_1 (k : ℕ) :
@@ -258,10 +301,11 @@ theorem ex_2_1 (k : ℕ) :
     fNum (chainPolytope XElem) k = [8, 24, 35, 26, 9, 1].getD k 0 :=
   ex_2_1_proved k
 
-/-- **Example 2.1** in the v2.10 wording (l. 243-249; the name is historical): `O(X)` has `8` facets and `C(X)` has
-`9`; "`O(X)` and `C(X)` have equally many faces of dimension `0` and `1`" (Lean adds `f_5`, the polytope itself), "and
-`C(X)` has `1`, `2` and `1` more faces of dimension `2`, `3` and `4`, in agreement with the facet numbers `9` and `8`"
-(the difference `t^2 + 2t^3 + t^4` of Proposition 5.1). -/
+/-- **Example 2.1** in the v4.60 wording (l. 236-240; the name is historical): `O(X)` has `8` facets and `C(X)` has
+`9`; "`O(X)` and `C(X)` have the same number of vertices and the same number of edges" (Lean adds `f_5`, the polytope
+itself), "and `C(X)` has one more face of dimension `2` than `O(X)`, two more of dimension `3` and one more of dimension
+`4`, in agreement with the numbers of facets, `9` for `C(X)` and `8` for `O(X)`" (the difference `t^2 + 2t^3 + t^4` of
+Proposition 5.1). -/
 theorem ex_2_1_v180 :
     fNum (orderPolytope XElem) 4 = 8 ∧ fNum (chainPolytope XElem) 4 = 9 ∧
     fNum (orderPolytope XElem) 0 = fNum (chainPolytope XElem) 0 ∧
@@ -274,7 +318,7 @@ theorem ex_2_1_v180 :
     (ex_2_1 3).2, (ex_2_1 4).1, (ex_2_1 4).2, (ex_2_1 5).1, (ex_2_1 5).2]
   decide
 
-/-- **Example 2.1**, the facet counts in the v2.10 wording (l. 241-243): "the facets of `O(P)` correspond to the minimal
+/-- **Example 2.1**, the facet counts in the v4.60 wording, as in v2.10 (l. 234-236): "the facets of `O(P)` correspond to the minimal
 elements, the maximal elements and the cover relations of `P`, and those of `C(P)` to the elements and the maximal
 chains of `P` [HL, Lemma 1.1]. So `O(X)` has `2+2+4 = 8` facets and `C(X)` has `5+4 = 9`." Lean proves the five
 counts for `X` (2 minimal and 2 maximal elements, 4 cover relations, 5 elements, 4 maximal chains) and the two facet
@@ -315,14 +359,14 @@ theorem ex_2_1_facet_counts :
     Set.ncard_coe_finset, (ex_2_1 4).1, (ex_2_1 4).2]
   decide
 
-/-- Lines 104–106: `O(X)` and `C(X)` are not unimodularly equivalent, "as they have 8 and 9 facets, respectively". -/
+/-- Lines 115–117: `O(X)` and `C(X)` are not unimodularly equivalent, "as they have 8 and 9 facets, respectively". -/
 theorem sec1_X_not_unimod : ¬ UnimodEquiv (orderPolytope XElem) (chainPolytope XElem) := by
   intro h
   have h4 := sec2_unimod_same_fvector _ _ h 4
   rw [(ex_2_1 4).1, (ex_2_1 4).2] at h4
   simp at h4
 
-/-- **Theorem 2.2** (Hibi–Li; lines 252–255), in the paper's conventions: `O(P)` and `C(P)` are unimodularly equivalent
+/-- **Theorem 2.2** (Hibi–Li; lines 243–246), in the paper's conventions: `O(P)` and `C(P)` are unimodularly equivalent
 iff `P` does not contain `X`. (Derived from the cited `hibiLi_thm_2_1` and the three convention theorems above.) -/
 theorem thm_2_2 (P : Type*) [Fintype P] [PartialOrder P] [DecidableEq P] :
     UnimodEquiv (orderPolytope P) (chainPolytope P) ↔ ¬ ContainsX P := by
@@ -333,9 +377,9 @@ theorem thm_2_2 (P : Type*) [Fintype P] [PartialOrder P] [DecidableEq P] :
 section
 local instance : DecidableLT XElem := decidableLTOfDecidableLE
 
-/-- v2.10 l. 148 (F9, table; also Theorem 1.2(c), l. 129-131): part (b) of the conjecture is "false for `k=1` (by
-[HLSS, Theorem 2.1] and [HL, Theorem 2.1])":
-for every finite poset `P` that contains `X`, `O(P)` and `C(P)` have equally many edges ([HLSS],
+/-- v4.60 l. 168 (F9, table; also Theorem 1.2(c), l. 142-143): part (b) of the conjecture is "false for `k=1`
+[HLSS, Theorem 2.1], [HL, Theorem 2.1]":
+for every finite poset `P` that contains `X`, `O(P)` and `C(P)` have the same number of edges ([HLSS],
 `sec1_edges_agree`) but are not unimodularly equivalent ([HL, Theorem 2.1], `thm_2_2`); and `X` is such a poset,
 with `|X| = 5 > 1`.  The proof uses only these two cited routes, not the face counts of `ex_2_1`. -/
 theorem sec1_partb_false_k1 :
@@ -348,7 +392,7 @@ theorem sec1_partb_false_k1 :
 
 end
 
-/-- Lines 257–262: the nonempty faces of a pyramid `pyr(Q)` (apex `v` outside `aff(Q)`) are exactly the faces of `Q`,
+/-- Lines 248–249: the nonempty faces of a pyramid `pyr(Q)` (apex `v` outside `aff(Q)`) are exactly the faces of `Q`,
 the apex, and the pyramids over the faces of `Q`. -/
 theorem sec2_pyramid_faces {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ : IsPolytope Q) (v : ι → ℝ)
     (hv : v ∉ affineSpan ℝ Q) (F : Set (ι → ℝ)) :
@@ -356,10 +400,10 @@ theorem sec2_pyramid_faces {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ 
       IsFace Q F ∨ F = {v} ∨ ∃ G, IsFace Q G ∧ F = convexHull ℝ (insert v G) :=
   Proofs.sec2_pyramid_faces_proved Q hQ v hv F
 
-/-- **P2** (v2.10 l. 259-262): the nonempty faces of a pyramid `conv(Q ∪ {o})` are "the nonempty faces `G` of `Q`, the
-apex, and the pyramids `conv(G ∪ {o})` over the nonempty faces `G` of `Q`; as `o ∉ aff(G)`, the pyramid
-`conv(G ∪ {o})` has dimension `dim G + 1`, and these faces are pairwise distinct (no `G` contains `o`, and
-`conv(G ∪ {o}) ∩ Q = G` as `o ∉ aff(Q)`)". -/
+/-- **P2** (v4.60 l. 249): the nonempty faces of a pyramid `conv(Q ∪ {o})` are "the nonempty faces `G` of `Q`, the
+set `{o}`, and the pyramids `conv(G ∪ {o})` over the nonempty faces `G` of `Q`. As `o ∉ aff(G)`, the pyramid
+`conv(G ∪ {o})` has dimension `dim G + 1`. These sets are pairwise distinct: no `G` contains `o`, and
+`conv(G ∪ {o}) ∩ Q = G` because `o ∉ aff(Q)`". -/
 theorem sec2_pyramid_faces_full {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ : IsPolytope Q)
     (o : ι → ℝ) (ho : o ∉ affineSpan ℝ Q) :
     (∀ F, IsFace (convexHull ℝ (insert o Q)) F ↔
@@ -374,10 +418,10 @@ theorem sec2_pyramid_faces_full {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ))
   sec2_pyramid_faces_full_proved Q hQ o ho
 
 open HibiLi.Proofs.Cov200 in
-/-- **Section 2, Faces** (v2.10 l. 203-205): "The set of points of `Q` at which several valid inequalities are all
-tight is a face (it is cut out by their sum); we say that they cut it out." Finitely many valid affine inequalities
-`l i ≤ c i` (`i ∈ s`); their sum is valid, cuts out the same set, and that set is a face. The paper counts `∅` as a
-face (l. 202-203); Lean's `IsFace` is the nonempty case, so the face conclusion carries "if the set is nonempty"
+/-- **Section 2, Faces** (v4.60 l. 207-208): "The set of points of `Q` at which several valid inequalities are all
+tight is a face, since it is cut out by their sum; we say that these inequalities cut it out." Finitely many valid
+affine inequalities `l i ≤ c i` (`i ∈ s`); their sum is valid, cuts out the same set, and that set is a face. The paper
+counts `∅` as a face (l. 207: "they include `Q` and `∅`"); Lean's `IsFace` is the nonempty case, so the face conclusion carries "if the set is nonempty"
 (the empty case is the paper's convention); the first two conclusions need no such hypothesis. -/
 theorem sec2_valid_inequalities_face {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] {ι : Type*}
     (Q : Set E) (s : Finset ι) (l : ι → StrongDual ℝ E) (c : ι → ℝ)
@@ -387,9 +431,9 @@ theorem sec2_valid_inequalities_face {E : Type*} [NormedAddCommGroup E] [NormedS
       ({x ∈ Q | ∀ i ∈ s, l i x = c i}.Nonempty → IsFace Q {x ∈ Q | ∀ i ∈ s, l i x = c i}) :=
   valid_tight_face_proved Q s l c hvalid
 
-/-- The pyramid rule (line 269; "the pyramid formula of Section 2", line 960): `F_{pyr(Q)}(t) = 1 + (1 + t) F_Q(t)`
-for a polytope `Q` and an apex outside its affine hull.  (The name is historical: line 269 has no equation number; the
-paper's equation (1) is `E ∩ N₀ = V₄ × (Q_E ∩ V_ζ)` in Lemma 4.5, line 754.) -/
+/-- The pyramid rule (line 254; "the formula `F_{pyr(Q)} = 1 + (1 + t)F_Q` of Section 2", line 803): `F_{pyr(Q)}(t) = 1 + (1 + t) F_Q(t)`
+for a polytope `Q` and an apex outside its affine hull.  (The name is historical: line 254 has no equation number; the
+paper's equation (1) is `E ∩ N₀ = V₄ × (Q_E ∩ V_ζ)` in Lemma 4.5, line 656.) -/
 theorem eq_1_pyramid {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ : IsPolytope Q) (v : ι → ℝ)
     (hv : v ∉ affineSpan ℝ Q) :
     facePoly (convexHull ℝ (insert v Q)) = 1 + (1 + X) * facePoly Q :=
@@ -397,13 +441,13 @@ theorem eq_1_pyramid {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ : IsPo
 
 /-! ### Section 2: coverage rows (review REVIEW_006_cov, 20261028) -/
 
-/-- **Section 2** (v2.10 l. 211), a standard fact the paper uses: every point `u` of a polytope `Q` lies in the
+/-- **Section 2** (v4.60 l. 212), a standard fact the paper uses: every point `u` of a polytope `Q` lies in the
 relative interior of exactly one face of `Q`. -/
 theorem sec2_faces_relint_partition {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ : IsPolytope Q) (u : ι → ℝ)
     (hu : u ∈ Q) : ∃! F, IsFace Q F ∧ u ∈ intrinsicInterior ℝ F :=
   Proofs.Cov1.faces_relint_partition Q hQ u hu
 
-/-- **Section 2** (v2.10 l. 227-229): Stanley's vertex description, cited by the paper and proved in Lean: the vertices
+/-- **Section 2** (v4.60 l. 223-225): Stanley's vertex description, cited by the paper and proved in Lean: the vertices
 of `O(P)` are the indicator vectors of the upper sets of `P`, and those of `C(P)` the indicator vectors of its
 antichains. -/
 theorem sec2_stanley_vertices (P : Type*) [Fintype P] [PartialOrder P] :
@@ -412,12 +456,13 @@ theorem sec2_stanley_vertices (P : Type*) [Fintype P] [PartialOrder P] :
       (fun A : Set P => ({A.indicator 1} : Set (P → ℝ))) '' {A | IsAntichain (· ≤ ·) A} :=
   ⟨Proofs.Cov1.stanley_order P, Proofs.Cov1.stanley_chain P⟩
 
-/-- v2.10 l. 246-247 (Example 2.1): `t² + 2t³ + t⁴ = t²(1 + t)²`, the bound of Theorem 4.1 for `n = 5 = |X|`. -/
+/-- v4.60 l. 239-240 (Example 2.1): `t² + 2t³ + t⁴ = t²(1 + t)²`, the bound of Theorem 4.1 for `n = 5 = |X|`. -/
 theorem ex_2_1_x_gap : (X ^ 2 + 2 * X ^ 3 + X ^ 4 : ℤ[X]) = gapPoly 5 ∧ Fintype.card XElem = 5 :=
   Proofs.sec5_x_gap
 
 open Classical Filter Topology in
-/-- v2.10 l.262-263: "an affine function f on aff(Q) extends to an affine function ... with any prescribed value at o". -/
+/-- v4.60 l.249-250: "an affine function `ψ` on `aff(Q)` extends to an affine function `ψ̃` on `aff(pyr(Q))` with any
+prescribed value at `o`" (here `f` and `g`, the value `c`). -/
 theorem sec2_pyramid_extend {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ))
     [Nonempty (affineSpan ℝ Q)] (o : ι → ℝ) (ho : o ∉ affineSpan ℝ Q)
     (f : affineSpan ℝ Q →ᵃ[ℝ] ℝ) (c : ℝ) :
@@ -425,7 +470,7 @@ theorem sec2_pyramid_extend {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ))
   Proofs.sec2_pyramid_extend Q o ho f c
 
 open Classical Filter Topology in
-/-- v2.10 l.263-265: "the inequality ... cuts out G from pyr(Q) if ... = 1, and conv(G union {o}) if ... = 0". Validity and the tight set are both asserted. -/
+/-- v4.60 l.250-251: "the inequality ... cuts out G from pyr(Q) if ... = 1, and conv(G union {o}) if ... = 0". Validity and the tight set are both asserted. -/
 theorem sec2_pyramid_cut {ι : Type*} (Q : Set (ι → ℝ)) (V : Finset (ι → ℝ))
     (hQ : Q = convexHull ℝ ↑V) (o : ι → ℝ) (ho : o ∉ affineSpan ℝ Q)
     (G : Set (ι → ℝ)) (g : (ι → ℝ) →ᵃ[ℝ] ℝ) (hg : ∀ x ∈ Q, 0 ≤ g x)
@@ -436,7 +481,7 @@ theorem sec2_pyramid_cut {ι : Type*} (Q : Set (ι → ℝ)) (V : Finset (ι →
       {x ∈ convexHull ℝ (insert o Q) | g x = 0} = convexHull ℝ (insert o G)) :=
   Proofs.sec2_pyramid_cut_valid Q V hQ o ho G g hg hG hGface
 
-/-- v2.10 l. 262-265 (pyramids), the apex: an affine `g` equal to `1` on `Q` with `g(o) = 0` cuts out `{o}` from
+/-- v4.60 l. 249-251 (pyramids), the apex: an affine `g` equal to `1` on `Q` with `g(o) = 0` cuts out `{o}` from
 `pyr(Q)`. -/
 theorem sec2_pyramid_apex_cut {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (V : Finset (ι → ℝ))
     (hQ : Q = convexHull ℝ ↑V) (o : ι → ℝ) (ho : o ∉ affineSpan ℝ Q) (g : (ι → ℝ) →ᵃ[ℝ] ℝ)
@@ -444,7 +489,7 @@ theorem sec2_pyramid_apex_cut {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (
     {x ∈ convexHull ℝ (insert o Q) | g x = 0} = {o} :=
   Proofs.sec2_pyramid_apex_cut Q V hQ o ho g hg1 hgo
 
-/-- v2.10 l. 265-267 (pyramids): the vertices of a face `F` of `pyr(Q)` are among `o` and the vertices of `Q`, and
+/-- v4.60 l. 251-252 (pyramids): the vertices of a face `F` of `pyr(Q)` are among `o` and the vertices of `Q`, and
 `F ∩ Q`, when nonempty, is a face of `Q`. -/
 theorem sec2_pyramid_face_parts {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (V : Finset (ι → ℝ)) (hQ : Q = convexHull ℝ ↑V)
     (o : ι → ℝ) (ho : o ∉ affineSpan ℝ Q) (F : Set (ι → ℝ)) :
@@ -455,7 +500,8 @@ theorem sec2_pyramid_face_parts {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ))
 /-! ## Section 3 (cited input: Fourier's chain–order polytopes) -/
 
 open Classical Filter Topology in
-/-- v2.10 l.266-268: "G=F intersect Q is a face of pyr(Q) ... whose vertices are the vertices of F other than o. So F=G if o is not in F, F={o} if G is empty, and F=conv(G union {o}) otherwise." -/
+/-- v4.60 l.252-253: "the set `G = F ∩ Q` is a face of `pyr(Q)` contained in `Q`, hence a face of `Q`; its vertices are
+the vertices of `F` other than `o`. So `F = G` if `o ∉ F`, `F = {o}` if `G = ∅`, and `F = conv(G ∪ {o})` otherwise." -/
 theorem sec2_pyramid_face_cases {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ))
     (V : Finset (ι → ℝ)) (hQ : Q = convexHull ℝ ↑V) (o : ι → ℝ)
     (ho : o ∉ affineSpan ℝ Q) (F : Set (ι → ℝ))
@@ -466,12 +512,12 @@ theorem sec2_pyramid_face_cases {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ))
     (o ∈ F → (F ∩ Q).Nonempty → F = convexHull ℝ (insert o (F ∩ Q))) :=
   Proofs.sec2_pyramid_face_cases Q V hQ o ho F hF
 
-/-- Line 299: `O_∅(P) = O(P)` and `O_P(P) = C(P)`. -/
+/-- Line 278: `O_∅(P) = O(P)` and `O_P(P) = C(P)`. -/
 theorem sec3_endpoints (P : Type*) [Fintype P] [PartialOrder P] :
     chainOrderPolytope P ∅ = orderPolytope P ∧ chainOrderPolytope P Set.univ = chainPolytope P :=
   ⟨chainOrderPolytope_empty P, chainOrderPolytope_univ P⟩
 
-/-- The chain–order polytope as displayed in v2.10 (l. 285-298; the name is historical): the order inequalities are
+/-- The chain–order polytope as displayed in v4.60 (l. 266-278; the name is historical): the order inequalities are
 `y_r ≤ y_{r'}` for `r < r'` in `J` (Lean's `chainOrderPolytope` uses `r ≤ r'`; for `r = r'` the inequality is trivial).
 The two definitions give the same set. -/
 theorem sec3_def_v190 (P : Type*) [Fintype P] [PartialOrder P] (I : Set P) :
@@ -491,12 +537,12 @@ theorem sec3_def_v190 (P : Type*) [Fintype P] [PartialOrder P] (I : Set P) :
   · rintro ⟨h1, h2, h3, h4, h5⟩
     exact ⟨h1, h2, fun r r' hr hr' hlt => h3 r r' hr hr' hlt.le, h4, h5⟩
 
-/-- Lines 299–303: `O_I(P)` is a polytope of dimension `|P|` (proved there in the paper, and here). -/
+/-- Lines 278–281: `O_I(P)` is a polytope of dimension `|P|` (proved there in the paper, and here). -/
 theorem sec3_dim (P : Type*) [Fintype P] [PartialOrder P] (I : Set P) (hI : IsLowerSet I) :
     IsPolytope (chainOrderPolytope P I) ∧ adim (chainOrderPolytope P I) = Fintype.card P :=
   sec3_dim_proved P I hI
 
-/-- **W1** (v2.10 l. 301-303): "if `r_1, …, r_m` is a linear extension of `J`, the point with `x_p = 1/(4|P|)` (`p ∈ I`)
+/-- **W1** (v4.60 l. 279-281): "if `r_1, …, r_m` is a linear extension of `J`, the point with `x_p = 1/(4|P|)` (`p ∈ I`)
 and `y_{r_i} = 1/2 + i/(4m)` satisfies every inequality above strictly, as every sum `Σ_{p∈K} x_p` over a chain
 `K ⊆ I` is at most `|I|/(4|P|) ≤ 1/4`" (here `e i = r_{i+1}`, and `r_i < r_j` implies `i < j`). -/
 theorem sec3_strict_point_v200 (P : Type*) [Fintype P] [PartialOrder P] (I : Set P) [DecidablePred (· ∈ I)] (m : ℕ)
@@ -512,43 +558,43 @@ theorem sec3_strict_point_v200 (P : Type*) [Fintype P] [PartialOrder P] (I : Set
     (∀ K : Finset P, (↑K ⊆ I) → IsChainSet P K → ∑ p ∈ K, pt p < 1) :=
   sec3_strict_point_v200_proved P I m e hext
 
-/-- v2.10 l. 299: "Each `O_I(P)` lies in `[0,1]^P`". -/
+/-- v4.60 l. 278: "Each `O_I(P)` lies in `[0,1]^P`". -/
 theorem sec3_in_unit_cube (P : Type*) [Fintype P] [PartialOrder P] (I : Set P) :
     chainOrderPolytope P I ⊆ {x | ∀ p, 0 ≤ x p ∧ x p ≤ 1} := fun _ hx p =>
   chainOrderPolytope_coordinate_bounds P I hx p
 
-/-- Lines 309–310: `B = O_I(P′)` is a polytope of dimension `n − 1`. -/
+/-- Lines 287–288: `B = O_I(P′)` is a polytope of dimension `n − 1`. -/
 theorem sec3_B_dim {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     IsPolytope s.B ∧ adim s.B + 1 = Fintype.card P :=
   Proofs.sec3_B_dim_proved s
 
-/-- Lines 306–307: "Let `q` be minimal in `J`, so that `I ∪ {q}` is again an order ideal." -/
+/-- Lines 284–285: "Let `q` be minimal in `J`, so that `I ∪ {q}` is again an order ideal." -/
 theorem sec3_insert_isLowerSet {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     IsLowerSet (insert s.q s.I) :=
   Proofs.insert_isLowerSet s
 
-/-- v2.10 l. 308: for a switch, "`I` is an order ideal of `P'`" (`P' = P \ {q}`). -/
+/-- v4.60 l. 286: for a switch, "`I` is an order ideal of `P'`" (`P' = P \ {q}`). -/
 theorem sec3_I_ideal_of_P' {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) : IsLowerSet s.I' :=
   Proofs.I'_isLowerSet s
 
-/-- v2.10 l. 316-317: "Every `r > q` lies in `J \ {q}`, as `J` is an upper set." -/
+/-- v4.60 l. 294-295: "Every `r > q` lies in `J \ {q}`, as `J` is an upper set." -/
 theorem sec3_gt_q_mem_J {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) {r : P} (hr : s.q < r) :
     r ∉ s.I ∧ r ≠ s.q :=
   ⟨Proofs.not_mem_I_of_gt s hr, hr.ne'⟩
 
-/-- Lines 317–321: `0 ≤ L ≤ U ≤ 1` on `B`, `L` convex, `U` concave. -/
+/-- Lines 295–298: `0 ≤ L ≤ U ≤ 1` on `B`, `L` convex, `U` concave. -/
 theorem sec3_L_U {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     (∀ u ∈ s.B, 0 ≤ s.L u ∧ s.L u ≤ s.U u ∧ s.U u ≤ 1) ∧ ConvexOn ℝ Set.univ s.L ∧
     ConcaveOn ℝ Set.univ s.U :=
   ⟨fun _ hu => Proofs.L_U_bounds s hu, Proofs.L_convex s, Proofs.U_concave s⟩
 
-/-- Lines 320–321: `L` and `U` are piecewise affine (a maximum, resp. minimum, of finitely many affine functions). -/
+/-- Line 298: `L` and `U` are piecewise affine (a maximum, resp. minimum, of finitely many affine functions). -/
 theorem sec3_L_U_piecewise {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     (∃ (fs : Finset ((s.P' → ℝ) →ᵃ[ℝ] ℝ)) (h : fs.Nonempty), ∀ u, s.L u = fs.sup' h (fun f => f u)) ∧
     (∃ (gs : Finset ((s.P' → ℝ) →ᵃ[ℝ] ℝ)) (h : gs.Nonempty), ∀ u, s.U u = gs.inf' h (fun g => g u)) :=
   Proofs.sec3_L_U_piecewise_proved s
 
-/-- **Proposition 3.1** (lines 323–330; Fourier's Proposition 3.1, which the paper reproves at lines 331–340, as
+/-- **Proposition 3.1** (lines 300–307; Fourier's Proposition 3.1, which the paper reproves at lines 308–317, as
 does Lean): the fibre description of `O_I(P)` and
 `O_{I∪{q}}(P)` over `B`, coordinates `(u, z)` with `z` the `q`-coordinate (`z = y_q` on the left, `z = x_q` on the
 right; in Lean both are `x q`). -/
@@ -559,8 +605,8 @@ theorem prop_3_1 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (x : P 
       (fun p : s.P' => x p.1) ∈ s.B ∧ 0 ≤ x s.q ∧ x s.q ≤ s.U (fun p => x p.1) - s.L (fun p => x p.1)) :=
   Proofs.prop_3_1_proved s x
 
-/-- Lines 341–346, the worked example: for the chain `a < b` (`Chain2`, `a = 0`, `b = 1`), `I = {a}`, `q = b`:
-`B = [0,1]`, `L = x_a`, `U = 1`, and the two fibre polytopes are `O_{{a}}(P)`, which is `O(P)` (lines 341–343: at
+/-- Lines 318–323, the worked example: for the chain `a < b` (`Chain2`, `a = 0`, `b = 1`), `I = {a}`, `q = b`:
+`B = [0,1]`, `L = x_a`, `U = 1`, and the two fibre polytopes are `O_{{a}}(P)`, which is `O(P)` (lines 318–320: at
 the switch of the minimal `p₁ = a`, `L ≡ 0`, so `O_{{p₁}}(P) = O(P)`), and `C(P)`. -/
 theorem sec3_chain2_example :
     ∃ s : Switch Chain2, s.I = {0} ∧ s.q = 1 ∧ s.B = {u | ∀ p, 0 ≤ u p ∧ u p ≤ 1} ∧
@@ -569,9 +615,9 @@ theorem sec3_chain2_example :
       chainOrderPolytope Chain2 (insert s.q s.I) = chainPolytope Chain2 :=
   Proofs.sec3_chain2_example_proved
 
-/-- **W2** (v2.10 l. 431-433), the chain example `p₁ < p₂` at both switches (of `p₁`: `I = ∅`, `q = p₁`; of `p₂`:
-`I = {p₁}`, `q = p₂`): "`L` and `U` are affine, so `S`, `T` and `R` all consist of the faces of `B`, and Lemma 3.2
-gives the difference `0`" (the right side `F_B + F_R − F_S − F_T` of Lemma 3.2 is `0`). -/
+/-- **W2** (v4.60 l. 377-378), the chain example `p₁ < p₂` at both switches (of `p₁`: `I = ∅`, `q = p₁`; of `p₂`:
+`I = {p₁}`, `q = p₂`): "`L` and `U` are affine, so `S`, `T` and `R` all consist of the nonempty faces of `B`, and
+Lemma 3.2 shows that the difference is `0`" (the right side `F_B + F_R − F_S − F_T` of Lemma 3.2 is `0`). -/
 theorem sec3_chain2_cells_faces :
     ∀ s : Switch Chain2, (s.I = ∅ ∧ s.q = 0) ∨ (s.I = {0} ∧ s.q = 1) →
       AffineOn s.L s.B ∧ AffineOn s.U s.B ∧
@@ -582,7 +628,7 @@ theorem sec3_chain2_cells_faces :
     obtain ⟨h1, h2, h3, h4, h5, h6⟩ := sec3_chain2_cells_faces_proved s hs
     exact ⟨h1, h2, h3, h4, h5, h6, (Cited.fourier_lemma_4_1 s).trans h6⟩
 
-/-- v2.10 l. 341-343, "At the switch of `p₁` (from `I = ∅` to `I = {p₁}`) we have `L ≡ 0`, so the two polytopes of
+/-- v4.60 l. 318-320, "At the switch of `p₁` (from `I = ∅` to `I = {p₁}`) we have `L ≡ 0`, so the two polytopes of
 Proposition 3.1 coincide: `O_{{p₁}}(P) = O(P)`", in general: if `I` is an order ideal and `q` is a minimal element of
 `P`, then `O_{I ∪ {q}}(P) = O_I(P)`. (`q` is incomparable with every
 element of `I`, so the only chain of `I ∪ {q}` through `q` is `{q}`, and the inequalities on the coordinate of `q` are
@@ -663,8 +709,9 @@ theorem sec3_minimal_switch (P : Type*) [Fintype P] [PartialOrder P] (I : Set P)
         exact (h2 q hqI).2
       · exact h5 K (hsub K hKI hqK) hKc
 
-/-- v2.10 l. 431-433, the chain example (`P = p₁ < p₂`, `I = {p₁}`, `q = p₂`): "In the example after Proposition 3.1,
-`L` and `U` are affine, so `S`, `T` and `R` all consist of the faces of `B`, and Lemma 3.2 gives the difference `0`":
+/-- v4.60 l. 377-378, the chain example (`P = p₁ < p₂`, `I = {p₁}`, `q = p₂`): "In the example after Proposition 3.1,
+`L` and `U` are affine, so `S`, `T` and `R` all consist of the nonempty faces of `B`, and Lemma 3.2 shows that the
+difference is `0`":
 the right side `F_B + F_R − F_S − F_T` of Lemma 3.2 is `0` for this
 switch. -/
 theorem sec3_chain2_difference_zero :
@@ -679,9 +726,9 @@ theorem sec3_chain2_difference_zero :
   rw [s.cellsR_eq_S_of_T_faces hT, hT, cellPoly_faces]
   ring
 
-/-- v2.10 l. 341-346 (F7), the example after Proposition 3.1: for the chain `p₁ < p₂` (`Chain2`, `p₁ = 0`, `p₂ = 1`),
+/-- v4.60 l. 318-323 (F7), the example after Proposition 3.1: for the chain `p₁ < p₂` (`Chain2`, `p₁ = 0`, `p₂ = 1`),
 `I = {p₁}`, `q = p₂`, and `z = x_{p₂}`: `O_I(P) = {0 ≤ x_{p₁} ≤ z ≤ 1}`, which is `O(P)` ("`O_{{p₁}}(P) = O(P)`", l.
-342), and `C(P) = O_{I ∪ {q}}(P) = {x_{p₁} ≥ 0, 0 ≤ z ≤ 1 − x_{p₁}}`, as sets. -/
+319), and `C(P) = O_{I ∪ {q}}(P) = {x_{p₁} ≥ 0, 0 ≤ z ≤ 1 − x_{p₁}}`, as sets. -/
 theorem sec3_chain2_triangles :
     chainOrderPolytope Chain2 {0} = {u | 0 ≤ u 0 ∧ u 0 ≤ u 1 ∧ u 1 ≤ 1} ∧
     chainOrderPolytope Chain2 {0} = orderPolytope Chain2 ∧
@@ -694,7 +741,7 @@ theorem sec3_chain2_triangles :
     hC.trans Proofs.AddV170.chain2_chainPolytope_eq, Proofs.AddV170.chain2_chainPolytope_eq⟩
 
 open Example21.CenterSwitch Example21.CenterGeometry in
-/-- v2.10 l. 361-362 (F2; again at l. 921-922): "for `P = X`, `I = {a, b}` and `q = c`, the maximal cells of `S` are
+/-- v4.60 l. 334-335 (F2; again at l. 776-777): "for `P = X` with `I = {a, b}` and `q = c`, the maximal cells of `S` are
 `B ∩ {x_a ≥ x_b}` and `B ∩ {x_a ≤ x_b}`, and those of `T` are `B ∩ {y_g ≥ y_h}` and `B ∩ {y_g ≤ y_h}`": for the switch
 of `c` on `X` (`canonical`: `q = c`, `I = {a, b}`, `g' = g`, `h' = h`; the coordinates of `B` are `x_a, x_b, y_g, y_h`),
 the maximal (4-dimensional) cells of `S` are `B ∩ {x_b ≤ x_a}` and `B ∩ {x_a ≤ x_b}`, and those of `T` are
@@ -709,16 +756,16 @@ theorem sec3_X_cuts :
         {u | u ∈ center.B ∧ u canonical.pg ≤ u canonical.ph}} :=
   ⟨rfl, Proofs.AddV170.center_S_top, Proofs.AddV170.center_T_top⟩
 
-/-- Lines 349–355 (definition of a subdivision): "the relative interiors (relint) of the cells then partition `Q`"
-(proved there, lines 353–355) —
+/-- Line 326 (definition of a subdivision): "The relative interiors `relint(C)` of the cells `C` then partition `Q`"
+(proved there, lines 326–328) —
 every point of the polytope lies in the relative interior of exactly one cell. -/
 theorem sec3_subdivision_relint_partition {ι : Type*} [Fintype ι] (base : Set (ι → ℝ))
     (cells : Finset (Set (ι → ℝ))) (hsub : IsFinitePolytopalSubdivision base cells) (u : ι → ℝ) (hu : u ∈ base) :
     ∃! C, C ∈ cells ∧ u ∈ intrinsicInterior ℝ C :=
   subdivision_relint_partition base cells hsub u hu
 
-/-- Lines 383–385: `S`, `T` and their common refinement `R` are subdivisions of `B` ("All three are subdivisions of
-`B`"; proved in the paper at lines 385–394, and here, from the cell description of lines 367–380). -/
+/-- Lines 346–348: `S`, `T` and their common refinement `R` are subdivisions of `B` ("All three are subdivisions of
+`B`"; proved in the paper at lines 345–353, and here, from the cell description of lines 338–343). -/
 theorem sec3_subdivisions {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     ∃ cS cT cR : Finset (Set (s.P' → ℝ)),
       (cS : Set (Set (s.P' → ℝ))) = s.cellsS ∧ (cT : Set (Set (s.P' → ℝ))) = s.cellsT ∧
@@ -727,9 +774,10 @@ theorem sec3_subdivisions {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P
       IsFinitePolytopalSubdivision s.B cR :=
   Proofs.sec3_subdivisions_proved s
 
-/-- **P3** (v2.10 l. 356-358 and l. 367-369): "a cell is *maximal* if no other cell contains it" and "The maximal cells of
-`S` are the full-dimensional sets among the `A_ℓ = {u ∈ B : L(u) = ℓ(u)}`, for chain sums `ℓ = ℓ_K`" (and the same for
-`T`, l. 381 "Similarly for `T`"); equivalently, the maximal cells are the full-dimensional cells. -/
+/-- **P3** (v4.60 l. 329 and l. 339-340): "a cell is *maximal* if no other cell contains it" and "The maximal cells of
+`S` are the full-dimensional ones among the sets `A_ℓ = {u ∈ B : L(u) = ℓ(u)}`, where `ℓ` runs over the chain sums
+`ℓ_K`" (and the same for `T`, l. 343 "The same holds for `T`"); equivalently, the maximal cells are the full-dimensional
+cells. -/
 theorem sec3_maximal_cells_full {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (C : Set (s.P' → ℝ)) :
     ((C ∈ s.cellsS ∧ ∀ C' ∈ s.cellsS, C ⊆ C' → C' = C) ↔
       ∃ K ∈ s.lowBranches, adim (s.domL K) = Fintype.card s.P' ∧ C = s.domL K) ∧
@@ -739,8 +787,8 @@ theorem sec3_maximal_cells_full {P : Type*} [Fintype P] [PartialOrder P] (s : Sw
     ((C ∈ s.cellsT ∧ ∀ C' ∈ s.cellsT, C ⊆ C' → C' = C) ↔ C ∈ s.cellsT ∧ adim C = Fintype.card s.P') :=
   sec3_maximal_cells_full_proved s C
 
-/-- **P4** (v2.10 l. 370): "`A_ℓ = {u ∈ B : ℓ(u) ≥ ℓ_K(u) for all K}` is a polytope, and `L` equals the affine
-function `ℓ` on it" (and the same for `U`, l. 381). -/
+/-- **P4** (v4.60 l. 341): "`A_ℓ = {u ∈ B : ℓ(u) ≥ ℓ_K(u) for all K}` is a polytope, and `L` equals the affine
+function `ℓ` on it" (and the same for `U`, l. 343). -/
 theorem sec3_domains_polytope_affine {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     (∀ K ∈ s.lowBranches,
       s.domL K = {u | u ∈ s.B ∧ ∀ K' ∈ s.lowBranches, s.chainSum K' u ≤ s.chainSum K u} ∧
@@ -752,8 +800,8 @@ theorem sec3_domains_polytope_affine {P : Type*} [Fintype P] [PartialOrder P] (s
       ∃ g : (s.P' → ℝ) →ᵃ[ℝ] ℝ, (∀ u, g u = s.upVal j u) ∧ ∀ u ∈ s.domU j, s.U u = g u) :=
   sec3_domains_polytope_affine_proved s
 
-/-- **P5** (v2.10 l. 373-374): "Full-dimensional sets `A_ℓ ⊆ A_ℓ'` have `ℓ = ℓ'`, as `ℓ = L = ℓ'` on the
-full-dimensional set `A_ℓ`" (and the same for `U`, l. 381). Only `A_ℓ` needs to be full-dimensional. -/
+/-- **P5** (v4.60 l. 341): "If `A_ℓ ⊆ A_ℓ'` and `A_ℓ` is full-dimensional, then `ℓ = ℓ'`, as `ℓ = L = ℓ'` on `A_ℓ`"
+(and the same for `U`, l. 343). -/
 theorem sec3_full_domains_eq {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     (∀ K ∈ s.lowBranches, ∀ K' ∈ s.lowBranches, adim (s.domL K) = Fintype.card s.P' →
       s.domL K ⊆ s.domL K' → s.chainSum K = s.chainSum K' ∧ s.domL K = s.domL K') ∧
@@ -761,20 +809,20 @@ theorem sec3_full_domains_eq {P : Type*} [Fintype P] [PartialOrder P] (s : Switc
       s.domU j ⊆ s.domU j' → s.upVal j = s.upVal j' ∧ s.domU j = s.domU j') :=
   sec3_full_domains_eq_proved s
 
-/-- **P6** (v2.10 l. 377-380): "The full-dimensional `A_ℓ` cover `B`" (and the same for `U`, l. 381). -/
+/-- **P6** (v4.60 l. 343): "The full-dimensional sets `A_ℓ` cover `B`" (and the same for `U`, l. 343). -/
 theorem sec3_full_domains_cover {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     (∀ u ∈ s.B, ∃ K ∈ s.lowBranches, adim (s.domL K) = Fintype.card s.P' ∧ u ∈ s.domL K) ∧
     (∀ u ∈ s.B, ∃ j ∈ s.upBranches, adim (s.domU j) = Fintype.card s.P' ∧ u ∈ s.domU j) :=
   sec3_full_domains_cover_proved s
 
-/-- Lines 403–408 and 431: every cell of `S`, `T`, `R` has exactly one carrier, and its relative interior lies in
+/-- Lines 358–360 and 377: every cell of `S`, `T`, `R` has exactly one carrier, and its relative interior lies in
 the relative interior of its carrier. -/
 theorem sec3_carrier {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (C : Set (s.P' → ℝ))
     (hC : C ∈ s.cellsS ∨ C ∈ s.cellsT ∨ C ∈ s.cellsR) :
     (∃! E, IsCarrier s.B E C) ∧ ∀ E, IsCarrier s.B E C → intrinsicInterior ℝ C ⊆ intrinsicInterior ℝ E :=
   sec3_carrier_proved s C hC
 
-/-- **P7** (v2.10 l. 409-410): "the carrier of `C` is the only face of `B` whose relative interior meets
+/-- **P7** (v4.60 l. 359-360): "the carrier of `C` is the only face of `B` whose relative interior meets
 `relint(C)`", for every cell `C` of `S`, `T` or `R`. -/
 theorem sec3_carrier_unique {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (C : Set (s.P' → ℝ))
     (hC : C ∈ s.cellsS ∨ C ∈ s.cellsT ∨ C ∈ s.cellsR) (E : Set (s.P' → ℝ)) (hE : IsCarrier s.B E C) :
@@ -782,17 +830,17 @@ theorem sec3_carrier_unique {P : Type*} [Fintype P] [PartialOrder P] (s : Switch
   sec3_carrier_unique_proved s C hC E hE
 
 open HibiLi.Proofs.Cov200 in
-/-- **Section 3, carriers** (v2.10 l. 403-404): "The carrier of a cell is the smallest face of `B` that contains it
-(it exists: it is the intersection of all faces of `B` that contain the cell)." For a cell of `S`, `T` or `R`: the
+/-- **Section 3, carriers** (v4.60 l. 358): "The carrier of a cell is the smallest face of `B` that contains it; it
+exists, as the intersection of all faces of `B` that contain the cell is such a face." For a cell of `S`, `T` or `R`: the
 intersection of all faces of `B` containing it is its carrier, and every carrier equals that intersection. -/
 theorem sec3_carrier_eq_sInter {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (C : Set (s.P' → ℝ))
     (hC : C ∈ s.cellsS ∨ C ∈ s.cellsT ∨ C ∈ s.cellsR) :
     IsCarrier s.B (⋂₀ {G | IsFace s.B G ∧ C ⊆ G}) C ∧ ∀ K, IsCarrier s.B K C → K = ⋂₀ {G | IsFace s.B G ∧ C ⊆ G} :=
   carrier_sInter_proved s C hC
 
-/-- v2.10 l. 397-403 (F3): "For a face `E` of `B`, the restriction `S|_E` consists of the nonempty sets `S ∩ E` with
-`S ∈ S`; each is a face of `S`, as a valid inequality of `B` that cuts out `E` is valid on `S`, so `S|_E` is a
-subdivision of `E` into cells of `S` (…). Similarly for `T|_E` and `R|_E`": for each of the three families, every
+/-- v4.60 l. 356-358 (F3): "For a face `E` of `B`, the restriction `S|_E` consists of the nonempty sets `S ∩ E` with
+`S ∈ S`; each is a face of `S`, because a valid inequality of `B` that cuts out `E` is valid on `S`. So `S|_E` is a
+subdivision of `E` into cells of `S`: (…). Similarly for `T|_E` and `R|_E`": for each of the three families, every
 nonempty `A ∩ E` is a face of `A`, the restriction consists of cells of the family, and it is (the set of) a finite
 polytopal subdivision of `E`. -/
 theorem sec3_restrict_subdivision {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) {E : Set (s.P' → ℝ)}
@@ -806,14 +854,15 @@ theorem sec3_restrict_subdivision {P : Type*} [Fintype P] [PartialOrder P] (s : 
   · exact Proofs.AddV170.restrict_family s hE _ cT hT subT
   · exact Proofs.AddV170.restrict_family s hE _ cR hR subR
 
-/-- **Lemma 3.2** (lines 427–430), second equality (the paper's own, line 431; no cited input):
+/-- **Lemma 3.2** (lines 373–376), second equality (the paper's own, line 377; no cited input):
 `F_B + F_R − F_S − F_T = Σ_E δ_E` over all nonempty faces `E` of `B`. -/
 theorem lemma_3_2_local {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     facePoly s.B + cellPoly s.cellsR - cellPoly s.cellsS - cellPoly s.cellsT =
       ∑ᶠ (E : Set (s.P' → ℝ)) (_ : IsFace s.B E), s.delta E :=
   s.sum_delta_eq.symm.trans (finsum_mem_eq_finite_toFinset_sum _ s.B_isPolytope.finite_faces).symm
 
-/-- **Lemma 3.2** (lines 427–430; first equality = Fourier 4.1, cited; second equality = `lemma_3_2_local`): the change
+/-- **Lemma 3.2** (lines 373–376; the first equality is [Fourier, Lemma 4.1], which the paper cites and Lean proves,
+`Cited.fourier_lemma_4_1`; the second equality is `lemma_3_2_local`): the change
 in face polynomials is the sum of the local terms `δ_E` over all nonempty faces `E` of `B`. -/
 theorem lemma_3_2 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     {E | IsFace s.B E}.Finite ∧
@@ -821,7 +870,7 @@ theorem lemma_3_2 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
       ∑ᶠ (E : Set (s.P' → ℝ)) (_ : IsFace s.B E), s.delta E :=
   ⟨s.B_isPolytope.finite_faces, (Cited.fourier_lemma_4_1 s).trans (lemma_3_2_local s)⟩
 
-/-- **Definition 3.3** (lines 443–448), "the unique cells": for every face `E` of `B` and `u ∈ relint E`, exactly one
+/-- **Definition 3.3** (lines 386–391), "the unique cells": for every face `E` of `B` and `u ∈ relint E`, exactly one
 cell of `S|_E`, and exactly one cell of `T|_E`, has `u` in its relative interior.  (So `Switch.Transverse`, which
 quantifies over all such cells, says exactly what Definition 3.3 says.) -/
 theorem def_3_3_unique_cells {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
@@ -830,19 +879,30 @@ theorem def_3_3_unique_cells {P : Type*} [Fintype P] [PartialOrder P] (s : Switc
       (∃! D, D ∈ s.restrict s.cellsT E ∧ u ∈ intrinsicInterior ℝ D) :=
   Proofs.def_3_3_unique_cells_proved s E hE u hu
 
-/-- Lines 450–451, the clause "Although `L` depends only on the coordinates `x_p` with `p < q` and `U` only on the
+/-- Lines 393–394, the clause "Although `L` depends only on the coordinates `x_p` with `p < q` and `U` only on the
 coordinates `y_r` with `r > q`, …". -/
 theorem sec3_L_U_locality {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (u v : s.P' → ℝ) :
     ((∀ p : s.P', p.1 < s.q → u p = v p) → s.L u = s.L v) ∧
       ((∀ r : s.P', s.q < r.1 → u r = v r) → s.U u = s.U v) :=
   Proofs.sec3_L_U_locality_proved s u v
 
-/-- **Proposition 3.4** (lines 454–456; = Fourier Proposition 5.2, cited as `Cited.fourier_prop_5_2`): `S` and `T` are
+/-- **Proposition 3.4** (lines 397–399; = Fourier Proposition 5.2, cited as `Cited.fourier_prop_5_2`): `S` and `T` are
 transverse relative to the faces of `B`. -/
 theorem prop_3_4 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) : s.Transverse :=
   Cited.fourier_prop_5_2 s
 
-/-- **Lemma 3.5(i)** (lines 467–469), first sentence: for `k < e` and a `k`-cell `Y` of `S` or `T` with carrier `E`,
+/-- **v4.60 l. 395** (new in v4.50; the first case of the sketch of Fourier's proof of Proposition 3.4, the paper's own
+reasoning): "If `L(u)=U(u)` [`u ∈ relint(E)`, `E` a face of `B`], then `L=U` on `E`, as `U−L` is concave and nonnegative;
+so on `E` the convex function `L` equals the concave function `U`, hence is affine, and `S|_E` and `T|_E` consist of the
+nonempty faces of `E`." -/
+theorem sec3_transverse_equal_case {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
+    (E : Set (s.P' → ℝ)) (hE : IsFace s.B E) (u : s.P' → ℝ) (hu : u ∈ intrinsicInterior ℝ E)
+    (hLU : s.L u = s.U u) :
+    (∀ v ∈ E, s.L v = s.U v) ∧ AffineOn s.L E ∧ AffineOn s.U E ∧
+      s.restrict s.cellsS E = {C | IsFace E C} ∧ s.restrict s.cellsT E = {C | IsFace E C} :=
+  Proofs.V450.transverse_equal_case_proved s E hE u hu hLU
+
+/-- **Lemma 3.5(i)** (lines 409–411), first sentence: for `k < e` and a `k`-cell `Y` of `S` or `T` with carrier `E`,
 `R(Y)` is nonempty and its members have carrier `E`. -/
 theorem lemma_3_5_i_cover {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
     (hT : s.Transverse) (E : Set (s.P' → ℝ)) (hE : IsFace s.B E)
@@ -850,7 +910,7 @@ theorem lemma_3_5_i_cover {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P
     (s.RR Y).Nonempty ∧ ∀ R ∈ s.RR Y, IsCarrier s.B E R :=
   lemma_3_5_i_cover_proved s hT E hE Y hY hYE hdim
 
-/-- **Lemma 3.5(i)** (lines 469–470), second sentence: these sets are pairwise disjoint, over all such `Y` in `S` and
+/-- **Lemma 3.5(i)** (line 411), second sentence: these sets are pairwise disjoint, over all such `Y` in `S` and
 `T`. -/
 theorem lemma_3_5_i_disjoint {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
     (hT : s.Transverse) (E : Set (s.P' → ℝ)) (hE : IsFace s.B E) (Y Y' : Set (s.P' → ℝ))
@@ -860,8 +920,8 @@ theorem lemma_3_5_i_disjoint {P : Type*} [Fintype P] [PartialOrder P] (s : Switc
     Disjoint (s.RR Y) (s.RR Y') :=
   lemma_3_5_i_disjoint_proved s hT E hE Y Y' hYY' hYE hY'E hdim hlt
 
-/-- **Lemma 3.5(ii)** (lines 471–474): the bipartite graph `G_E` is connected (the paper's proof, lines 490–526, which
-cites [CJK, Lemma 2] for the dual graph and recalls its argument, lines 494–509).  Lean proves [CJK, Lemma 2] itself,
+/-- **Lemma 3.5(ii)** (lines 412–415): the bipartite graph `G_E` is connected (the paper's proof, lines 430–450, which
+cites [CJK, Lemma 2] for the dual graph and recalls its argument, lines 432–437).  Lean proves [CJK, Lemma 2] itself,
 by its own route (`HibiLi/Polytope/CJKProof.lean`; row `lemma_3_5_ii_dual_graph`), with no cited assumption. -/
 theorem lemma_3_5_ii {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
     (hT : s.Transverse) (E : Set (s.P' → ℝ)) (hE : IsFace s.B E) : (s.graphG E).Connected :=
@@ -869,10 +929,10 @@ theorem lemma_3_5_ii {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
 
 open HibiLi.Proofs.Cov200 in
 open Filter Topology in
-/-- **Lemma 3.5(ii), proof** (v2.10 l. 510-516): "Let `S ∩ T` and `S' ∩ T'` be adjacent `e`-cells of `R|_E`, with
-common `(e-1)`-face `D`. The two cells have disjoint interiors and both have `D` as a facet, so they lie on opposite
-sides of the hyperplane `aff(D)` of `aff(E)`: each lies on one side, as `D` is a facet of it, and near a point of
-`relint(D)` each coincides with the closed half-space bounded by `aff(D)` that contains it". Two cells `A, B ⊆ E`
+/-- **Lemma 3.5(ii), proof** (v4.60 l. 439-442): "Let `S ∩ T` and `S' ∩ T'` be adjacent `e`-cells of `R|_E`, with
+common `(e-1)`-face `D`. The two cells have disjoint relative interiors and both have `D` as a facet. They lie on
+opposite sides of the hyperplane `aff(D)` of `aff(E)`. Indeed, each lies on one side, as `D` is a facet of it. Fix
+`x_D ∈ relint(D)`. Near `x_D`, each cell coincides with the closed half-space bounded by `aff(D)` that contains it". Two cells `A, B ⊆ E`
 (polytopes of the dimension of `E`) meet in `D = A ∩ B` (cells of a subdivision meet in a common face), a face of `A`
 of dimension `dim E - 1`. Then an affine `h` cuts `aff(D)` out of `aff(E)`, `h ≤ 0` on `A` and `h ≥ 0` on `B`, neither
 cell lies in the hyperplane, and near every point of `relint(D)`, within `aff(E)`: `A = {h ≤ 0}` and `B = {h ≥ 0}`.
@@ -888,7 +948,7 @@ theorem lemma_3_5_ii_opposite_sides {ι : Type*} [Fintype ι] {E A B : Set (ι �
         ((y ∈ A ↔ h y ≤ 0) ∧ (y ∈ B ↔ 0 ≤ h y)) :=
   opposite_sides_proved hA hB hAE hBE hAdim hBdim hfA hdim
 
-/-- **Lemma 3.5(ii)**, the parenthesis (v2.10 l. 473-474): "each `e`-cell of `R|_E` has this form [`S ∩ T` with `S`, `T`
+/-- **Lemma 3.5(ii)**, the parenthesis (v4.60 l. 414-415): "each `e`-cell of `R|_E` has this form [`S ∩ T` with `S`, `T`
 `e`-cells of `S|_E`, `T|_E`] for exactly one such pair: the `e`-cells of `S|_E` and `T|_E` that contain it". Stated:
 every `e`-cell `R` of `R|_E` is `S ∩ T` for such `S`, `T`, and `S` (resp. `T`) is the ONLY `e`-cell of `S|_E` (resp.
 `T|_E`) that contains `R`; so any pair `S', T'` with `R = S' ∩ T'` is this pair (it contains `R`). -/
@@ -918,9 +978,10 @@ theorem lemma_3_5_ii_pairs {P : Type*} [Fintype P] [PartialOrder P] (s : Switch 
     · exact hle (Set.inter_subset_right.trans Set.inter_subset_right)
     · exact hdim.symm.le.trans (hle fun y hy => ⟨hRT' hy, hy.1.2, hy.2⟩)
 
-/-- v2.10 l. 509-517 (proof of Lemma 3.5(ii)): two distinct `e`-cells `A`, `B` of a subdivision of an `e`-polytope `E`
-that share the facet `D = A ∩ B` (a face of both, of dimension `e − 1`): "Hence `D` lies in no facet of `E` (otherwise
-`E` would lie on one side of `aff(D)`), so in no proper face of `E`, and `relint(D) ⊆ relint(E)`". -/
+/-- v4.60 l. 439-442 (proof of Lemma 3.5(ii)): two distinct `e`-cells `A`, `B` of a subdivision of an `e`-polytope `E`
+that share the facet `D = A ∩ B` (a face of both, of dimension `e − 1`): "Hence `D` lies in no facet of `E`, since
+otherwise `E` would lie on one side of `aff(D)`, yet it contains `e`-cells on both sides. So `D` lies in no proper face
+of `E`, and `E` is the carrier of `D`. Hence `relint(D) ⊆ relint(E)`". -/
 theorem lemma_3_5_ii_shared_facet {ι : Type*} [Fintype ι] {E A B : Set (ι → ℝ)}
     (hE : IsPolytope E) (hA : IsPolytope A) (hB : IsPolytope B) (hAE : A ⊆ E) (hBE : B ⊆ E)
     (hAdim : adim A = adim E) (hBdim : adim B = adim E) (hAB : A ≠ B)
@@ -928,12 +989,12 @@ theorem lemma_3_5_ii_shared_facet {ι : Type*} [Fintype ι] {E A B : Set (ι →
     intrinsicInterior ℝ (A ∩ B) ⊆ intrinsicInterior ℝ E :=
   interior_shared_facet hE hA hB hAE hBE hAdim hBdim hAB hfA hfB hdim
 
-/-- **Lemma 3.5(iii)** (line 475; Fourier 4.3, Steps 1–2): `δ_{E,k} ≥ 0` for every face `E` and every `k`. -/
+/-- **Lemma 3.5(iii)** (line 416; Fourier 4.3, Steps 1–2): `δ_{E,k} ≥ 0` for every face `E` and every `k`. -/
 theorem lemma_3_5_iii {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (hT : s.Transverse)
     (E : Set (s.P' → ℝ)) (hE : IsFace s.B E) (k : ℕ) : 0 ≤ s.deltaCoeff E k :=
   lemma_3_5_iii_proved s hT E hE k
 
-/-- v2.10 l. 530-531 (proof of Lemma 3.5(iii)): "an `e`-cell in `E` has carrier `E`", for `S|_E`, `T|_E` and `R|_E`. -/
+/-- v4.60 l. 453-454 (proof of Lemma 3.5(iii)): "an `e`-cell in `E` has carrier `E`", for `S|_E`, `T|_E` and `R|_E`. -/
 theorem lemma_3_5_top_cells_carrier {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) :
     (∀ C ∈ s.topCells s.cellsS E, IsCarrier s.B E C) ∧ (∀ C ∈ s.topCells s.cellsT E, IsCarrier s.B E C) ∧
@@ -946,7 +1007,7 @@ theorem lemma_3_5_top_cells_carrier {P : Type*} [Fintype P] [PartialOrder P] (s 
   · rw [s.topCellsR_eq_carried hE] at hC
     exact hC.2.2
 
-/-- **Lemma 3.6** (lines 536–540), first clause: the `e`-cells of `S|_E` are exactly the maximal convex subsets of `E`
+/-- **Lemma 3.6** (lines 492–496), first clause: the `e`-cells of `S|_E` are exactly the maximal convex subsets of `E`
 of dimension `e` on which `L` is affine; the same for `T|_E` and `U`.  The second clause, added in v0.60, is
 `lemma_3_6_cover`. -/
 theorem lemma_3_6 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
@@ -957,7 +1018,7 @@ theorem lemma_3_6 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : S
       ∀ D, A ⊆ D → D ⊆ E → Convex ℝ D → AffineOn s.U D → D = A) :=
   Proofs.lemma_3_6_proved s E hE A
 
-/-- **Lemma 3.6**, second clause (new in v0.60; v2.10 lines 539–540): every `e`-dimensional convex subset of `E` on which
+/-- **Lemma 3.6**, second clause (new in v0.60; v4.60 lines 495–496): every `e`-dimensional convex subset of `E` on which
 `L` is affine lies in an `e`-cell of `S|_E`; the same for `T|_E` and `U`. -/
 theorem lemma_3_6_cover {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) (D : Set (s.P' → ℝ)) (hDE : D ⊆ E) (hDc : Convex ℝ D) (hDdim : adim D = adim E) :
@@ -965,8 +1026,8 @@ theorem lemma_3_6_cover {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) 
       (AffineOn s.U D → ∃ C ∈ s.topCells s.cellsT E, D ⊆ C) :=
   Proofs.lemma_3_6_cover_proved s E hE D hDE hDc hDdim
 
-/-- Lines 357–380: Lean's `cellsS` is built from the full-dimensional branch domains `A_ℓ` (the characterization of
-lines 367–380, which the paper proves there).  This bridges back to the paper's DEFINITION of `S` (lines 357–360): its
+/-- Lines 330–343: Lean's `cellsS` is built from the full-dimensional branch domains `A_ℓ` (the characterization of
+lines 338–343, which the paper proves there).  This bridges back to the paper's DEFINITION of `S` (lines 330–333): its
 full-dimensional cells are exactly the maximal full-dimensional convex subsets of `B` on which `L` is affine (and
 the same for `T`, `U`). -/
 theorem sec3_S_paper_def {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (A : Set (s.P' → ℝ)) :
@@ -976,7 +1037,7 @@ theorem sec3_S_paper_def {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
       AffineOn s.U A ∧ ∀ D, A ⊆ D → D ⊆ s.B → Convex ℝ D → AffineOn s.U D → D = A) :=
   Proofs.sec3_S_paper_def_proved s A
 
-/-- Lines 357–360, the paper's DEFINITION of `S` in full: the cells of `S` are exactly the nonempty faces of the maximal
+/-- Lines 330–333, the paper's DEFINITION of `S` in full: the cells of `S` are exactly the nonempty faces of the maximal
 full-dimensional convex subsets of `B` on which `L` is affine (and the same for `T`, `U`). -/
 theorem sec3_S_paper_def_full {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     s.cellsS = {C | ∃ A, (A ⊆ s.B ∧ Convex ℝ A ∧ adim A = Fintype.card s.P' ∧ AffineOn s.L A ∧
@@ -985,8 +1046,8 @@ theorem sec3_S_paper_def_full {P : Type*} [Fintype P] [PartialOrder P] (s : Swit
         ∀ D, A ⊆ D → D ⊆ s.B → Convex ℝ D → AffineOn s.U D → D = A) ∧ IsFace A C} :=
   Proofs.sec3_S_paper_def_full_proved s
 
-/-- **Proposition 3.7** (lines 562–564; Fourier 6.1): `F_{O_I(P)} ≤ F_{O_{I∪{q}}(P)}` coefficientwise, derived as the
-paper's proof (lines 566–568) does: from Lemma 3.2, Proposition 3.4 and Lemma 3.5(iii). -/
+/-- **Proposition 3.7** (lines 515–517; Fourier 6.1): `F_{O_I(P)} ≤ F_{O_{I∪{q}}(P)}` coefficientwise, derived as the
+paper's proof (lines 519–521) does: from Lemma 3.2, Proposition 3.4 and Lemma 3.5(iii). -/
 theorem prop_3_7 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (k : ℕ) :
     fNum (chainOrderPolytope P s.I) k ≤ fNum (chainOrderPolytope P (insert s.q s.I)) k := by
   classical
@@ -1004,9 +1065,9 @@ theorem prop_3_7 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (k : �
     · exact le_refl 0
   omega
 
-/-- **Fourier's Theorem 1.1** (part (a) of the conjecture, paper lines 98–99; Theorem 1.2(a), line 126), DERIVED from
-Proposition 3.7 along a linear extension, as in the paper's proof of Theorem 1.2(a) (lines 982–985, "this is Fourier's
-argument"; the switches as in lines 879–890): `f_k(O(P)) ≤ f_k(C(P))` for every `k`. -/
+/-- **Fourier's Theorem 1.1** (part (a) of the conjecture, paper line 113; Theorem 1.2(a), line 139), DERIVED from
+Proposition 3.7 along a linear extension, as in the paper's proof of Theorem 1.2(a) (lines 825–828, "this is Fourier's
+argument"; the switches as in lines 742–752): `f_k(O(P)) ≤ f_k(C(P))` for every `k`. -/
 theorem fourier_thm_1_1 (P : Type*) [Fintype P] [PartialOrder P] (k : ℕ) :
     fNum (orderPolytope P) k ≤ fNum (chainPolytope P) k := by
   have h := Proofs.mono_of_step (P := P) (fun s k => prop_3_7 s k) ∅ Set.univ isLowerSet_empty isLowerSet_univ
@@ -1015,26 +1076,26 @@ theorem fourier_thm_1_1 (P : Type*) [Fintype P] [PartialOrder P] (k : ℕ) :
 
 /-! ### Section 3: coverage rows (review REVIEW_006_cov, 20261028) -/
 
-/-- v2.10 l. 332-334: every element comparable to `q` is in `I` and below `q`, or in `J` and above `q`. -/
+/-- v4.60 l. 309-311: every element comparable to `q` is in `I` and below `q`, or in `J` and above `q`. -/
 theorem sec3_q_comparable {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     ∀ p : P, (p < s.q ∨ s.q < p) → (p ∈ s.I ∧ p < s.q) ∨ (p ∉ s.I ∧ s.q < p) :=
   Proofs.sec3_q_comparable s
 
-/-- v2.10 l. 336-337: `q` is maximal in `I ∪ {q}`, so a chain of `I ∪ {q}` through `q` is `K ∪ {q}` with `K` a chain
+/-- v4.60 l. 313-314: `q` is maximal in `I ∪ {q}`, so a chain of `I ∪ {q}` through `q` is `K ∪ {q}` with `K` a chain
 of elements of `I` below `q`. -/
 theorem sec3_chains_through_q {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     ∀ K : Finset P, ↑K ⊆ insert s.q s.I → IsChainSet P K → s.q ∈ K → ∀ p ∈ K, p ≠ s.q → p ∈ s.I ∧ p < s.q :=
   Proofs.sec3_chains_through_q s
 
 open Classical Filter Topology in
-/-- v2.10 l.336-337: "the element q is maximal in I union {q}, so the chains through q are the sets K union {q} with K as in the definition of L". This row supplies maximality and the converse; sec3_chains_through_q supplies the forward direction. -/
+/-- v4.60 l.313-314: "the element `q` is maximal in `I ∪ {q}`, so the chains that contain `q` are the sets `K ∪ {q}` with `K` as in the definition of `L`". This row supplies maximality and the converse; sec3_chains_through_q supplies the forward direction. -/
 theorem sec3_chains_through_q_converse {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     (∀ p ∈ insert s.q s.I, ¬ s.q < p) ∧
     ∀ K : Finset P, ↑K ⊆ s.I → IsChainSet P K → (∀ p ∈ K, p < s.q) →
       IsChainSet P (insert s.q K) ∧ ↑(insert s.q K) ⊆ insert s.q s.I :=
   Proofs.sec3_chains_through_q_converse s
 
-/-- v2.10 l. 371-373: a full-dimensional convex `D ⊆ B` on which `L` (and `U`) is affine lies in a full-dimensional
+/-- v4.60 l. 341: a full-dimensional convex `D ⊆ B` on which `L` (and `U`) is affine lies in a full-dimensional
 affinity domain `A_ℓ`. -/
 theorem sec3_affine_in_domain {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     (∀ D ⊆ s.B, Convex ℝ D → adim D = Fintype.card s.P' → AffineOn s.L D →
@@ -1043,7 +1104,7 @@ theorem sec3_affine_in_domain {P : Type*} [Fintype P] [PartialOrder P] (s : Swit
       ∃ j ∈ s.upBranches, adim (s.domU j) = Fintype.card s.P' ∧ D ⊆ s.domU j) :=
   Proofs.sec3_affine_in_domain s
 
-/-- v2.10 l. 386-387: `A_ℓ ∩ A_ℓ' = A_ℓ ∩ {ℓ = ℓ'}` is a face of `A_ℓ` (for `L`, and likewise for `U`). -/
+/-- v4.60 l. 349-350: `A_ℓ ∩ A_ℓ' = A_ℓ ∩ {ℓ = ℓ'}` is a face of `A_ℓ` (for `L`, and likewise for `U`). -/
 theorem sec3_domain_inter_face {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     (∀ K ∈ s.lowBranches, ∀ K' ∈ s.lowBranches, (s.domL K ∩ s.domL K').Nonempty →
       s.domL K ∩ s.domL K' = {u ∈ s.domL K | s.chainSum K u = s.chainSum K' u} ∧
@@ -1053,14 +1114,17 @@ theorem sec3_domain_inter_face {P : Type*} [Fintype P] [PartialOrder P] (s : Swi
         IsFace (s.domU j) (s.domU j ∩ s.domU j')) :=
   Proofs.sec3_domain_inter_face s
 
-/-- v2.10 l. 390-392: a face of a cell `S ∩ T` of `R` is `S₀ ∩ T₀`, with `S₀`, `T₀` faces of `S`, `T`. -/
+/-- v4.60 l. 351: a face of a cell `S ∩ T` of `R` is `S₀ ∩ T₀`, with `S₀`, `T₀` faces of `S`, `T`. -/
 theorem sec3_R_cell_faces {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     ∀ A ∈ s.cellsS, ∀ D ∈ s.cellsT, ∀ F, IsFace (A ∩ D) F → ∃ A₀ D₀, IsFace A A₀ ∧ IsFace D D₀ ∧ F = A₀ ∩ D₀ :=
   Proofs.sec3_R_cell_faces s
 
-/-- **v2.10 l. 435-437** ("An informal reading (not used below)", sentence 1): a face of `O_I(P)` that contains no
-segment parallel to the `z`-axis (`z` = the `q`-coordinate) lies in the graph of `L` over a cell of `S`, or in the graph
-of `U` over a cell of `T`, or in both (both cell statements); the last case occurs exactly over the set where `L = U`.
+/-- **v4.60 l. 380-381** ("An informal reading (not used below)", sentence 1), in the v2.10 wording: a face of
+`O_I(P)` that contains no segment parallel to the `z`-axis (`z` = the `q`-coordinate) lies in the graph of `L` over a
+cell of `S`, or in the graph of `U` over a cell of `T`, or in both (both cell statements); the last case occurs exactly
+over the set where `L = U`.  The v4.60 wording, "is the graph of `L` over a cell of `S`, or the graph of `U` over a cell
+of `T`, or both", is `sec3_informal_before_graph`; "the faces that are of both kinds are those over the faces of `B` on
+which `L = U`, so the two polytopes have the same number of them" (l. 383) is `sec3_informal_both_kinds`.
   `HasVertical s F` (defined in `HibiLi/Proofs/VerticalCount.lean`): `F` contains a segment parallel to the
 `z`-axis, `{x, x + t e_q}` with `t ≠ 0`. -/
 theorem sec3_informal_before {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (F : Set (P → ℝ))
@@ -1072,9 +1136,11 @@ theorem sec3_informal_before {P : Type*} [Fintype P] [PartialOrder P] (s : Switc
       ∀ x ∈ F, s.L (fun p => x p.1) = s.U (fun p => x p.1)) :=
   Proofs.Informal.informal_before s F hF hv
 
-/-- **v2.10 l. 437-439** (sentence 2): after the switch, a face of `O_{I∪{q}}(P)` that contains no segment parallel to
-the `z`-axis lies in the facet `{z = 0}` over a face of `B`, or in the graph of `U − L` over a cell of `R`, or in both;
-again the last case (both cell statements) occurs exactly over the set where `L = U`.
+/-- **v4.60 l. 382** (sentence 2), in the v2.10 wording: after the switch, a face of `O_{I∪{q}}(P)` that contains no
+segment parallel to the `z`-axis lies in the facet `{z = 0}` over a face of `B`, or in the graph of `U − L` over a cell
+of `R`, or in both; again the last case (both cell statements) occurs exactly over the set where `L = U`.  The v4.60
+wording, "is the part of the facet `{z=0}` over a face of `B`, or the graph of `U−L` over a cell of `R`, or both", is
+`sec3_informal_after_graph`.
   `HasVertical s F` (defined in `HibiLi/Proofs/VerticalCount.lean`): `F` contains a segment parallel to the
 `z`-axis, `{x, x + t e_q}` with `t ≠ 0`. -/
 theorem sec3_informal_after {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (F : Set (P → ℝ))
@@ -1088,9 +1154,64 @@ theorem sec3_informal_after {P : Type*} [Fintype P] [PartialOrder P] (s : Switch
       ∀ x ∈ F, s.L (fun p => x p.1) = s.U (fun p => x p.1)) :=
   Proofs.Informal.informal_after s F hF hv
 
-/-- **v2.10 l. 439-441** (sentence 3 of the informal reading): "the first equality of Lemma 3.2 says that the two
-polytopes have equally many faces that contain a segment parallel to the `z`-axis": for every `k`, `O_I(P)` and
-`O_{I∪{q}}(P)` have equally many `k`-faces that contain such a segment.
+/-- **v4.60 l. 380-381** (informal reading, sentence 1, v4.60 wording; new in v4.50): "A face of `O_I(P)` that contains
+no segment parallel to the `z`-axis is the graph of `L` over a cell of `S`, or the graph of `U` over a cell of `T`, or
+both."  (Equality with the graph, not only containment as in `sec3_informal_before`.) -/
+theorem sec3_informal_before_graph {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (F : Set (P → ℝ))
+    (hF : IsFace (chainOrderPolytope P s.I) F) (hv : ¬ HasVertical s F) :
+    (∃ C ∈ s.cellsS, F = {x | (fun p : s.P' => x p.1) ∈ C ∧ x s.q = s.L (fun p => x p.1)}) ∨
+    (∃ C ∈ s.cellsT, F = {x | (fun p : s.P' => x p.1) ∈ C ∧ x s.q = s.U (fun p => x p.1)}) :=
+  Proofs.V450.informal_before_graph_proved s F hF hv
+
+/-- **v4.60 l. 382** (informal reading, sentence 2, v4.60 wording; new in v4.50): "After the switch, a face with no such
+segment is the part of the facet `{z=0}` over a face of `B`, or the graph of `U−L` over a cell of `R`, or both." -/
+theorem sec3_informal_after_graph {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (F : Set (P → ℝ))
+    (hF : IsFace (chainOrderPolytope P (insert s.q s.I)) F) (hv : ¬ HasVertical s F) :
+    (∃ G, IsFace s.B G ∧ F = {x | (fun p : s.P' => x p.1) ∈ G ∧ x s.q = 0}) ∨
+    (∃ C ∈ s.cellsR, F = {x | (fun p : s.P' => x p.1) ∈ C ∧
+        x s.q = s.U (fun p => x p.1) - s.L (fun p => x p.1)}) :=
+  Proofs.V450.informal_after_graph_proved s F hF hv
+
+/-- **v4.60 l. 383** (informal reading; new in v4.50): "In both polytopes, the faces that are of both kinds are those
+over the faces of `B` on which `L=U`, so the two polytopes have the same number of them."  Before the switch, the faces
+that are both the graph of `L` over a cell of `S` and the graph of `U` over a cell of `T` are exactly the graphs over the
+faces `G` of `B` with `L = U` on `G`; after it, the faces that are both the part of `{z = 0}` over a face of `B` and the
+graph of `U − L` over a cell of `R` are exactly the parts of `{z = 0}` over those same faces `G`; and in each dimension
+`k` the two sets are finite and equally large. -/
+theorem sec3_informal_both_kinds {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
+    (∀ F : Set (P → ℝ), (IsFace (chainOrderPolytope P s.I) F ∧
+        (∃ C ∈ s.cellsS, F = {x | (fun p : s.P' => x p.1) ∈ C ∧ x s.q = s.L (fun p => x p.1)}) ∧
+        (∃ C ∈ s.cellsT, F = {x | (fun p : s.P' => x p.1) ∈ C ∧ x s.q = s.U (fun p => x p.1)})) ↔
+      ∃ G, IsFace s.B G ∧ (∀ u ∈ G, s.L u = s.U u) ∧
+        F = {x | (fun p : s.P' => x p.1) ∈ G ∧ x s.q = s.L (fun p => x p.1)}) ∧
+    (∀ F : Set (P → ℝ), (IsFace (chainOrderPolytope P (insert s.q s.I)) F ∧
+        (∃ G, IsFace s.B G ∧ F = {x | (fun p : s.P' => x p.1) ∈ G ∧ x s.q = 0}) ∧
+        (∃ C ∈ s.cellsR, F = {x | (fun p : s.P' => x p.1) ∈ C ∧
+          x s.q = s.U (fun p => x p.1) - s.L (fun p => x p.1)})) ↔
+      ∃ G, IsFace s.B G ∧ (∀ u ∈ G, s.L u = s.U u) ∧
+        F = {x | (fun p : s.P' => x p.1) ∈ G ∧ x s.q = 0}) ∧
+    ∀ k : ℕ,
+      {F : Set (P → ℝ) | IsFace (chainOrderPolytope P s.I) F ∧ adim F = k ∧
+        (∃ C ∈ s.cellsS, F = {x | (fun p : s.P' => x p.1) ∈ C ∧ x s.q = s.L (fun p => x p.1)}) ∧
+        (∃ C ∈ s.cellsT, F = {x | (fun p : s.P' => x p.1) ∈ C ∧ x s.q = s.U (fun p => x p.1)})}.Finite ∧
+      {F : Set (P → ℝ) | IsFace (chainOrderPolytope P (insert s.q s.I)) F ∧ adim F = k ∧
+        (∃ G, IsFace s.B G ∧ F = {x | (fun p : s.P' => x p.1) ∈ G ∧ x s.q = 0}) ∧
+        (∃ C ∈ s.cellsR, F = {x | (fun p : s.P' => x p.1) ∈ C ∧
+          x s.q = s.U (fun p => x p.1) - s.L (fun p => x p.1)})}.Finite ∧
+      {F : Set (P → ℝ) | IsFace (chainOrderPolytope P s.I) F ∧ adim F = k ∧
+        (∃ C ∈ s.cellsS, F = {x | (fun p : s.P' => x p.1) ∈ C ∧ x s.q = s.L (fun p => x p.1)}) ∧
+        (∃ C ∈ s.cellsT, F = {x | (fun p : s.P' => x p.1) ∈ C ∧ x s.q = s.U (fun p => x p.1)})}.ncard =
+      {F : Set (P → ℝ) | IsFace (chainOrderPolytope P (insert s.q s.I)) F ∧ adim F = k ∧
+        (∃ G, IsFace s.B G ∧ F = {x | (fun p : s.P' => x p.1) ∈ G ∧ x s.q = 0}) ∧
+        (∃ C ∈ s.cellsR, F = {x | (fun p : s.P' => x p.1) ∈ C ∧
+          x s.q = s.U (fun p => x p.1) - s.L (fun p => x p.1)})}.ncard :=
+  Proofs.V450.informal_both_kinds_proved s
+
+/-- **v4.60 l. 383-384** (the last sentence of the informal reading): "the first equality of Lemma 3.2 is equivalent to
+the statement that the two polytopes have, in each dimension, the same number of faces that contain such a segment":
+this row proves that statement itself, with no cited input: for every `k`, `O_I(P)` and `O_{I∪{q}}(P)` have the same
+number of `k`-faces that contain such a segment.  (The equivalence with Lemma 3.2's first equality is
+`sec3_informal_equivalence`.)
   `HasVertical s F` (defined in `HibiLi/Proofs/VerticalCount.lean`): `F` contains a segment parallel to the
 `z`-axis, `{x, x + t e_q}` with `t ≠ 0`. -/
 theorem sec3_informal_vertical_count {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (k : ℕ) :
@@ -1099,34 +1220,48 @@ theorem sec3_informal_vertical_count {P : Type*} [Fintype P] [PartialOrder P] (s
   Proofs.sec3_informal_vertical_count s k
 
 open Classical Filter Topology in
-/-- v2.10 l.439-440: "Thus F_B+F_R-F_S-F_T compares the numbers of these faces before and after the switch". The subtraction is in integers; the cited Fourier identity is the only nonstandard input. -/
+/-- v4.60 l.383: "Thus `F_B + F_R − F_S − F_T` counts, dimension by dimension, the change in the number of faces with
+no segment parallel to the `z`-axis". The subtraction is in integers. Proved by counting the faces with no such segment
+by the cells (the classification rows `sec3_informal_before_graph`, `sec3_informal_after_graph`,
+`sec3_informal_both_kinds`, and the converse: the graph over every cell is a face), with no cited input. -/
 theorem sec3_nonvertical_coefficient {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
     (k : ℕ) :
     ({F | IsFace (chainOrderPolytope P (insert s.q s.I)) F ∧ adim F = k ∧ ¬ HasVertical s F}.ncard : ℤ) -
       ({F | IsFace (chainOrderPolytope P s.I) F ∧ adim F = k ∧ ¬ HasVertical s F}.ncard : ℤ) =
         (facePoly s.B + cellPoly s.cellsR - cellPoly s.cellsS - cellPoly s.cellsT).coeff k :=
-  Proofs.sec3_nonvertical_coefficient_of s (Cited.fourier_lemma_4_1 s) k
+  Proofs.Fourier41.nonvertical_coefficient_proved s k
 
-/-- v2.10 l. 450-451: "Although `L` depends only on the coordinates `x_p` with `p < q` and `U` only on the coordinates
+/-- **v4.60 l. 383-384** (new in v4.50): "the first equality of Lemma 3.2 is equivalent to the statement that the two
+polytopes have, in each dimension, the same number of faces that contain such a segment" (a segment parallel to the
+`z`-axis).  Proved structurally, from `sec3_nonvertical_coefficient` and the split of each face count into faces with
+and without such a segment, with no cited input; it does not use either side. -/
+theorem sec3_informal_equivalence {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
+    (facePoly (chainOrderPolytope P (insert s.q s.I)) - facePoly (chainOrderPolytope P s.I) =
+      facePoly s.B + cellPoly s.cellsR - cellPoly s.cellsS - cellPoly s.cellsT) ↔
+    ∀ k : ℕ, {F | IsFace (chainOrderPolytope P s.I) F ∧ adim F = k ∧ HasVertical s F}.ncard =
+      {F | IsFace (chainOrderPolytope P (insert s.q s.I)) F ∧ adim F = k ∧ HasVertical s F}.ncard :=
+  Proofs.Fourier41.informal_equivalence_proved s
+
+/-- v4.60 l. 393-394: "Although `L` depends only on the coordinates `x_p` with `p < q` and `U` only on the coordinates
 `y_r` with `r > q`, these coordinates are coupled by the inequalities of `B`": for `p ∈ I` with `p < q` and `r > q`,
 every `u ∈ B` has `u_p ≤ u_r` (the chain inequality `x_p ≤ y_r` of `B`). -/
 theorem sec3_coupled_coordinates {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     ∀ p r : s.P', p.1 ∈ s.I → p.1 < s.q → s.q < r.1 → ∀ u ∈ s.B, u p ≤ u r := by
   exact Proofs.sec3_coupled_coordinates s
 
-/-- **Lemma 3.5(i), proof** (v2.10 l. 480-482): a member `R` of `R(Y)` has `relint R ⊆ relint Y`. -/
+/-- **Lemma 3.5(i), proof** (v4.60 l. 421-423): a member `R` of `R(Y)` has `relint R ⊆ relint Y`. -/
 theorem lemma_3_5_i_relint {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) {Y R : Set (s.P' → ℝ)} :
     (Y ∈ s.cellsS ∨ Y ∈ s.cellsT) → R ∈ s.RR Y → intrinsicInterior ℝ R ⊆ intrinsicInterior ℝ Y :=
   Proofs.lemma_3_5_i_relint s
 
-/-- **Lemma 3.5(i)** (v2.10 l. 487-488): "In particular (take `S = T = Y`), no `k`-cell `Y` with carrier `E` is a cell
+/-- **Lemma 3.5(i)** (v4.60 l. 427-428): "In particular (take `S = T = Y`), no `k`-cell `Y` with carrier `E` is a cell
 of both `S` and `T`" (`k < e = dim E`). -/
 theorem lemma_3_5_i_not_both {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (hT : s.Transverse)
     (E : Set (s.P' → ℝ)) (hE : IsFace s.B E) (Y : Set (s.P' → ℝ)) (hYS : Y ∈ s.cellsS) (hYT : Y ∈ s.cellsT)
     (hYE : IsCarrier s.B E Y) (hdim : adim Y < adim E) : False :=
   Proofs.Cov1.not_both s hT E hE Y hYS hYT hYE hdim
 
-/-- **Lemma 3.5(ii), proof** (v2.10 l. 492-494): "The dual graph of the subdivision `R|_E` of `E` ... is connected
+/-- **Lemma 3.5(ii), proof** (v4.60 l. 432): "The dual graph of the subdivision `R|_E` of `E` ... is connected
 [CJK, Lemma 2]" (proved in Lean, `subdivisionDualGraph_connected`); its vertices, the maximal cells, are exactly the
 `e`-cells (`e = dim E`). -/
 theorem lemma_3_5_ii_dual_graph {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
@@ -1139,7 +1274,7 @@ theorem lemma_3_5_ii_dual_graph {P : Type*} [Fintype P] [PartialOrder P] (s : Sw
   exact ⟨c, hc, hsub, subdivisionDualGraph_connected E c hEpoly hE.1 hsub,
     Proofs.Cov1.max_iff_full hEpoly hE.1 hsub⟩
 
-/-- **Lemma 3.5(ii), proof** (v2.10 l. 518-523): "Let `S ∩ T` and `S' ∩ T'` be adjacent `e`-cells of `R|_E` ...":
+/-- **Lemma 3.5(ii), proof** (v4.60 l. 439 and 443-447): "Let `S ∩ T` and `S' ∩ T'` be adjacent `e`-cells of `R|_E` ...":
 two adjacent `e`-cells of `R|_E` (distinct, meeting in a common face of dimension `e - 1`) are edges of `G_E` with a
 common vertex, `S = S'` or `T = T'`. -/
 theorem lemma_3_5_ii_adjacent_common_vertex {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
@@ -1151,7 +1286,7 @@ theorem lemma_3_5_ii_adjacent_common_vertex {P : Type*} [Fintype P] [PartialOrde
     (hdim : adim (S ∩ T ∩ (S' ∩ T')) + 1 = adim E) : S = S' ∨ T = T' :=
   Proofs.Cov1.adjacent_common_vertex s hT hE hS hS' hT₁ hT₂ hR hR' hne hD hdim
 
-/-- **Lemma 3.5(ii), proof** (v2.10 l. 524-525): every vertex of `G_E` lies on an edge: each `e`-cell of `S|_E`
+/-- **Lemma 3.5(ii), proof** (v4.60 l. 448-449): every vertex of `G_E` lies on an edge: each `e`-cell of `S|_E`
 meets some `e`-cell of `T|_E` in an `e`-cell of `R|_E`, and conversely. -/
 theorem lemma_3_5_ii_vertex_on_edge {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) :
@@ -1159,8 +1294,8 @@ theorem lemma_3_5_ii_vertex_on_edge {P : Type*} [Fintype P] [PartialOrder P] (s 
     (∀ T ∈ s.topCells s.cellsT E, ∃ S ∈ s.topCells s.cellsS E, S ∩ T ∈ s.topCells s.cellsR E) :=
   ⟨fun _ hS => Proofs.Cov1.vertex_on_edge_S s hE hS, fun _ hT => Proofs.Cov1.vertex_on_edge_T s hE hT⟩
 
-/-- **Lemma 3.5(iii), proof** (v2.10 l. 528-531): "For `k > e` there are no cells with carrier `E`. For `k < e`, (i)
-gives `ρ_E(k) ≥ σ_E(k) + τ_E(k)`. For `k = e`, the cells with carrier `E` in `S` and `T` are the `e`-cells of `S|_E` and
+/-- **Lemma 3.5(iii), proof** (v4.60 l. 452-454): "For `k > e` there are no cells with carrier `E`. For `k < e`, part
+(i) gives `ρ_E(k) ≥ σ_E(k) + τ_E(k)`. For `k = e`, the cells with carrier `E` in `S` and `T` are the `e`-cells of `S|_E` and
 `T|_E` (an `e`-cell in `E` has carrier `E`), that is, the vertices of `G_E`, and those in `R` are its edges". -/
 theorem lemma_3_5_iii_steps {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ)) (hE : IsFace s.B E)
     (hT : s.Transverse) :
@@ -1173,7 +1308,7 @@ theorem lemma_3_5_iii_steps {P : Type*} [Fintype P] [PartialOrder P] (s : Switch
     {C | C ∈ s.cellsR ∧ adim C = adim E ∧ IsCarrier s.B E C} = s.topCells s.cellsR E := by
   exact Proofs.lemma_3_5_iii_steps s E hE hT
 
-/-- **Lemma 3.6, proof** (v2.10 l. 543-548): "An `e`-cell of `S|_E` is a set `S ∩ E` with `S` a face of a maximal cell
+/-- **Lemma 3.6, proof** (v4.60 l. 499-504): "An `e`-cell of `S|_E` is a set `S ∩ E` with `S` a face of a maximal cell
 `A_ℓ` of `S`. … the two are equal: `S ∩ E = A_ℓ ∩ E = {u ∈ E : L(u) = ℓ(u)}`". -/
 theorem lemma_3_6_cell_branch_L {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ)) (hE : IsFace s.B E)
     (A : Set (s.P' → ℝ)) (hA : A ∈ s.topCells s.cellsS E) :
@@ -1181,7 +1316,7 @@ theorem lemma_3_6_cell_branch_L {P : Type*} [Fintype P] [PartialOrder P] (s : Sw
       A = {u ∈ E | s.L u = s.chainSum K u} := by
   exact Proofs.lemma_3_6_cell_branch_L s E hE A hA
 
-/-- **Lemma 3.6, proof** (v2.10 l. 543-548 with l. 559, "For `U`, use the minimum in place of the maximum"): an
+/-- **Lemma 3.6, proof** (v4.60 l. 499-504 with l. 512, "For `U`, use the minimum in place of the maximum"): an
 `e`-cell of `T|_E` is `A'_j ∩ E = {u ∈ E : U(u) = u_j}` for a full-dimensional affinity domain `A'_j` of `U`. -/
 theorem lemma_3_6_cell_branch_U {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ)) (hE : IsFace s.B E)
     (A : Set (s.P' → ℝ)) (hA : A ∈ s.topCells s.cellsT E) :
@@ -1189,15 +1324,15 @@ theorem lemma_3_6_cell_branch_U {P : Type*} [Fintype P] [PartialOrder P] (s : Sw
       A = {u ∈ E | s.U u = s.upVal j u} := by
   exact Proofs.lemma_3_6_cell_branch_U s E hE A hA
 
-/-- **Lemma 3.6, proof** (v2.10 l. 555-557): "Two nested `e`-cells `A_ℓ ∩ E ⊆ A_ℓ' ∩ E` have `ℓ = ℓ'` on `aff(E)`, so
-they are equal" (an `e`-cell is nonempty: the hypothesis `nonempty`). -/
+/-- **Lemma 3.6, proof** (v4.60 l. 510): "If two `e`-cells satisfy `A_ℓ ∩ E ⊆ A_ℓ' ∩ E`, then `ℓ = ℓ'` on `aff(E)`, so
+the two cells are equal" (an `e`-cell is nonempty: the hypothesis `nonempty`). -/
 theorem lemma_3_6_nested_L {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
     (K K' : Finset s.P') (E : Set (s.P' → ℝ)) (nonempty : (s.domL K ∩ E).Nonempty)
     (inside : s.domL K ∩ E ⊆ s.domL K' ∩ E) (dimension : adim (s.domL K ∩ E) = adim E) :
     s.domL K ∩ E = s.domL K' ∩ E := by
   exact Proofs.lemma_3_6_nested_L s K K' E nonempty inside dimension
 
-/-- **Lemma 3.6, proof** (v2.10 l. 555-557 with l. 559, "For `U`, use the minimum in place of the maximum"): two
+/-- **Lemma 3.6, proof** (v4.60 l. 510 with l. 512, "For `U`, use the minimum in place of the maximum"): two
 nested nonempty `e`-dimensional sets `A'_j ∩ E ⊆ A'_j' ∩ E` are equal. -/
 theorem lemma_3_6_nested_U {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
     (j j' : Option s.P') (E : Set (s.P' → ℝ)) (nonempty : (s.domU j ∩ E).Nonempty)
@@ -1208,10 +1343,10 @@ theorem lemma_3_6_nested_U {P : Type*} [Fintype P] [PartialOrder P] (s : Switch 
 /-! ## Section 4 (the sharp gap) -/
 
 
-/-- **Lemma 4.2** (one crossing; lines 580–590): under the crossing hypotheses at some `w`,
+/-- **Lemma 4.2** (one crossing; lines 539–549): under the crossing hypotheses at some `w`,
 `δ_E(t) ≥ t^{e−2}(1+t)^2`.  `CrossingAt` is the v1.00-v1.80 hypothesis ("`H_S`, `H_T` hyperplanes of `aff(E)` through
-`w`, and `H_S ≠ H_T`", a clause v2.10 keeps) by `crossingAt_iff_v060`, with `N` "a convex neighborhood of `w` in `E`"
-(v1.80); the v2.10 wording of `N`, "some convex set `N ⊆ E`, open in `aff(E)` and containing `w`", is
+`w`, and `H_S ≠ H_T`", a clause v2.10 to v4.60 keep) by `crossingAt_iff_v060`, with `N` "a convex neighborhood of `w`
+in `E`" (v1.80); the v2.10 to v4.60 wording of `N`, "some convex set `N ⊆ E`, open in `aff(E)` and containing `w`", is
 `lemma_4_2_v190`. -/
 theorem lemma_4_2 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) (w : s.P' → ℝ) (hw : CrossingAt s E w) (k : ℕ) :
@@ -1221,7 +1356,7 @@ theorem lemma_4_2 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : S
 
 /-- Lemma 4.2's hypothesis as worded in v0.60 to v1.80, with `N` a convex neighbourhood of `w` in `E`: `H_S = {φ = φ w}`
 and `H_T = {ψ = ψ w}` are hyperplanes of `aff(E)` through `w` (`φ, ψ` nonzero on `dir(E)`), and `H_S ≠ H_T` (this clause
-is unchanged in v2.10, lines 585–588; v2.10 words `N` as a convex set open in `aff(E)`, lines 582–583:
+is unchanged in v4.60, lines 544–547; v2.10 to v4.60 word `N` as a convex set open in `aff(E)`, lines 541–542:
 `lemma_4_2_v190`).  This is exactly `CrossingAt`, whose last clause is the v0.41 wording "the normals are linearly
 independent in the dual of `dir(E)`". -/
 theorem crossingAt_iff_v060 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
@@ -1240,7 +1375,7 @@ theorem crossingAt_iff_v060 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch
         {u | u ∈ affineSpan ℝ E ∧ φ u = φ w} ≠ {u | u ∈ affineSpan ℝ E ∧ ψ u = ψ w} :=
   Proofs.crossingAt_iff_v060_proved s E w
 
-/-- Lemma 4.2's hypotheses force `e ≥ 2` (v2.10 line 588: "(this forces `e ≥ 2`)"): the two normals restricted to
+/-- Lemma 4.2's hypotheses force `e ≥ 2` (v4.60 line 547: "(this forces `e ≥ 2`)"): the two normals restricted to
 `dir(E)` are linearly independent in its dual, so `dim E = dim dir(E) ≥ 2`. -/
 theorem lemma_4_2_e_ge_two {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (w : s.P' → ℝ) (hw : CrossingAt s E w) : 2 ≤ adim E := by
@@ -1249,11 +1384,12 @@ theorem lemma_4_2_e_ge_two {P : Type*} [Fintype P] [PartialOrder P] (s : Switch 
   rw [Fintype.card_fin] at h
   exact h.trans_eq Subspace.dual_finrank_eq
 
-/-- **Lemma 4.2** with the v2.10 hypothesis (l. 580-590; the name is historical, this wording dates from v1.90): "some
-convex set `N ⊆ E`, open in `aff(E)` and containing `w`" (v1.80: "a convex neighborhood `N` of `w` in `E`"); the rest
-of the hypothesis is the v1.80 wording, unchanged in v2.10, as in `crossingAt_iff_v060` (the cells meeting `N` are
+/-- **Lemma 4.2** with the v2.10 to v4.60 hypothesis (l. 539-549; the name is historical, this wording dates from
+v1.90): "some convex set `N ⊆ E`, open in `aff(E)` and containing `w`" (v1.80: "a convex neighborhood `N` of `w` in
+`E`"); the rest of the hypothesis is the v1.80 wording, unchanged in content in v2.10 to v4.60 (v4.60 writes "`S` and
+`T`", "`S₁` and `S₂`", "`T₁` and `T₂`" for v2.10's lists), as in `crossingAt_iff_v060` (the cells meeting `N` are
 among `S₁, S₂` and `T₁, T₂`; the half-space description; `H_S`, `H_T` hyperplanes of `aff(E)` through `w`;
-`H_S ≠ H_T`), with "(this forces `e ≥ 2`)" (l. 588). Derived from
+`H_S ≠ H_T`), with "(this forces `e ≥ 2`)" (l. 547). Derived from
 `lemma_4_2` and `lemma_4_2_e_ge_two`: such an `N` is a neighborhood of `w` within `E`. -/
 theorem lemma_4_2_v190 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) (w : s.P' → ℝ) (hw : w ∈ intrinsicInterior ℝ E)
@@ -1281,15 +1417,15 @@ theorem lemma_4_2_v190 {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (
   exact ⟨lemma_4_2_e_ge_two s E w hcross, fun k => lemma_4_2 s E hE w hcross k⟩
 
 
-/-- Paper lines 679–681: a valid `q` exists — an element `q`, maximal among the elements `m ≥ c` whose strict upper
+/-- Paper line 594: a valid `q` exists — an element `q`, maximal among the elements `m ≥ c` whose strict upper
 set is not a chain (as every `r > q` is `≥ c`, maximality says: the strict upper set of every `r > q` is a chain). -/
 theorem sec4_q_exists {P : Type*} [Fintype P] [PartialOrder P] {a b c g h : P} (hX : IsXCopy a b c g h) :
     ∃ q, c ≤ q ∧ ¬ IsChain (· ≤ ·) (Set.Ioi q) ∧ ∀ r, q < r → IsChain (· ≤ ·) (Set.Ioi r) :=
   Proofs.q_exists hX.2.2.1 hX.2.2.2.1 hX.2.2.2.2.2.2.1 hX.2.2.2.2.2.2.2
 
-/-- Lines 681–684: "We cannot always take `q = c`: the construction of `E₀` below needs two incomparable upper covers
-of `q`, and `c` may have only one, for example when an element `d` with `c < d < g, h` is the only upper cover of
-`c`".  In
+/-- Lines 594–595: "We cannot always take `q = c`: the construction of `E₀` below needs two incomparable upper covers
+of `q`, and `c` may have only one, for example when an element `c'` with `c < c' < g, h` is the only upper cover of
+`c`" (here `c' = d`).  In
 `a, b < c < d < g, h` (`XdElem`) the elements `a, b, c, g, h` form a copy of `X`, no switch of Section 4 can use
 `q = c`, and one does exist (with `q = d`). -/
 theorem sec4_q_c_remark :
@@ -1297,14 +1433,14 @@ theorem sec4_q_c_remark :
       ∀ x : XSwitch XdElem, x.q ≠ XdElem.c :=
   Proofs.sec4_q_c_remark_proved
 
-/-- Lines 681–684, the remark's reason: in `XdElem`, `c`'s strict upper set is not a chain, yet `c` has no two distinct
+/-- Lines 594–595, the remark's reason: in `XdElem`, `c`'s strict upper set is not a chain, yet `c` has no two distinct
 upper covers (its only cover is `d`), so `E₀` could not be built at `q = c`. -/
 theorem sec4_q_c_no_two_covers :
     ¬ IsChain (· ≤ ·) (Set.Ioi XdElem.c) ∧
       ¬ ∃ g' h' : XdElem, XdElem.c ⋖ g' ∧ XdElem.c ⋖ h' ∧ g' ≠ h' :=
   Proofs.sec4_q_c_no_two_covers_proved
 
-/-- v2.10 l. 683-684 ("an element `d` with `c < d < g, h` is the only upper cover of `c`"): in the poset
+/-- v4.60 l. 595 ("an element `c'` with `c < c' < g, h` is the only upper cover of `c`", here `c' = d`): in the poset
 `a, b < c < d < g, h` (`XdElem`), `d` is the ONLY upper cover of `c` (stronger than
 `sec4_q_c_no_two_covers`, which says that `c` has no two distinct upper covers). -/
 theorem sec4_d_only_cover_of_c : XdElem.c ⋖ XdElem.d ∧ ∀ y : XdElem, XdElem.c ⋖ y → y = XdElem.d := by
@@ -1313,7 +1449,7 @@ theorem sec4_d_only_cover_of_c : XdElem.c ⋖ XdElem.d ∧ ∀ y : XdElem, XdEle
   simp only [lt_iff_le_not_ge]
   decide
 
-/-- **Lemma 4.3** (lines 686–691): `q` has two distinct, incomparable upper covers; `I = P \ ↑q` is an order ideal, `q`
+/-- **Lemma 4.3** (lines 597–602): `q` has two distinct, incomparable upper covers; `I = P \ ↑q` is an order ideal, `q`
 is minimal in `J = ↑q`, and `a, b ∈ I` with `a, b < q`. -/
 theorem lemma_4_3 {P : Type*} [Fintype P] [PartialOrder P] {a b c g h q : P} (hX : IsXCopy a b c g h)
     (hcq : c ≤ q) (hq : ¬ IsChain (· ≤ ·) (Set.Ioi q)) (hmax : ∀ r, q < r → IsChain (· ≤ ·) (Set.Ioi r)) :
@@ -1322,14 +1458,14 @@ theorem lemma_4_3 {P : Type*} [Fintype P] [PartialOrder P] {a b c g h q : P} (hX
     a ∈ (Set.Ici q)ᶜ ∧ b ∈ (Set.Ici q)ᶜ ∧ a < q ∧ b < q :=
   Proofs.lemma_4_3 hX.1 hX.2.1 hcq hq hmax
 
-/-- **Lemma 4.3** in its final wording (v2.10 lines 687–688: "`q` has at least two upper covers, and any two are
-incomparable"): any two distinct upper covers of an element are incomparable (in every poset; with `lemma_4_3`, which
+/-- **Lemma 4.3** in its final wording (v4.60 lines 598–599: "The element `q` has at least two upper covers, and any two
+of them are incomparable"): any two distinct upper covers of an element are incomparable (in every poset; with `lemma_4_3`, which
 gives two of them). -/
 theorem lemma_4_3_covers_incomparable {P : Type*} [PartialOrder P] (q g' h' : P) (hg : q ⋖ g') (hh : q ⋖ h')
     (hne : g' ≠ h') : ¬ g' ≤ h' ∧ ¬ h' ≤ g' :=
   ⟨fun hle => hh.2 hg.1 (lt_of_le_of_ne hle hne), fun hle => hg.2 hh.1 (lt_of_le_of_ne hle hne.symm)⟩
 
-/-- Line 706: "Fix two upper covers `g′` and `h′` of `q`; they need not be `g` and `h`."  Witness `R3Elem`:
+/-- Line 612: "Fix two distinct upper covers `g′` and `h′` of `q`; they need not be `g` and `h`."  Witness `R3Elem`:
 `a, b < c < d < g′, h′`, `g′ < g`, with the copy `a, b, c, g, h′` of `X`; a switch of Section 4 exists with `q > c` and
 `{g′, h′} ≠ {g, h}`, and every `q` meeting Lemma 4.3's conditions for this copy has this property. -/
 theorem sec4_covers_may_differ :
@@ -1342,7 +1478,7 @@ theorem sec4_covers_may_differ :
           ({g', h'} : Set R3Elem) ≠ {R3Elem.g, R3Elem.hp} :=
   Proofs.sec4_covers_may_differ_proved
 
-/-- Line 706 ("they need not be `g` and `h`"), in its bare form: some switch of Section 4 has `q > c` and
+/-- Line 612 ("they need not be `g` and `h`"), in its bare form: some switch of Section 4 has `q > c` and
 `{g′, h′} ≠ {g, h}`. -/
 theorem sec4_covers_may_differ_exists :
     ∃ (P : Type) (_ : Fintype P) (_ : PartialOrder P) (x : XSwitch P),
@@ -1350,7 +1486,7 @@ theorem sec4_covers_may_differ_exists :
   Proofs.sec4_covers_may_differ_exists_proved
 
 
-/-- **Lemma 4.4** (lines 717–721): `E₀` is a 4-dimensional face of `B`, cut out (besides `ζ = ζ₀`) by `α, β ≥ 0`,
+/-- **Lemma 4.4** (lines 627–631): `E₀` is a 4-dimensional face of `B`, cut out (besides `ζ = ζ₀`) by `α, β ≥ 0`,
 `max(α, β) ≤ min(γ, η)`, `γ, η ≤ 1`. -/
 theorem lemma_4_4 {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
     (pa pb pg ph : x.toSwitch.P') (hpa : pa.1 = x.a) (hpb : pb.1 = x.b) (hpg : pg.1 = x.g')
@@ -1362,7 +1498,7 @@ theorem lemma_4_4 {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
   Proofs.lemma_4_4_proved x pa pb pg ph hpa hpb hpg hph
 
 open Classical in
-/-- **P8** (v2.10 l. 723-724), the switch of Section 4.2: "The inequality
+/-- **P8** (v4.60 l. 633-634), the switch of Section 4.2: "The inequality
 `Σ_{p ∈ I∖{a,b}} x_p + Σ_{r ∈ J'∖{g',h'}} (1 − y_r) ≥ 0` is valid on `B` and is tight exactly where `ζ = ζ₀`"
 (`J'` = the coordinates of `B` outside `I`). -/
 theorem sec4_E0_inequality {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
@@ -1374,10 +1510,33 @@ theorem sec4_E0_inequality {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch
         x.zeta u = x.zeta x.u0) :=
   sec4_E0_inequality_proved x
 
-/-- **Lemma 4.5** (lines 747–764; local product structure): open `V₄ ∋ (1/4,1/4,3/4,3/4)` and `V_ζ ∋ ζ₀` with
+/-- **v4.60 l. 622-623** (new in v4.50): "On `E₀` all other chain coordinates vanish and all other order coordinates
+equal `1`, so `L = max(α, β)` and `U = min(γ, η)` there" — on all of `E₀` (Lemma 4.5(b) gives it only near `u₀`). -/
+theorem sec4_E0_L_U {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
+    ∀ u ∈ x.E0, x.toSwitch.L u = max (u x.pa) (u x.pb) ∧ x.toSwitch.U u = min (u x.pg) (u x.ph) :=
+  Proofs.V450.E0_L_U_proved x
+
+/-- **v4.60 l. 623-624** (new in v4.50): "`E₀` is a copy of the base of the switch of `c` in `X`": the coordinates
+`(α, β, γ, η)` map `E₀` one-to-one onto the same subset of `ℝ⁴` as they map the base `B` of the switch of `c` in `X`
+(`Example21.CenterSwitch.canonical`) one-to-one; on both, `L = max(α, β)` and `U = min(γ, η)` (`sec4_E0_L_U`,
+`prop_5_1_X_LU`). -/
+theorem sec4_E0_copy {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
+    Set.InjOn (fun u : x.toSwitch.P' → ℝ => (![u x.pa, u x.pb, u x.pg, u x.ph] : Fin 4 → ℝ)) x.E0 ∧
+    Set.InjOn (fun u : Example21.CenterSwitch.canonical.toSwitch.P' → ℝ =>
+        (![u Example21.CenterSwitch.canonical.pa, u Example21.CenterSwitch.canonical.pb,
+           u Example21.CenterSwitch.canonical.pg, u Example21.CenterSwitch.canonical.ph] : Fin 4 → ℝ))
+      Example21.CenterSwitch.canonical.toSwitch.B ∧
+    (fun u : x.toSwitch.P' → ℝ => (![u x.pa, u x.pb, u x.pg, u x.ph] : Fin 4 → ℝ)) '' x.E0 =
+      (fun u : Example21.CenterSwitch.canonical.toSwitch.P' → ℝ =>
+        (![u Example21.CenterSwitch.canonical.pa, u Example21.CenterSwitch.canonical.pb,
+           u Example21.CenterSwitch.canonical.pg, u Example21.CenterSwitch.canonical.ph] : Fin 4 → ℝ))
+        '' Example21.CenterSwitch.canonical.toSwitch.B :=
+  Proofs.V450.E0_copy_proved x
+
+/-- **Lemma 4.5** (lines 651–664; local product structure): open `V₄ ∋ (1/4,1/4,3/4,3/4)` and `V_ζ ∋ ζ₀` with
 `N₀ = V₄ × V_ζ` such that (a) for every face `E ⊇ E₀` of `B`, membership in `E` within `N₀` depends only on `ζ` (so
 `E ∩ N₀ = V₄ × (Q_E ∩ V_ζ)`, with `Q_E` the `ζ`-section; the paper's own `Q_E`, defined in the statement by tight
-inequalities, lines 756–758, is in `lemma_4_5_paper`), and (b) on `B ∩ N₀`, `L = max(α + λ_a(ζ), β + λ_b(ζ))` and
+inequalities, line 658, is in `lemma_4_5_paper`), and (b) on `B ∩ N₀`, `L = max(α + λ_a(ζ), β + λ_b(ζ))` and
 `U = min(γ, η)`. -/
 theorem lemma_4_5 {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∃ (V4 : Set (Fin 4 → ℝ)) (Vz : Set ({p // p ∉ x.special} → ℝ)), IsOpen V4 ∧ IsOpen Vz ∧
@@ -1388,12 +1547,12 @@ theorem lemma_4_5 {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
         x.toSwitch.L u = max (u x.pa + x.lamA u) (u x.pb + x.lamB u) ∧ x.toSwitch.U u = min (u x.pg) (u x.ph)) :=
   Proofs.lemma_4_5_proved x
 
-/-- Lines 738–743: all forms of the `a`- and `b`-families vanish at `ζ₀`, so `λ_a(ζ₀) = λ_b(ζ₀) = 0`. -/
+/-- Lines 646–647: all forms of the `a`- and `b`-families vanish at `ζ₀`, so `λ_a(ζ₀) = λ_b(ζ₀) = 0`. -/
 theorem sec4_lam_u0 {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     x.lamA x.u0 = 0 ∧ x.lamB x.u0 = 0 :=
   Proofs.sec4_lam_u0_proved x
 
-/-- **Lemma 4.5, full form of (a)** (lines 752–759), with the same `N₀` as (b): for every face `E ⊇ E₀` of `B`,
+/-- **Lemma 4.5, full form of (a)** (lines 654–659), with the same `N₀` as (b): for every face `E ⊇ E₀` of `B`,
 `ζ₀ ∈ Q_E`, `E ∩ N₀ = V₄ × (Q_E ∩ V_ζ)` and `relint E ∩ N₀ = V₄ × (relint Q_E ∩ V_ζ)`.  Here `Q_E` is the
 `ζ`-section of `E` (`XSwitch.QE`).  The paper's own `Q_E` (inequalities tight at `u₀`) is used in `lemma_4_5_paper`
 below; the two agree near `ζ₀` (`Proofs.QEPaper.QE_iff_QEpaper`). -/
@@ -1407,9 +1566,9 @@ theorem lemma_4_5_full {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) 
         x.toSwitch.L u = max (u x.pa + x.lamA u) (u x.pb + x.lamB u) ∧ x.toSwitch.U u = min (u x.pg) (u x.ph)) :=
   Proofs.lemma_4_5_full_proved x
 
-/-- **Lemma 4.5(a)** with the paper's OWN `Q_E` (lines 752–759): "`Q_E ∋ ζ₀` is the polyhedron of the points of the
-`ζ`-space that satisfy the defining inequalities of `B` that are tight at `u₀` (these involve only `ζ`), those that are
-tight on all of `E` being imposed as equations" (`XSwitch.QEpaper`,
+/-- **Lemma 4.5(a)** with the paper's OWN `Q_E` (lines 654–659): "`Q_E` is the set of points of the `ζ`-space that
+satisfy the defining inequalities of `B` that are tight at `u₀`, with those that are tight on all of `E` taken as
+equations (these inequalities involve only `ζ`, and `Q_E` is a polyhedron that contains `ζ₀`)" (`XSwitch.QEpaper`,
 Defs/QEPaper.lean); same quantifiers and clauses as `lemma_4_5_full`. -/
 theorem lemma_4_5_paper {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∃ (V4 : Set (Fin 4 → ℝ)) (Vz : Set ({p // p ∉ x.special} → ℝ)), IsOpen V4 ∧ IsOpen Vz ∧
@@ -1422,9 +1581,10 @@ theorem lemma_4_5_paper {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
   Proofs.lemma_4_5_paper x
 
 open Filter Topology in
-/-- **M1** (v2.10 l. 778-782), proof of Lemma 4.5: "Every point of `E` satisfies the inequalities that define `Q_E`, so
-`E ⊆ ℝ⁴ × Q_E`; with (product), and as `aff(Q_E ∩ V_ζ) = aff(Q_E)` (`Q_E` is convex and `V_ζ` is a neighborhood of its
-point `ζ₀`), this gives `aff(E) = ℝ⁴ × aff(Q_E)`", for every face `E ⊇ E₀` of `B`; the middle equality is stated for
+/-- **M1** (v4.60 l. 673-674), proof of Lemma 4.5: "Every point of `E` satisfies the inequalities that define `Q_E`, so
+`E ⊆ ℝ⁴ × Q_E`. Since `Q_E` is convex and `V_ζ` is a neighborhood of its point `ζ₀`, every segment from `ζ₀` to a point
+of `Q_E` has an initial subsegment in `Q_E ∩ V_ζ`, so `aff(Q_E ∩ V_ζ) = aff(Q_E)`. Together with (product), this gives
+`aff(E) = ℝ⁴ × aff(Q_E)`", for every face `E ⊇ E₀` of `B`; the middle equality is stated for
 every neighborhood `V` of `ζ₀`. -/
 theorem sec4_E_subset_QE {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) (E : Set (x.toSwitch.P' → ℝ))
     (hE : IsFace x.toSwitch.B E) (hE0 : x.E0 ⊆ E) :
@@ -1434,7 +1594,7 @@ theorem sec4_E_subset_QE {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P
   ⟨Proofs.QEPaper.QEpaper_convex x E, sec4_E_subset_QE_proved x E hE hE0⟩
 
 open HibiLi.Proofs.Cov200 in
-/-- **Lemma 4.5(a), proof** (v2.10 l. 766-772): "Every defining inequality of `B` that involves `α, β, γ` or `η` is
+/-- **Lemma 4.5(a), proof** (v4.60 l. 666-669): "Every defining inequality of `B` that involves `α, β, γ` or `η` is
 strict at `u₀`" (`x_a ≥ 0`, `x_b ≥ 0`, `0 ≤ γ ≤ 1`, `0 ≤ η ≤ 1`, the chain inequalities, and the order inequalities
 `y_r ≤ y_{r'}`, `r < r'`, that involve `γ` or `η`). The inequality lists are those of `chainOrderPolytope`; an order
 inequality is taken for `r < r'` (for `r = r'` it is `y_r ≤ y_r`). Stronger than the text for chains: every chain
@@ -1449,9 +1609,9 @@ theorem sec4_u0_strict {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) 
   u0_strict_proved x
 
 open Classical in
-/-- v2.10 l. 737-742 (F4): "For a chain `K ∋ a` in the definition of `L`, the linear form `Σ_{p∈K∖{a}} x_p`
-depends only on `ζ`, as `K∖{a} ⊆ I∖{a,b}` (`b ∉ K`, since `a` and `b` are incomparable); … likewise for the
-`b`-family": for `K` a chain of `L` (`lowBranches`), if `a ∈ K`
+/-- v4.60 l. 646 (F4): "Let `K` be a chain as in the definition of `L`, with `a ∈ K`. Then `b ∉ K`, as `a` and `b` are
+incomparable, so `K∖{a} ⊆ I∖{a,b}`, and the linear form `Σ_{p∈K∖{a}} x_p` depends only on `ζ`. … the `b`-family and
+`λ_b` are defined in the same way": for `K` a chain of `L` (`lowBranches`), if `a ∈ K`
 then `b ∉ K` and the form factors through `ζ` by a linear map; the same with `a, b` exchanged. -/
 theorem sec4_family_forms_zeta {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
     {K : Finset x.toSwitch.P'} (hK : K ∈ x.toSwitch.lowBranches) :
@@ -1465,10 +1625,11 @@ theorem sec4_family_forms_zeta {P : Type*} [Fintype P] [PartialOrder P] (x : XSw
       Proofs.AddV170.family_form_zeta_proved x hK (Or.inr rfl) hb⟩⟩
 
 open Classical in
-/-- v2.10 l. 783-787 (F5), proof of Lemma 4.5(b): "At `u₀` a chain has sum `1/4` if it contains `a` or `b` (not both),
-and sum `0` otherwise, the empty chain included. The terms of `U` other than `γ` and `η` equal `1 > 3/4`. Shrinking `N₀`
-(which keeps (a) true) keeps these strict inequalities, so on `B ∩ N₀` only chains containing `a` or `b` attain `L`, and
-only `γ` or `η` attains `U`": `lemma_4_5` with, on the same `N₀`, the last sentence (a chain `K` of `L` with
+/-- v4.60 l. 677-678 (F5), proof of Lemma 4.5(b): "At `u₀` a chain has sum `1/4` if it contains `a` or `b`, and sum `0`
+otherwise, the empty chain included. The terms of `U` other than `γ` and `η` equal `1`, which exceeds `3/4`. By
+continuity, after shrinking `N₀` (which keeps (a) true), on all of `N₀` every chain that contains `a` or `b` has a larger
+sum than every chain that contains neither, and `γ` and `η` are smaller than the other terms of `U`. Hence, on `B ∩ N₀`,
+only chains containing `a` or `b` attain `L`, and only `γ` or `η` attains `U`": `lemma_4_5` with, on the same `N₀`, the last sentence (a chain `K` of `L` with
 `ℓ_K(u) = L(u)` contains `a` or `b`; a term `j` of `U` with value `U(u)` is `γ` or `η`). -/
 theorem lemma_4_5_strict {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∃ (V4 : Set (Fin 4 → ℝ)) (Vz : Set ({p // p ∉ x.special} → ℝ)), IsOpen V4 ∧ IsOpen Vz ∧
@@ -1482,13 +1643,13 @@ theorem lemma_4_5_strict {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P
         (∀ j ∈ x.toSwitch.upBranches, x.toSwitch.upVal j u = x.toSwitch.U u → j = some x.pg ∨ j = some x.ph)) :=
   Proofs.AddV170.lemma_4_5_strict_proved x
 
-/-- **Lemma 4.6** (lines 792–795; with Lemma 4.5 inside its proof): for every face `E ⊇ E₀` of `B`, the hypotheses of
+/-- **Lemma 4.6** (lines 683–686; with Lemma 4.5 inside its proof): for every face `E ⊇ E₀` of `B`, the hypotheses of
 Lemma 4.2 hold at some `w ∈ relint E` (`CrossingAt` contains `w ∈ relint E`). -/
 theorem lemma_4_6 {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) (E : Set (x.toSwitch.P' → ℝ))
     (hE : IsFace x.toSwitch.B E) (hE0 : x.E0 ⊆ E) : ∃ w, CrossingAt x.toSwitch E w :=
   Proofs.lemma_4_6_of_3_6 x (fun E hE A => Proofs.lemma_3_6_proved x.toSwitch E hE A) E hE hE0
 
-/-- **Lemma 4.7**, first part of its proof (lines 847–855): an `s`-polytope has at least `C(s+1, κ+1)` faces of
+/-- **Lemma 4.7**, first part of its proof (lines 718–719): an `s`-polytope has at least `C(s+1, κ+1)` faces of
 dimension `κ` (`0 ≤ κ ≤ s`).  The paper's cases `κ = −1` (the empty face) and `s ≤ 0` are left out: Lean's `IsFace`
 excludes `∅`, and `Q` is nonempty. -/
 theorem lemma_4_7_simplex {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ : IsPolytope Q) (hne : Q.Nonempty)
@@ -1496,8 +1657,8 @@ theorem lemma_4_7_simplex {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ :
   Proofs.lemma_4_8_simplex_proved Q hQ hne κ hκ
 
 open HibiLi.Proofs.Cov200 in
-/-- **Lemma 4.7, proof** (v2.10 l. 850-851): "an `s`-polytope with `s ≥ 1` has a facet, and, being the convex hull of
-its vertices, it has a vertex outside the proper face `D`". A facet is a face of dimension `dim Q - 1`; a vertex is a
+/-- **Lemma 4.7, proof** (v4.60 l. 719): "Let `s ≥ 1`. The polytope has a facet `D` and, being the convex hull of its
+vertices, a vertex `v` outside the proper face `D`" (an `s`-dimensional polytope). A facet is a face of dimension `dim Q - 1`; a vertex is a
 `0`-dimensional face `{v}`. -/
 theorem sec4_facet_vertex_outside {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ)) (hQ : IsPolytope Q) (hne : Q.Nonempty)
     (hs : 1 ≤ adim Q) :
@@ -1505,21 +1666,21 @@ theorem sec4_facet_vertex_outside {ι : Type*} [Fintype ι] (Q : Set (ι → ℝ
   ⟨exists_facet_proved Q hQ hne (adim Q - 1) (by omega),
     fun D hD hDQ => exists_vertex_not_mem_proved Q hQ hne D hD hDQ⟩
 
-/-- **Lemma 4.7** (lines 841–845): a nonempty `e`-face `E` of an `m`-polytope `B` lies in at least `C(m−e, j)` faces of
+/-- **Lemma 4.7** (lines 712–716): a nonempty `e`-face `E` of an `m`-polytope `B` lies in at least `C(m−e, j)` faces of
 dimension `e + j`, for `0 ≤ j ≤ m − e`. -/
 theorem lemma_4_7 {ι : Type*} [Fintype ι] (B : Set (ι → ℝ)) (hB : IsPolytope B) (E : Set (ι → ℝ))
     (hE : IsFace B E) (j : ℕ) (hj : j ≤ adim B - adim E) :
     Nat.choose (adim B - adim E) j ≤ {G | IsFace B G ∧ E ⊆ G ∧ adim G = adim E + j}.ncard :=
   Proofs.lemma_4_8_proved B hB E hE j hj
 
-/-- Lines 867–878: for the switch of Section 4.2, the single step from `O_I(P)` to `O_{I∪{q}}(P)` already adds at least
+/-- Lines 731–741: for the switch of Section 4.2, the single step from `O_I(P)` to `O_{I∪{q}}(P)` already adds at least
 `t^2 (1+t)^{n−3}`. -/
 theorem switch_step_gap {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) (k : ℕ) :
     (gapPoly (Fintype.card P)).coeff k ≤
       (fNum (chainOrderPolytope P (insert x.q (Set.Ici x.q)ᶜ)) k : ℤ) - fNum (chainOrderPolytope P (Set.Ici x.q)ᶜ) k := by
   classical
   let s := x.toSwitch
-  -- dimensions: B is an (n−1)-polytope (lines 299–303, 309–310), E₀ a 4-face (Lemma 4.4)
+  -- dimensions: B is an (n−1)-polytope (lines 278–281, 287–288), E₀ a 4-face (Lemma 4.4)
   obtain ⟨hBpoly, hBdim⟩ := sec3_dim s.P' s.I' (Proofs.I'_isLowerSet s)
   obtain ⟨hE0face, hE0dim, -⟩ := lemma_4_4 x x.pa x.pb x.pg x.ph
     rfl rfl rfl rfl
@@ -1565,7 +1726,7 @@ theorem switch_step_gap {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
     rw [hg]
     exact hgapstep
 
-/-- **Theorem 4.1** (lines 572–574), inequality: if `P` contains `X` then `F_C(P) − F_O(P) ≥ t^2 (1+t)^{n−3}`
+/-- **Theorem 4.1** (lines 525–527), inequality: if `P` contains `X` then `F_C(P) − F_O(P) ≥ t^2 (1+t)^{n−3}`
 coefficientwise. -/
 theorem thm_4_1 (P : Type*) [Fintype P] [PartialOrder P] (hX : ContainsX P) (k : ℕ) :
     (gapPoly (Fintype.card P)).coeff k ≤ (fNum (chainPolytope P) k : ℤ) - fNum (orderPolytope P) k := by
@@ -1580,7 +1741,7 @@ theorem thm_4_1 (P : Type*) [Fintype P] [PartialOrder P] (hX : ContainsX P) (k :
   have hstep : (gapPoly (Fintype.card P)).coeff k ≤
       (fNum (chainOrderPolytope P (insert s.q s.I)) k : ℤ) - fNum (chainOrderPolytope P s.I) k :=
     switch_step_gap x k
-  -- the monotone chain O(P) = O_∅ ≤ O_I and O_{I∪{q}} ≤ O_P = C(P) (Proposition 3.7, lines 879–890)
+  -- the monotone chain O(P) = O_∅ ≤ O_I and O_{I∪{q}} ≤ O_P = C(P) (Proposition 3.7, lines 742–752)
   have hmono : ∀ I I' : Set P, IsLowerSet I → IsLowerSet I' → I ⊆ I' →
       fNum (chainOrderPolytope P I) k ≤ fNum (chainOrderPolytope P I') k :=
     fun I I' hI hI' hII' => Proofs.mono_of_step (fun s k => prop_3_7 s k) I I' hI hI' hII' k
@@ -1590,13 +1751,13 @@ theorem thm_4_1 (P : Type*) [Fintype P] [PartialOrder P] (hX : ContainsX P) (k :
   rw [(sec3_endpoints P).2] at h2
   omega
 
-/-- **P9** (v2.10 l. 867): "As `P` contains `X`, we have `n ≥ 5`" (`n = |P|`). -/
+/-- **P9** (v4.60 l. 731): "As `P` contains `X`, we have `n ≥ 5`" (`n = |P|`). -/
 theorem sec5_contains_X_five_le (P : Type*) [Fintype P] [PartialOrder P] (hX : ContainsX P) :
     5 ≤ Fintype.card P :=
   sec5_contains_X_five_le_proved P hX
 
-/-- Theorem 4.1, as stated in the introduction (lines 112–115; also the abstract, lines 47–50, and the table, lines
-150–152): for `2 ≤ k ≤ n − 1`, `C(P)` has at least `C(n−3, k−2)` more `k`-faces than `O(P)`. -/
+/-- Theorem 4.1, as stated in the introduction (lines 128–131; also the abstract, lines 50–53, and the table, lines
+157–159): for `2 ≤ k ≤ n − 1`, `C(P)` has at least `C(n−3, k−2)` more `k`-faces than `O(P)`. -/
 theorem thm_4_1_binom (P : Type*) [Fintype P] [PartialOrder P] (hX : ContainsX P) (k : ℕ) (hk2 : 2 ≤ k)
     (_hkn : k ≤ Fintype.card P - 1) :
     fNum (orderPolytope P) k + Nat.choose (Fintype.card P - 3) (k - 2) ≤ fNum (chainPolytope P) k := by
@@ -1607,12 +1768,12 @@ theorem thm_4_1_binom (P : Type*) [Fintype P] [PartialOrder P] (hX : ContainsX P
 
 /-! ### Section 4: coverage rows (review REVIEW_006_cov, 20261028) -/
 
-/-- **Lemma 4.2, proof steps** (v2.10 l. 595-629), under the v2.10 hypothesis of Lemma 4.2 for the
+/-- **Lemma 4.2, proof steps** (v4.60 l. 554-583), under the v2.10 to v4.60 hypothesis of Lemma 4.2 for the
 given `N, S₁, S₂, T₁, T₂, φ, ψ` (the body of `lemma_4_2_v190`'s hypothesis, unbundled): `S_w = S₁ ∩ S₂` is an
-`(e−1)`-cell of `S` with `w` in its relative interior, carrier `E` and affine span `H_S` (l. 595-602), and the same for
+`(e−1)`-cell of `S` with `w` in its relative interior, carrier `E` and affine span `H_S` (l. 554-559), and the same for
 `T_w = T₁ ∩ T₂` with `H_T`; `R_w = S_w ∩ T_w` is an `(e−2)`-cell of `R` with `w` in its relative interior, in no `R(Y)`
-(l. 604-611; by uniqueness of the cell whose relative interior contains `w`, as in the paper);
-`|R(S_w)| ≥ 2`, `|R(T_w)| ≥ 2` (l. 614-620); the four `S_i ∩ T_j` are `e`-cells of `R|_E` (l. 625-629). -/
+(l. 561-568; by uniqueness of the cell whose relative interior contains `w`, as in the paper);
+`|R(S_w)| ≥ 2`, `|R(T_w)| ≥ 2` (l. 571-577); the four `S_i ∩ T_j` are `e`-cells of `R|_E` (l. 579-583). -/
 theorem lemma_4_2_steps {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) (w : s.P' → ℝ) (hw : w ∈ intrinsicInterior ℝ E) (N S₁ S₂ T₁ T₂ : Set (s.P' → ℝ))
     (φ ψ : (s.P' → ℝ) →ₗ[ℝ] ℝ)
@@ -1641,26 +1802,27 @@ theorem lemma_4_2_steps {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) 
     S₂ ∩ T₁ ∈ s.topCells s.cellsR E ∧ S₂ ∩ T₂ ∈ s.topCells s.cellsR E :=
   Proofs.lemma_4_2_steps_proved s E hE w hw N S₁ S₂ T₁ T₂ φ ψ H
 
-/-- **Lemma 4.3, proof** (v2.10 l. 693-695): "As `P` is finite, every `r > q` satisfies `r ≥ s` for an upper cover
-`s` of `q` (a minimal element of `{s' : q < s' ≤ r}`)". -/
+/-- **Lemma 4.3, proof** (v4.60 l. 604): "As `P` is finite, for every `r > q` the set `{s' : q < s' ≤ r}` has a minimal
+element `s`; it is an upper cover of `q`, and `r ≥ s`". -/
 theorem sec4_upper_cover_below {P : Type*} [Fintype P] [PartialOrder P] (q r : P) (h : q < r) :
     ∃ s', q ⋖ s' ∧ s' ≤ r := by
   exact Proofs.sec4_upper_cover_below q r h
 
-/-- Section 4.2 (v2.10 l. 708-710): "The coordinates of `B` are `x_p` for `p ∈ I` and `y_r` for `r ∈ J' = J ∖ {q}`;
+/-- Section 4.2 (v4.60 l. 614-616): "The coordinates of `B` are `x_p` for `p ∈ I` and `y_r` for `r ∈ J' = J ∖ {q}`;
 every `r ∈ J'` satisfies `r > q`". -/
 theorem sec4_remaining_above_q {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∀ r : x.toSwitch.P', r.1 ∉ x.toSwitch.I → x.q < r.1 := by
   exact Proofs.sec4_remaining_above_q x
 
-/-- **Lemma 4.4 and Lemma 4.5, proofs** (v2.10 l. 729-730: "unless `r' ∈ {g', h'}`, which is impossible, as
-`q < r < r'` and `g', h'` cover `q`"; l. 770-771: "no `r ∈ J'` satisfies `r < g'` (`q < r`, and `g'` covers `q`)"):
+/-- **Lemma 4.4 and Lemma 4.5, proofs** (v4.60 l. 639-640: "unless `r' ∈ {g', h'}`, which is impossible, as
+`q < r < r'` and both `g'` and `h'` cover `q`"; l. 667-668: "no `r ∈ J'` satisfies `r < g'` (each `r ∈ J'` satisfies
+`r > q`, and `g'` covers `q`)"):
 no `r ∈ J'` lies below `g'` or `h'`. -/
 theorem sec4_no_remaining_below_covers {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∀ r : P, r ∉ x.toSwitch.I → r ≠ x.q → ¬ r < x.g' ∧ ¬ r < x.h' := by
   exact Proofs.sec4_no_remaining_below_covers x
 
-/-- **Lemma 4.6** (v2.10 l. 792-795) with the v2.10 wording of the hypothesis of Lemma 4.2 (l. 580-590): for every face
+/-- **Lemma 4.6** (v4.60 l. 683-686) with the v2.10 to v4.60 wording of the hypothesis of Lemma 4.2 (l. 539-549): for every face
 `E ⊇ E₀` of `B` there are `w ∈ relint E` and "some convex set `N ⊆ E`, open in `aff(E)` and containing `w`", with the
 cells meeting `N` among `S₁, S₂` and `T₁, T₂`, the half-space description, and `H_S`, `H_T` hyperplanes of `aff(E)`
 through `w` with `H_S ≠ H_T` — exactly the hypothesis `hN` of `lemma_4_2_v190`. -/
@@ -1680,7 +1842,11 @@ theorem lemma_4_6_v190 {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) 
   Proofs.Cov1.lemma_4_6_v190_proved x E hE hE0
 
 open Classical Filter Topology in
-/-- v2.10 l.803-809,815-817,834-835: "for such maximal forms mu_a, mu_b of the two families, lambda_a=mu_a and lambda_b=mu_b ... near zeta"; "the two terms of the maximum ... are equal, and so are the two terms of the minimum"; "E contains a segment through w in the alpha-direction, so phi_1 is not identically phi_2 on aff(E)". The gamma segment and the linear-form clause are retained. -/
+/-- v4.60 l.692,698-700,706-707: "if `μ_a` and `μ_b` are forms of maximal value at `ζ₁` in the `a`-family and in the
+`b`-family, respectively, then `λ_a = μ_a` and `λ_b = μ_b` on `Q_E` near `ζ₁`"; "At `w` the two terms of the maximum in
+Lemma 4.5(b) are both equal to `1/4 + (λ_a(ζ₁) + λ_b(ζ₁))/2`, and the two terms of the minimum are both equal to `3/4`"
+(here: the two terms of the maximum are equal, and so are the two terms of the minimum; the values are in
+`lemma_4_6_point_values`); "`E` contains a segment through `w` in the `α`-direction, so `φ₁ ≢ φ₂` on `aff(E)`". The gamma segment and the linear-form clause are retained. -/
 theorem lemma_4_6_point {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
     (E : Set (x.toSwitch.P' → ℝ)) (hE : IsFace x.toSwitch.B E) (hE0 : x.E0 ⊆ E) :
     ∃ w ∈ intrinsicInterior ℝ E,
@@ -1697,10 +1863,23 @@ theorem lemma_4_6_point {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
               u x.pb + x.toSwitch.chainSum (Kb.erase x.pb) u) :=
   Proofs.lemma_4_6_point_full x E hE hE0
 
+/-- v4.60 l. 689-692, proof of Lemma 4.6 (the values, new in v4.50): at the point `w = w(ζ₁)`, whose coordinates are
+`ζ₁` and `(α, β, γ, η) = (1/4 + ε/2, 1/4 − ε/2, 3/4, 3/4)` with `ε = λ_b − λ_a` (l. 689-690), "the two terms of the
+maximum in Lemma 4.5(b) are both equal to `1/4 + (λ_a(ζ₁) + λ_b(ζ₁))/2`, and the two terms of the minimum are both
+equal to `3/4`" (`λ_a`, `λ_b` read at `w`; they depend only on `ζ`, row `sec4_family_forms_zeta`). -/
+theorem lemma_4_6_point_values {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P)
+    (w : x.toSwitch.P' → ℝ) (hα : w x.pa = 1 / 4 + (x.lamB w - x.lamA w) / 2)
+    (hβ : w x.pb = 1 / 4 - (x.lamB w - x.lamA w) / 2) (hγ : w x.pg = 3 / 4) (hη : w x.ph = 3 / 4) :
+    w x.pa + x.lamA w = 1 / 4 + (x.lamA w + x.lamB w) / 2 ∧
+      w x.pb + x.lamB w = 1 / 4 + (x.lamA w + x.lamB w) / 2 ∧
+      w x.pg = 3 / 4 ∧ w x.ph = 3 / 4 :=
+  Proofs.V450.lemma_4_6_point_values_proved x w hα hβ hγ hη
+
 open Classical Filter Topology in
-/-- **Lemma 4.7, proof** (v2.10 l. 852-855): "at least `C(s, κ+1)` of the `κ`-faces lie in `D` (the faces of `D`, an
-`(s−1)`-polytope); the vertex figure of `v` is an `(s−1)`-polytope whose `(κ−1)`-faces correspond to the `κ`-faces
-that contain `v` [Ziegler, Proposition 2.4], so at least `C(s, κ)` of the `κ`-faces contain `v`" (`D` a facet,
+/-- **Lemma 4.7, proof** (v4.60 l. 719): "By the induction hypothesis for the `(s−1)`-polytope `D`, at least
+`C(s, κ+1)` of the `κ`-faces lie in `D`. The vertex figure of `v` is an `(s−1)`-polytope whose `(κ−1)`-faces correspond
+to the `κ`-faces that contain `v` [Ziegler, Proposition 2.4], so, by the induction hypothesis, at least `C(s, κ)` of the
+`κ`-faces contain `v`" (`D` a facet,
 `v` a vertex, `s = dim Q`; for `κ = 0` the face `{v}` itself counts). -/
 theorem lemma_4_7_facet_counts {ι : Type*} [Fintype ι] (Q D : Set (ι → ℝ))
     (hQ : IsPolytope Q) (hD : IsFace Q D) (facet : adim D + 1 = adim Q)
@@ -1709,20 +1888,20 @@ theorem lemma_4_7_facet_counts {ι : Type*} [Fintype ι] (Q D : Set (ι → ℝ)
     Nat.choose (adim Q) κ ≤ {F | IsFace Q F ∧ adim F = κ ∧ v ∈ F}.ncard :=
   Proofs.lemma_4_7_facet_counts_all Q D hQ hD facet v hv κ
 
-/-- **Lemma 4.7, proof** (v2.10 l. 855): "no face lies in `D` and contains `v`" (`v ∉ D`). -/
+/-- **Lemma 4.7, proof** (v4.60 l. 719): "no face lies in `D` and contains `v`" (`v ∉ D`). -/
 theorem sec4_facet_families_disjoint {ι : Type*} [Fintype ι] (Q D : Set (ι → ℝ))
     (v : ι → ℝ) (outside : v ∉ D) (κ : ℕ) :
     Disjoint {F | IsFace Q F ∧ adim F = κ ∧ F ⊆ D} {F | IsFace Q F ∧ adim F = κ ∧ v ∈ F} := by
   exact Proofs.sec4_facet_families_disjoint Q D v outside κ
 
-/-- **Section 4.4** (v2.10 l. 876-877), the displayed identity
+/-- **Section 4.4** (v4.60 l. 739-740), the displayed identity
 `∑_{e=4}^{n-1} C(n-5, e-4) t^{e-2}(1+t)² = t²(1+t)^{n-3}` (as polynomials in `t = X`). -/
 theorem sec4_sum_identity (n : ℕ) (hn : 5 ≤ n) :
     ∑ e ∈ Finset.Icc 4 (n - 1), (Nat.choose (n - 5) (e - 4) : ℤ[X]) * (X ^ (e - 2) * (1 + X) ^ 2) =
       X ^ 2 * (1 + X) ^ (n - 3) :=
   Proofs.Cov1.sum_identity n hn
 
-/-- v2.10 l. 879-883 and 982-985: for a linear extension `p₁, …, p_n` of `P` (`e i = p_{i+1}`), each prefix
+/-- v4.60 l. 742-745 and 825-828: for a linear extension `p₁, …, p_n` of `P` (`e i = p_{i+1}`), each prefix
 `I_j = {p₁, …, p_j}` is an order ideal and `p_{j+1}` is minimal in `P ∖ I_j`. -/
 theorem sec4_linext_prefixes (P : Type*) [Fintype P] [PartialOrder P] (e : Fin (Fintype.card P) ≃ P)
     (he : ∀ i j, e i < e j → i < j) (j : ℕ) (hj : j < Fintype.card P) :
@@ -1731,13 +1910,13 @@ theorem sec4_linext_prefixes (P : Type*) [Fintype P] [PartialOrder P] (e : Fin (
   Proofs.sec4_linext_prefixes P e he j hj
 
 open Classical Filter Topology in
-/-- v2.10 l.882: "Each I_j={p_1,...,p_j} (0 <= j <= n, I_0 empty) is an order ideal". The conclusion holds for every natural j, including j=n and n=0. -/
+/-- v4.60 l.744: "Each I_j={p_1,...,p_j} (0 <= j <= n, I_0 empty) is an order ideal". The conclusion holds for every natural j, including j=n and n=0. -/
 theorem sec4_linext_prefix_isLowerSet {P : Type*} [Fintype P] [PartialOrder P]
     (e : Fin (Fintype.card P) ≃ P) (he : ∀ i j, e i < e j → i < j) (j : ℕ) :
     IsLowerSet {p | (e.symm p : ℕ) < j} :=
   Proofs.sec4_linext_prefix_isLowerSet e he j
 
-/-- v2.10 l. 879-883 (Section 4.4): a linear extension of `I`, then `q`, then a linear extension of `J'` is a linear
+/-- v4.60 l. 742-745 (Section 4.4): a linear extension of `I`, then `q`, then a linear extension of `J'` is a linear
 extension of `P`: some linear extension has `I_{j₀} = I` and `p_{j₀+1} = q`. -/
 theorem sec4_linext_through_switch {P : Type*} [Fintype P] [PartialOrder P] (x : XSwitch P) :
     ∃ (e : Fin (Fintype.card P) ≃ P) (j₀ : ℕ) (hj₀ : j₀ < Fintype.card P), (∀ i j, e i < e j → i < j) ∧
@@ -1747,7 +1926,7 @@ theorem sec4_linext_through_switch {P : Type*} [Fintype P] [PartialOrder P] (x :
 /-! ## Section 5 (sharpness and the equality part) -/
 
 open Classical Filter Topology in
-/-- v2.10 l.879-881: "Now concatenate a linear extension of I, then q, then a linear extension of J'; as I is an order ideal and q=min J, this is a linear extension ... of P." -/
+/-- v4.60 l.742-743: "Now take a linear extension of `I`, followed by `q` and then by a linear extension of `J'`; as `I` is an order ideal and `q = min J`, this is a linear extension `p_1, …, p_n` of `P`." -/
 theorem sec4_linext_concat {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
     (e : Fin (Fintype.card P) ≃ P)
     (hI : ∀ i, e i ∈ s.I ↔ (i : ℕ) < s.I.ncard)
@@ -1757,14 +1936,14 @@ theorem sec4_linext_concat {P : Type*} [Fintype P] [PartialOrder P] (s : Switch 
     ∀ i j, e i < e j → i < j :=
   Proofs.sec4_linext_concat s e hI hq heI heJ
 
-/-- **Proposition 5.1** (lines 894–896): `F_C(X) − F_O(X) = t^2 + 2t^3 + t^4`. -/
+/-- **Proposition 5.1** (lines 756–757): `F_C(X) − F_O(X) = t^2 + 2t^3 + t^4`. -/
 theorem prop_5_1 :
     facePoly (chainPolytope XElem) - facePoly (orderPolytope XElem) = X ^ 2 + 2 * X ^ 3 + X ^ 4 := by
   ext k
   rw [coeff_sub, Proofs.facePoly_coeff, Proofs.facePoly_coeff, (ex_2_1 k).1, (ex_2_1 k).2]
   rcases k with _ | _ | _ | _ | _ | _ | k <;> simp [coeff_X_pow]
 
-/-- Proof of Proposition 5.1 "by hand" (lines 898–903), the switches other than `c` along `a, b, c, g, h`: at a
+/-- Proof of Proposition 5.1 "by hand" (lines 759–762), the switches other than `c` along `a, b, c, g, h`: at a
 switch of `a` or `b`, `L ≡ 0` on `B`; at a switch of `g` or `h`, `U ≡ 1` on `B`; and every switch of an element
 other than `c` leaves the face polynomial unchanged. -/
 theorem prop_5_1_other_switches (s : Switch XElem) :
@@ -1773,11 +1952,11 @@ theorem prop_5_1_other_switches (s : Switch XElem) :
     (s.q ≠ XElem.c → facePoly (chainOrderPolytope XElem (insert s.q s.I)) = facePoly (chainOrderPolytope XElem s.I)) :=
   prop_5_1_other_switches_of s (Cited.fourier_lemma_4_1 s)
 
-/-- **P10** (v2.10 l. 341-342 and l. 899-903): "At the switch of `p₁` (from `I = ∅` to `I = {p₁}`) we have `L ≡ 0`, so
+/-- **P10** (v4.60 l. 318-319 and l. 760-762): "At the switch of `p₁` (from `I = ∅` to `I = {p₁}`) we have `L ≡ 0`, so
 the two polytopes of Proposition [fibres] coincide: `O_{p₁}(P) = O(P)`, with `x_{p₁} = v_{p₁}`"; and "no element of `I`
-lies below the switched element, so `L ≡ 0` is affine on `B`. Hence `S` consists of the faces of `B`, so `F_S = F_B`;
-and `R = T`, as each cell `F ∩ T` (`F` a face of `B`, `T ∈ T`) is a face of `T`. So the change is
-`F_B + F_T − F_B − F_T = 0`; likewise at `g` and `h`, where `U ≡ 1`", stated for every switch (the change is the right
+lies below the switched element, so `L ≡ 0` is affine on `B`. Hence `S` consists of the nonempty faces of `B`, so
+`F_S = F_B`; and `R = T`, because each cell `G ∩ T` (`G` a face of `B`, `T ∈ T`) is a face of `T`. So the change is
+`F_B + F_T − F_B − F_T = 0`; likewise at the switches of `g` and `h`, where `U ≡ 1`", stated for every switch (the change is the right
 side `F_B + F_R − F_S − F_T` of Lemma 3.2). -/
 theorem sec5_minimal_switch_faces {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) :
     ((∀ p ∈ s.I, ¬ p < s.q) →
@@ -1798,7 +1977,7 @@ theorem sec5_minimal_switch_faces {P : Type*} [Fintype P] [PartialOrder P] (s : 
     · obtain ⟨h1, h2, h3, h4, h5, h6⟩ := hb h
       exact ⟨h1, h2, h3, h4, h5, h6, (Cited.fourier_lemma_4_1 s).trans h6⟩
 
-/-- Proof of Proposition 5.1 "by hand" (lines 905–937) and Figure 2 (lines 657–671): the switch of `c` in `X` exists;
+/-- Proof of Proposition 5.1 "by hand" (lines 764–790) and Figure 3 (lines 479–487): the switch of `c` in `X` exists;
 for it `E₀ = B`, only the carrier `B` contributes, `S` and `T` each have two 4-cells and one 3-cell with carrier `B`,
 `R` has four 4-cells, four 3-cells and one 2-cell with carrier `B`, and `δ_B = t^2 + 2t^3 + t^4`. -/
 theorem prop_5_1_c_switch :
@@ -1812,8 +1991,8 @@ theorem prop_5_1_c_switch :
   prop_5_1_c_switch_proved
 
 open Example21 in
-/-- **P11** (v2.10 l. 921-925), the switch of `c` in `X`: "here `L = max(0, α, β)`, and `A_0 = B ∩ {α = β = 0}` is not
-full-dimensional; likewise `U = min(γ, η, 1)`, and `A_1 = B ∩ {γ = η = 1}`" (`A_0` is the domain of the empty chain,
+/-- **P11** (v4.60 l. 777-778), the switch of `c` in `X`: "here `L = max(0, α, β)`, and `A_0 = B ∩ {α = β = 0}` is not
+full-dimensional; likewise, `U = min(γ, η, 1)`, and `A_1 = B ∩ {γ = η = 1}` is not full-dimensional either" (`A_0` is the domain of the empty chain,
 `A_1` the domain of the constant branch `1`; neither is full-dimensional). -/
 theorem sec5_center_A0_A1 :
     let s := CenterResult.center
@@ -1829,7 +2008,7 @@ theorem sec5_center_A0_A1 :
   exact sec5_center_A0_A1_proved
 
 open HibiLi.Proofs.Cov200 in
-/-- **Section 5** (v2.10 l. 932): "A cell `S ∩ T` of `R` has carrier `B` only if `S` and `T` do." Stated for every
+/-- **Section 5** (v4.60 l. 784): "A cell `S ∩ T` of `R` has carrier `B` only if `S` and `T` do." Stated for every
 switch, every cell `S` of `S` and `T` of `T`. -/
 theorem sec5_RT_carrier {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) {S T : Set (s.P' → ℝ)}
     (hS : S ∈ s.cellsS) (hT : T ∈ s.cellsT) (h : IsCarrier s.B s.B (S ∩ T)) :
@@ -1838,8 +2017,9 @@ theorem sec5_RT_carrier {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) 
 
 open HibiLi.Proofs.Cov200 in
 open HibiLi.Example21 HibiLi.Example21.CenterGeometry in
-/-- **Figure 2** (v2.10 l. 665-667): "The function `L` is affine on no neighborhood of a point with `ξ = 0` (these points
-lie in the `3`-cell `B ∩ {α = β}` of `S`, blue), and `U` is affine on no neighborhood of a point with `ω = 0`". In the
+/-- **Figure 3** (v4.60 l. 484): "The function `L` is not affine on any neighborhood of a point with `ξ = 0`; these
+points lie in the `3`-cell `B ∩ {α = β}` of `S` (solid line). Likewise, `U` is not affine on any neighborhood of a point
+with `ω = 0`". In the
 figure's slice `Π = {α + β = 1/2, γ + η = 3/2}` of `B` (the switch of `c` in `X`): for every point `v` of `B ∩ Π` with
 `ξ = α - β = 0` and every `ε > 0`, `L` is not affine on `B ∩ Π ∩ ball(v, ε)`; likewise `U` at `ω = γ - η = 0`. (Not
 affine on these slice neighbourhoods implies not affine on any neighbourhood of `v` in `B`.) -/
@@ -1859,9 +2039,9 @@ theorem fig2_L_not_affine_near :
 
 open HibiLi.Proofs.Fig2B in
 open HibiLi.Example21 HibiLi.Example21.CenterGeometry in
-/-- **Figure 2** (v2.10 l. 665-667), strict reading: "The function `L` is affine on no neighborhood of a point with
-`ξ = 0` ..., and `U` is affine on no neighborhood of a point with `ω = 0`". For EVERY point `v` of `B` (the switch of `c`
-in `X`, coordinates `α, β, γ, η`, l. 659-661) with `ξ = α - β = 0` and every `ε > 0`, `L` is not affine on the
+/-- **Figure 3** (v4.60 l. 484), strict reading: "The function `L` is not affine on any neighborhood of a point with
+`ξ = 0`; … Likewise, `U` is not affine on any neighborhood of a point with `ω = 0`". For EVERY point `v` of `B` (the switch of `c`
+in `X`, coordinates `α, β, γ, η`, l. 480) with `ξ = α - β = 0` and every `ε > 0`, `L` is not affine on the
 neighbourhood `B ∩ ball(v, ε)` of `v` in `B`; likewise `U` at every point of `B` with `ω = γ - η = 0`. (The row
 `fig2_L_not_affine_near` is the same claim for neighbourhoods inside the figure's slice plane.) -/
 theorem fig2_not_affine_near_B :
@@ -1872,8 +2052,8 @@ theorem fig2_not_affine_near_B :
   ⟨fun v hv hξ _ hε => L_not_affine_near_B_proved v hv hξ hε,
     fun v hv hω _ hε => U_not_affine_near_B_proved v hv hω hε⟩
 
-/-- **Proposition 5.1**, proof, v2.10 l. 913-921, for every switch and every face `E` of `B`: if `L` is affine on `E`,
-then `E` is a cell of `S` (l. 916), `S|_E` consists of the (nonempty) faces of `E`, `E` is the only cell of `S` with
+/-- **Proposition 5.1**, proof, v4.60 l. 768-774, for every switch and every face `E` of `B`: if `L` is affine on `E`,
+then `E` is a cell of `S` (l. 771), `S|_E` consists of the (nonempty) faces of `E`, `E` is the only cell of `S` with
 carrier `E`, `R|_E = T|_E`, and `δ_{E,k} = 0` for all `k`; the same with `U`, `T` and `S` exchanged. -/
 theorem sec5_affine_face {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P) (E : Set (s.P' → ℝ))
     (hE : IsFace s.B E) :
@@ -1896,7 +2076,7 @@ theorem sec5_affine_face {P : Type*} [Fintype P] [PartialOrder P] (s : Switch P)
       B3.restrict_cellsR_eq_S s hE hET, fun k => B3.deltaCoeff_eq_zero_of_T s hE hET k⟩
 
 open Example21 in
-/-- Proposition 5.1, switch of `c` in `X` (paper v2.10 l. 908-914): every proper face of `B` lies in one of the
+/-- Proposition 5.1, switch of `c` in `X` (paper v4.60 l. 766-769): every proper face of `B` lies in one of the
 eight hyperplanes `α = 0, β = 0, γ = 1, η = 1, α = γ, α = η, β = γ, β = η`; on the first four `L` or `U` is affine; on the
 other four `L` and `U` are both affine (for example, on `α = γ`, `L = α` and `U = γ`; Lean also states `L = U` there);
 so on every proper face `E` of `B`, `L` or `U` is affine. -/
@@ -1923,7 +2103,7 @@ theorem prop_5_1_proper_faces_affine :
     fun _ hE hne => B2.proper_face_affine hE hne⟩
 
 open Example21 Example21.CenterRegions Example21.NamedCells Example21.CenterGeometry in
-/-- **Proposition 5.1**, proof, switch of `c` in `X`, v2.10 l. 925-929: "The cells with carrier `B` are: in `S`, two
+/-- **Proposition 5.1**, proof, switch of `c` in `X`, v4.60 l. 778-781: "The cells with carrier `B` are as follows: in `S`, two
 `4`-cells and the `3`-cell `B ∩ {α = β}`; in `T`, two `4`-cells and the `3`-cell `B ∩ {γ = η}`; in `R`, four `4`-cells,
 four `3`-cells and the `2`-cell `B ∩ {α = β, γ = η}`". Stated in the coordinates `(α, β, γ, η) = (x_a, x_b, y_g, y_h)`
 (`canonicalEquiv`, an affine bijection, which keeps dimensions: last conjunct), with every cell named. -/
@@ -1939,10 +2119,10 @@ theorem prop_5_1_cells_with_carrier_B :
   NamedCells.center_cells_with_carrier_B
 
 open Example21 Example21.CenterRegions Example21.NamedCells Example21.CenterGeometry in
-/-- **Figure 2** caption, v2.10 l. 660-670: the slice of `B` by the plane `{α + β = 1/2, γ + η = 3/2}` through
+/-- **Figure 3** caption, v4.60 l. 480-487: the slice of `B` by the plane `{α + β = 1/2, γ + η = 3/2}` through
 `u₀ = (1/4, 1/4, 3/4, 3/4)`, in the coordinates `ξ = α − β`, `ω = γ − η`, is the square `|ξ|, |ω| ≤ 1/2`; "the point
 `u₀`, the four half-axes and the four quadrants are the slices of the `2`-, `3`- and `4`-dimensional cells of `R` with
-carrier `B`" (the cells named in `prop_5_1_cells_with_carrier_B`).  `base` is the image of `B` in the `Fin 4`
+carrier `B`, respectively" (the cells named in `prop_5_1_cells_with_carrier_B`).  `base` is the image of `B` in the `Fin 4`
 coordinates (first conjunct), so these are slices of `B`. -/
 theorem fig2_slices :
     canonicalEquiv '' center.B = base ∧ u0 ∈ slicePlane ∧ sliceCoords u0 = (0, 0) ∧
@@ -1957,8 +2137,8 @@ theorem fig2_slices :
   ⟨CenterGeometry.image_B, NamedCells.fig2_slices⟩
 
 open Example21 Example21.CenterRegions Example21.NamedCells Example21.CenterGeometry in
-/-- **Figure 2** caption, v2.10 l. 665-666, for bands: `L = max(α, β)` is not affine on any band `|α − β| ≤ t`
-(`0 < t ≤ 1/2`) of the slice (the caption's stronger "affine on no neighborhood of a point with `ξ = 0`" is the row
+/-- **Figure 3** caption, v4.60 l. 484, for bands: `L = max(α, β)` is not affine on any band `|α − β| ≤ t`
+(`0 < t ≤ 1/2`) of the slice (the caption's stronger "not affine on any neighborhood of a point with `ξ = 0`" is the row
 `fig2_not_affine_near_B`). -/
 theorem fig2_L_not_affine_band (t : ℝ) (ht : 0 < t) (ht' : t ≤ 1 / 2) :
     ¬ AffineOn center.L {u | u ∈ center.B ∧ u CenterSwitch.canonical.pa + u CenterSwitch.canonical.pb = 1 / 2 ∧
@@ -1967,8 +2147,8 @@ theorem fig2_L_not_affine_band (t : ℝ) (ht : 0 < t) (ht' : t ≤ 1 / 2) :
   NamedCells.center_L_not_affine_across t ht ht'
 
 open Example21 Example21.CenterRegions Example21.NamedCells Example21.CenterGeometry in
-/-- **Figure 2** caption, v2.10 l. 666-667, for bands: `U = min(γ, η)` is not affine on any band `|γ − η| ≤ t` of
-the slice (the caption's stronger "affine on no neighborhood of a point with `ω = 0`" is the row
+/-- **Figure 3** caption, v4.60 l. 484, for bands: `U = min(γ, η)` is not affine on any band `|γ − η| ≤ t` of
+the slice (the caption's stronger "not affine on any neighborhood of a point with `ω = 0`" is the row
 `fig2_not_affine_near_B`). -/
 theorem fig2_U_not_affine_band (t : ℝ) (ht : 0 < t) (ht' : t ≤ 1 / 2) :
     ¬ AffineOn center.U {u | u ∈ center.B ∧ u CenterSwitch.canonical.pa + u CenterSwitch.canonical.pb = 1 / 2 ∧
@@ -1976,7 +2156,7 @@ theorem fig2_U_not_affine_band (t : ℝ) (ht : 0 < t) (ht' : t ≤ 1 / 2) :
       |u CenterSwitch.canonical.pg - u CenterSwitch.canonical.ph| ≤ t} :=
   NamedCells.center_U_not_affine_across t ht ht'
 
-/-- Figure 2 caption (lines 657–661) and proof of Proposition 5.1 (lines 905–907): for `P = X` (the switch of `c`,
+/-- Figure 3 caption (lines 479–480) and proof of Proposition 5.1 (lines 764–765): for `P = X` (the switch of `c`,
 `I = {a, b}`, `J′ = {g, h}`), `L = max(α, β)` and `U = min(γ, η)` on all of `B`. -/
 theorem prop_5_1_X_LU : ∀ x : XSwitch XElem,
     x.q = XElem.c ∧ x.toSwitch.I = {XElem.a, XElem.b} ∧ x.toSwitch.Iᶜ \ {x.q} = {XElem.g, XElem.h} ∧
@@ -1988,13 +2168,14 @@ section
 local instance : DecidableLT XElem := decidableLTOfDecidableLE
 
 open Polynomial in
-/-- v2.10 l. 245-246 and 897-938 (F6): "Proposition 5.1 shows that `F_C(X) − F_O(X) = t^2+2t^3+t^4`", by the proof of
+/-- v4.60 l. 238-239 and 758-790 (F6): "Proposition 5.1 shows that `F_C(X) − F_O(X) = t^2+2t^3+t^4`", by the proof of
 Proposition 5.1 itself. Switch along `a, b, c, g, h` (`O(X) = O_∅(X)`, `C(X) = O_X(X)`); by Lemma 3.2 each switch
 changes `F` by the sum of its local terms. The switches of `a`, `b`, `g`, `h` change nothing
 (`prop_5_1_other_switches`); for the switch of `c` (`I = {a, b}`) every local term other than `δ_B` is `0` and
 `δ_B = t² + 2t³ + t⁴` (`prop_5_1_c_switch`); "adding the five changes gives the claim":
 `F_C(X) − F_O(X) = t² + 2t³ + t⁴`. Same statement as `prop_5_1`, by the paper's route: it does not use the
-computed face numbers of Example 2.1 (`ex_2_1`), and it uses Fourier's Lemma 4.1 (cited, inside `lemma_3_2`). -/
+computed face numbers of Example 2.1 (`ex_2_1`), and it uses Fourier's Lemma 4.1 (cited by the paper, proved in Lean,
+inside `lemma_3_2`). -/
 theorem prop_5_1_by_switches :
     facePoly (chainPolytope XElem) - facePoly (orderPolytope XElem) = X ^ 2 + 2 * X ^ 3 + X ^ 4 := by
   classical
@@ -2040,18 +2221,18 @@ theorem prop_5_1_by_switches :
 
 end
 
-/-- **Proposition 5.2** (lines 941–946): `P_n` (here `sharpFamily (n−5)`) has `n` elements, contains `X`, and
+/-- **Proposition 5.2** (lines 793–797): `P_n` (here `sharpFamily (n−5)`) has `n` elements, contains `X`, and
 `F_C(P_n) − F_O(P_n) = t^2 (1+t)^{n−3}`. -/
 theorem prop_5_2 (m : ℕ) :
     Fintype.card (sharpFamily m) = m + 5 ∧ ContainsX (sharpFamily m) ∧
     facePoly (chainPolytope (sharpFamily m)) - facePoly (orderPolytope (sharpFamily m)) = gapPoly (m + 5) :=
   prop_5_2_proved m
 
-/-- v2.10 l. 948-959 (F11), proof of Proposition 5.2, with `0̂` the new minimum (l. 942): "the points of `O(P_{m+1})`
+/-- v4.60 l. 799-802 (F11), proof of Proposition 5.2, with `0̂` the new least element (l. 794): "the points of `O(P_{m+1})`
 with `v_0̂ = θ` are … the points `(θ, θ1 + (1−θ)v')` with `v' ∈ O(P_m)` …, the polytope `O(P_{m+1})` is the pyramid over
-`{0} × O(P_m)` with apex `1'`. Every maximal chain of `P_{m+1}` contains `0̂`, … so the section of `C(P_{m+1})` at
-`x_0̂ = θ` is `{θ} × (1−θ)C(P_m)`, and, … the polytope `C(P_{m+1})` is the pyramid over `{0} × C(P_m)` with apex the
-unit vector `e_0̂`." Here `P_{m+1} = WithBot P_m` (`0̂ = ⊥`; this is how
+`{0} × O(P_m)` with apex `1'`. Every maximal chain of `P_{m+1}` contains `0̂`. … so the set of points of `C(P_{m+1})`
+with `x_0̂ = θ` is `{θ} × (1−θ)C(P_m)`. Since …, the polytope `C(P_{m+1})` is the pyramid over `{0} × C(P_m)` with apex
+the unit vector `e_0̂`." Here `P_{m+1} = WithBot P_m` (`0̂ = ⊥`; this is how
 `sharpFamily (m+1)` is built from `sharpFamily m`), and `O(P_m)`, `C(P_m)` sit in the hyperplane `v_0̂ = 0` by
 `bottomLift`. For `0 ≤ θ ≤ 1`: the section of `O` at `v_0̂ = θ` is the set of `θ1 + (1−θ)·lift(w)`, `w ∈ O(P_m)`
 (its `0̂` coordinate is `θ`, the others are `θ1 + (1−θ)w`); `O(P_{m+1})` is the convex hull of the apex `1` and the
@@ -2075,7 +2256,7 @@ theorem sec5_bottom_pyramids (P : Type*) [Fintype P] [PartialOrder P] :
     chainBottomApex (P := P) ⊥ = 1 ∧ (∀ pp : P, chainBottomApex (P := P) pp = 0) :=
   Proofs.AddV170.bottom_pyramids_proved P
 
-/-- **Theorem 4.1**, attainment (lines 574–576): for every `n ≥ 5`, equality holds for some `n`-element poset `P`
+/-- **Theorem 4.1**, attainment (lines 527–529): for every `n ≥ 5`, equality holds for some `n`-element poset `P`
 containing `X` (Proposition 5.2). -/
 theorem thm_4_1_sharp (n : ℕ) (hn : 5 ≤ n) :
     ∃ (P : Type) (_ : Fintype P) (_ : PartialOrder P), Fintype.card P = n ∧ ContainsX P ∧
@@ -2087,7 +2268,7 @@ theorem thm_4_1_sharp (n : ℕ) (hn : 5 ≤ n) :
   have := congrArg (fun p => Polynomial.coeff p k) hpoly
   simpa only [coeff_sub, Proofs.facePoly_coeff] using this
 
-/-- v1.70 lines 737–738 (not in v1.80 or v2.10): "For `n = 6`, seven of the sixteen posets containing `X` attain the
+/-- v1.70 lines 737–738 (not in v1.80, v2.10, v4.50 or v4.60): "For `n = 6`, seven of the sixteen posets containing `X` attain the
 bound, `P_6` among them".  The sixteen posets `censusPoset i` (Defs/Census.lean) are a complete, irredundant list of the
 6-element posets containing `X` up to isomorphism; exactly seven of them have `F_C − F_O = t²(1+t)³`; one of them is
 `P_6 = sharpFamily 1`. -/
@@ -2103,7 +2284,7 @@ theorem sec5_census_n6 :
         facePoly (chainPolytope (censusPoset i)) - facePoly (orderPolytope (censusPoset i)) = gapPoly 6) :=
   Census.sec5_census_n6_proved
 
-/-- **Corollary 5.3** (lines 967–972): for `2 ≤ k ≤ n − 1`, `f_k(O(P)) = f_k(C(P))` iff `P` does not contain `X`, iff
+/-- **Corollary 5.3** (lines 810–815): for `2 ≤ k ≤ n − 1`, `f_k(O(P)) = f_k(C(P))` iff `P` does not contain `X`, iff
 `O(P)` and `C(P)` are unimodularly equivalent. -/
 theorem cor_5_3 (P : Type*) [Fintype P] [PartialOrder P] [DecidableEq P] (k : ℕ) (hk2 : 2 ≤ k)
     (hkn : k ≤ Fintype.card P - 1) :
@@ -2115,12 +2296,12 @@ theorem cor_5_3 (P : Type*) [Fintype P] [PartialOrder P] [DecidableEq P] (k : �
   have hpos : 0 < Nat.choose (Fintype.card P - 3) (k - 2) := Nat.choose_pos (by omega)
   omega
 
-/-- **Theorem 1.2** (thm:resolution), v2.10 l. 123-133: for a finite poset `P` with `n ≥ 2` elements,
+/-- **Theorem 1.2** (thm:resolution), v4.60 l. 136-145: for a finite poset `P` with `n ≥ 2` elements,
 (a) (Fourier, Theorem 1.1) `f_k(O(P)) ≤ f_k(C(P))` for every `k` (`fourier_thm_1_1`, proved from Proposition 3.7);
 (b) for `2 ≤ k ≤ n − 1`, `f_k(O(P)) = f_k(C(P))` iff `O(P)` and `C(P)` are unimodularly equivalent (Corollary 5.3);
 (c) `f_1(O(P)) = f_1(C(P))` [HLSS], while `O(P)` and `C(P)` are not unimodularly equivalent if `P` contains `X`
-("Theorem 2.2; for `P = X`, see also Example 2.1"), so "part (b) of Conjecture 1.1 fails for `k = 1`, for every poset
-that contains `X`": the fourth conjunct is `P = X` (equal edge counts, not equivalent, via the facet numbers), and the
+("Theorem 2.2; for `P = X`, see also Example 2.1"), so "for every poset that contains `X`, part (b) of Conjecture 1.1
+fails for `k = 1`": the fourth conjunct is `P = X` (equal edge counts, not equivalent, via the facet numbers), and the
 last conjunct is every poset `Q` that contains `X` (by `thm_2_2`). The hypothesis `n ≥ 2` is kept as in the paper; it
 is not needed. -/
 theorem thm_1_2 (P : Type*) [Fintype P] [PartialOrder P] [DecidableEq P] (_hn : 2 ≤ Fintype.card P) :
@@ -2136,8 +2317,8 @@ theorem thm_1_2 (P : Type*) [Fintype P] [PartialOrder P] [DecidableEq P] (_hn : 
     sec1_edges_agree P, ⟨sec1_edges_agree XElem, sec1_X_not_unimod⟩,
     fun Q _ _ _ hX => ⟨sec1_edges_agree Q, fun h => (thm_2_2 Q).1 h hX⟩⟩
 
-/-- Conjecture 1.1 resolved, in the PAPER's conventions (lines 120–121: "With part (a) and the case `k=1`, this resolves
-Conjecture 1.1"; abstract line 57: "With Fourier's inequality, these results settle the conjecture"): part (a) for every
+/-- Conjecture 1.1 resolved, in the PAPER's conventions (line 134: "Together with part (a) and the case `k=1`, this
+resolves Conjecture 1.1"; abstract line 59: "Together with Fourier's inequality, these results settle the conjecture"): part (a) for every
 `1 ≤ i ≤ d − 1`; part (b) for every `2 ≤ i ≤ d − 1`; and part (b) fails for `i = 1` (the poset `X`). -/
 theorem conj_1_1_resolved_paper :
     (∀ (P : Type u) [Fintype P] [PartialOrder P], 1 < Fintype.card P → ∀ i, 1 ≤ i → i ≤ Fintype.card P - 1 →
@@ -2151,7 +2332,7 @@ theorem conj_1_1_resolved_paper :
   · exact (thm_2_2 P).mpr ((cor_5_3 P i hi2 hin).1.mp heq)
   · rw [(ex_2_1 1).1, (ex_2_1 1).2]; rfl
 
-/-- **Conjecture 1.1 (lines 71–81; Hibi–Li 2016, Conjecture 2.4) is resolved — the HEADLINE, stated in Hibi–Li's own
+/-- **Conjecture 1.1 (lines 77–87; Hibi–Li 2016, Conjecture 2.4) is resolved — the HEADLINE, stated in Hibi–Li's own
 published conventions** (their `O(P)` with `a_i ≥ a_j`, `C(P)` by maximal chains, unimodular equivalence by row
 vectors): (a) `f_i ≤ f'_i` for all `1 ≤ i ≤ d − 1`; (b) if `f_i = f'_i` for some `2 ≤ i ≤ d − 1` then `O(P)` and `C(P)`
 are unimodularly equivalent; and (b) is false for `i = 1`, witnessed by `X`. -/
@@ -2183,13 +2364,14 @@ theorem conj_1_1_resolved :
 
 /-! ### Section 5: coverage rows (review REVIEW_006_cov, 20261028) -/
 
-/-- v2.10 l. 176-177 and 960-961: each pyramid step multiplies `F_C − F_O` by `1 + t`. -/
+/-- v4.60 l. 183-184 and 803-804: each pyramid step multiplies `F_C − F_O` by `1 + t`. -/
 theorem sec5_pyramid_step : ∀ m, facePoly (chainPolytope (sharpFamily (m + 1))) -
     facePoly (orderPolytope (sharpFamily (m + 1))) =
       (1 + X) * (facePoly (chainPolytope (sharpFamily m)) - facePoly (orderPolytope (sharpFamily m))) :=
   Proofs.sec5_pyramid_step
 
-/-- **Corollary 5.3, proof** (v2.10 l. 976-977): "the coefficient of `t^k` in `t²(1+t)^{n−3}` is `C(n−3, k−2) ≥ 1`"
+/-- **Corollary 5.3, proof** (v4.60 l. 819-820): "the coefficient of `t^k` in `t²(1+t)^{n−3}` is `C(n−3, k−2)`, which
+is at least `1`"
 (for `2 ≤ k ≤ n − 1`). -/
 theorem cor_5_3_gap_coefficient (n k : ℕ) (hn : 5 ≤ n) (hk : 2 ≤ k) (hkn : k ≤ n - 1) :
     (gapPoly n).coeff k = (Nat.choose (n - 3) (k - 2) : ℤ) ∧ 1 ≤ Nat.choose (n - 3) (k - 2) := by

@@ -167,7 +167,7 @@ end R3Small
 
 open R3Small
 
-/-- Paper v2.10 lines 657–661 (Figure 2 caption: "for `P = X` … `L = max(α, β)`, `U = min(γ, η)`") and lines 905–907
+/-- Paper v2.10 lines 657–661 (the caption of Figure 2 then, Figure 3 now: "for `P = X` … `L = max(α, β)`, `U = min(γ, η)`") and lines 905–907
 (proof of Proposition 5.1: "When `c` is switched, `I = {a, b}` and `J' = {g, h}` … with `L = max(α, β)` and
 `U = min(γ, η)`"): for every switch of Section 4.2 in `X`, `q = c`, `I = {a, b}`, `J' = J \ {q} = {g, h}`, the
 coordinates `α, β` are those of `a, b` and `γ, η` those of `g, h`, and on all of `B` the two functions are
