@@ -1,6 +1,6 @@
 # The Hibi–Li (2016) conjecture is fully resolved — Lean 4 proof
 
-The paper: https://doi.org/10.5281/zenodo.23704735
+The paper: https://doi.org/10.5281/zenodo.23887049
 
 This folder is a Lean 4 proof of the paper's results.
 
