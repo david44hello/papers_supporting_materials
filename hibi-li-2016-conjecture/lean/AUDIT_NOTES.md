@@ -1,7 +1,7 @@
 # The Hibi–Li (2016) conjecture is fully resolved — notes on the Lean proof
 
 This folder is a formal proof, checked by the Lean 4 proof assistant, of every result of the paper "The Hibi–Li (2016)
-conjecture is fully resolved" by Dave Goel. Lean checked version 4.60 of the paper. The paper: https://doi.org/10.5281/zenodo.23704735
+conjecture is fully resolved" by Dave Goel. Lean checked version 4.60 of the paper (the posted version 4.70 has the same mathematics; it changes only the Lean link and the colours of Figure 2). The paper: https://doi.org/10.5281/zenodo.23887049
 An expanded version of the paper, with many other results, is on Zenodo:
 https://doi.org/10.5281/zenodo.23601975
 
