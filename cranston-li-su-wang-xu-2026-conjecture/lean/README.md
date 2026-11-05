@@ -23,4 +23,4 @@ PASS: project builds; source policy passes; no forbidden assumptions in the pape
 
 [AUDIT.md](AUDIT.md) lists every claim of the paper, as Lean sees it.
 
-Copyright (C) Dave Goel 2026--now. All rights reserved.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
