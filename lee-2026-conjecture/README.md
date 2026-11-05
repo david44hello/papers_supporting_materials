@@ -1,8 +1,8 @@
-# The Lee (2026) conjecture on the diameters of order and chain polytopes fails in both directions
+# Diameters of the order and chain polytopes of a connected poset
 
-The paper: https://doi.org/10.5281/zenodo.23716603
+The paper: https://doi.org/10.5281/zenodo.23968824
 
-[lean/](lean/) is a Lean 4 proof of the paper's results.
+[lean/](lean/) is a Lean 4 proof of the results of version 1.50 of the paper (https://doi.org/10.5281/zenodo.23716603), then titled "The Lee (2026) conjecture on the diameters of order and chain polytopes fails in both directions". The numbered results are the same in version 2.10.
 
 ## Directions to Reproduce
 
