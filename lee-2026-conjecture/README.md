@@ -23,4 +23,4 @@ PASS: project builds; source policy passes; audit OPEN 0 / VIOLATION 0; every X_
 
 31 claims use results that the paper cites; [AUDIT.md](lean/AUDIT.md) names them, claim by claim.
 
-Copyright (C) Dave Goel 2026--now. All rights reserved.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
