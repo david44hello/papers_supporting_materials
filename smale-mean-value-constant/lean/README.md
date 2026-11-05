@@ -38,4 +38,4 @@ It ends with (its Lemma 8.6 is Lemma 4.3 of the paper):
 LEMMA 8.6 for ../pairs/pair_I_K2N18.json with k = 2, n = 18: PASS
 ```
 
-Copyright (C) Dave Goel 2026--now. All rights reserved.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
