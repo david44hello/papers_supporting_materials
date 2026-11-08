@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/ResDegree.lean — the degree bound of Theorem 5.1, proof (R) (paper 009, posted v1.90, tex l.404-405):
+Smale/Proofs/ResDegree.lean — the degree bound of Theorem 5.1, proof (R) (paper 009, v2.90, tex l.449-450):
 the resultant `Res_w(P_c, P_c*)` at formal degrees `(n-1, n-1)` is a polynomial `F` in `c` of degree at most
 `2(n-1)²` (`578` for `n = 18`): the Sylvester matrix has `2(n-1)` rows, and its entries are coefficients of `P_c` or
 `P_c*`, polynomials in `c` of degree at most `n - 1` (`U_l` has degree `l`).
@@ -66,7 +66,7 @@ theorem natDegree_sylvester_le (H : ℂ[X]) (n : ℕ) (i j : Fin (n - 1 + (n - 1
     · exact natDegree_coeff_dieudonneGen_le H n _
     · rw [natDegree_zero]; exact Nat.zero_le _
 
-/-- tex l.307 and l.404-405, exactly the Statements type: `Res_w(P_c, P_c*)` is a polynomial `F` in `c` of degree at
+/-- tex l.352-353 and l.449-450, exactly the Statements type: `Res_w(P_c, P_c*)` is a polynomial `F` in `c` of degree at
 most `2(n-1)²`. -/
 theorem sec4_res_poly_deg_proved (H : ℂ[X]) (n : ℕ) :
     ∃ F : ℂ[X], F.natDegree ≤ 2 * (n - 1) ^ 2 ∧
@@ -79,7 +79,7 @@ theorem sec4_res_poly_deg_proved (H : ℂ[X]) (n : ℕ) :
   calc _ ≤ (n - 1 + (n - 1)) * (n - 1) := h
     _ = 2 * (n - 1) ^ 2 := by ring
 
-/-- tex l.307, l.404-405: the Sylvester matrix of `P_c`, `P_c*` is `M(c)` for one matrix `M` of polynomials in `c` whose
+/-- tex l.352-353, l.449-450: the Sylvester matrix of `P_c`, `P_c*` is `M(c)` for one matrix `M` of polynomials in `c` whose
 entries have degree at most `n - 1`; `F = det M` has degree at most `2(n-1)²`, and `Res_w(P_c, P_c*) = F(c)`. -/
 theorem sec4_res_poly_matrix_proved (H : ℂ[X]) (n : ℕ) :
     ∃ (M : Matrix (Fin (n - 1 + (n - 1))) (Fin (n - 1 + (n - 1))) ℂ[X]) (F : ℂ[X]),
@@ -99,7 +99,7 @@ theorem sec4_res_poly_matrix_proved (H : ℂ[X]) (n : ℕ) :
       _ = 2 * (n - 1) ^ 2 := by ring
   · rw [← map_dieudonneGen H n c, ← map_dieudonneStarGen H n c, resultant_map_map, coe_evalRingHom]
 
-/-- tex l.301: "a common zero makes the Sylvester matrix singular, at any formal degrees": for formal degrees
+/-- tex l.345: "a common zero makes the Sylvester matrix singular, at any formal degrees": for formal degrees
 `m ≥ deg f`, `k ≥ deg g`, not both `0`, a common zero of `f` and `g` makes the resultant at `(m, k)` vanish. (For
 `m = k = 0` the Sylvester matrix is empty, with determinant `1`.) -/
 theorem resultant_eq_zero_of_common_zero (f g : ℂ[X]) (m k : ℕ) (hf : f.natDegree ≤ m) (hg : g.natDegree ≤ k)

@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Lemma31.lean — paper 009, Lemma 3.1 (tex l.193-217): from a polynomial `Q` with no critical point in `𝔻`
+Smale/Proofs/Lemma31.lean — paper 009, Lemma 3.1 (tex l.236-260): from a polynomial `Q` with no critical point in `𝔻`
 and `k + 1` distinct zeros `b, a₁, …, a_k` in `𝔻` such that `H = Q ∏ (1 - ā_j z)/(z - a_j)` is univalent in `𝔻`, the
 pair `W = (H ∘ φ)/N`, `B = (|η|/η) ∏ B_{a_j} ∘ φ` is admissible with `deg B = k` and `1/B(0)² = ∏ J(a_j, b)`.
 The paper's step "as `H` is univalent, `H'(b) ≠ 0`" is proved for polynomials from Rouché's theorem.
@@ -257,7 +257,7 @@ theorem deriv_WOf_mul_BOf {Q : ℂ[X]} {as : List ℂ} {b : ℂ} (hnd : as.Nodup
     ((Q.hasDerivAt (diskAut b w)).comp w hφ).const_mul κ
   rw [hev.deriv_eq, hcomp.deriv, mul_assoc]
 
-/-- `lem_3_1_WB` (tex l.213-217): `B(0) = |η|`; `WB = (|η|/(ηN)) Q ∘ φ` on `𝔻`; `(WB)' = (|η|/(ηN)) Q'(φ) φ'` on `𝔻`. -/
+/-- `lem_3_1_WB` (tex l.256-260): `B(0) = |η|`; `WB = (|η|/(ηN)) Q ∘ φ` on `𝔻`; `(WB)' = (|η|/(ηN)) Q'(φ) φ'` on `𝔻`. -/
 theorem lem_3_1_WB_proved (k : ℕ) (_hk : 1 ≤ k) (Q : ℂ[X]) (b : ℂ) (as : List ℂ) (_hlen : as.length = k)
     (_hQ' : ∀ w ∈ disk, Q.derivative.eval w ≠ 0) (hnd : (b :: as).Nodup) (hin : ∀ a ∈ b :: as, a ∈ disk)
     (hzero : ∀ a ∈ b :: as, Q.eval a = 0) (_huniv : IsUnivalentOn (fun z => (Hpoly Q as).eval z) disk) :
@@ -294,7 +294,7 @@ theorem prod_blaschke_comp_aut (b : ℂ) (hb : b ∈ disk) :
       rw [hfac w hw, hprod w hw]
       ring
 
-/-- `lem_3_1` (tex l.193-217): `(W, B)` is an admissible pair, `deg B = k`, and `1/B(0)² = ∏_j J(a_j, b)`. -/
+/-- `lem_3_1` (tex l.236-260): `(W, B)` is an admissible pair, `deg B = k`, and `1/B(0)² = ∏_j J(a_j, b)`. -/
 theorem lem_3_1_proved (k : ℕ) (_hk : 1 ≤ k) (Q : ℂ[X]) (b : ℂ) (as : List ℂ) (hlen : as.length = k)
     (hQ' : ∀ w ∈ disk, Q.derivative.eval w ≠ 0) (hnd : (b :: as).Nodup) (hin : ∀ a ∈ b :: as, a ∈ disk)
     (hzero : ∀ a ∈ b :: as, Q.eval a = 0) (huniv : IsUnivalentOn (fun z => (Hpoly Q as).eval z) disk) :

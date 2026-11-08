@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Lemma53More.lean — two steps of the proof of Lemma 5.3 of paper 009 (posted v1.90, tex l.453-463): a
+Smale/Proofs/Lemma53More.lean — two steps of the proof of Lemma 5.3 of paper 009 (v2.90, tex l.496-506): a
 critical point of p_ε escapes to ∞ as ε → 0 (the d critical points have product of modulus 1/((d+1)|ε|)); and at a
 critical point β of p_ε, p_ε(β)/β = Q(β) for one polynomial Q of degree d - 1 ≥ 1, so |p_ε(β)/β| → ∞ as |β| → ∞,
 uniformly in ε.
@@ -19,7 +19,7 @@ theorem norm_multiset_prod_le_pow (s : Multiset ℂ) (M : ℝ) (hM : 0 ≤ M) (h
     exact mul_le_mul (h a (Multiset.mem_cons_self a s)) (ih fun x hx => h x (Multiset.mem_cons_of_mem hx))
       (norm_nonneg _) hM
 
-/-- tex l.453-456: as `ε → 0` a critical point of `p_ε` tends to `∞`: for every `M > 0` there is `δ > 0` such that for
+/-- tex l.496-499: as `ε → 0` a critical point of `p_ε` tends to `∞`: for every `M > 0` there is `δ > 0` such that for
 `0 < |ε| < δ` some critical point `β` of `p_ε` has `|β| ≥ M`. -/
 theorem lem_5_3_escape_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd d p) (M : ℝ) (hM : 0 < M) :
     ∃ δ : ℝ, 0 < δ ∧ ∀ ε : ℂ, ε ≠ 0 → ‖ε‖ < δ →
@@ -40,7 +40,7 @@ theorem lem_5_3_escape_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd d
   have h2 : 1 ≤ M ^ d * (((d : ℝ) + 1) * ‖ε‖) := (div_le_iff₀ (by positivity)).1 hle
   nlinarith
 
-/-- tex l.456-463: at a critical point `β` of `p_ε`, `p_ε(β)/β = p(β)/β - p'(β)/(d+1)` is the value at `β` of one
+/-- tex l.499-506: at a critical point `β` of `p_ε`, `p_ε(β)/β = p(β)/β - p'(β)/(d+1)` is the value at `β` of one
 polynomial of degree `d - 1 ≥ 1`, independent of `ε`, so it tends to `∞` in modulus as `|β| → ∞`, uniformly in `ε`. -/
 theorem lem_5_3_far_ratio_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd d p) (B : ℝ) :
     ∃ R : ℝ, 0 < R ∧ ∀ ε β : ℂ, ε ≠ 0 → (p + C ε * X ^ (d + 1)).derivative.eval β = 0 → R ≤ ‖β‖ →

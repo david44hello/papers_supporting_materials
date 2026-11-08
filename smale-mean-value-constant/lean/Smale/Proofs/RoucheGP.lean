@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/RoucheGP.lean — tools for Remark 5.2 and the control (paper 009, tex l.433-442): composition of
+Smale/Proofs/RoucheGP.lean — tools for Remark 5.2 (paper 009, tex l.470-473) and the control (tex v1.90 l.439-442, removed at v2.90): composition of
 coefficient lists, Chebyshev values at a rational point and P_c as a list, and a Rouché certificate: a zero of P
 within R of z₀, from exact bounds on the Taylor coefficients of P at z₀ (via the argument principle of
 ArgPrinciple.lean).

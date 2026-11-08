@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Schur.lean — the reversed polynomial `f*` and Lemma 4.2 (Schur–Cohn) of paper 009 (tex l.252-271):
+Smale/Proofs/Schur.lean — the reversed polynomial `f*` and Lemma 4.2 (Schur–Cohn) of paper 009 (tex l.299-317):
 `|f*| = |f|` on the circle; `Tf` has formal degree `n - 1` and constant term `|e₀|² - |e_n|²`; if `|e₀| > |e_n|`, `f`
 and `Tf` have the same zeros on the circle and the same number in `𝔻` (by Rouché for polynomials,
 `Smale/Proofs/ArgPrinciple.lean`); if all `δ_j > 0`, `f` has no zero in `𝔻̄`.
@@ -30,7 +30,7 @@ theorem conj_mul_self_of_norm_eq_one {w : ℂ} (hw : ‖w‖ = 1) : conj w * w =
   rw [Complex.conj_mul', hw]
   simp
 
-/-- On the circle, `f*(w) = wⁿ · conj(f(w))` (tex l.254-255). -/
+/-- On the circle, `f*(w) = wⁿ · conj(f(w))` (tex l.300-301). -/
 theorem conjRev_eval_circle (f : ℂ[X]) (n : ℕ) (hn : f.natDegree ≤ n) {w : ℂ} (hw : conj w * w = 1) :
     (conjRev f n).eval w = w ^ n * conj (f.eval w) := by
   rw [eval_conjRev, eval_eq_sum_range' (Nat.lt_succ_of_le hn), map_sum, Finset.mul_sum]
@@ -42,7 +42,7 @@ theorem conjRev_eval_circle (f : ℂ[X]) (n : ℕ) (hn : f.natDegree ≤ n) {w :
   rw [map_mul, map_pow, ← hpow]
   ring
 
-/-- tex l.255, exactly the Statements type: on the circle `|f*| = |f|`. -/
+/-- tex l.301, exactly the Statements type: on the circle `|f*| = |f|`. -/
 theorem sec4_conjRev_circle_proved (f : ℂ[X]) (n : ℕ) (hn : f.natDegree ≤ n) (w : ℂ) (hw : ‖w‖ = 1) :
     ‖(conjRev f n).eval w‖ = ‖f.eval w‖ := by
   rw [conjRev_eval_circle f n hn (conj_mul_self_of_norm_eq_one hw), norm_mul, norm_pow, hw, one_pow, one_mul,
@@ -52,7 +52,7 @@ theorem coeff_schurT (f : ℂ[X]) (n m : ℕ) :
     (schurT f n).coeff m = conj (f.coeff 0) * f.coeff m - f.coeff n * (conjRev f n).coeff m := by
   rw [schurT, coeff_sub, coeff_C_mul, coeff_C_mul]
 
-/-- Lemma 4.2 (tex l.258-259), exactly the Statements type: `Tf` has formal degree `n - 1` and constant term
+/-- Lemma 4.2 (tex l.304-305), exactly the Statements type: `Tf` has formal degree `n - 1` and constant term
 `|e₀|² - |e_n|²`. -/
 theorem lem_4_2_T_proved (f : ℂ[X]) (n : ℕ) (_hn1 : 1 ≤ n) (hn : f.natDegree ≤ n) :
     (schurT f n).natDegree ≤ n - 1 ∧ (schurT f n).coeff 0 = ((‖f.coeff 0‖ ^ 2 - ‖f.coeff n‖ ^ 2 : ℝ) : ℂ) := by
@@ -70,7 +70,7 @@ theorem lem_4_2_T_proved (f : ℂ[X]) (n : ℕ) (_hn1 : 1 ≤ n) (hn : f.natDegr
     push_cast
     ring
 
-/-- Lemma 4.2, first claim (tex l.259-260), exactly the Statements type: if `|e₀| > |e_n|`, `f` and `Tf` have the
+/-- Lemma 4.2, first claim (tex l.305-306), exactly the Statements type: if `|e₀| > |e_n|`, `f` and `Tf` have the
 same zeros on the circle and, if `f` has none there, the same number of zeros in `𝔻` (Rouché for polynomials). -/
 theorem lem_4_2_a_proved (f : ℂ[X]) (n : ℕ) (_hn1 : 1 ≤ n) (hn : f.natDegree ≤ n)
     (hlt : ‖f.coeff n‖ < ‖f.coeff 0‖) :
@@ -121,14 +121,14 @@ theorem natDegree_schurSeq_le (f : ℂ[X]) (n : ℕ) (hn : f.natDegree ≤ n) :
     show (schurT (schurSeq f n j) (n - j)).natDegree ≤ n - (j + 1)
     omega
 
-/-- The step `j ↦ j - 1` of the proof (tex l.266-270): `f_j = T f_{j-1}`, here with `j = n - i`. -/
+/-- The step `j ↦ j - 1` of the proof (tex l.313-316): `f_j = T f_{j-1}`, here with `j = n - i`. -/
 theorem schurSeq_succ_eq (f : ℂ[X]) (n i : ℕ) (hi : i + 1 ≤ n) :
     schurSeq f n (n - i) = schurT (schurSeq f n (n - (i + 1))) (i + 1) := by
   rw [show n - i = n - (i + 1) + 1 by omega]
   show schurT (schurSeq f n (n - (i + 1))) (n - (n - (i + 1))) = _
   rw [show n - (n - (i + 1)) = i + 1 by omega]
 
-/-- Lemma 4.2, "Consequently" (tex l.260-261, proof l.264-270), exactly the Statements type: if `δ₁, …, δ_n` are all
+/-- Lemma 4.2, "Consequently" (tex l.306-307, proof l.311-316), exactly the Statements type: if `δ₁, …, δ_n` are all
 positive, `f` has no zero in `𝔻̄`. -/
 theorem lem_4_2_b_proved (f : ℂ[X]) (n : ℕ) (hn1 : 1 ≤ n) (hn : f.natDegree ≤ n)
     (hδ : ∀ j, 1 ≤ j → j ≤ n → (schurDelta f n j).im = 0 ∧ 0 < (schurDelta f n j).re) :

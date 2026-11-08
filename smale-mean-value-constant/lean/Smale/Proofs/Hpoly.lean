@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Hpoly.lean — Lemma 3.1, first sentence of the proof (tex l.208): if `a₁, …, a_k` are distinct zeros of `Q`,
+Smale/Proofs/Hpoly.lean — Lemma 3.1, first sentence of the proof (tex l.253): if `a₁, …, a_k` are distinct zeros of `Q`,
 then `H = Q ∏(1 - ā_j z)/(z - a_j)` is a polynomial, `H ∏(z - a_j) = Q ∏(1 - ā_j z)`.
 -/
 import Smale.Defs.Basic
@@ -32,7 +32,7 @@ theorem zerosPoly_dvd (Q : ℂ[X]) (as : List ℂ) (hnd : as.Nodup) (hz : ∀ a 
   rw [mem_roots hQ, IsRoot.def]
   exact hz a (Multiset.mem_coe.1 ha)
 
-/-- Lemma 3.1, first sentence of the proof (tex l.208), exactly the Statements type. -/
+/-- Lemma 3.1, first sentence of the proof (tex l.253), exactly the Statements type. -/
 theorem lem_3_1_H_poly_proved (Q : ℂ[X]) (as : List ℂ) (hnd : as.Nodup) (hz : ∀ a ∈ as, Q.eval a = 0) :
     Hpoly Q as * zerosPoly as = Q * reflPoly as := by
   have hdvd : zerosPoly as ∣ Q * reflPoly as := (zerosPoly_dvd Q as hnd hz).mul_right _

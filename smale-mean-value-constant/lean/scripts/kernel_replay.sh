@@ -2,13 +2,18 @@
 # kernel_replay.sh — re-check every Smale declaration with Lean's kernel and the toolchain's independent checkers.
 # Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
 #
-# Usage:  scripts/kernel_replay.sh          full run (about 20 min; one thread, nice 19; peak RSS 9 GB = 6.2 mapped + 2.9 anon);
+# Usage:  scripts/kernel_replay.sh          full run, every module except fact (R)'s (see --r) (about 20 min; one thread, nice 19; peak RSS 9 GB = 6.2 mapped + 2.9 anon);
 #                                           refuses (exit 3) if any Smale olean is missing or older than its source
 #         scripts/kernel_replay.sh --use-built-oleans   check the oleans as built, even if not fresh; exits 3, never 0
+#         scripts/kernel_replay.sh --r CHECKERS [--names FILE]   fact (R) only: the modules Smale.R.* and Smale.Paper.Unconditional.
+#                                           CHECKERS: comma list of olean, leanchecker, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron.
+#                                           A checker not named prints NOT RUN. FILE limits the export to its constants, a stated sample
+#                                           (one name per line; lines starting with # say the rule): such a run's labels say SAMPLE.
 #         scripts/kernel_replay.sh --test   self-test: known-good inputs must pass, a kernel-invalid olean must fail
 # Work files and logs are isolated per invocation under .lake/kernel_replay/ (ignored by Git).
 # Extra prerequisites: Python 3, ripgrep, GNU time, timeout, and all seven checker/export tools named below.
 # Exit:   0 no FAIL | 1 some checker FAILed | 2 usage/setup error | 3 oleans missing, stale, or changed during run
+#         | 4 --r only: a checker it names did not PASS (a SKIPPED is not a pass)
 #
 # (a) leanchecker, olean replay: each Smale.* module's own declarations are replayed by Lean's C++ kernel on top
 #     of the imported environment (Mathlib and core are trusted in this mode).  One process per module: a single
@@ -17,7 +22,7 @@
 #     into WORK_DIR.  The 6 checkers bundled for `lake check --paranoid` then check that file starting from an
 #     empty environment, so they also re-check the Mathlib/core declarations Smale depends on.  `lake check`
 #     itself is not used: it builds the project, runs nanoda on 4 threads and con-leche/con-ron on all cores, and
-#     rejects every non-standard axiom (Smale.Cited.* may declare cited axioms by design; axiom policy is audit.py's job).
+#     rejects every non-standard axiom (axiom policy is audit.py's job).
 #     con-leche/con-ron DECLINE (exit 2) any export with a non-standard axiom; that is reported as SKIPPED.
 # Every checker accepts an EMPTY export with exit 0.  So the export is verified to declare every requested name,
 # and each checker's own declaration count must equal the count computed from the export.
@@ -31,6 +36,11 @@ MEMORY_WARN_KB=8000000            # a peak RSS above this is flagged.  RSS inclu
                                   # (measured on HibiLiLean: Example21.ChainData peaked at 9.06 GB RSS = 6.19 GB mapped
                                   # oleans + 2.87 GB anon)
 LIB_NAME=Smale                         # the Lean library: lakefile [[lean_lib]] name = root module = source folder
+R_PREFIX=$LIB_NAME.R.                  # fact (R)'s modules. Its big numbers take con-leche and con-ron about 50x the kernel's time,
+R_TOP=$LIB_NAME.Paper.Unconditional    # so they stay out of the plain run's one export, and have their own flag.
+RUN_SCOPE=plain                        # plain or r
+WANTED_CHECKERS=(olean leanchecker leanchecker-paranoid lean4lean nanoda con-leche con-ron)
+SAMPLE_NAMES=                          # with --names: the file of constants, a stated sample
 POSITIVE_TEST_MODULE=Smale.Defs.Basic
 EXPORT_CHECKERS=("leanchecker --from-export" "leanchecker-paranoid --from-export" "lean4lean --import"
                  "nanoda" "con-leche --verified" "con-ron --verified")
@@ -140,6 +150,9 @@ EOF
 }
 
 all_modules() { { echo "$LIB_NAME"; rg --files --hidden --no-ignore "$LIB_NAME" -g '*.lean' | sed 's|\.lean$||; s|/|.|g'; } | sort; }
+is_r_module() { [[ $1 == "$R_PREFIX"* || $1 == "$R_TOP" ]]; }
+plain_modules() { local module; all_modules | while read -r module; do is_r_module "$module" || echo "$module"; done; }
+r_modules() { local module; all_modules | while read -r module; do if is_r_module "$module"; then echo "$module"; fi; done; }
 olean_of() { echo "$PROJECT_DIR/.lake/build/lib/lean/${1//.//}.olean"; }
 source_of() { echo "$PROJECT_DIR/${1//.//}.lean"; }
 
@@ -192,6 +205,47 @@ check_lake_fresh() {
         echo "PRECONDITION: Lake cannot confirm the current sources and dependencies are built; see $WORK_DIR/build_freshness.log" >&2
         return 3
     fi
+}
+
+# Fact (R) must stay above the rest: a plain module that imported it would carry it into the plain run's export. Only the root
+# and the generated audit module may import it, and they declare nothing that the export could need it for.
+check_r_wall() {
+    local module offenders=()
+    for module in "$@"; do
+        [[ $module == "$LIB_NAME" || $module == "$LIB_NAME.Audit" ]] && continue
+        if grep -Eq "^import (${R_PREFIX//./\\.}|${R_TOP//./\\.}\$)" "$(source_of "$module")"; then offenders+=("$module"); fi
+    done
+    (( ${#offenders[@]} == 0 )) && return 0
+    record "fact (R) wall" "FAIL(these plain modules import fact (R)'s: ${offenders[*]})"
+    ANY_FAIL=1
+    return 1
+}
+
+checker_wanted() {   # checker_wanted NAME: is it one of WANTED_CHECKERS?
+    local name
+    for name in "${WANTED_CHECKERS[@]}"; do [[ $name == "$1" ]] && return 0; done
+    return 1
+}
+
+any_export_checker_wanted() {
+    local label
+    for label in "${EXPORT_CHECKERS[@]}"; do checker_wanted "${label%% *}" && return 0; done
+    return 1
+}
+
+# Reads the arguments of --r into WANTED_CHECKERS and SAMPLE_NAMES; a name it does not know is a usage error.
+parse_r_arguments() {
+    local known=" olean leanchecker leanchecker-paranoid lean4lean nanoda con-leche con-ron " name
+    (( $# == 1 || $# == 3 )) || die "--r takes CHECKERS [--names FILE]"
+    IFS=, read -r -a WANTED_CHECKERS <<< "$1"
+    (( ${#WANTED_CHECKERS[@]} > 0 )) || die "--r names no checker"
+    for name in "${WANTED_CHECKERS[@]}"; do [[ $known == *" $name "* ]] || die "--r: unknown checker '$name'"; done
+    if (( $# == 3 )); then
+        [[ $2 == --names && -s $3 ]] || die "--r: expected --names and a file that is not empty"
+        SAMPLE_NAMES=$3
+        EXPORT_CHECKERS=("${EXPORT_CHECKERS[@]/%/ (SAMPLE)}")
+    fi
+    RUN_SCOPE=r
 }
 
 record() { SUMMARY+=("$(printf '%-36s %s' "$1" "$2")"); }
@@ -270,6 +324,16 @@ list_constants() {
     fi
 }
 
+# The constants this run exports: those of its modules, or the stated sample.
+list_constants_of_this_run() {
+    if [[ -n $SAMPLE_NAMES ]]; then
+        grep -v '^#' "$SAMPLE_NAMES" | sed '/^$/d' > "$1"
+        : > "$1.skipped"
+    else
+        list_constants "$1" "${ALL_MODULES[@]}"
+    fi
+}
+
 # Exports the names in NAMES_FILE, with everything they depend on, from an environment importing MODULES.
 export_constants() {
     local export_file=$1 names_file=$2; shift 2
@@ -318,6 +382,7 @@ EOF
 # Runs one export checker.  ACCEPT_REGEX must match its output; if COUNT_REGEX is non-empty, the number it
 # captures must equal EXPECTED.  Exit 2 with a "declined" verdict (con-leche/con-ron) is SKIPPED, not FAIL.
 export_checker() {
+    if ! checker_wanted "${1%% *}"; then record "$1" "NOT RUN(not named in this run)"; return 0; fi
     local label=$1 accept_regex=$2 count_regex=$3 expected=$4; shift 4
     local log="$LOG_DIR/export_${label//[^A-Za-z0-9]/_}.log" count reason
     timed_run "$log" "$log" "$@"
@@ -369,8 +434,16 @@ print_summary() {
 }
 
 main_full_run() {
-    local use_built_oleans=$1 not_fresh=$1 module
-    mapfile -t ALL_MODULES < <(all_modules)
+    local use_built_oleans=$1 not_fresh=$1 module named_not_passed=0
+    if [[ $RUN_SCOPE == r ]]; then
+        mapfile -t ALL_MODULES < <(r_modules)
+        (( ${#ALL_MODULES[@]} > 0 )) || die "--r: this tree has no module of fact (R)"
+        record "scope" "fact (R) only: ${#ALL_MODULES[@]} modules, ${R_PREFIX}* and $R_TOP"
+    else
+        mapfile -t ALL_MODULES < <(plain_modules)
+        check_r_wall "${ALL_MODULES[@]}" || true
+    fi
+    [[ -z $SAMPLE_NAMES ]] || record "scope" "SAMPLE: the export holds only the constants of $SAMPLE_NAMES, not all of fact (R)"
     LOG_DIR="$WORK_DIR/logs_$(date +%Y%m%d_%H%M)"
     mkdir -p "$LOG_DIR"
     echo "Project $PROJECT_DIR: ${#ALL_MODULES[@]} modules; toolchain $TOOLCHAIN_BIN"
@@ -391,19 +464,28 @@ main_full_run() {
     local before names_file="$WORK_DIR/${LIB_NAME}_constants.txt" export_file="$WORK_DIR/${LIB_NAME}_export.ndjson" label
     before=$(snapshot_inputs) || die "cannot snapshot replay inputs"
 
-    echo "(a) leanchecker olean replay, one process per module:"
-    leanchecker_replay "leanchecker (olean replay)" "${ALL_MODULES[@]}" || true
-    echo "(b) leanexport of every safe $LIB_NAME constant with its dependencies..."
-    if list_constants "$names_file" "${ALL_MODULES[@]}" \
+    if checker_wanted olean; then
+        echo "(a) leanchecker olean replay, one process per module:"
+        leanchecker_replay "leanchecker (olean replay)" "${ALL_MODULES[@]}" || named_not_passed=1
+    else
+        record "leanchecker (olean replay)" "NOT RUN(not named in this run)"
+    fi
+    echo "(b) leanexport of this run's constants with their dependencies..."
+    if ! any_export_checker_wanted; then
+        record "leanexport" "NOT RUN(no export checker named in this run)"
+        : > "$names_file.skipped"
+    elif list_constants_of_this_run "$names_file" \
         && export_constants "$export_file" "$names_file" "${ALL_MODULES[@]}" \
         && analyze_export "$export_file" "$names_file"; then
-        echo "    $EXPORT_RECORDS declaration records; running the 6 export checkers..."
-        run_export_checkers "$export_file" || true
+        echo "    $EXPORT_RECORDS declaration records; running the named export checkers..."
+        run_export_checkers "$export_file" || named_not_passed=1
         record "axioms declared in the export" "${EXPORT_AXIOMS//,/, }"
     else
         for label in "${EXPORT_CHECKERS[@]}"; do record "$label" "SKIPPED(export failed)"; done
     fi
-    record "not exported (unsafe/partial)" "$(grep -c '^skipped' "$names_file.skipped" || true) compiler helpers; replayed in (a) only"
+    local helpers_note="compiler helpers"
+    if checker_wanted olean; then helpers_note="compiler helpers; replayed in (a) only"; fi
+    record "not exported (unsafe/partial)" "$(grep -c '^skipped' "$names_file.skipped" || true) $helpers_note"
 
     local changed=0
     local after
@@ -413,6 +495,7 @@ main_full_run() {
     print_summary
     (( ANY_FAIL )) && exit 1
     (( changed || not_fresh )) && exit 3
+    [[ $RUN_SCOPE == r ]] && (( named_not_passed )) && exit 4
     exit 0
 }
 
@@ -511,9 +594,10 @@ main() {
     case "${1:-}" in
         "") setup_environment; main_full_run 0 ;;
         --use-built-oleans) setup_environment; main_full_run 1 ;;
+        --r) shift; parse_r_arguments "$@"; setup_environment; main_full_run 0 ;;
         --test) setup_environment; main_test ;;
         -h|--help) sed -n '2,/^set -euo/p' "${BASH_SOURCE[0]}" | sed '$d' ;;
-        *) die "unknown argument '$1' (use --test, --use-built-oleans, --help, or no argument)" ;;
+        *) die "unknown argument '$1' (use --test, --use-built-oleans, --r, --help, or no argument)" ;;
     esac
 }
 

@@ -1,11 +1,11 @@
 /-
 Smale/Proofs/Sec4More.lean — three more Section 4 facts of paper 009: Dieudonné's criterion for every polynomial `H`
-(tex l.237-240: subtracting the constant term changes neither univalence nor any `P_c`; from the cited form
-`Cited.dieudonne_criterion`, which assumes `H(0) = 0`); `deg H ≤ n` (tex l.283); and `Res_w(P_c, P_c*)` is a polynomial
-in `c` (tex l.306: the Chebyshev values are polynomials in `c`, and the resultant commutes with evaluation at `c`).
+(tex l.280-283: subtracting the constant term changes neither univalence nor any `P_c`; from the form
+`dieudonne_criterion_proved`, which assumes `H(0) = 0`); `deg H ≤ n` (tex l.328); and `Res_w(P_c, P_c*)` is a polynomial
+in `c` (tex l.352-353: the Chebyshev values are polynomials in `c`, and the resultant commutes with evaluation at `c`).
 -/
 import Smale.Proofs.Hpoly
-import Smale.Cited.Basic
+import Smale.Proofs.DieudonneIf
 
 namespace Smale
 
@@ -17,7 +17,7 @@ theorem dieudonne_sub_C (H : ℂ[X]) (n : ℕ) (a : ℂ) (c : ℝ) : dieudonne (
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [coeff_sub, coeff_C, ite_eq_right (by omega : l + 1 ≠ 0), sub_zero]
 
-/-- tex l.237-240, exactly the Statements type: Dieudonné's criterion applies to every polynomial `H`. -/
+/-- tex l.280-283, exactly the Statements type: Dieudonné's criterion applies to every polynomial `H`. -/
 theorem sec4_dieudonne_any_proved (H : ℂ[X])
     (hP : ∀ c : ℝ, c ∈ Set.Icc (-1 : ℝ) 1 → ∀ w ∈ disk, (dieudonne H H.natDegree c).eval w ≠ 0) :
     IsUnivalentOn (fun z => H.eval z) disk := by
@@ -27,7 +27,7 @@ theorem sec4_dieudonne_any_proved (H : ℂ[X])
     intro c hc w hw
     rw [natDegree_sub_C, dieudonne_sub_C]
     exact hP c hc w hw
-  obtain ⟨hd, hi⟩ := Cited.dieudonne_criterion _ hc0 hP'
+  obtain ⟨hd, hi⟩ := dieudonne_criterion_proved _ hc0 hP'
   have heq : ∀ z, H.eval z = (H - C (H.coeff 0)).eval z + H.coeff 0 := fun z => by
     rw [eval_sub, eval_C, sub_add_cancel]
   refine ⟨(hd.add_const (H.coeff 0)).congr fun z _ => heq z, fun z₁ h₁ z₂ h₂ h => hi h₁ h₂ ?_⟩
@@ -53,7 +53,7 @@ theorem natDegree_reflPoly_le (as : List ℂ) : (reflPoly as).natDegree ≤ as.l
     rw [List.length_cons]
     omega
 
-/-- Lemma 4.3 (D) ⇒ (tex l.283), exactly the Statements type: `deg H ≤ n` (this holds for any `as`). -/
+/-- Lemma 4.3 (D) ⇒ (tex l.328), exactly the Statements type: `deg H ≤ n` (this holds for any `as`). -/
 theorem lem_4_3_H_deg_proved (Q : ℂ[X]) (n : ℕ) (hQ : Q.natDegree = n) (b : ℂ) (as : List ℂ)
     (_hnd : (b :: as).Nodup) (_hin : ∀ a ∈ b :: as, a ∈ disk) (_hzero : ∀ a ∈ b :: as, Q.eval a = 0) :
     (Hpoly Q as).natDegree ≤ n := by
@@ -86,7 +86,7 @@ theorem map_dieudonneStarGen (H : ℂ[X]) (n : ℕ) (c : ℝ) :
   simp only [dieudonneStarGen, dieudonneStar, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C,
     Polynomial.map_pow, Polynomial.map_X, coe_evalRingHom, eval_mul, eval_C, U_eval_ofReal]
 
-/-- tex l.306, exactly the Statements type: `Res_w(P_c, P_c*)` is a polynomial in `c`. -/
+/-- tex l.352-353, exactly the Statements type: `Res_w(P_c, P_c*)` is a polynomial in `c`. -/
 theorem sec4_res_poly_proved (H : ℂ[X]) (n : ℕ) :
     ∃ F : ℂ[X], ∀ c : ℝ, resultant (dieudonne H n c) (dieudonneStar H n c) (n - 1) (n - 1) = F.eval (c : ℂ) :=
   ⟨resultant (dieudonneGen H n) (dieudonneStarGen H n) (n - 1) (n - 1), fun c => by

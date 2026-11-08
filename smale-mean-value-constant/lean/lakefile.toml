@@ -1,4 +1,4 @@
-# SmaleLean — Lean 4 formalization of Dave Goel's paper 009 "Smale's mean value constant exceeds 1.1559" (v1.00).
+# SmaleLean — Lean 4 formalization of Dave Goel's paper 009 "Smale's mean value constant exceeds 1.1559".
 name = "SmaleLean"
 version = "0.1.0"
 defaultTargets = ["Smale"]

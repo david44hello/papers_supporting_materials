@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Star.lean — Section 4 facts next to Lemma 4.3 (tex l.238-239, l.288-289, l.299-301): `h₁ = P_c(0) ≠ 0`;
+Smale/Proofs/Star.lean — Section 4 facts next to Lemma 4.3 (tex l.281-282, l.333-334, l.344-346): `h₁ = P_c(0) ≠ 0`;
 `P_c* = (P_c)*` at formal degree `n - 1`; a zero of `P_c` on the circle is a common zero of `P_c` and `P_c*`, so the
 resultant at formal degrees `(n - 1, n - 1)` vanishes (Mathlib's Bézout identity for the resultant).
 -/
@@ -20,7 +20,7 @@ theorem natDegree_conjRev_le (f : ℂ[X]) (n : ℕ) : (conjRev f n).natDegree �
   intro N hN
   rw [coeff_conjRev, ite_eq_right (by omega)]
 
-/-- tex l.238-239, exactly the Statements type: the hypothesis of Dieudonné's criterion gives `h₁ = P_c(0) ≠ 0`. -/
+/-- tex l.281-282, exactly the Statements type: the hypothesis of Dieudonné's criterion gives `h₁ = P_c(0) ≠ 0`. -/
 theorem sec4_dieudonne_h1_proved (H : ℂ[X])
     (hP : ∀ c : ℝ, c ∈ Set.Icc (-1 : ℝ) 1 → ∀ w ∈ disk, (dieudonne H H.natDegree c).eval w ≠ 0) :
     H.coeff 1 ≠ 0 := by
@@ -31,7 +31,7 @@ theorem sec4_dieudonne_h1_proved (H : ℂ[X])
   · rw [← dieudonne_eval_zero H _ hd 1]
     exact hP 1 h1 0 h0
 
-/-- Lemma 4.3 (R) (tex l.288-289), exactly the Statements type: `P_c*` is `(P_c)*` at formal degree `n - 1`. -/
+/-- Lemma 4.3 (R) (tex l.333-334), exactly the Statements type: `P_c*` is `(P_c)*` at formal degree `n - 1`. -/
 theorem lem_4_3_Pstar_proved (H : ℂ[X]) (n : ℕ) (c : ℝ) :
     dieudonneStar H n c = conjRev (dieudonne H n c) (n - 1) := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
@@ -41,7 +41,7 @@ theorem lem_4_3_Pstar_proved (H : ℂ[X]) (n : ℕ) (c : ℝ) :
   have hl' : l < n := Finset.mem_range.1 hl
   rw [coeff_dieudonne, ite_eq_left (by omega), map_mul (starRingEnd ℂ), Complex.conj_ofReal, show n - 1 - (n - 1 - l) = l by omega]
 
-/-- Lemma 4.3, proof (tex l.299-301), exactly the Statements type: a zero `w₀` of `P_c` on the circle is a zero of
+/-- Lemma 4.3, proof (tex l.344-346), exactly the Statements type: a zero `w₀` of `P_c` on the circle is a zero of
 `P_c*`, and the resultant at formal degrees `(n - 1, n - 1)` vanishes. -/
 theorem lem_4_3_common_zero_proved (H : ℂ[X]) (n : ℕ) (hn : 2 ≤ n) (c : ℝ) (w : ℂ) (hw : ‖w‖ = 1)
     (h0 : (dieudonne H n c).eval w = 0) :

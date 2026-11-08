@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/DataRoots.lean — the zeros of `G` (tex l.352-353, `sec5_G_zeros`) and the exact parts of Remark 5.2
+Smale/Proofs/DataRoots.lean — the zeros of `G` (tex l.396-397, `sec5_G_zeros`) and the exact parts of Remark 5.2
 (`rem_5_2_exact`). A zero of a monic quadratic lies within `2|G(r)|/|G'(r)|` of any point `r`; the kernel checks this
 bound at the rational point `rG` (Smale/Proofs/DataRootsData.lean). All other bounds are exact rational checks.
 -/

@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Lemma53.lean — Lemma 5.3 of paper 009 (Crane, tex l.448-465): `K(d+1) ≥ K(d)`. For `p ∈ 𝓟_d` and
+Smale/Proofs/Lemma53.lean — Lemma 5.3 of paper 009 (Crane, tex l.490-508): `K(d+1) ≥ K(d)`. For `p ∈ 𝓟_d` and
 `ε ≠ 0`, `p_ε = p + εz^{d+1} ∈ 𝓟_{d+1}`; at a critical point `β` of `p_ε`, `p_ε(β)/β = p(β)/β - p'(β)/(d+1)`; the `d`
 critical points of `p_ε` have product of modulus `1/((d+1)|ε|)`; and `m(p_ε) → m(p)` as `ε → 0`:
 * upper bound: by Rouché on a small circle around the critical point of `p` where `m(p)` is attained, `p_ε` has a
@@ -15,7 +15,7 @@ namespace Smale
 
 open Polynomial Complex Metric Filter Topology
 
-/-! ### `m(p)` as a minimum (tex l.55) -/
+/-! ### `m(p)` as a minimum (tex l.73) -/
 
 theorem critRatios_bddBelow (q : ℂ[X]) : BddBelow (critRatios q) :=
   ⟨0, fun _ ⟨_, _, hr⟩ => hr ▸ div_nonneg (norm_nonneg _) (norm_nonneg _)⟩
@@ -33,7 +33,7 @@ theorem crit_ne_zero {d : ℕ} {p : ℂ[X]} (hp : IsPd d p) {β : ℂ} (hβ : p.
   rw [hp.2.2] at hβ
   exact one_ne_zero hβ
 
-/-- tex l.55 ("min"), exactly the Statements type: `critRatios p` is finite and nonempty, and `m(p)` is its least
+/-- tex l.73 ("min"), exactly the Statements type: `critRatios p` is finite and nonempty, and `m(p)` is its least
 element. -/
 theorem sec1_m_attained_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd d p) :
     (critRatios p).Finite ∧ mval p ∈ critRatios p ∧ ∀ r ∈ critRatios p, mval p ≤ r := by
@@ -83,7 +83,7 @@ theorem crit_eps_ne_zero {d : ℕ} (hd : 2 ≤ d) {p : ℂ[X]} (hp : IsPd d p) {
   rw [eval_derivative_eps, hp.2.2, zero_pow (by omega), mul_zero, add_zero] at hβ
   exact one_ne_zero hβ
 
-/-- Lemma 5.3, proof (tex l.457-461), exactly the Statements type: at a critical point `β` of `p_ε`,
+/-- Lemma 5.3, proof (tex l.500-504), exactly the Statements type: at a critical point `β` of `p_ε`,
 `p_ε(β)/β = p(β)/β - p'(β)/(d+1)`. -/
 theorem lem_5_3_identity_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd d p) (ε β : ℂ) (_hε : ε ≠ 0)
     (hβ : (p + C ε * X ^ (d + 1)).derivative.eval β = 0) :
@@ -97,7 +97,7 @@ theorem lem_5_3_identity_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd
   rw [h2, eval_eps, pow_succ, ← mul_assoc, add_div, mul_div_cancel_right₀ _ hβ0]
   ring
 
-/-- Lemma 5.3, proof (tex l.456-457), exactly the Statements type: `p_ε'` has `d` roots, with product of modulus
+/-- Lemma 5.3, proof (tex l.498-499), exactly the Statements type: `p_ε'` has `d` roots, with product of modulus
 `1/((d+1)|ε|)` (Vieta: `p_ε'(0) = 1` and the leading coefficient is `(d+1)ε`). -/
 theorem lem_5_3_prod_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd d p) (ε : ℂ) (hε : ε ≠ 0) :
     (p + C ε * X ^ (d + 1)).derivative.roots.card = d ∧
@@ -309,7 +309,7 @@ theorem upper_bound_eps {d : ℕ} (hd : 2 ≤ d) {p : ℂ[X]} (hp : IsPd d p) {�
   rw [h4] at h5
   nlinarith [mul_lt_mul_of_pos_right hεB hβpos]
 
-/-- Lemma 5.3, proof (tex l.453-465), exactly the Statements type: `p_ε ∈ 𝓟_{d+1}` and `m(p_ε) → m(p)`. -/
+/-- Lemma 5.3, proof (tex l.495-507), exactly the Statements type: `p_ε ∈ 𝓟_{d+1}` and `m(p_ε) → m(p)`. -/
 theorem lem_5_3_limit_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd d p) :
     (∀ ε : ℂ, ε ≠ 0 → IsPd (d + 1) (p + C ε * X ^ (d + 1))) ∧
       Tendsto (fun ε : ℂ => mval (p + C ε * X ^ (d + 1))) (𝓝[≠] 0) (𝓝 (mval p)) := by
@@ -327,7 +327,7 @@ theorem lem_5_3_limit_proved (d : ℕ) (hd : 2 ≤ d) (p : ℂ[X]) (hp : IsPd d 
   rw [Real.dist_eq, abs_lt]
   constructor <;> linarith
 
-/-- Lemma 5.3 (Crane; tex l.448-450), exactly the Statements type: `K(d+1) ≥ K(d)` for every `d ≥ 2`. -/
+/-- Lemma 5.3 (Crane; tex l.490-492), exactly the Statements type: `K(d+1) ≥ K(d)` for every `d ≥ 2`. -/
 theorem lem_5_3_proved (d : ℕ) (hd : 2 ≤ d) : Kd d ≤ Kd (d + 1) := by
   show (⨆ q : {q : ℂ[X] // IsPd d q}, ((mval q.1 : ℝ) : EReal)) ≤ Kd (d + 1)
   refine iSup_le fun q => ?_

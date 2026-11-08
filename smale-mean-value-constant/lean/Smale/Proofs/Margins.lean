@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Margins.lean — Remark 5.2 and the control of paper 009 (posted v1.90, tex l.433-442), proved from the
+Smale/Proofs/Margins.lean — Remark 5.2 (tex l.470-473) and the control (tex v1.90 l.439-442, removed at v2.90) of paper 009, proved from the
 certificates SchurCertR.lean (Schur–Cohn for H'(r w), r = 1.00001141) and RoucheCert.lean (two Rouché certificates):
 the zero of H' nearest to the circle has modulus 1.00001141…; at c = 0.9231 a zero of P_c has modulus between
 1 + 7.02·10⁻⁶ and 1 + 7.03·10⁻⁶; for H(sz) the polynomials P_{±1} still have no zero in the closed disk, P_{0.9231} has
@@ -33,7 +33,7 @@ theorem Hder_natDegree_le : Hdata.derivative.natDegree ≤ 17 := by
   rw [Hdata_natDegree_eq] at h
   omega
 
-/-- Remark 5.2 (tex l.434-435), the Schur–Cohn half: `H'` has no zero with `|z| ≤ 1.00001141`. -/
+/-- Remark 5.2 (tex l.471-472), the Schur–Cohn half: `H'` has no zero with `|z| ≤ 1.00001141`. -/
 theorem Hder_ne_zero_of_le (z : ℂ) (hz : ‖z‖ ≤ 1.00001141) : Hdata.derivative.eval z ≠ 0 := by
   set r : ℚ := 100001141 / 100000000 with hr
   have hrC : (Exact.GQ.ofQ r).toC = ((1.00001141 : ℝ) : ℂ) := by
@@ -71,7 +71,7 @@ theorem Hder_root_lt : ∃ z : ℂ, Hdata.derivative.eval z = 0 ∧ ‖z‖ < 1.
     _ ≤ (Exact.rRadius : ℝ) + ((25000285389 / 25000000000 : ℚ) : ℝ) := by linarith
     _ < 1.00001142 := by norm_num [Exact.rRadius]
 
-/-- Remark 5.2 (tex l.434-435): the zero of `H'` nearest to the circle has modulus `1.00001141…`. -/
+/-- Remark 5.2 (tex l.471-472): the zero of `H'` nearest to the circle has modulus `1.00001141…`. -/
 theorem rem_5_2_Hprime_proved :
     ∃ z : ℂ, Hdata.derivative.eval z = 0 ∧ 1.00001141 ≤ ‖z‖ ∧ ‖z‖ < 1.00001142 ∧
       ∀ w : ℂ, Hdata.derivative.eval w = 0 → |‖z‖ - 1| ≤ |‖w‖ - 1| := by
@@ -96,7 +96,7 @@ theorem dieudonne_c0_eq :
     dieudonne Hdata 18 0.9231 = Exact.toPoly (Exact.pdieu Exact.hGQ 18 (9231 / 10000 : ℚ)) := by
   rw [← Exact.dieudonne_toPoly, ← Exact.Hdata_eq]; norm_num
 
-/-- tex l.435-436 at `c = 0.9231`: `P_c` has a zero `z` with `1 + 7.02·10⁻⁶ < |z| < 1 + 7.03·10⁻⁶`. -/
+/-- tex l.472-473 at `c = 0.9231`: `P_c` has a zero `z` with `1 + 7.02·10⁻⁶ < |z| < 1 + 7.03·10⁻⁶`. -/
 theorem P_c0_root :
     ∃ z : ℂ, (dieudonne Hdata 18 0.9231).eval z = 0 ∧ 1.00000702 < ‖z‖ ∧ ‖z‖ < 1.00000703 := by
   have hT : ∀ u : ℂ, (dieudonne Hdata 18 0.9231).eval (Exact.zC.toC + u) = (Exact.toPoly Exact.tC).eval u := by
@@ -153,14 +153,14 @@ theorem Hctrl_derivative_ne_zero (w : ℂ) (hw : w ∈ closedDisk) : Hctrl.deriv
   have hw1 : ‖w‖ ≤ 1 := mem_closedBall_zero_iff.1 hw
   nlinarith [norm_nonneg w]
 
-/-- tex l.440-441 ("but not the margin at `c = ±1`"): for `H(sz)`, `P_1` and `P_{-1}` have no zero in `𝔻̄`. -/
+/-- tex v1.90 l.440-441, removed at v2.90 ("but not the margin at `c = ±1`"): for `H(sz)`, `P_1` and `P_{-1}` have no zero in `𝔻̄`. -/
 theorem ctrl_pm_one_proved (w : ℂ) (hw : w ∈ closedDisk) :
     (dieudonne Hctrl 18 1).eval w ≠ 0 ∧ (dieudonne Hctrl 18 (-1)).eval w ≠ 0 := by
   obtain ⟨h1, h2⟩ := rem_5_2_P_pm_one_proved Hctrl 18 Hctrl_natDegree_le w
   refine ⟨h1 ▸ Hctrl_derivative_ne_zero w hw, h2 ▸ Hctrl_derivative_ne_zero (-w) ?_⟩
   rw [mem_closedBall_zero_iff, norm_neg]; exact mem_closedBall_zero_iff.1 hw
 
-/-- tex l.440-441 at `c = 0.9231` ("`s - 1` exceeds the margin"): the zero `z` of `P_c` gives the zero `z/s` of the
+/-- tex v1.90 l.440-441, removed at v2.90 at `c = 0.9231` ("`s - 1` exceeds the margin"): the zero `z` of `P_c` gives the zero `z/s` of the
 Dieudonné polynomial of `H(sz)`, inside `𝔻`. -/
 theorem ctrl_zero_inside :
     ∃ w : ℂ, (dieudonne Hctrl 18 0.9231).eval w = 0 ∧ ‖w‖ < 1 := by
@@ -170,7 +170,7 @@ theorem ctrl_zero_inside :
   · rw [norm_div, norm_sCtrl, div_lt_one (by norm_num)]
     linarith
 
-/-- The control (tex l.441-442): "for these data the resultant in (R) has a zero in `[-1, 1]`". -/
+/-- The control (tex v1.90 l.441-442, removed at v2.90): "for these data the resultant in (R) has a zero in `[-1, 1]`". -/
 theorem ctrl_R_fails_proved :
     ∃ c : ℝ, c ∈ Set.Icc (-1 : ℝ) 1 ∧ resultant (dieudonne Hctrl 18 c) (dieudonneStar Hctrl 18 c) 17 17 = 0 := by
   by_contra hno
@@ -211,7 +211,7 @@ theorem ctrl_R_fails_proved :
     refine Multiset.card_pos_iff_exists_mem.2 ⟨w, Multiset.mem_filter.2 ⟨(mem_roots hP0).2 hw0, by simpa using hw1⟩⟩
   omega
 
-/-- tex l.442: "check (D) fails too, since `H(sz)` no longer matches `Q`". -/
+/-- tex v1.90 l.442, removed at v2.90: "check (D) fails too, since `H(sz)` no longer matches `Q`". -/
 theorem ctrl_D_fails_proved : Hctrl * zerosPoly [a1D, a2D] ≠ Qdata * reflPoly [a1D, a2D] := by
   have hHQ := Exact.sec5_Q_proved.2.2.2.2.2.2.2.2.1
   intro h

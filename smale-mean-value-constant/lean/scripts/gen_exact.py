@@ -77,8 +77,6 @@ Smale/Proofs/DataGQ.lean — the data of Section 5 as computable Gaussian ration
 definition in Smale/Defs/Data.lean, and the coefficients of `H` (computed by
 scripts/gen_exact.py; Lean checks them by a kernel identity, see Smale/Proofs/DataPoly.lean).
 GENERATED — do not edit by hand.
-## version 0.11 - 20261027_2145 — public header (comments only).
-## version 0.01 - 20261027_1715 — first version.
 -/
 import Smale.Proofs.GQPoly
 

@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Sec1Best.lean — paper 009, Section 1 (tex l.52-63): the normalization `p(u) = (P(z+u) - P(z))/P'(z)`
+Smale/Proofs/Sec1Best.lean — paper 009, Section 1 (tex l.70-81): the normalization `p(u) = (P(z+u) - P(z))/P'(z)`
 of a polynomial `P` of degree `d` at a point `z` with `P'(z) ≠ 0` lies in `𝓟_d` and has the critical points `ζ - z`;
 hence `K(d)` is the best constant in Smale's inequality (1.1).
 Helpers live in namespace `Smale.Sec1`.
@@ -22,7 +22,7 @@ theorem eval_normalizeAt (P : ℂ[X]) (z u : ℂ) :
     (normalizeAt P z).eval u = (P.derivative.eval z)⁻¹ * (P.eval (z + u) - P.eval z) := by
   simp [normalizeAt, eval_comp, add_comm]
 
-/-- `sec1_normalize` (tex l.57-58): for `P` of degree `d ≥ 2` and `P'(z) ≠ 0`, `p(u) = (P(z+u) - P(z))/P'(z)` lies
+/-- `sec1_normalize` (tex l.75-76): for `P` of degree `d ≥ 2` and `P'(z) ≠ 0`, `p(u) = (P(z+u) - P(z))/P'(z)` lies
 in `𝓟_d`, and its critical points are the points `ζ - z` with `ζ` a critical point of `P`. -/
 theorem sec1_normalize_proved (d : ℕ) (_hd : 2 ≤ d) (P : ℂ[X]) (hP : P.natDegree = d) (z : ℂ)
     (hz : P.derivative.eval z ≠ 0) :
@@ -38,7 +38,7 @@ theorem sec1_normalize_proved (d : ℕ) (_hd : 2 ≤ d) (P : ℂ[X]) (hP : P.nat
   · rw [derivative_normalizeAt]
     simp [eval_comp, hz, add_comm]
 
-/-- `sec1_best_constant` (tex l.58-63): `K(d)` is the best constant `K` in (1.1) over all polynomials `P` of degree
+/-- `sec1_best_constant` (tex l.76-81): `K(d)` is the best constant `K` in (1.1) over all polynomials `P` of degree
 `d` and all `z` with `P'(z) ≠ 0`. Given (1.1) with `K`, take `P = p ∈ 𝓟_d` and `z = 0`; conversely normalize `P` at
 `z` and use a critical point where `m(p)` is attained. -/
 theorem sec1_best_constant_proved (d : ℕ) (hd : 2 ≤ d) (K : ℝ) :

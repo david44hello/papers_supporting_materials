@@ -117,6 +117,106 @@ run_export_checkers() { return 0; }
         self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
 
 
+class FactRSplit(ReplayGuards):
+    """The plain run leaves fact (R) out; --r takes only fact (R) and names its checkers."""
+
+    def add_module(self, name, text="-- module\n"):
+        relative = Path(*name.split("."))
+        source = self.root / relative.with_suffix(".lean")
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text(text)
+        artifact = self.root / ".lake/build/lib/lean" / relative.with_suffix(".olean")
+        artifact.parent.mkdir(parents=True, exist_ok=True)
+        artifact.write_bytes(b"fixture")
+
+    def add_fact_r(self):
+        self.add_module(f"{LIB}.Paper.Statements", f"import {LIB}.Basic\n")
+        self.add_module(f"{LIB}.R.Checker")
+        self.add_module(f"{LIB}.Paper.Unconditional", f"import {LIB}.Paper.Statements\nimport {LIB}.R.Checker\n")
+
+    def lines(self, commands):
+        result = self.shell(commands)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return result.stdout.split()
+
+    def test_plain_run_leaves_fact_r_out(self):
+        self.add_fact_r()
+        self.assertEqual(self.lines("plain_modules"), [LIB, f"{LIB}.Basic", f"{LIB}.Paper.Statements"])
+
+    def test_r_run_takes_only_fact_r(self):
+        self.add_fact_r()
+        self.assertEqual(self.lines("r_modules"), [f"{LIB}.Paper.Unconditional", f"{LIB}.R.Checker"])
+
+    def test_tree_without_fact_r_is_as_before(self):
+        self.assertEqual(self.lines("plain_modules"), self.lines("all_modules"))
+
+    def test_wall_stops_the_plain_run(self):
+        self.add_fact_r()
+        self.assertEqual(self.run_mode(0).returncode, 0)
+        self.add_module(f"{LIB}.Paper.Statements", f"import {LIB}.R.Checker\n")
+        result = self.run_mode(0)
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn("wall", result.stdout)
+
+    def test_root_and_audit_may_import_fact_r(self):
+        self.add_fact_r()
+        self.add_module(f"{LIB}.Audit", f"import {LIB}.Paper.Unconditional\n")
+        self.add_module(LIB, f"import {LIB}.R.Checker\n")
+        self.assertEqual(self.run_mode(0).returncode, 0)
+
+    def test_r_run_needs_fact_r(self):
+        self.assertEqual(self.run_mode(0, "parse_r_arguments nanoda").returncode, 2)
+
+    def test_unknown_checker_refused(self):
+        self.assertEqual(self.run_mode(0, "parse_r_arguments nanoda,bogus").returncode, 2)
+
+    def test_a_named_checker_that_does_not_pass_exits_4(self):
+        self.add_fact_r()
+        override = "parse_r_arguments nanoda\nrun_export_checkers() { return 1; }"
+        self.assertEqual(self.run_mode(0, override).returncode, 4)
+        self.assertEqual(self.run_mode(0, "parse_r_arguments nanoda").returncode, 0)
+
+    def test_a_failure_stays_a_failure(self):
+        self.add_fact_r()
+        override = "parse_r_arguments nanoda\nrun_export_checkers() { ANY_FAIL=1; return 1; }"
+        self.assertEqual(self.run_mode(0, override).returncode, 1)
+
+    def test_plain_run_keeps_its_exit_code_on_a_skip(self):
+        self.add_fact_r()
+        self.assertEqual(self.run_mode(0, "run_export_checkers() { return 1; }").returncode, 0)
+
+    def test_a_checker_not_named_is_not_run_and_is_not_a_pass(self):
+        result = self.shell('parse_r_arguments nanoda\nexport_checker "con-ron --verified" x x x false\nprintf "%s\\n" "${SUMMARY[@]}"')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("NOT RUN", result.stdout)
+        self.assertNotIn("PASS", result.stdout)
+
+    def test_sample_run_says_so(self):
+        self.add_fact_r()
+        sample = self.root / "sample.txt"
+        sample.write_text("# rule: the five thinnest margins\nSmale.one\n")
+        result = self.run_mode(0, f'parse_r_arguments con-leche --names "{sample}"\nprintf "%s\\n" "${{EXPORT_CHECKERS[4]}}"')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("con-leche --verified (SAMPLE)", result.stdout)
+        self.assertIn("SAMPLE: the export holds only", result.stdout)
+        names = self.shell(f'SAMPLE_NAMES="{sample}"\nlist_constants_of_this_run out.txt\ncat out.txt')
+        self.assertEqual(names.stdout.split(), ["Smale.one"])
+
+    def test_a_split_run_prints_nothing_false(self):
+        self.add_fact_r()
+        result = self.run_mode(0, "parse_r_arguments nanoda")
+        self.assertNotIn("replayed in (a) only", result.stdout)
+        self.assertNotIn("the 6 export checkers", result.stdout)
+        self.assertNotIn("every safe", result.stdout)
+
+    def test_olean_alone_needs_no_export(self):
+        self.add_fact_r()
+        override = "parse_r_arguments olean\nlist_constants() { echo EXPORT_RAN; return 1; }"
+        result = self.run_mode(0, override)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertNotIn("EXPORT_RAN", result.stdout)
+
+
 def main():
     if sys.argv[1:] == ["--test"]:
         sys.argv = [sys.argv[0]]

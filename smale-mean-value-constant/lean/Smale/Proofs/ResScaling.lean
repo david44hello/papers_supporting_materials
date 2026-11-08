@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/ResScaling.lean — `thm_5_1_R_scaling` (tex l.402-404): multiplying `H` by a positive integer `L`
+Smale/Proofs/ResScaling.lean — `thm_5_1_R_scaling` (tex l.447-449): multiplying `H` by a positive integer `L`
 multiplies `Res_w(P_c, P_c*)` (formal degrees `n-1, n-1`) by `L^(2(n-1)) > 0`.
 -/
 import Smale.Defs.Basic

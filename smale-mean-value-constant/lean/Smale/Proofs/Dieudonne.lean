@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Dieudonne.lean — the identities of the Dieudonné polynomials `P_c` (tex l.228-235, l.435):
+Smale/Proofs/Dieudonne.lean — the identities of the Dieudonné polynomials `P_c` (tex l.271-278, l.472):
 `H(ze^{iθ}) - H(ze^{-iθ}) = 2i sin θ · z P_{cos θ}(z)`, `P₁ = H'`, `P_c(0) = h₁`, `P_{-1}(w) = H'(-w)`.
 -/
 import Smale.Defs.Basic
@@ -20,7 +20,7 @@ theorem eval_dieudonne (H : ℂ[X]) (n : ℕ) (c : ℝ) (w : ℂ) :
       ∑ l ∈ Finset.range n, H.coeff (l + 1) * (((Chebyshev.U ℝ (l : ℤ)).eval c : ℝ) : ℂ) * w ^ l := by
   simp only [dieudonne, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X]
 
-/-- `P₁ = H'` (tex l.231-232: `U_{ℓ-1}(1) = ℓ`), for every formal degree `n ≥ deg H`. -/
+/-- `P₁ = H'` (tex l.276-277: `U_{ℓ-1}(1) = ℓ`), for every formal degree `n ≥ deg H`. -/
 theorem dieudonne_one (H : ℂ[X]) (n : ℕ) (hn : H.natDegree ≤ n) : dieudonne H n 1 = H.derivative := by
   ext m
   rw [coeff_dieudonne, coeff_derivative]
@@ -28,12 +28,12 @@ theorem dieudonne_one (H : ℂ[X]) (n : ℕ) (hn : H.natDegree ≤ n) : dieudonn
   · simp [Chebyshev.U_eval_one]
   · rw [coeff_eq_zero_of_natDegree_lt (by omega), zero_mul]
 
-/-- `P_c(0) = h₁` (tex l.232). -/
+/-- `P_c(0) = h₁` (tex l.277). -/
 theorem dieudonne_eval_zero (H : ℂ[X]) (n : ℕ) (hn1 : 1 ≤ n) (c : ℝ) : (dieudonne H n c).eval 0 = H.coeff 1 := by
   rw [← coeff_zero_eq_eval_zero, coeff_dieudonne]
   simp [show 0 < n by omega]
 
-/-- tex l.231-232, exactly the Statements type: `P₁ = H'` and `P_c(0) = h₁`. -/
+/-- tex l.276-277, exactly the Statements type: `P₁ = H'` and `P_c(0) = h₁`. -/
 theorem sec4_P_one_proved (H : ℂ[X]) (n : ℕ) (hn : H.natDegree ≤ n) (hn1 : 1 ≤ n) :
     dieudonne H n 1 = H.derivative ∧ ∀ c : ℝ, (dieudonne H n c).eval 0 = H.coeff 1 :=
   ⟨dieudonne_one H n hn, dieudonne_eval_zero H n hn1⟩
@@ -53,7 +53,7 @@ theorem U_cos_mul_sin (l : ℕ) (θ : ℝ) :
   push_cast
   ring
 
-/-- tex l.231, exactly the Statements type: `H(ze^{iθ}) - H(ze^{-iθ}) = 2i sin θ · z P_c(z)`, `c = cos θ`. -/
+/-- tex l.276, exactly the Statements type: `H(ze^{iθ}) - H(ze^{-iθ}) = 2i sin θ · z P_c(z)`, `c = cos θ`. -/
 theorem sec4_dieudonne_identity_proved (H : ℂ[X]) (n : ℕ) (hn : H.natDegree ≤ n) (θ : ℝ) (z : ℂ) :
     H.eval (z * exp (θ * I)) - H.eval (z * exp (-(θ * I))) =
       2 * I * Real.sin θ * z * (dieudonne H n (Real.cos θ)).eval z := by
@@ -72,7 +72,7 @@ theorem U_eval_neg_one' (l : ℕ) :
     (Chebyshev.U ℝ (l : ℤ)).eval (-1) = (-1) ^ l * (Chebyshev.U ℝ (l : ℤ)).eval 1 := by
   rw [Chebyshev.U_eval_neg, Int.cast_negOnePow_natCast]
 
-/-- Remark 5.2 (tex l.435), exactly the Statements type: `P_{±1}(w) = H'(±w)`. -/
+/-- Remark 5.2 (tex l.472), exactly the Statements type: `P_{±1}(w) = H'(±w)`. -/
 theorem rem_5_2_P_pm_one_proved (H : ℂ[X]) (n : ℕ) (hn : H.natDegree ≤ n) (w : ℂ) :
     (dieudonne H n 1).eval w = H.derivative.eval w ∧ (dieudonne H n (-1)).eval w = H.derivative.eval (-w) := by
   refine ⟨by rw [dieudonne_one H n hn], ?_⟩

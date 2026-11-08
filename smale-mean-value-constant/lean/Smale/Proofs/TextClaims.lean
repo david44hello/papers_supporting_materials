@@ -1,7 +1,7 @@
 /-
-Smale/Proofs/TextClaims.lean — in-text claims of paper 009 (posted v1.90): a zero of P_c in 0 < |z| < 1 makes H
-non-univalent (tex l.235-236); the critical points of z - z^d/d and the value of p(β)/β there (tex l.66-67); the
-paper's arithmetic on the constants of [JN] (tex l.33, l.48-49, l.84, l.122-123).
+Smale/Proofs/TextClaims.lean — in-text claims of paper 009 (v2.90): a zero of P_c in 0 < |z| < 1 makes H
+non-univalent (tex l.278-279); the critical points of z - z^d/d and the value of p(β)/β there (tex l.84-85); the
+paper's arithmetic on the constants of [JN] (tex l.45, l.66-67, l.101, l.214-216).
 -/
 import Smale.Proofs.Dieudonne
 import Smale.Proofs.Sec1Exact
@@ -31,7 +31,7 @@ theorem norm_mul_exp_pm (θ : ℝ) (z : ℂ) :
   refine ⟨by rw [norm_mul, norm_exp_ofReal_mul_I, mul_one], ?_⟩
   rw [norm_mul, show -((θ : ℂ) * I) = ((-θ : ℝ) : ℂ) * I by push_cast; ring, norm_exp_ofReal_mul_I, mul_one]
 
-/-- tex l.235-236: "So if `-1 < c < 1` and `P_c(z) = 0` with `0 < |z| < 1`, then `H` takes the same value at the two
+/-- tex l.278-279: "So if `-1 < c < 1` and `P_c(z) = 0` with `0 < |z| < 1`, then `H` takes the same value at the two
 distinct points `ze^{±iθ}` of `𝔻`, and `H` is not univalent in `𝔻`" (`c = cos θ`, `θ = arccos c ∈ (0, π)`). -/
 theorem sec4_P_zero_not_univalent_proved (H : ℂ[X]) (n : ℕ) (hn : H.natDegree ≤ n) (c : ℝ) (hc1 : -1 < c) (hc2 : c < 1)
     (z : ℂ) (hz0 : z ≠ 0) (hz1 : ‖z‖ < 1) (h0 : (dieudonne H n c).eval z = 0) :
@@ -54,7 +54,7 @@ theorem sec4_P_zero_not_univalent_proved (H : ℂ[X]) (n : ℕ) (hn : H.natDegre
     exact sub_eq_zero.1 h
   exact ⟨hcos, hθ0, hθπ, hne, hin1, hin2, heq, fun hu => hne (hu.2 hin1 hin2 heq)⟩
 
-/-- tex l.66-67: the critical points `β` of `p = z - z^d/d` are the `(d-1)`-st roots of unity, and
+/-- tex l.84-85: the critical points `β` of `p = z - z^d/d` are the `(d-1)`-st roots of unity, and
 `p(β)/β = 1 - β^{d-1}/d = (d-1)/d` at each. -/
 theorem sec1_example_crit_proved (d : ℕ) (hd : 2 ≤ d) (β : ℂ) :
     ((X - C (1 / (d : ℂ)) * X ^ d).derivative.eval β = 0 ↔ β ^ (d - 1) = 1) ∧
@@ -74,7 +74,7 @@ theorem sec1_example_crit_proved (d : ℕ) (hd : 2 ≤ d) (β : ℂ) :
     simp only [eval_sub, eval_X, eval_mul, eval_C, eval_pow, hpow]
     field_simp
 
-/-- tex l.33, l.48-49, l.84: `√(8081/6656) = 1.1018586…` (truncated decimals), so the bound of [JN] exceeds `1.1018`,
+/-- tex l.45, l.66-67, l.101: `√(8081/6656) = 1.1018586…` (truncated decimals), so the bound of [JN] exceeds `1.1018`,
 and `1.1559837 > 1.1018586…` ("improving the bound 1.1018"). -/
 theorem intro_JN_digits_proved :
     (1.1018586 : ℝ) ≤ Real.sqrt (8081 / 6656) ∧ Real.sqrt (8081 / 6656) < 1.1018587 ∧
@@ -85,7 +85,7 @@ theorem intro_JN_digits_proved :
   · rw [Real.lt_sqrt (by norm_num)]; norm_num
   · rw [Real.sqrt_lt' (by norm_num)]; norm_num
 
-/-- tex l.122-123, the paper's reading of [JN, Thm. 1.3]: `√(8081/6656) ≤ 𝓑₁ < √(7/5)` gives `1.1018 < 𝓑₁ < 1.1833`
+/-- tex l.214-216, the paper's reading of [JN, Thm. 1.3]: `√(8081/6656) ≤ 𝓑₁ < √(7/5)` gives `1.1018 < 𝓑₁ < 1.1833`
 (the numbers), and `𝓑_d < 4 - 529(log 2)²/(576d²)` at `d = 2` "gives `𝓑₂ < 3.89`". -/
 theorem intro_JN_B1_B2_proved :
     (1.1018 : ℝ) < Real.sqrt (8081 / 6656) ∧ Real.sqrt (7 / 5) < 1.1833 ∧
@@ -96,7 +96,7 @@ theorem intro_JN_B1_B2_proved :
     apply pow_lt_pow_left₀ (by linarith) (by norm_num) (by norm_num)
   nlinarith
 
-/-- tex l.75-76: "All these bounds tend to `4` as `d → ∞`": `4^{(d-2)/(d-1)}`, `4(d-1)/(d+1)` and `4 - 2.263/√d`. -/
+/-- tex l.92-93: "All these bounds tend to `4` as `d → ∞`": `4^{(d-2)/(d-1)}`, `4(d-1)/(d+1)` and `4 - 2.263/√d`. -/
 theorem intro_bounds_tend_to_4_proved :
     Tendsto (fun d : ℕ => (4 : ℝ) ^ (((d : ℝ) - 2) / ((d : ℝ) - 1))) atTop (𝓝 4) ∧
       Tendsto (fun d : ℕ => 4 * ((d : ℝ) - 1) / ((d : ℝ) + 1)) atTop (𝓝 4) ∧

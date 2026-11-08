@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Count.lean — Lemma 4.1, the step of the proof (tex l.251-253): if no `P_c` with `c ∈ [-1, 1]` has a
+Smale/Proofs/Count.lean — Lemma 4.1, the step of the proof (tex l.294-296): if no `P_c` with `c ∈ [-1, 1]` has a
 zero on the circle, the number of zeros of `P_c` in `𝔻` is the same for all `c`. By the argument principle for
 polynomials (`Smale/Proofs/ArgPrinciple.lean`) this number is `(2πi)⁻¹ ∮ P_c'/P_c`, a continuous function of `c`; a
 continuous function on `[-1, 1]` with values in ℕ is constant (it would take a half-integer value in between).
@@ -66,7 +66,7 @@ theorem natCast_ne_half (m k : ℕ) : (k : ℝ) ≠ m + 1 / 2 := fun h => by
   have h3 : 2 * k = 2 * m + 1 := by exact_mod_cast h2
   omega
 
-/-- Lemma 4.1, the step of the proof (tex l.248-250), exactly the Statements type. -/
+/-- Lemma 4.1, the step of the proof (tex l.294-296), exactly the Statements type. -/
 theorem lem_4_1_count_proved (H : ℂ[X]) (_hH' : ∀ w ∈ closedDisk, H.derivative.eval w ≠ 0)
     (hcirc : ∀ c : ℝ, c ∈ Set.Icc (-1 : ℝ) 1 → ∀ w : ℂ, ‖w‖ = 1 → (dieudonne H H.natDegree c).eval w ≠ 0) :
     ∀ c ∈ Set.Icc (-1 : ℝ) 1,
@@ -89,7 +89,7 @@ theorem lem_4_1_count_proved (H : ℂ[X]) (_hH' : ∀ w ∈ closedDisk, H.deriva
   obtain ⟨c', -, hc'⟩ := intermediate_value_uIcc (hcont.mono (uIcc_subset_Icc hc h1)) hm
   exact natCast_ne_half m _ hc'
 
-/-- Lemma 4.1 (tex l.244-252), from the paper's extension of Dieudonné's criterion (the claim `sec4_dieudonne_any`,
+/-- Lemma 4.1 (tex l.288-297), from the paper's extension of Dieudonné's criterion (the claim `sec4_dieudonne_any`,
 taken as the hypothesis `hany` with exactly its Statements type): the count of zeros of `P_c` in `𝔻` is that of
 `P₁ = H'`, which is `0`, so no `P_c` has a zero in `𝔻`. -/
 theorem lem_4_1_of

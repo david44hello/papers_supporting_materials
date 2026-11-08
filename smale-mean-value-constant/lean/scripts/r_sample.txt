@@ -1,0 +1,9 @@
+# The sample of the kernel checks offered to the two slow checkers, con-leche and con-ron. All 299 checks go through the other checkers.
+# Rule: the 5 intervals of the cover with the largest k, the level of the dyadic interval. No tie at the cut.
+# Why this rule: the digit width of a check is 324 + 34 k bits, so these are the largest computations of the cover.
+# Intervals, c = (a + tau) / 2^k with tau in [-1, 1]: (a, k) = (524285, 19), (a, k) = (524287, 19), (a, k) = (262141, 18), (a, k) = (131069, 17), (a, k) = (65533, 16).
+Smale.RK.t_524285_19
+Smale.RK.t_524287_19
+Smale.RK.t_262141_18
+Smale.RK.t_131069_17
+Smale.RK.t_65533_16

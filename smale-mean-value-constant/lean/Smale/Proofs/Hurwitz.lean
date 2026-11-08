@@ -1,5 +1,5 @@
 /-
-Smale/Proofs/Hurwitz.lean — the Hurwitz step of the proof of Lemma 5.3 of paper 009 (posted v1.90, tex l.453-456):
+Smale/Proofs/Hurwitz.lean — the Hurwitz step of the proof of Lemma 5.3 of paper 009 (v2.90, tex l.496-499):
 as ε → 0, d - 1 of the d critical points of p_ε, counted with multiplicity, tend to those of p, and the other one
 escapes. By Rouché's theorem (ArgPrinciple.lean) with f = p' and g = (d+1)εz^d: (i) in a disk |w| < R₀ that contains
 all critical points of p, p_ε has exactly d - 1 critical points for small ε; (ii) in a small disk around a critical
@@ -44,7 +44,7 @@ theorem zerosInBall_eps_eq {d : ℕ} (p : ℂ[X]) (c : ℂ) {ρ : ℝ} (hρ : 0 
     linarith)
   rwa [← derivative_eps] at hrouche
 
-/-- tex l.453-456 (Hurwitz): (i) in a disk `|w| < R₀` that contains all critical points of `p`, `p_ε` has exactly
+/-- tex l.496-499 (Hurwitz): (i) in a disk `|w| < R₀` that contains all critical points of `p`, `p_ε` has exactly
 `d - 1` critical points (with multiplicity) for small `ε` (so the remaining one of its `d` lies outside); (ii) around
 each critical point `β` of `p` there is `r₀ > 0` such that for every `0 < r ≤ r₀` and small `ε`, `p_ε` has exactly
 `μ` critical points in `|w - β| < r`, `μ` the multiplicity of `β`. -/
