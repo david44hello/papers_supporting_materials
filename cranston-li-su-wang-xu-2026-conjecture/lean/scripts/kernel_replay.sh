@@ -1,56 +1,97 @@
 #!/usr/bin/env bash
 # kernel_replay.sh — re-check every EulerFlow declaration with Lean's kernel and the toolchain's independent checkers.
-# Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+# Author: Dave Goel. Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
+## version 0.90 - 20261110: portable replay for this library; two limits, complete module coverage, explicit gate
+##   and lock settings, large lean4lean fuel budgets, and exit 4 when a selected export checker does not finish.
 #
-# Usage:  scripts/kernel_replay.sh          full run (about 20 min; one thread, nice 19; peak RSS 9 GB = 6.2 mapped + 2.9 anon);
-#                                           refuses (exit 3) if any EulerFlow olean is missing or older than its source
+# Usage:  scripts/kernel_replay.sh          full run (one thread, nice 19); refuses (exit 3) if Lake reports any EulerFlow
+#                                           module out of date, or any olean is missing
 #         scripts/kernel_replay.sh --use-built-oleans   check the oleans as built, even if not fresh; exits 3, never 0
-#         scripts/kernel_replay.sh --test   self-test: known-good inputs must pass, a kernel-invalid olean must fail
-# Work files and logs are isolated per invocation under .lake/kernel_replay/ (ignored by Git).
-# Extra prerequisites: Python 3, ripgrep, GNU time, timeout, and all seven checker/export tools named below.
+#         scripts/kernel_replay.sh --export-only        part (b) only (after a run whose (a) PASSED on the same sources)
+#         scripts/kernel_replay.sh --only-olean         part (a) only
+#         scripts/kernel_replay.sh --only-checker N     a fresh export + export checker N only, N = 1..6 in
+#                                                       EXPORT_CHECKERS order; run (a) and N = 1..6 as 7 separate jobs
+#         scripts/kernel_replay.sh --selftest   Lean self-test: known-good inputs must pass, a kernel-invalid olean must fail
+#         scripts/kernel_replay.sh --test       unit tests of the run logic with stand-in tools (no Lean)
+# Every Lean, lake and checker process runs through scripts/lean_run.sh (the shared compile lock and the priority gate),
+# one at a time; waiting for the lock does not count toward a checker's time limit.
+# Work files and logs are isolated per invocation under .lake/kernel_replay/ (ignored by Git); override the folder
+# with KERNEL_REPLAY_WORK_ROOT.
+# Extra prerequisites: Python 3, ripgrep, GNU time, timeout, elan, and all seven checker/export tools named below.
 # Exit:   0 no FAIL | 1 some checker FAILed | 2 usage/setup error | 3 oleans missing, stale, or changed during run
+#         | 4 a selected export checker did not finish or declined the export (SKIPPED)
 #
 # (a) leanchecker, olean replay: each EulerFlow.* module's own declarations are replayed by Lean's C++ kernel on top
 #     of the imported environment (Mathlib and core are trusted in this mode).  One process per module: a single
-#     process re-imports Mathlib for every module and reached 9 GB.
+#     process re-imports Mathlib for every module and reached 9 GB.  Exception: a parent module that declares
+#     constants is replayed in one process together with the modules under it (leanchecker selects by name prefix).
+#     Coverage, from leanchecker's own --verbose output: the modules named by its exit-0 runs, plus the parents that
+#     declare nothing, must be exactly the modules expected, none missing and none unknown.
 # (b) leanexport: every safe EulerFlow constant is exported with its transitive dependencies (core and Mathlib too)
 #     into WORK_DIR.  The 6 checkers bundled for `lake check --paranoid` then check that file starting from an
 #     empty environment, so they also re-check the Mathlib/core declarations EulerFlow depends on.  `lake check`
-#     itself is not used: it builds the project, runs nanoda on 4 threads and con-leche/con-ron on all cores, and
-#     rejects every non-standard axiom (EulerFlow.Cited.* declares axioms by design; axiom policy is audit.py's job).
-#     con-leche/con-ron DECLINE (exit 2) any export with a non-standard axiom; that is reported as SKIPPED.
+#     itself is not used: it builds the project and runs nanoda on 4 threads and con-leche/con-ron on all cores.
+#     The axiom policy is audit.py's job; a non-standard axiom (sorryAx of an unproved row included) is reported here
+#     in "axioms declared in the export".  con-leche/con-ron DECLINE (exit 2) any export with a non-standard axiom;
+#     that is reported as SKIPPED, and the run ends with exit 4.
 # Every checker accepts an EMPTY export with exit 0.  So the export is verified to declare every requested name,
 # and each checker's own declaration count must equal the count computed from the export.
 set -euo pipefail
 
 PROJECT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+RUNNER="$PROJECT_DIR/scripts/lean_run.sh"
 WORK_DIR=
 SCRATCH_DIR=
-CHECKER_TIME_LIMIT_SECONDS=2400   # about 40 min per checker; a checker that needs longer is reported as SKIPPED
-MEMORY_WARN_KB=8000000            # a peak RSS above this is flagged.  RSS includes the memory-mapped .olean files:
-                                  # Example21.ChainData peaked at 9.06 GB RSS = 6.19 GB mapped oleans + 2.87 GB anon
-POSITIVE_TEST_MODULE=EulerFlow.Defs.Graph   # a small module that exists in EulerFlowLean
+RUN_TIME_LIMIT_SECONDS=3300       # each olean replay run and the export: below the priority gate's 3600 s stop for a
+                                  # long check, so run part (a) inside ONE long check with the inner gate off
+                                  # (LEAN_RUN_GATE=none).  An olean replay stopped at it is a FAIL, reported as stopped
+EXPORT_CHECKER_TIME_LIMIT_SECONDS=14400   # each export checker: only to stop a hung tool.  Some checkers need hours on
+                                  # kernel computations, so run them in
+                                  # a job with no shorter outer limit.  A checker stopped at it is SKIPPED (exit 4)
+MEMORY_WARN_KB=8000000            # a peak RSS above this is flagged.  RSS includes the memory-mapped .olean files
+                                  # (measured on an earlier project: one module peaked at 9.06 GB RSS = 6.19 GB mapped
+                                  # oleans + 2.87 GB anon)
+GATE_LINE='^PRIORITY GATE'        # the gate's own stderr lines; not output of the tool
+LIB_NAME=EulerFlow                      # the Lean library: lakefile [[lean_lib]] name = root module = source folder
+POSITIVE_TEST_MODULE=EulerFlow.Defs.Graph
 EXPORT_CHECKERS=("leanchecker --from-export" "leanchecker-paranoid --from-export" "lean4lean --import"
                  "nanoda" "con-leche --verified" "con-ron --verified")
+# lean4lean's step budgets (its --config fields); the defaults are too small for the decide +kernel certificates.
+LEAN4LEAN_FUEL=(--config:whnf=1000000000000 --config:whnfEager=1000000000000 --config:lazyDelta=1000000000000
+                --config:etaExpand=1000000000000 --config:inductiveFuel=1000000000000 --config:recDepth=1000000000000)
 
 SUMMARY=()
 ANY_FAIL=0
+ANY_SKIPPED=0   # a selected export checker ended SKIPPED (stopped at its limit, or declined): exit 4
 RUN_EXIT=0 RUN_SECONDS=0 RUN_RSS_KB=0
 
 die() { echo "ERROR: $*" >&2; exit 2; }
 
 setup_work_dirs() {
-    local work_root="$PROJECT_DIR/.lake/kernel_replay"
+    local work_root="${KERNEL_REPLAY_WORK_ROOT:-$PROJECT_DIR/.lake/kernel_replay}"
     mkdir -p "$work_root"
     WORK_DIR=$(mktemp -d "$work_root/run.XXXXXXXX") || die "cannot create isolated replay directory"
     SCRATCH_DIR="$WORK_DIR/selftest"
 }
 
+# Runs "$@" through the lock and the gate; the gate's own stderr lines are dropped, the tool's stderr is kept.
+gated() {
+    local status=0 errors
+    errors=$(mktemp "$WORK_DIR/gated.XXXXXX")
+    "$RUNNER" "$@" 2> "$errors" || status=$?
+    grep -v "$GATE_LINE" "$errors" >&2 || true
+    rm -f -- "$errors"
+    return "$status"
+}
+
 setup_environment() {
     export PATH="$HOME/.elan/bin:$PATH"
-    cd "$PROJECT_DIR"   # `lake env` and the elan `lean` proxy both need the project directory
-    local prefix
-    prefix=$(lean --print-prefix) || die "cannot find the project's Lean toolchain"
+    cd "$PROJECT_DIR"   # `lake env` and elan's toolchain choice both need the project directory
+    [[ -x $RUNNER ]] || die "missing $RUNNER"
+    local lean_binary prefix
+    # elan resolves the project's toolchain without starting Lean (lean-toolchain of the project directory).
+    lean_binary=$(elan which lean) || die "cannot find the project's Lean toolchain (elan which lean)"
+    prefix=$(dirname -- "$(dirname -- "$lean_binary")")
     TOOLCHAIN_BIN="$prefix/bin"
     # Lean tools find core via `lean --print-prefix` unless LEAN_SYSROOT is set; outside the project that is
     # elan's default toolchain (which elan then downloads).  Pin the project's toolchain.
@@ -72,12 +113,25 @@ setup_environment() {
     write_export_analyzer "$HELPER_DIR/analyze_export.py"
 }
 
-# Prints the name of every constant declared in the given .olean files.  Unsafe and partial constants (compiler
-# helpers such as `_unsafe_rec`) go to stderr: no safe declaration can use them, and nanoda refuses them.
+# Prints the name of every constant declared in the given .olean files, as a name literal that leanexport can read
+# back.  Unsafe and partial constants (compiler helpers such as `_unsafe_rec`) go to stderr: no safe declaration can
+# use them, and nanoda refuses them.  A name that cannot be written as a literal is an error (exit 1).
 write_constant_lister() {
     cat > "$1" <<'EOF'
 import Lean
 open Lean
+
+/-- `name` as a name literal that leanexport's `Syntax.decodeNameLit` reads back as `name`: digits for a numeric
+component, `Name.escapePart` («...» when needed) for a string one.  `Name.toString` never escapes a name with macro
+scopes (`deriving DecidableEq` makes `T.match_on_same_ctor._@.M._hyg.95`), and leanexport panics on those. -/
+def nameLiteral (name : Name) : Except String String := do
+  let parts ← name.componentsRev.reverse.mapM fun
+    | .str _ part => match Name.escapePart part with
+      | some escaped => pure escaped
+      | none => throw s!"cannot write {name} as a name literal (a component contains »)"
+    | .num _ index => pure (toString index)
+    | .anonymous => throw s!"anonymous component in {name}"
+  return ".".intercalate parts
 
 unsafe def main (oleanFiles : List String) : IO UInt32 := do
   for file in oleanFiles do
@@ -86,7 +140,9 @@ unsafe def main (oleanFiles : List String) : IO UInt32 := do
       if info.isUnsafe || info.isPartial then
         IO.eprintln s!"skipped unsafe/partial: {info.name}"
       else
-        IO.println info.name
+        match nameLiteral info.name with
+        | .ok literal => IO.println literal
+        | .error message => IO.eprintln message; return 1
     region.free
   return 0
 EOF
@@ -137,32 +193,31 @@ print("axioms=" + ",".join(axioms))
 EOF
 }
 
-all_modules() { { echo EulerFlow; rg --files --hidden --no-ignore EulerFlow -g '*.lean' | sed 's|\.lean$||; s|/|.|g'; } | sort; }
+all_modules() { { echo "$LIB_NAME"; rg --files --hidden --no-ignore "$LIB_NAME" -g '*.lean' | sed 's|\.lean$||; s|/|.|g'; } | sort; }
 olean_of() { echo "$PROJECT_DIR/.lake/build/lib/lean/${1//.//}.olean"; }
 source_of() { echo "$PROJECT_DIR/${1//.//}.lean"; }
 
-# The oleans must exist and be newer than their sources, or the replay would not describe the current code.
-# Sets MISSING_MODULES and STALE_MODULES.  (Lake itself compares content hashes; an mtime-only touch shows here.)
+# The oleans must exist.  Whether they describe the current code is check_lake_fresh's job: Lake compares content
+# hashes, while file times can mislead (a copy or checkout makes a source look newer without changing it).
+# Sets MISSING_MODULES.
 check_oleans_fresh() {
     local module
-    MISSING_MODULES=(); STALE_MODULES=()
+    MISSING_MODULES=()
     for module in "$@"; do
-        if [[ ! -f $(olean_of "$module") ]]; then MISSING_MODULES+=("$module")
-        elif [[ $(source_of "$module") -nt $(olean_of "$module") ]]; then STALE_MODULES+=("$module"); fi
+        [[ -f $(olean_of "$module") ]] || MISSING_MODULES+=("$module")
     done
-    (( ${#MISSING_MODULES[@]} == 0 && ${#STALE_MODULES[@]} == 0 )) && return 0
-    (( ${#MISSING_MODULES[@]} )) && echo "PRECONDITION: no olean for: ${MISSING_MODULES[*]}" >&2
-    (( ${#STALE_MODULES[@]} )) && echo "PRECONDITION: olean older than source for: ${STALE_MODULES[*]}" >&2
+    (( ${#MISSING_MODULES[@]} == 0 )) && return 0
+    echo "PRECONDITION: no olean for: ${MISSING_MODULES[*]}" >&2
     return 3
 }
 
 # Hash both the current source inventory and artifact contents. This catches source-only edits,
 # added/removed modules, and same-size artifact rewrites even when timestamps are preserved.
 snapshot_inputs() {
-    python3 -I - "$PROJECT_DIR" <<'PY'
+    python3 -I - "$PROJECT_DIR" "$LIB_NAME" <<'PY'
 import hashlib, pathlib, sys
-root = pathlib.Path(sys.argv[1])
-sources = sorted([root / "EulerFlow.lean", *(root / "EulerFlow").rglob("*.lean")])
+root, library = pathlib.Path(sys.argv[1]), sys.argv[2]
+sources = sorted([root / (library + ".lean"), *(root / library).rglob("*.lean")])
 paths = set(sources)
 paths.update(root / name for name in ("lean-toolchain", "lakefile.toml", "lake-manifest.json"))
 for source in sources:
@@ -185,26 +240,30 @@ print(digest.hexdigest())
 PY
 }
 
+# Lake's own freshness test (content hashes): exit 0 iff TARGET and everything it imports are built from the current
+# sources (`lake --no-build build` exits 3 when a rebuild would be needed).
 check_lake_fresh() {
-    if ! lake --no-build build EulerFlow > "$WORK_DIR/build_freshness.log" 2>&1; then
-        echo "PRECONDITION: Lake cannot confirm the current sources and dependencies are built; see $WORK_DIR/build_freshness.log" >&2
+    local target=$1
+    if ! gated lake --no-build build "$target" > "$WORK_DIR/build_freshness.log" 2>&1; then
+        echo "PRECONDITION: Lake cannot confirm that $target and its imports are built from the current sources; see $WORK_DIR/build_freshness.log" >&2
         return 3
     fi
 }
 
 record() { SUMMARY+=("$(printf '%-36s %s' "$1" "$2")"); }
 
-# Runs COMMAND with the time limit at nice 19 under GNU time; stdout to OUT, stderr to ERR (may be the same file).
+# timed_run LIMIT OUT ERR COMMAND...: runs COMMAND through the lock and the gate (one thread, nice 19), stopped after
+# LIMIT seconds, under GNU time; stdout to OUT, stderr to ERR (may be the same file; the gate's own lines are dropped).
 # Sets RUN_EXIT, RUN_SECONDS, RUN_RSS_KB.
 timed_run() {
-    local out=$1 err=$2; shift 2
+    local limit=$1 out=$2 err=$3; shift 3
     RUN_EXIT=0
     if [[ $out == "$err" ]]; then
-        /usr/bin/time -o "$err.time" -f '%e %M' \
-            timeout "$CHECKER_TIME_LIMIT_SECONDS" nice -n 19 "$@" > "$out" 2>&1 || RUN_EXIT=$?
+        gated /usr/bin/time -o "$err.time" -f '%e %M' \
+            timeout "$limit" "$@" > "$out" 2>&1 || RUN_EXIT=$?
     else
-        /usr/bin/time -o "$err.time" -f '%e %M' \
-            timeout "$CHECKER_TIME_LIMIT_SECONDS" nice -n 19 "$@" > "$out" 2> "$err" || RUN_EXIT=$?
+        gated /usr/bin/time -o "$err.time" -f '%e %M' \
+            timeout "$limit" "$@" > "$out" 2> "$err" || RUN_EXIT=$?
     fi
     read -r RUN_SECONDS RUN_RSS_KB < <(tail -n 1 "$err.time")
     [[ $RUN_SECONDS =~ ^[0-9.]+$ && $RUN_RSS_KB =~ ^[0-9]+$ ]] || { RUN_SECONDS=0; RUN_RSS_KB=0; }
@@ -226,33 +285,95 @@ is_parent_module() {   # true if some other module's name starts with "$1."
     return 1
 }
 
-# (a) Replays the given modules' own declarations, one leanchecker process per module.  leanchecker selects
-# modules by NAME PREFIX, so a parent module (the root `EulerFlow`) cannot be replayed alone; it must declare nothing.
+modules_under() {   # prints each of the modules "${@:2}" whose name starts with "$1."
+    local parent=$1 other; shift
+    for other in "$@"; do
+        if [[ $other == "$parent".* ]]; then echo "$other"; fi
+    done
+}
+
+replayed_modules_in() {   # the modules that `leanchecker --verbose` names on its "replaying <module>" lines in log $1
+    sed -n 's/^replaying \([^ ]\{1,\}\)$/\1/p' "$1"
+}
+
+write_sorted() {   # write_sorted FILE ITEM...: the items one per line, sorted, unique (C order, as comm needs)
+    local file=$1; shift
+    if (( $# > 0 )); then printf '%s\n' "$@"; fi | LC_ALL=C sort -u > "$file" || die "cannot write $file"
+}
+
+# Part (a)'s coverage, from leanchecker's own output, over three sorted lists in DIR: modules_expected.txt (the modules
+# given to leanchecker_replay), modules_confirmed.txt (named on a "replaying" line of a run that exited 0) and
+# modules_no_constants.txt (parents not run because they declare nothing).  MISSING = expected - confirmed -
+# no_constants, UNKNOWN = confirmed - expected.  Prints and records one line, then the missing and unknown names;
+# returns 1 unless both are empty.
+record_replay_coverage() {
+    local dir=$1 line name replayed skipped total verdict=PASS
+    local expected="$dir/modules_expected.txt" confirmed="$dir/modules_confirmed.txt"
+    local no_constants="$dir/modules_no_constants.txt"
+    local -a missing unknown
+    mapfile -t missing < <(LC_ALL=C comm -23 "$expected" "$confirmed" | LC_ALL=C comm -23 - "$no_constants")
+    mapfile -t unknown < <(LC_ALL=C comm -13 "$expected" "$confirmed")
+    replayed=$(LC_ALL=C comm -12 "$expected" "$confirmed" | wc -l)
+    skipped=$(wc -l < "$no_constants")
+    total=$(wc -l < "$expected")
+    line="$replayed replayed + $skipped with no constants = $(( replayed + skipped )) of $total modules,"
+    line+=" ${#missing[@]} missing, ${#unknown[@]} unknown; lists in $dir"
+    (( ${#missing[@]} == 0 && ${#unknown[@]} == 0 )) || verdict=FAIL
+    echo "  coverage: $line"
+    for name in "${missing[@]}"; do echo "    missing: $name"; done
+    for name in "${unknown[@]}"; do echo "    unknown: $name"; done
+    record "olean replay coverage" "$verdict($line)"
+    [[ $verdict == PASS ]]
+}
+
+# (a) Replays the given modules' own declarations, one leanchecker process per module.  leanchecker selects modules
+# by NAME PREFIX: `leanchecker M` replays M and every module whose name starts with "M.", each on top of its own
+# imports, and fails if any of them fails.  So a parent module that declares constants is replayed together with all
+# modules under it in ONE run, and the loop skips those modules when it reaches them.  A parent module that declares
+# nothing (the root module) is not run.  A module that came BEFORE its parent in the list would be replayed twice,
+# alone and with its parent: correct, only slower (the sorted module list puts every parent first).
+# Each run is --verbose: leanchecker prints "replaying <module>" for each module it replays and stops at the first
+# failure, so the modules named by a run that exits 0 were all replayed and accepted.  Those modules, checked against
+# the modules given (record_replay_coverage), decide part (a) together with the exit statuses.
 leanchecker_replay() {
     local label=$1; shift
-    local module log failed=() replayed=0 total_seconds=0 peak_kb=0
-    mkdir -p "$LOG_DIR/leanchecker"
+    local module covered log group_note status=0 failed=() under=() total_seconds=0 peak_kb=0
+    local dir="$LOG_DIR/leanchecker" confirmed=() no_constants=()
+    local -A replayed=()   # every module some leanchecker run of this call has replayed
+    mkdir -p "$dir"
     for module in "$@"; do
+        [[ -n ${replayed[$module]:-} ]] && continue   # replayed (and counted) by its parent's run
+        under=() group_note=
         if is_parent_module "$module"; then
-            if [[ -n $("$TOOLCHAIN_BIN/lean" --run "$HELPER_DIR/ListConstants.lean" "$(olean_of "$module")" 2>&1) ]]; then
-                record "$label" "FAIL(parent module $module declares constants; leanchecker cannot replay it alone)"
-                ANY_FAIL=1; return 1
+            if [[ -z $(gated "$TOOLCHAIN_BIN/lean" --run "$HELPER_DIR/ListConstants.lean" "$(olean_of "$module")" 2>&1) ]]; then
+                echo "  $module: parent of other modules and declares no constants; nothing to replay"
+                no_constants+=("$module"); continue
             fi
-            echo "  $module: parent of other modules and declares no constants; nothing to replay"
-            continue
+            mapfile -t under < <(modules_under "$module" "$@")
+            group_note=" (+ ${#under[@]} modules under it, one leanchecker run)"
         fi
-        log="$LOG_DIR/leanchecker/$module.log"
-        timed_run "$log" "$log" lake env "$TOOLCHAIN_BIN/leanchecker" "$module"
-        replayed=$((replayed + 1))
+        log="$dir/$module.log"
+        timed_run "$RUN_TIME_LIMIT_SECONDS" "$log" "$log" lake env "$TOOLCHAIN_BIN/leanchecker" --verbose "$module"
+        for covered in "$module" "${under[@]}"; do replayed[$covered]=1; done
         total_seconds=$(awk -v a="$total_seconds" -v b="$RUN_SECONDS" 'BEGIN { print a + b }')
         (( RUN_RSS_KB > peak_kb )) && peak_kb=$RUN_RSS_KB
-        if (( RUN_EXIT == 0 )); then echo "  $module: accepted"
-        else echo "  $module: REJECTED (exit $RUN_EXIT)"; failed+=("$module"); show_failure_tail "$log"; fi
+        if (( RUN_EXIT == 0 )); then
+            echo "  $module$group_note: accepted"
+            mapfile -t -O "${#confirmed[@]}" confirmed < <(replayed_modules_in "$log")
+        elif (( RUN_EXIT == 124 )); then
+            echo "  $module$group_note: STOPPED at the ${RUN_TIME_LIMIT_SECONDS} s limit (exit 124; not a rejection)"
+            failed+=("$module$group_note stopped at the time limit"); show_failure_tail "$log"
+        else echo "  $module$group_note: REJECTED (exit $RUN_EXIT)"; failed+=("$module$group_note"); show_failure_tail "$log"; fi
     done
     RUN_SECONDS=$total_seconds; RUN_RSS_KB=$peak_kb
-    if (( ${#failed[@]} == 0 )); then record "$label" "PASS($replayed modules, $(resource_note))"; return 0; fi
-    record "$label" "FAIL(${#failed[@]} of $replayed modules: ${failed[*]}; logs in $LOG_DIR/leanchecker)"
-    ANY_FAIL=1; return 1
+    if (( ${#failed[@]} == 0 )); then record "$label" "PASS(${#replayed[@]} modules, $(resource_note))"
+    else record "$label" "FAIL(${#failed[@]} of ${#replayed[@]} modules: ${failed[*]}; logs in $dir)"; status=1; fi
+    write_sorted "$dir/modules_expected.txt" "$@"
+    write_sorted "$dir/modules_confirmed.txt" "${confirmed[@]}"
+    write_sorted "$dir/modules_no_constants.txt" "${no_constants[@]}"
+    record_replay_coverage "$dir" || status=1
+    (( status == 0 )) || ANY_FAIL=1
+    return "$status"
 }
 
 # Writes the safe constants of MODULES to NAMES_FILE and the skipped unsafe/partial ones to NAMES_FILE.skipped.
@@ -261,7 +382,7 @@ list_constants() {
     local module
     local -a oleans=()
     for module in "$@"; do oleans+=("$(olean_of "$module")"); done
-    if ! "$TOOLCHAIN_BIN/lean" --run "$HELPER_DIR/ListConstants.lean" "${oleans[@]}" \
+    if ! gated "$TOOLCHAIN_BIN/lean" --run "$HELPER_DIR/ListConstants.lean" "${oleans[@]}" \
         > "$names_file" 2> "$names_file.skipped"; then
         record "leanexport" "FAIL(listing constants failed: $(grep -v '^skipped' "$names_file.skipped" | head -n 1))"
         ANY_FAIL=1; return 1
@@ -275,8 +396,8 @@ export_constants() {
     local -a names
     mapfile -t names < "$names_file"
     (( ${#names[@]} > 0 )) || { record "leanexport" "FAIL(no constants to export)"; ANY_FAIL=1; return 1; }
-    timed_run "$export_file" "$log" lake env "$TOOLCHAIN_BIN/leanexport" "$@" -- "${names[@]}"
-    if (( RUN_EXIT != 0 )) || [[ -s $log ]]; then
+    timed_run "$RUN_TIME_LIMIT_SECONDS" "$export_file" "$log" lake env "$TOOLCHAIN_BIN/leanexport" "$@" -- "${names[@]}"
+    if (( RUN_EXIT != 0 )) || [[ -s $log ]]; then   # leanexport writes nothing to stderr on success
         record "leanexport" "FAIL(exit $RUN_EXIT; $log)"; show_failure_tail "$log"; ANY_FAIL=1; return 1
     fi
 }
@@ -315,17 +436,19 @@ EOF
 
 # Runs one export checker.  ACCEPT_REGEX must match its output; if COUNT_REGEX is non-empty, the number it
 # captures must equal EXPECTED.  Exit 2 with a "declined" verdict (con-leche/con-ron) is SKIPPED, not FAIL.
+# Either SKIPPED (stopped at the limit, or declined) sets ANY_SKIPPED: the run then ends with exit 4.
 export_checker() {
     local label=$1 accept_regex=$2 count_regex=$3 expected=$4; shift 4
     local log="$LOG_DIR/export_${label//[^A-Za-z0-9]/_}.log" count reason
-    timed_run "$log" "$log" "$@"
+    timed_run "$EXPORT_CHECKER_TIME_LIMIT_SECONDS" "$log" "$log" "$@"
     if (( RUN_EXIT == 124 )); then
-        record "$label" "SKIPPED(stopped at the ${CHECKER_TIME_LIMIT_SECONDS} s limit; needs longer)"; return 2
+        record "$label" "SKIPPED(stopped at the ${EXPORT_CHECKER_TIME_LIMIT_SECONDS} s limit; needs longer)"
+        ANY_SKIPPED=1; return 2
     fi
     if (( RUN_EXIT == 2 )) && reason=$(grep -Eo '(declined|not implemented yet): [^[(]*' "$log" | head -n 1) \
         && [[ -n $reason ]]; then
         record "$label" "SKIPPED(checker declines the export, ${reason% }, first at: $(grep -Eo '\[at [a-z]+ [^],]*' "$log" | head -n 1 | cut -c5- || true))"
-        return 2
+        ANY_SKIPPED=1; return 2
     fi
     if (( RUN_EXIT != 0 )) || ! grep -Eq "$accept_regex" "$log"; then
         record "$label" "FAIL(exit $RUN_EXIT, $(resource_note); $log)"; show_failure_tail "$log"; ANY_FAIL=1; return 1
@@ -340,24 +463,50 @@ export_checker() {
     record "$label" "PASS($count declarations, $(resource_note))"
 }
 
-# (b) The 6 checkers on one export, in EXPORT_CHECKERS order.  Same commands as `lake check --paranoid`, but
-# nanoda and con-* pinned to one thread.  Returns the number of checkers that did not PASS.
+# Export checker number INDEX (0-based, EXPORT_CHECKERS order) on EXPORT_FILE.  Same commands as `lake check
+# --paranoid`, but nanoda and con-* pinned to one thread.
+run_one_export_checker() {
+    local index=$1 export_file=$2
+    case $index in
+        0) export_checker "${EXPORT_CHECKERS[0]}" "Lean default kernel accepts" "" "" \
+               "$TOOLCHAIN_BIN/leanchecker" --from-export "$export_file" ;;
+        1) export_checker "${EXPORT_CHECKERS[1]}" "Lean default kernel accepts" "" "" \
+               "$TOOLCHAIN_BIN/leanchecker-paranoid" --from-export "$export_file" ;;
+        2) export_checker "${EXPORT_CHECKERS[2]}" "^checked [0-9]+ declarations" "^checked [0-9]+ declarations" \
+               "$EXPECTED_LEAN4LEAN_COUNT" "$TOOLCHAIN_BIN/lean4lean" "${LEAN4LEAN_FUEL[@]}" --import "$export_file" ;;
+        3) export_checker "${EXPORT_CHECKERS[3]}" "no typechecker errors" "^Checked [0-9]+ declarations with no typechecker errors" \
+               "$EXPECTED_NANODA_COUNT" "$TOOLCHAIN_BIN/nanoda_bin" "$export_file.nanoda.json" ;;
+        4) export_checker "${EXPORT_CHECKERS[4]}" "^con-leche: accepted [0-9]+ declarations" "accepted [0-9]+ declarations" \
+               "$EXPECTED_RECORD_COUNT" "$TOOLCHAIN_BIN/con-leche" --jobs=1 "$export_file" ;;
+        5) export_checker "${EXPORT_CHECKERS[5]}" "^con-ron: accepted [0-9]+ declarations" "accepted [0-9]+ declarations" \
+               "$EXPECTED_RECORD_COUNT" "$TOOLCHAIN_BIN/con-ron" --jobs=1 "$export_file" ;;
+        *) die "no export checker number $index" ;;
+    esac
+}
+
+# The 0-based checker indices that SELECTION names: "all" -> 0..5, a single index -> itself.
+selected_checkers() {
+    if [[ $1 == all ]]; then seq 0 $(( ${#EXPORT_CHECKERS[@]} - 1 )); else echo "$1"; fi
+}
+
+# (b) The export checkers chosen by SELECTION ("all" or one 0-based index) on one export, in EXPORT_CHECKERS
+# order.  Returns the number of chosen checkers that did not PASS.
 run_export_checkers() {
-    local export_file=$1 not_passed=0
+    local export_file=$1 selection=${2:-all} not_passed=0 index
     write_nanoda_config "$export_file.nanoda.json" "$export_file"
-    export_checker "${EXPORT_CHECKERS[0]}" "Lean default kernel accepts" "" "" \
-        "$TOOLCHAIN_BIN/leanchecker" --from-export "$export_file" || not_passed=$((not_passed + 1))
-    export_checker "${EXPORT_CHECKERS[1]}" "Lean default kernel accepts" "" "" \
-        "$TOOLCHAIN_BIN/leanchecker-paranoid" --from-export "$export_file" || not_passed=$((not_passed + 1))
-    export_checker "${EXPORT_CHECKERS[2]}" "^checked [0-9]+ declarations" "^checked [0-9]+ declarations" \
-        "$EXPECTED_LEAN4LEAN_COUNT" "$TOOLCHAIN_BIN/lean4lean" --import "$export_file" || not_passed=$((not_passed + 1))
-    export_checker "${EXPORT_CHECKERS[3]}" "no typechecker errors" "^Checked [0-9]+ declarations with no typechecker errors" \
-        "$EXPECTED_NANODA_COUNT" "$TOOLCHAIN_BIN/nanoda_bin" "$export_file.nanoda.json" || not_passed=$((not_passed + 1))
-    export_checker "${EXPORT_CHECKERS[4]}" "^con-leche: accepted [0-9]+ declarations" "accepted [0-9]+ declarations" \
-        "$EXPECTED_RECORD_COUNT" "$TOOLCHAIN_BIN/con-leche" --jobs=1 "$export_file" || not_passed=$((not_passed + 1))
-    export_checker "${EXPORT_CHECKERS[5]}" "^con-ron: accepted [0-9]+ declarations" "accepted [0-9]+ declarations" \
-        "$EXPECTED_RECORD_COUNT" "$TOOLCHAIN_BIN/con-ron" --jobs=1 "$export_file" || not_passed=$((not_passed + 1))
+    for index in $(selected_checkers "$selection"); do
+        run_one_export_checker "$index" "$export_file" || not_passed=$((not_passed + 1))
+    done
     return "$not_passed"
+}
+
+# A split run (SELECTION = one 0-based index) records every other export checker as NOT RUN.
+record_unselected_checkers() {
+    local selection=$1 index
+    [[ $selection == all ]] && return 0
+    for index in "${!EXPORT_CHECKERS[@]}"; do
+        (( index == selection )) || record "${EXPORT_CHECKERS[$index]}" "NOT RUN(--only-checker $(( selection + 1 )))"
+    done
 }
 
 print_summary() {
@@ -366,8 +515,29 @@ print_summary() {
     printf '%s\n' "${SUMMARY[@]}"
 }
 
+# (b) list + export + analyze, then the export checkers chosen by SELECTION ("all" or one 0-based index).
+run_export_part() {
+    local names_file=$1 export_file=$2 selection=$3 label index chosen="the 6 export checkers"
+    [[ $selection == all ]] || chosen="export checker $(( selection + 1 )) only"
+    echo "(b) leanexport of every safe $LIB_NAME constant with its dependencies..."
+    if list_constants "$names_file" "${ALL_MODULES[@]}" \
+        && export_constants "$export_file" "$names_file" "${ALL_MODULES[@]}" \
+        && analyze_export "$export_file" "$names_file"; then
+        echo "    $EXPORT_RECORDS declaration records; running $chosen..."
+        run_export_checkers "$export_file" "$selection" || true
+        record "axioms declared in the export" "${EXPORT_AXIOMS//,/, }"
+    else
+        for index in $(selected_checkers "$selection"); do
+            label=${EXPORT_CHECKERS[$index]}; record "$label" "SKIPPED(export failed)"
+        done
+    fi
+    record_unselected_checkers "$selection"
+    record "not exported (unsafe/partial)" "$(grep -c '^skipped' "$names_file.skipped" || true) compiler helpers; replayed in (a) only"
+}
+
+# USE_BUILT_OLEANS 0/1; OLEAN_REPLAY 0/1 (part (a)); EXPORT_SELECTION "all" | "none" | one 0-based checker index.
 main_full_run() {
-    local use_built_oleans=$1 not_fresh=$1 module
+    local use_built_oleans=$1 not_fresh=$1 olean_replay=$2 export_selection=$3 module
     mapfile -t ALL_MODULES < <(all_modules)
     LOG_DIR="$WORK_DIR/logs_$(date +%Y%m%d_%H%M)"
     mkdir -p "$LOG_DIR"
@@ -375,7 +545,7 @@ main_full_run() {
     if (( use_built_oleans )); then
         record "certification mode" "UNCERTIFIED(--use-built-oleans requested; this run never exits 0)"
     else
-        check_lake_fresh || exit 3
+        check_lake_fresh "$LIB_NAME" || exit 3
     fi
     if ! check_oleans_fresh "${ALL_MODULES[@]}"; then
         if (( ! use_built_oleans )); then
@@ -383,25 +553,25 @@ main_full_run() {
             exit 3
         fi
         not_fresh=1
-        record "olean freshness" "NOT FRESH(checking the oleans as built; stale: ${STALE_MODULES[*]:-none}; no olean, NOT checked: ${MISSING_MODULES[*]:-none})"
+        record "olean freshness" "NOT FRESH(checking the oleans as built; no olean, NOT checked: ${MISSING_MODULES[*]:-none})"
         mapfile -t ALL_MODULES < <(for module in "${ALL_MODULES[@]}"; do [[ -f $(olean_of "$module") ]] && echo "$module"; done)
     fi
-    local before names_file="$WORK_DIR/hibili_constants.txt" export_file="$WORK_DIR/hibili_export.ndjson" label
+    local before names_file="$WORK_DIR/${LIB_NAME}_constants.txt" export_file="$WORK_DIR/${LIB_NAME}_export.ndjson"
     before=$(snapshot_inputs) || die "cannot snapshot replay inputs"
 
-    echo "(a) leanchecker olean replay, one process per module:"
-    leanchecker_replay "leanchecker (olean replay)" "${ALL_MODULES[@]}" || true
-    echo "(b) leanexport of every safe EulerFlow constant with its dependencies..."
-    if list_constants "$names_file" "${ALL_MODULES[@]}" \
-        && export_constants "$export_file" "$names_file" "${ALL_MODULES[@]}" \
-        && analyze_export "$export_file" "$names_file"; then
-        echo "    $EXPORT_RECORDS declaration records; running the 6 export checkers..."
-        run_export_checkers "$export_file" || true
-        record "axioms declared in the export" "${EXPORT_AXIOMS//,/, }"
+    if (( olean_replay )); then
+        echo "(a) leanchecker olean replay, one process per module:"
+        leanchecker_replay "leanchecker (olean replay)" "${ALL_MODULES[@]}" || true
+    elif [[ $export_selection == all ]]; then
+        record "leanchecker (olean replay)" "NOT RUN(--export-only)"
     else
-        for label in "${EXPORT_CHECKERS[@]}"; do record "$label" "SKIPPED(export failed)"; done
+        record "leanchecker (olean replay)" "NOT RUN(--only-checker $(( export_selection + 1 )))"
     fi
-    record "not exported (unsafe/partial)" "$(grep -c '^skipped' "$names_file.skipped" || true) compiler helpers; replayed in (a) only"
+    if [[ $export_selection == none ]]; then
+        record "(b) export + export checkers" "NOT RUN(--only-olean)"
+    else
+        run_export_part "$names_file" "$export_file" "$export_selection"
+    fi
 
     local changed=0
     local after
@@ -411,10 +581,11 @@ main_full_run() {
     print_summary
     (( ANY_FAIL )) && exit 1
     (( changed || not_fresh )) && exit 3
+    (( ANY_SKIPPED )) && exit 4
     exit 0
 }
 
-# ---------------------------------------------------------------- --test
+# ---------------------------------------------------------------- --selftest (runs Lean) and --test (no Lean)
 TEST_FAILURES=0
 
 expect() {   # expect pass|fail DESCRIPTION COMMAND...; shows the summary lines the command produced
@@ -441,22 +612,27 @@ set_option debug.skipKernelTC true in
 run_cmd liftCoreM (addDecl (.thmDecl { name := `kernelReplayBogus, levelParams := [], type := mkConst ``False, value := mkConst ``Nat.zero }))
 EOF
     printf 'theorem kernelReplayGood (number : Nat) : number + 0 = number := rfl\n' > "$SCRATCH_DIR/KernelReplayGood.lean"
+    # KernelReplayHygienic: `deriving DecidableEq` on a 10-constructor inductive declares macro-scoped constants
+    # (`KernelReplayHygienic.match_on_same_ctor._@...._hyg.N`), as deriving DecidableEq can do.
+    { printf 'inductive KernelReplayHygienic (size : Nat) where\n'
+      printf '  | c%s : Fin size → KernelReplayHygienic size\n' 0 1 2 3 4 5 6 7 8 9
+      printf '  deriving DecidableEq\n'; } > "$SCRATCH_DIR/KernelReplayHygienic.lean"
     local module
-    for module in KernelReplayBogus KernelReplayGood; do
-        nice -n 19 "$TOOLCHAIN_BIN/lean" -R "$SCRATCH_DIR" -o "$SCRATCH_DIR/$module.olean" "$SCRATCH_DIR/$module.lean" \
+    for module in KernelReplayBogus KernelReplayGood KernelReplayHygienic; do
+        gated "$TOOLCHAIN_BIN/lean" -j1 -R "$SCRATCH_DIR" -o "$SCRATCH_DIR/$module.olean" "$SCRATCH_DIR/$module.lean" \
             || die "the elaborator rejected test module $module"
     done
 }
 
 scratch_export() {   # scratch_export MODULE CONSTANT  ->  $SCRATCH_DIR/MODULE.ndjson and MODULE.names
     printf '%s\n' "$2" > "$SCRATCH_DIR/$1.names"
-    timed_run "$SCRATCH_DIR/$1.ndjson" "$LOG_DIR/leanexport_$1.log" \
+    timed_run "$RUN_TIME_LIMIT_SECONDS" "$SCRATCH_DIR/$1.ndjson" "$LOG_DIR/leanexport_$1.log" \
         env LEAN_PATH="$SCRATCH_DIR" "$TOOLCHAIN_BIN/leanexport" "$1" -- "$2"
     (( RUN_EXIT == 0 )) || die "leanexport failed on test module $1"
 }
 
 leanchecker_on_scratch() {
-    LEAN_PATH="$SCRATCH_DIR" "$TOOLCHAIN_BIN/leanchecker" "$1" > "$LOG_DIR/leanchecker_$1.log" 2>&1
+    gated env LEAN_PATH="$SCRATCH_DIR" "$TOOLCHAIN_BIN/leanchecker" "$1" > "$LOG_DIR/leanchecker_$1.log" 2>&1
 }
 
 all_export_checkers_accept() { analyze_export "$1" "$2" && run_export_checkers "$1"; }
@@ -469,14 +645,24 @@ every_export_checker_rejects() {   # all 6 must report FAIL (a SKIPPED does not 
     (( rejected == ${#EXPORT_CHECKERS[@]} ))
 }
 
+lister_names_reach_leanexport() {   # the lister's names for scratch MODULE, incl. a macro-scoped one, all exported
+    local names_file="$SCRATCH_DIR/$1.listed" export_file="$SCRATCH_DIR/$1.listed.ndjson"
+    gated "$TOOLCHAIN_BIN/lean" --run "$HELPER_DIR/ListConstants.lean" "$SCRATCH_DIR/$1.olean" > "$names_file" || return 1
+    grep -q '_hyg' "$names_file" || return 1   # without a macro-scoped name this test would prove nothing
+    local -a names
+    mapfile -t names < "$names_file"
+    gated env LEAN_PATH="$SCRATCH_DIR" "$TOOLCHAIN_BIN/leanexport" "$1" -- "${names[@]}" \
+        > "$export_file" 2> "$LOG_DIR/leanexport_$1.listed.log" || return 1
+    [[ ! -s $LOG_DIR/leanexport_$1.listed.log ]] && analyze_export "$export_file" "$names_file"
+}
+
 project_pipeline_accepts() {   # list + export + analyze + 6 checkers on one known-good project module
     local names_file="$SCRATCH_DIR/project_constants.txt" export_file="$SCRATCH_DIR/project_export.ndjson"
     list_constants "$names_file" "$1" && export_constants "$export_file" "$names_file" "$1" \
         && all_export_checkers_accept "$export_file" "$names_file"
 }
 
-main_test() {
-    python3 "$PROJECT_DIR/scripts/test_kernel_replay.py" --test
+main_selftest() {
     LOG_DIR="$SCRATCH_DIR/logs"
     mkdir -p "$LOG_DIR"
     mapfile -t ALL_MODULES < <(all_modules)
@@ -494,24 +680,33 @@ main_test() {
         "$SCRATCH_DIR/KernelReplayBogus.ndjson" "$SCRATCH_DIR/KernelReplayBogus.names"
     expect fail "an empty export (every checker accepts it) is caught by the completeness check" \
         all_export_checkers_accept "$SCRATCH_DIR/Empty.ndjson" "$SCRATCH_DIR/KernelReplayGood.names"
+    expect pass "leanexport reads every name the lister prints, macro-scoped ones included" \
+        lister_names_reach_leanexport KernelReplayHygienic
 
-    check_oleans_fresh "$POSITIVE_TEST_MODULE" || die "the olean of $POSITIVE_TEST_MODULE is missing or stale"
+    check_lake_fresh "$POSITIVE_TEST_MODULE" || die "Lake reports $POSITIVE_TEST_MODULE (or an import) out of date"
+    check_oleans_fresh "$POSITIVE_TEST_MODULE" || die "the olean of $POSITIVE_TEST_MODULE is missing"
     expect pass "leanchecker replays the project's known-good $POSITIVE_TEST_MODULE" \
         leanchecker_replay "leanchecker (olean replay)" "$POSITIVE_TEST_MODULE"
     expect pass "list + export + 6 checkers accept the project's $POSITIVE_TEST_MODULE" \
         project_pipeline_accepts "$POSITIVE_TEST_MODULE"
     echo
-    if (( TEST_FAILURES == 0 )); then echo "kernel_replay --test: all 7 tests passed"; return 0; fi
-    echo "kernel_replay --test: $TEST_FAILURES of 7 tests FAILED"; return 1
+    if (( TEST_FAILURES == 0 )); then echo "kernel_replay --selftest: all 8 tests passed"; return 0; fi
+    echo "kernel_replay --selftest: $TEST_FAILURES of 8 tests FAILED"; return 1
 }
 
 main() {
     case "${1:-}" in
-        "") setup_environment; main_full_run 0 ;;
-        --use-built-oleans) setup_environment; main_full_run 1 ;;
-        --test) setup_environment; main_test ;;
+        "") setup_environment; main_full_run 0 1 all ;;
+        --use-built-oleans) setup_environment; main_full_run 1 1 all ;;
+        --export-only) setup_environment; main_full_run 0 0 all ;;
+        --only-olean) setup_environment; main_full_run 0 1 none ;;
+        --only-checker)
+            [[ ${2:-} =~ ^[1-6]$ ]] || die "--only-checker needs N = 1..6 (EXPORT_CHECKERS order), got '${2:-}'"
+            setup_environment; main_full_run 0 0 $(( $2 - 1 )) ;;
+        --selftest) setup_environment; main_selftest ;;
+        --test) python3 "$PROJECT_DIR/scripts/test_kernel_replay.py" --test ;;
         -h|--help) sed -n '2,/^set -euo/p' "${BASH_SOURCE[0]}" | sed '$d' ;;
-        *) die "unknown argument '$1' (use --test, --use-built-oleans, --help, or no argument)" ;;
+        *) die "unknown argument '$1' (use --test, --selftest, --use-built-oleans, --export-only, --only-olean, --only-checker N, --help, or no argument)" ;;
     esac
 }
 

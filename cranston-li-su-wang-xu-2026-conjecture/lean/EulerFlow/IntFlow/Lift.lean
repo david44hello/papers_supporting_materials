@@ -1,8 +1,10 @@
 /-
-EulerFlow/IntFlow/Lift.lean — paper 002, Section 8 (tex l.566-633): flows and boundaries, residues of `k`-flows,
+EulerFlow/IntFlow/Lift.lean — Section 8 (tex l.566-633): flows and boundaries, residues of `k`-flows,
 the representatives `r_f`, integer lifts (Lemma 8.3, by rounding `r_f / k`), connected fibres (Lemma 8.4, a
 `{-1,0,1}` circulation times `k`), and the `ℤ₂` facts of Remark 8.8.
 Helpers live in namespace `EulerFlow.Sec8` (no clash with Section 3 names).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.IntFlow.Rounding
 import EulerFlow.Graph.MultiStep

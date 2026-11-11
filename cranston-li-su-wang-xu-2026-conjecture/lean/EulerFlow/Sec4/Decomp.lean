@@ -1,6 +1,8 @@
 /-
 EulerFlow/Sec4/Decomp.lean — Section 4 opening (tex l.321-332): every finite abelian group has a cyclic
 decomposition, the properties of the small set `S`, and helper lemmas on parts and colours.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Defs.Constructions
 

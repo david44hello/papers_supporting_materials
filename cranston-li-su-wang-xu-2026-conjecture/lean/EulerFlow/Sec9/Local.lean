@@ -1,6 +1,8 @@
 /-
 EulerFlow/Sec9/Local.lean — Lemma 9.5 (tex l.788-820) for (p,q)-flows; Lemma 6.2 is its case q = 1.
 Also: a chain of steps along Q gives reachability in the step graph.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Sec4.Prop44
 import EulerFlow.Sec6.Acyc

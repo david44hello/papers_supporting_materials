@@ -1,8 +1,10 @@
 /-
-EulerFlow/Reduction/Paper3.lean — the Section 3 claims of paper 002 in exactly the Statements types: (T1)/(T2)
+EulerFlow/Reduction/Paper3.lean — the Section 3 claims of the paper in exactly the Statements types: (T1)/(T2)
 for `A ∖ {0}` and for `{±1, ±2}` (tex l.219-220), Lemma 3.1, Proposition 3.4; and Lemma 9.3 (tex l.735-769) as
 the instance of the same engine for `(p,q)`-flows, with the Section 9 facts on `I` and `T` as hypotheses
 (they are the claims `sec9_I_props`, `sec9_T_props`).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Reduce
 

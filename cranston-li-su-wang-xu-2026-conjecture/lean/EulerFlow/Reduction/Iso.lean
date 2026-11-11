@@ -2,6 +2,8 @@
 EulerFlow/Reduction/Iso.lean — flows, steps and multi-steps are invariant under a graph isomorphism: an edge
 bijection `eE : E₁ ≃ E₂` and an injective vertex map `fV : V₁ → V₂` that respect the reference ends. (The vertices
 of `G₂` outside the image of `fV` carry no edge.) Used for "G = G⁺/Δ" in the proof of Theorem 2.3 (tex l.455).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Basic
 

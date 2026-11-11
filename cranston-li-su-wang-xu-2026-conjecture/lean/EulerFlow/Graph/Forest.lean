@@ -1,11 +1,13 @@
 /-
-EulerFlow/Graph/Forest.lean — paper 002 foundation: the two counting facts of Props 4.4, 6.3, 9.6.
+EulerFlow/Graph/Forest.lean — foundation: the two counting facts of Props 4.4, 6.3, 9.6.
 * `card_lt_of_acyclic` (C3): an edge set with no cycle, all of whose ends lie in a nonempty vertex set `W`, has
   fewer than `|W|` edges ("a forest on n vertices has at most n − 1 edges", tex l.398-399);
 * `exists_dirCycle_of_card_le` (C3'): the contrapositive ("the small edges contain a cycle", tex l.399-400);
 * `card_le_of_cycle_ends_two` (C4): if every vertex of every cycle of `H` has exactly two ends of `H`, then
   `|H| ≤ |W|` ("every cycle is a whole component, every component a tree or a cycle", tex l.510-513, l.833-836).
 Same names and types as the stub EulerFlow/Graph/ForestStub.lean (v0.01, md5 16e186d1), which this replaces.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.Cycles
 import EulerFlow.Graph.DirCycleBasic

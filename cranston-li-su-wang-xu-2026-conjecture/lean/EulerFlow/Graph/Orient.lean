@@ -1,8 +1,10 @@
 /-
-EulerFlow/Graph/Orient.lean — paper 002 foundation: Eulerian orientations (Lemma 3.3, tex l.272-274).
+EulerFlow/Graph/Orient.lean — foundation: Eulerian orientations (Lemma 3.3, tex l.272-274).
 * `isEulerOrient_iff`: `D` is Eulerian iff `σ_D` (`-1` on reversed edges, `1` on the others) is an integer flow;
 * `exists_eulerOrient`: every even graph has an Eulerian orientation (repeatedly remove a cycle);
 * `lem_3_3_exists_proved`: the Statements form.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.MultiStep
 

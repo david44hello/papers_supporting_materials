@@ -1,7 +1,9 @@
 /-
-EulerFlow/Reduction/Reduce.lean — Proposition 3.4 of paper 002 (the reduction, tex l.294-319), proved ONCE for
+EulerFlow/Reduction/Reduce.lean — Proposition 3.4 of the paper (the reduction, tex l.294-319), proved ONCE for
 `I`-flows, and its two instances: nowhere-zero flows (Proposition 3.4 itself) and `(p,q)`-flows (Lemma 9.3, tex
 l.735-769, "the same proof with this rule of replacement"). Also (T1)/(T2) for `A ∖ {0}` and for `{±1, ±2}`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Loop
 import EulerFlow.Reduction.Const

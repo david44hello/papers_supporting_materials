@@ -1,11 +1,13 @@
 /-
-EulerFlow/Count/StepsB.lean — paper 002, Theorem 2.5, second part (tex l.549-556): for `|A| ≥ 4` and an even graph
+EulerFlow/Count/StepsB.lean — Theorem 2.5, second part (tex l.549-556): for `|A| ≥ 4` and an even graph
 with `M` edges, any two flows are joined by at most `16M³ + 12M² + M` steps.
 Route = the paper's: count multi-steps along the proof of Theorem 2.3. A loop costs one more multi-step (Lemma 3.1).
 Loopless graphs: induction on `Φ`; the blow-up `G⁺` keeps `2M + 3Φ` (three more edges, `Φ` two less), and a walk of
 multi-steps of `G⁺` gives a walk of `G⁺/Δ ≅ G` that is not longer (Lemma 5.1); at `Φ = 0` Theorem 2.5 (a) counts
 `B(M) = M² + 3M + 1`. As `Φ ≤ 2M`, every even graph needs at most `B(4M) = 16M² + 12M + 1` multi-steps, each at most
 `M` steps.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Count.StepsA
 import EulerFlow.Reduction.Expand

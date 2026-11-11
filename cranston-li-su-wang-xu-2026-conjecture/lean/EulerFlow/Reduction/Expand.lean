@@ -1,9 +1,11 @@
 /-
-EulerFlow/Reduction/Expand.lean — the blow-up step of the proof of Theorem 2.3 of paper 002 (tex l.450-456): a
+EulerFlow/Reduction/Expand.lean — the blow-up step of the proof of Theorem 2.3 of the paper (tex l.450-456): a
 vertex `v` of degree `d ≥ 6` is replaced by a triangle `x₁ x₂ x₃` with two ends of `v` at `x₁`, two at `x₂`, the
 other `d - 4` at `x₃`. The new graph is even, loopless, has `Φ(G⁺) = Φ(G) - 2`, the triangle is isolated, and
 `G⁺/Δ` is isomorphic to `G`. Here `x₁ = inr 0`, `x₂ = inr 1`, `x₃ = inl v`, and the triangle edges are
 `d₁₂ = inr 0`, `d₂₃ = inr 1`, `d₃₁ = inr 2`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Iso
 

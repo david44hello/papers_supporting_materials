@@ -1,7 +1,9 @@
 /-
-EulerFlow/Reduction/Thm23.lean — Theorem 2.3 of paper 002 (tex l.177-178, proof l.448-457): every even graph is
+EulerFlow/Reduction/Thm23.lean — Theorem 2.3 of the paper (tex l.177-178, proof l.448-457): every even graph is
 A-flow-connected for every finite abelian group A with |A| ≥ 4; Theorem 1.1 (a) (the same statement); Remark 2.6
 (K5 is even, has a triangle, and is ℤ₄-flow-connected).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Expand
 import EulerFlow.Reduction.Triangle

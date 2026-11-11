@@ -1,6 +1,8 @@
 /-
-EulerFlow/Reduction/Loop.lean — Lemma 3.1 of paper 002 (loops, tex l.222-232), for `I`-flows: if any two
+EulerFlow/Reduction/Loop.lean — Lemma 3.1 of the paper (loops, tex l.222-232), for `I`-flows: if any two
 `I`-flows of `G - l` are `T`-joined, then so are any two `I`-flows of `G`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Basic
 

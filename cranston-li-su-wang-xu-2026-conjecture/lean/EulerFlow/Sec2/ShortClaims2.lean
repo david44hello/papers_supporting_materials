@@ -1,11 +1,12 @@
 /-
-EulerFlow/Sec2/ShortClaims2.lean — in-text claims that the SHORT paper's release 1.53 adds (Section 1): an even graph
+EulerFlow/Sec2/ShortClaims2.lean — in-text claims of the short paper (Section 1, Remark 5.2): an even graph
 has a nowhere-zero 3-flow; the even graph with two vertices and six parallel edges has a nowhere-zero 3-flow (three
 edges with value 1, three with value -1) and its two vertices are joined by six edge-disjoint paths; at a vertex of
 degree 2 of a loopless graph the two ends form a balanced pair in every flow; a triangle is A-connected (|A| ≥ 4)
-with the sign of the paper's definition (leaving minus entering), for any directions of its edges; Section 4: the
+with the sign of the definition of [JLPT] (leaving minus entering), for any directions of its edges; Section 4: the
 small edges contain a cycle.
-Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Concrete.Dipole
 import EulerFlow.Concrete.Small
@@ -109,7 +110,7 @@ theorem triangle_A_connected_any_dir_proved {A : Type} [AddCommGroup A] [Fintype
 
 /-- Section 4 plan: in a graph with an edge in which every degree is `0` or `4`, if every directed cycle has an edge
 that is not small (the edges that are not small form a forest), then the small edges contain a directed cycle.
-(Proof from review B r3, Appendix A: the first half of `prop_4_4_main`.) -/
+(Proof: the first half of `prop_4_4_main`.) -/
 theorem sec4_small_cycle_proved {A : Type} [AddCommGroup A] (D : CyclicDecomp A) (G : MGraph V E)
     (hE : Nonempty E) (hdeg : ∀ v, G.degree v = 0 ∨ G.degree v = 4) (f : E → A)
     (hforest : ∀ Q : G.DirCycle, ∃ d ∈ Q.darts, f d.1 ∈ D.S) :

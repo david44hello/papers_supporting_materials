@@ -1,8 +1,9 @@
 /-
-EulerFlow/Sec2/ShortClaims.lean — six in-text claims of the SHORT paper (v1.46) that a review
-found without a statement: the sign of a step value (l.155-157), outward values of a flow are non-zero
-(l.171-172), the two ends of a loop (l.184), small edges and colors (l.322-324), non-small values in ℤ_m (l.445-446).
-Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+EulerFlow/Sec2/ShortClaims.lean — six in-text claims of the short paper: the sign of a step value, outward
+values of a flow are non-zero, the two ends of a loop, small edges and colors, non-small values in ℤ_m. Their places in
+the paper are the first lines of the docstrings in Paper/Statements.lean.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.DirCycleBasic
 import EulerFlow.Graph.CycleFind

@@ -1,7 +1,9 @@
 /-
-EulerFlow/Reduction/Thm22.lean — Theorem 2.2 of paper 002 (tex l.172-175, proof l.406-413): every even graph with
+EulerFlow/Reduction/Thm22.lean — Theorem 2.2 of the paper (tex l.172-175, proof l.406-413): every even graph with
 all degrees at most 4 is A-flow-connected, for every finite abelian group A. Proposition 3.4 for the class "even,
 all degrees ≤ 4" with T = A ∖ {0}; (LOCAL) is Proposition 4.4 (EulerFlow/Sec4/Prop44.lean).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Paper3
 import EulerFlow.Sec4.Prop44

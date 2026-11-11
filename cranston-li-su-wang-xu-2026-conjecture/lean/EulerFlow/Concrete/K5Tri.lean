@@ -1,9 +1,11 @@
 /-
-EulerFlow/Concrete/K5Tri.lean — paper 002, Remark 2.6 (tex l.205-207): `K₅` is triangularly connected in the sense of
+EulerFlow/Concrete/K5Tri.lean — Remark 2.6 (tex l.205-207): `K₅` is triangularly connected in the sense of
 [CLSWX] (`IsTriConnectedOn Set.univ`).
 Route: `arc u v` is the dart from `u` to `v` (`u ≠ v`), `tri p q r` the triangle `p → q → r → p`. For edges `ab` and
 `cd`, pick a vertex `x` off `a, b, c, d` (K₅ has five). If `a = c`: the triangles `abx`, `adx` share the edge `ax`.
 Otherwise: `abx`, `acx`, `cdx`, consecutive ones sharing `ax` and `cx`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Defs.Constructions
 

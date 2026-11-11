@@ -1,5 +1,5 @@
 /-
-EulerFlow/Count/StepsA.lean — paper 002, Theorem 2.5, first part (tex l.532-547): for an even graph with `M` edges
+EulerFlow/Count/StepsA.lean — Theorem 2.5, first part (tex l.532-547): for an even graph with `M` edges
 and all degrees at most 4, any two flows are joined by at most `M³ + 3M² + M` steps.
 Route = the paper's: `c(G)` multi-steps to some `a 𝟙_D`, counted along the induction of Proposition 3.4
 (loop: `+1`; vertex of degree 2: splitting off maps multi-steps to multi-steps; otherwise Proposition 4.4, at most
@@ -7,6 +7,8 @@ Route = the paper's: `c(G)` multi-steps to some `a 𝟙_D`, counted along the in
 most one multi-step apart; a multi-step is at most `M` steps.
 A multi-step is used in its `h`-form (`CircStep`): `f' = f + h•t`, `h` a nonzero `{-1,0,1}` integer circulation
 (equivalent to the paper's definition by `circ_decomp`).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Reduce
 import EulerFlow.Sec4.Prop44

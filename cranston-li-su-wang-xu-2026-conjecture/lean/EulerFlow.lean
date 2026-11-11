@@ -1,3 +1,8 @@
+/-
+EulerFlow.lean — the root of the library: it imports every module.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
+-/
 import EulerFlow.Defs.Graph
 import EulerFlow.Defs.Constructions
 import EulerFlow.Paper.Statements

@@ -1,6 +1,8 @@
 /-
-EulerFlow/Reduction/Triangle.lean — Lemma 5.1 of paper 002 (contracting a triangle, tex l.415-446) and the
+EulerFlow/Reduction/Triangle.lean — Lemma 5.1 of the paper (contracting a triangle, tex l.415-446) and the
 triangle computation of the introduction (a triangle is A-connected for |A| ≥ 4, tex l.110-111).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Paper3
 

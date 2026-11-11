@@ -1,7 +1,9 @@
 /-
-EulerFlow/Reduction/Split.lean — the algebra of splitting off (Lemma 3.2 of paper 002, tex l.234-269), for maps
+EulerFlow/Reduction/Split.lean — the algebra of splitting off (Lemma 3.2 of the paper, tex l.234-269), for maps
 into any additive group: the map `L = splitLift` keeps the flow condition at every vertex, makes the ends of
 `e, e'` at `v` a balanced pair, is inverted by `splitRes` on the balanced maps, and is additive.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Defs.Constructions
 

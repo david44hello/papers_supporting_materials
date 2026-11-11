@@ -1,6 +1,8 @@
 /-
-EulerFlow/Reduction/Const.lean — Lemma 3.3 of paper 002 (constant flows, tex l.271-292): `a 𝟙_D` is a flow;
+EulerFlow/Reduction/Const.lean — Lemma 3.3 of the paper (constant flows, tex l.271-292): `a 𝟙_D` is a flow;
 two of them are equal or one multi-step with the value `-2a` apart; `B(v; e, e')` contains one.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.SplitLemma
 

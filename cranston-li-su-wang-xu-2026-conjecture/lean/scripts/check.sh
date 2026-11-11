@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# EulerFlowLean policy check — 2026-10-26. Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+# EulerFlowLean policy check — 2026-10-26. Author: Dave Goel. Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 set -euo pipefail
 
 project_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)

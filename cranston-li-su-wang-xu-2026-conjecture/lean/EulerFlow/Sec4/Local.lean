@@ -1,7 +1,9 @@
 /-
-EulerFlow/Sec4/Local.lean — the local step for every group on graphs with all degrees 0 or 4 (paper 002, Section 4):
+EulerFlow/Sec4/Local.lean — the local step for every group on graphs with all degrees 0 or 4 (Section 4):
 Lemma 4.3 (Case 1 / Case 2 and the step (∗)), with the algebraic facts on parts taken as hypotheses (proved in
 Sec4/Decomp.lean).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.DirCycleBasic
 

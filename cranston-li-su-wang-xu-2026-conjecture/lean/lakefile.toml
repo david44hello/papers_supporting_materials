@@ -1,4 +1,4 @@
-# EulerFlowLean — Lean 4 formalization of Dave Goel's paper 002 "Eulerian graphs are flow-connected" (v0.30).
+# EulerFlowLean — Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel. Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 name = "EulerFlowLean"
 version = "0.1.0"
 defaultTargets = ["EulerFlow"]

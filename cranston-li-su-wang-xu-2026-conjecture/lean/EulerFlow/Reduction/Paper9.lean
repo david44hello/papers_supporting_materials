@@ -3,6 +3,8 @@ EulerFlow/Reduction/Paper9.lean — Theorem 9.1 (tex l.718-721, proof l.839-841)
 (tex l.728 and the abstract), and the circular (2k+1,k)-flow of tex l.731-732. Theorem 9.1 and the "iff" take their
 inputs from the paper (Proposition 9.6, Theorem 9.2, the Section 9 facts on I and T) as hypotheses; the Statements
 bodies link them.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Paper3
 

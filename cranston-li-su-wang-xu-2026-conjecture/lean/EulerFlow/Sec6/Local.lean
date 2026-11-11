@@ -1,6 +1,8 @@
 /-
-EulerFlow/Sec6/Local.lean — Section 6 of paper 002: Lemma 6.2 and Proposition 6.3 as the case q = 1 of Lemma 9.5
+EulerFlow/Sec6/Local.lean — Section 6 of the paper: Lemma 6.2 and Proposition 6.3 as the case q = 1 of Lemma 9.5
 and Proposition 9.6 (the same argument with 1 in the place of q), and the small claims of tex l.524-527.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Sec9.Prop96
 import EulerFlow.Concrete.Small

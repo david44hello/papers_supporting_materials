@@ -2,6 +2,8 @@
 EulerFlow/Reduction/OneCycle.lean — Remark 9.7 for every graph that is one cycle (tex l.859-861): if all edges and
 all vertices of `G` lie on one directed cycle `Q`, then `G` is even and `(p,q)`-flow-connected ("any two different
 `(p,q)`-flows of it differ by a non-zero constant along the cycle, which is one step").
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.AgreeOutside
 import EulerFlow.Reduction.Split

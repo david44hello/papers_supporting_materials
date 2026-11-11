@@ -1,9 +1,11 @@
 /-
-EulerFlow/IntFlow/Transfer.lean — paper 002, Proposition 8.7 (the transfer, tex l.671-684), Theorem 8.1
+EulerFlow/IntFlow/Transfer.lean — Proposition 8.7 (the transfer, tex l.671-684), Theorem 8.1
 (tex l.686-688), Remark 8.8 (tex l.690-697) and Theorem 1.1(b).
 Route = the paper's: every step of a `{1,-1,2,-2}`-chain of `ℤ_k`-flows lifts to adjacent integer lifts
 (Lemma 8.5 for the value 1, Lemma 8.6 for the value 2; for -1 and -2 the same lemmas from the other end), and the
 lifts of one flow are joined (Lemma 8.4). Theorem 2.4 enters only as the hypothesis `h24`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.IntFlow.Steps
 import EulerFlow.Defs.Constructions

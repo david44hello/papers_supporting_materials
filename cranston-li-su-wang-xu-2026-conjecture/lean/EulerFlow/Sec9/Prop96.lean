@@ -1,6 +1,8 @@
 /-
 EulerFlow/Sec9/Prop96.lean — Proposition 9.6 (tex l.822-837): every (p,q)-flow of an even loopless graph with all
 degrees 0 or ≥ 4 is T-joined to a (p,q)-flow with a balanced pair (p ≥ 4q). Proposition 6.3 is its case q = 1.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Sec9.Local
 

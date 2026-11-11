@@ -1,5 +1,7 @@
 /-
-EulerFlow/Sec2/Basic.lean — equations (2.1) and (2.2) of paper 002 (tex l.155-164).
+EulerFlow/Sec2/Basic.lean — equations (2.1) and (2.2) of the paper (tex l.155-164).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.DirCycleBasic
 

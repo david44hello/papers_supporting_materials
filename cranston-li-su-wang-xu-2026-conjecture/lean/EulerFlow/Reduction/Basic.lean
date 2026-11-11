@@ -1,6 +1,8 @@
 /-
-EulerFlow/Reduction/Basic.lean — small facts used throughout Section 3 of paper 002: flows form a group, the
+EulerFlow/Reduction/Basic.lean — small facts used throughout Section 3 of the paper: flows form a group, the
 chi-sum of a list of directed cycles, and transport of reachability along a map of step graphs.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Split
 import EulerFlow.Graph.Orient

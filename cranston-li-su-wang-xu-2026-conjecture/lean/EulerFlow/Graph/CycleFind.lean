@@ -1,7 +1,9 @@
 /-
-EulerFlow/Graph/CycleFind.lean — paper 002 foundation: a directed cycle from a non-backtracking successor
+EulerFlow/Graph/CycleFind.lean — foundation: a directed cycle from a non-backtracking successor
 function on darts. Every "contains a cycle" argument of the paper (Lemma 3.3, Prop 4.4, Prop 6.3, Lemma 8.2,
 Prop 9.6, and the decomposition of circulations) goes through `exists_dirCycle_of_succ`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Defs.Graph
 

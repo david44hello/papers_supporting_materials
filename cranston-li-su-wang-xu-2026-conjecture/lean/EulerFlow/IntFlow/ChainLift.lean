@@ -1,9 +1,11 @@
 /-
-EulerFlow/IntFlow/ChainLift.lean — paper 002, Lemma 7.4, abstract and Section 7 opening ("the same residues modulo
+EulerFlow/IntFlow/ChainLift.lean — Lemma 7.4, abstract and Section 7 opening ("the same residues modulo
 k"): two integer lifts of `f` are joined by a PATH of integer lifts of `f` (`lem_8_4_fibre`), and a `{1,-1,2,-2}`-chain
 of `ℤ_k`-flows becomes a walk in `𝓕(G, k)` in which every flow of the chain, in order, is replaced by a non-empty path of
 its integer lifts; the walk is a path when the chain is (`sec7_chain_lift`).
 Helpers live in namespace `EulerFlow.Sec8`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.IntFlow.Transfer
 import Mathlib.Combinatorics.SimpleGraph.Paths

@@ -1,9 +1,11 @@
 /-
-EulerFlow/Count/StepsC.lean — paper 002, Section 7 (tex l.534-555): the multi-step counts behind Theorem 2.5, stated
+EulerFlow/Count/StepsC.lean — Section 7 (tex l.534-555): the multi-step counts behind Theorem 2.5, stated
 on the paper's multi-step graph (`multiStepGraph`: a multi-step is `IsMultiStep`).
 Route: every multi-step in `h`-form (`CircStep`) is a multi-step, as `circ_decomp` splits `h` into edge-disjoint
 directed cycles; so `msGraph ≤ multiStepGraph`, and the counts of Count/StepsA.lean and Count/StepsB.lean carry over
 with the same lengths.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Count.StepsB
 

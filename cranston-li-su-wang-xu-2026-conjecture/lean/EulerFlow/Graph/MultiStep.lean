@@ -1,10 +1,12 @@
 /-
-EulerFlow/Graph/MultiStep.lean — paper 002 foundation: multi-steps are chains of steps (tex l.148-151, l.713-715),
+EulerFlow/Graph/MultiStep.lean — foundation: multi-steps are chains of steps (tex l.148-151, l.713-715),
 and the decomposition interface used by Section 3.
 * `multistep_chain_I`: for `I`-flows `f` and `f + t(χ_{Q_1} + ⋯ + χ_{Q_r})` with edge-disjoint `Q_i`, every
   partial sum is an `I`-flow and there is a walk of exactly `r` steps with the value `t` (gives
   `sec2_multistep_chain` with `I = {x ≠ 0}` and `sec9_multistep_chain` with `I = Ipq p q`);
 * `circ_decomp`, `sum_chi_mem`, `sum_chi_ne_zero`, `reachable_of_circ`, `walk_of_circ`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.Cycles
 

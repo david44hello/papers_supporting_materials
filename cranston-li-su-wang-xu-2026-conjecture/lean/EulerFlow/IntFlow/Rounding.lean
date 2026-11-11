@@ -1,9 +1,11 @@
 /-
-EulerFlow/IntFlow/Rounding.lean — paper 002, Lemma 8.2 (rounding, tex l.593-606): a map `x : E → [0,1]` with
+EulerFlow/IntFlow/Rounding.lean — Lemma 8.2 (rounding, tex l.593-606): a map `x : E → [0,1]` with
 integer boundary has a `{0,1}`-valued rounding `z` with the same boundary that keeps the values `0` and `1`.
 Route = the paper's: while some edge is fractional, the fractional edges contain a cycle (no vertex meets exactly
 one fractional end, because the boundary is an integer); push `x` along it by the least `δ` that makes an edge `0`
 or `1`; the number of fractional edges drops.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.Cycles
 

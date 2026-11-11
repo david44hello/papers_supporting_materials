@@ -1,5 +1,7 @@
 /-
-EulerFlow/Concrete/Extra.lean — small facts for review r2: the one-cycle graph is even; (p,1)-flows are ℤ_p-flows.
+EulerFlow/Concrete/Extra.lean — small facts: the one-cycle graph is even; (p,1)-flows are ℤ_p-flows.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Concrete.Small
 

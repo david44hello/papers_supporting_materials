@@ -1,6 +1,8 @@
 /-
 EulerFlow/Graph/DirCycleBasic.lean — dart-level facts on directed cycles: χ on the darts of Q, the outward values
 of a step at the ends of Q (the paper's equation (2.2), tex l.160-164), heads = tails rotated.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Defs.Constructions
 import EulerFlow.Graph.Chi

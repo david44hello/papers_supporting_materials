@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Checks the Lean proof: downloads Mathlib's prebuilt files, builds the proof, checks it, prints the result.
-# Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+# Author: Dave Goel. Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 set -euo pipefail
 cd "$(dirname "$0")"
 lake exe cache get

@@ -1,10 +1,12 @@
 /-
-EulerFlow/IntFlow/Steps.lean — paper 002, Lemmas 8.5 and 8.6 (tex l.635-669): lifting a step with the value `1`
+EulerFlow/IntFlow/Steps.lean — Lemmas 8.5 and 8.6 (tex l.635-669): lifting a step with the value `1`
 or `2`, and the remark after Lemma 8.6 (tex l.652).
 The paper chooses reference directions along `Q`; here every edge keeps its own reference direction and `Q`
 passes it with the sign `χ_Q(e) = ±1`. For Lemma 8.6 the rounded map is `x = (r_f + χ_Q)/k` (the paper's
 `(r + χ_Q)/k`, now valid in any reference directions): it is `1` exactly on the forward edges with `r = k-1` and
 `0` exactly on the backward edges with `r = 1`, which forces the lift there.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.IntFlow.Lift
 

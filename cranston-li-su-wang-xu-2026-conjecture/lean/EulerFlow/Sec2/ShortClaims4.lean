@@ -2,7 +2,8 @@
 EulerFlow/Sec2/ShortClaims4.lean — two in-text claims of the SHORT paper: A-connectedness differs from
 A-flow-connectedness (the graph with two vertices and one edge is A-flow-connected, as it has no flow, but it is not
 A-connected: for β = 0 the edge would need the value 0); a graph with no edge has exactly one flow.
-Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Defs.Constructions
 
@@ -19,7 +20,7 @@ theorem dipole_one_no_flow {A : Type} [AddCommGroup A] (f : Fin 1 → A) : ¬ (d
   simp [dipole] at h
   exact hnz 0 h
 
-/-- SHORT l.157-158: the graph with two vertices and one edge is `A`-flow-connected but not `A`-connected. -/
+/-- Remark 5.2 of the short paper: the graph with two vertices and one edge is `A`-flow-connected but not `A`-connected. -/
 theorem A_connected_differs_proved (A : Type) [AddCommGroup A] :
     (dipole 1).FlowConnected A ∧
     ¬ ∀ β : Fin 2 → A, ∑ v, β v = 0 → ∃ x : Fin 1 → A, (∀ e, x e ≠ 0) ∧ ∀ v,
@@ -32,7 +33,7 @@ theorem A_connected_differs_proved (A : Type) [AddCommGroup A] :
   exact hx 0 h0
 
 omit [Fintype V] [DecidableEq E] in
-/-- SHORT l.335: a graph with no edge has exactly one flow (the empty map), for every `A`. -/
+/-- Proof of Proposition 3.4 in the short paper: a graph with no edge has exactly one flow (the empty map), for every `A`. -/
 theorem no_edge_proved (A : Type) [AddCommGroup A] (G : MGraph V E) [IsEmpty E] :
     ∃! f : E → A, G.IsNZFlow f :=
   ⟨fun e => isEmptyElim e, ⟨fun v => by simp [Finset.univ_eq_empty], fun e => isEmptyElim e⟩,

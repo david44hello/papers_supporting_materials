@@ -1,10 +1,12 @@
 /-
-EulerFlow/Graph/Cycles.lean — paper 002 foundation: cycles in edge sets and the decomposition of circulations.
+EulerFlow/Graph/Cycles.lean — foundation: cycles in edge sets and the decomposition of circulations.
 * `exists_dirCycle_of_sdeg_ne_one`: a nonempty edge set in which no vertex has exactly one end contains a cycle
   (used for Eulerian orientations, the forest bound, and the rounding Lemma 8.2);
 * `exists_conformal_dirCycle`: a nonzero `{-1,0,1}`-valued circulation contains a directed cycle along its arcs;
 * `circ_decomp`: such a circulation is the sum of `χ` of pairwise edge-disjoint directed cycles, each following
   the sign of the circulation (used by Lemmas 3.2(b), 3.3(a), 5.1(b), 8.4: "multi-step").
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.Chi
 

@@ -1,9 +1,11 @@
 /-
-EulerFlow/Graph/AgreeOutside.lean — paper 002, Section 2 (tex l.138-139, again l.709-711): two flows that agree
+EulerFlow/Graph/AgreeOutside.lean — Section 2 (tex l.138-139, again l.709-711): two flows that agree
 outside a cycle differ by a flow on that cycle, which is constant along the cycle: `f' = f + t χ_Q`; and
 conversely. Route: `g = f' - f` is a flow that vanishes off `Q`; at each vertex of `Q` the flow condition, written
 over the ends (eq. (2.1)), has only the entering and the leaving end of `Q`, so `g` has the same value along
 consecutive darts of `Q`.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.DirCycleBasic
 import EulerFlow.Graph.MultiStep

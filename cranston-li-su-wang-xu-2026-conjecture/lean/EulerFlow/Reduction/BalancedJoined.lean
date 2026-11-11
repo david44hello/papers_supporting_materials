@@ -1,8 +1,10 @@
 /-
 EulerFlow/Reduction/BalancedJoined.lean — the Outline sentence "So all flows with a balanced pair are joined to each
-other" (short paper v1.51 l.121; the same step in the proof of Proposition 3.4, l.305-306), as its own statement.
+other" (short paper, Section 1; the same step in the proof of Proposition 3.4), as its own statement.
 It is the step `hbal` inside `reduction_preconnected`, for nowhere-zero flows, with the induction hypothesis of that
 proof (any two flows of every splitting off are joined) as a hypothesis.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Reduce
 

@@ -1,6 +1,8 @@
 /-
-EulerFlow/Defs/Constructions.lean — the graph operations and concrete graphs of paper 002 (Sections 3-9),
+EulerFlow/Defs/Constructions.lean — the graph operations and concrete graphs of the paper (Sections 3-9),
 and the cyclic decomposition of a finite abelian group (Section 4).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Defs.Graph
 

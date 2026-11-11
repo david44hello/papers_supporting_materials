@@ -1,6 +1,10 @@
 /-
-EulerFlow/Defs/Graph.lean — multigraphs, ends, flows, directed cycles, steps (paper 002, Section 2).
-Paper: Dave Goel, "Eulerian graphs are flow-connected", v0.30 (2026-10-23) = the expanded version, reference [3] of the paper.
+EulerFlow/Defs/Graph.lean — multigraphs, ends, flows, directed cycles, steps (Section 2).
+In the comments of this folder, "tex l." is a line of the LaTeX source of the expanded version of the paper (reference [3]
+of the paper), version 0.30 of 2026-10-23. The place of a statement in the paper itself is the first line of its docstring in
+Paper/Statements.lean.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import Mathlib
 

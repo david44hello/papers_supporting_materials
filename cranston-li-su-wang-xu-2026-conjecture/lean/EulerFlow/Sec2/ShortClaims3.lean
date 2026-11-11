@@ -2,7 +2,8 @@
 EulerFlow/Sec2/ShortClaims3.lean — three in-text claims of the SHORT paper: the named nowhere-zero 3-flow of an even
 graph (the value 1 on every edge, directed by an Eulerian orientation); the ends of a cycle at one of its
 vertices (there are exactly two); for k = 3 the k-flows are the nowhere-zero 3-flows of Section 1.
-Author: Dave Goel. Copyright (C) Dave Goel 2026--now.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Const
 import EulerFlow.Graph.Orient

@@ -1,7 +1,9 @@
 /-
-EulerFlow/Graph/Chi.lean — paper 002 foundation: the dart algebra of a directed cycle `Q`:
+EulerFlow/Graph/Chi.lean — foundation: the dart algebra of a directed cycle `Q`:
 the heads of `Q` are a permutation of its tails, `χ_Q` is the sign of the dart on the edges of `Q` and `0`
 elsewhere, and `χ_Q` satisfies the flow condition (`DirCycle.chi_isFlow`).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.CycleFind
 

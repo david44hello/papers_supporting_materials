@@ -1,5 +1,7 @@
 /-
-EulerFlow/Sec4/Prop44.lean — Section 4 of paper 002: Lemma 4.1, Corollary 4.2, Lemma 4.3 (case choice), Prop. 4.4.
+EulerFlow/Sec4/Prop44.lean — Section 4 of the paper: Lemma 4.1, Corollary 4.2, Lemma 4.3 (case choice), Prop. 4.4.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Sec4.Bstar
 import EulerFlow.Sec4.Decomp

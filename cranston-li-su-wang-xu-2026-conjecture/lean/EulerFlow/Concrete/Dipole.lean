@@ -1,6 +1,8 @@
 /-
 EulerFlow/Concrete/Dipole.lean — the dipole (two vertices, parallel edges) and the one-loop graph: Theorem 9.2,
-the introduction's example, the remark after Lemma 8.6 and the remark after Theorem 2.4 (paper 002).
+the introduction's example, the remark after Lemma 8.6 and the remark after Theorem 2.4.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.DirCycleBasic
 

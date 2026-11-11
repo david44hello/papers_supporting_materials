@@ -1,6 +1,8 @@
 /-
 EulerFlow/Sec9/Replace.lean — the "rule of replacement" claims inside the proof of Lemma 9.3 (tex l.751-763): the
 (p,q) versions of Lemmas 3.1, 3.2, 3.3, read off the general I-flow lemmas (EulerFlow/Reduction/).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Paper9
 import EulerFlow.Concrete.Small

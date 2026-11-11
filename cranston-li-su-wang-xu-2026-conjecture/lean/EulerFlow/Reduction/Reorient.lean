@@ -2,6 +2,8 @@
 EulerFlow/Reduction/Reorient.lean — the step graphs do not depend on the reference directions (tex l.129: "Fix a
 reference direction of every edge"): reversing the reference direction of the edges with `R e = true` and negating
 the values there is an isomorphism of step graphs.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Basic
 

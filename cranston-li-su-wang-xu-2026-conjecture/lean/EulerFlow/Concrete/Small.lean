@@ -1,7 +1,9 @@
 /-
-EulerFlow/Concrete/Small.lean — small claims of paper 002: the sets `I(p,q)`, `T(p,q)` of Section 9 (tex l.701-706,
+EulerFlow/Concrete/Small.lean — small claims of the paper: the sets `I(p,q)`, `T(p,q)` of Section 9 (tex l.701-706,
 l.728-729, l.745-747), the one-cycle graph (Remark 9.7, tex l.856-861), edge-disjoint paths at a vertex of degree
 at most 4 (tex l.195-196), and the group with one element (tex l.140-142).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Graph.DirCycleBasic
 

@@ -1,6 +1,8 @@
 /-
 EulerFlow/Sec6/Acyc.lean — Lemma 6.1 (tex l.465-474) and Lemma 9.4 (tex l.776-786): push a cycle `Q` with no
 small edge down by steps `-1` until an edge of `Q` becomes small. Lemma 6.1 is the case `q = 1` of Lemma 9.4.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Defs.Constructions
 import EulerFlow.Graph.DirCycleBasic

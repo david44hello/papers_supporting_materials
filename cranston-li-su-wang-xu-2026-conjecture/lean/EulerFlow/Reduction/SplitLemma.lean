@@ -1,10 +1,12 @@
 /-
-EulerFlow/Reduction/SplitLemma.lean — Lemma 3.2 of paper 002 (splitting off, tex l.234-269): (a) `L` is a
+EulerFlow/Reduction/SplitLemma.lean — Lemma 3.2 of the paper (splitting off, tex l.234-269): (a) `L` is a
 bijection from the flows of `G'` onto `B(v; e, e')`; (b) it maps multi-steps to multi-steps with the same value,
 and `T`-joined flows to `T`-joined flows. Proved for `I`-flows, then stated for nowhere-zero flows.
-Route note: the paper builds the cycles of `G` from a cycle of `G'` through `g` by cutting a closed walk at `v`;
+A note on the route: the paper builds the cycles of `G` from a cycle of `G'` through `g` by cutting a closed walk at `v`;
 here `L(χ_{Q'})` is a `{-1,0,1}`-valued integer flow of `G` and the decomposition into edge-disjoint cycles
 (`circ_decomp`) supplies them.
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Reduction.Basic
 

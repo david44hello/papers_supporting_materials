@@ -2,6 +2,8 @@
 EulerFlow/Sec4/Bstar.lean — Lemma 4.3 (tex l.357-389): Case 1 (two neighbouring edges of Q of different colours) and
 Case 2 (all edges of Q of one colour), each finished by the step (∗) of Sec4/Local.lean. The two facts on parts
 of a cyclic decomposition are hypotheses here (`ColourUnique`, `SmallSumEq`; proved in Sec4/Decomp.lean).
+Part of the Lean 4 proof of the paper "The Cranston–Li–Su–Wang–Xu (2026) conjecture is true" by Dave Goel.
+Copyright (C) Dave Goel 2026--now. Licensed under the Apache License 2.0; see LICENSE.
 -/
 import EulerFlow.Sec4.Local
 
